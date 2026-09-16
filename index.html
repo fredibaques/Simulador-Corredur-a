@@ -556,6 +556,12 @@
   .intl-chev{color:var(--muted-foreground);font-size:10px}
   .intl-name-s{font-size:10.5px;color:var(--muted-foreground);margin-top:2px;font-weight:400}
   .intl-ramos{display:flex;flex-wrap:wrap;gap:3px;max-width:230px}
+  .intl-name-vp{font-size:10.5px;line-height:1.45;color:var(--muted-foreground);font-weight:400;margin-top:5px;
+    max-width:250px;font-style:italic}
+  .intl-f-claim{font-size:13px;line-height:1.6;font-style:italic;color:var(--foreground);background:var(--muted-bg);
+    border-radius:var(--radius);padding:10px 13px;margin:0 0 12px}
+  .intl-pal-row{display:flex;flex-wrap:wrap;gap:3px;margin-top:7px}
+  .intl-paldist{display:grid;grid-template-columns:minmax(0,1fr);max-width:640px}
   .intl-ramo{font-size:10px;padding:1.5px 6px;border-radius:var(--radius-sm);background:var(--muted-bg);
     color:var(--muted-foreground);white-space:nowrap}
   .intl-detail-row>td{background:var(--muted-bg);padding:0 !important}
@@ -2868,6 +2874,23 @@ const INTL_FOCO={
  multi:{lab:'Multirramo', color:'#1f3864',
   desc:'Oferta amplia sin especialización de ramo ni de cliente. Exige volumen y marca para sostener el coste de adquisición.'}
 };
+// --- palancas de la propuesta de valor: con qué argumento convence cada compañía ---
+// Se leen del mensaje de su propia home (titular, subtítulo y bloques de «por qué nosotros»).
+const INTL_PAL={
+ precio:{lab:'Precio', color:'#c00000', desc:'Ser el más barato es el argumento central de la home, no un añadido.'},
+ velocidad:{lab:'Velocidad', color:'#c55a11', desc:'Cotizar, contratar y tener el certificado en minutos, con el tiempo cronometrado en la propia web.'},
+ simple:{lab:'Simplicidad', color:'#d97706', desc:'Lenguaje claro, menos letra pequeña y una interfaz que se entiende sin que nadie te la explique.'},
+ flex:{lab:'Flexibilidad', color:'#059669', desc:'Sin permanencia: mensual, por uso o por trabajo, modificable y cancelable cuando el cliente quiera.'},
+ medida:{lab:'Producto a medida', color:'#2e5496', desc:'Cobertura construida para un oficio, un sector o una etapa concreta, no un producto genérico.'},
+ agregador:{lab:'Todo en un sitio', color:'#1f3864', desc:'El valor es ordenar en un único lugar lo que el cliente ya tiene disperso entre varias compañías.'},
+ experto:{lab:'Asesoramiento experto', color:'#7030a0', desc:'Hay una persona que entiende el riesgo del cliente; la tecnología acelera el trámite, no sustituye el criterio.'},
+ prevencion:{lab:'Prevención y servicio', color:'#0891b2', desc:'Evitar el siniestro o acompañar al cliente mientras lo usa, no solo indemnizar cuando ocurre.'},
+ siniestro:{lab:'Siniestro rápido', color:'#db2777', desc:'La promesa está en el momento de la verdad: reembolso o asistencia en horas, y contado en horas en la home.'},
+ embebido:{lab:'Invisible / embebido', color:'#65a30d', desc:'El seguro aparece dentro de una experiencia que el cliente ya estaba usando: el coche, la app de reparto, el banco.'},
+ ahorro:{lab:'Ahorro por comparación', color:'#16a34a', desc:'No vende la póliza: vende la certeza de no estar pagando de más.'},
+ cobertura:{lab:'Cobertura superior', color:'#831843', desc:'Límites, porcentajes de reembolso o disponibilidad por encima de lo que da el resto del mercado.'},
+ confianza:{lab:'Prueba social', color:'#475569', desc:'Reseñas, nota de Trustpilot o volumen de clientes usados como argumento explícito de venta.'}
+};
 // --- ramos, para la matriz de cobertura ---
 const INTL_RAMOS=[
  ['auto','Auto / movilidad'],['hogar','Hogar'],['salud','Salud'],['vida','Vida'],
@@ -2883,6 +2906,9 @@ const INTL=[
   figuraNota:'Corredor de seguros digital (Versicherungsmakler). El grupo integra además finanzen Group, un negocio de generación de leads que vende tráfico a aseguradoras y mediadores.',
   cliente:['B2C','B2B2C'], foco:'multi',
   focoNota:'Gestor de toda la cartera del cliente particular: la propuesta es «tu seguro en una app», no un producto concreto.',
+  vpClaim:'«Sag Ciao zu Versicherungschaos» — di adiós al caos de los seguros: gestiónalos online y ahorra hasta un 50% al año',
+  vp:'No vende un seguro, vende orden. La promesa es que dejes de tener seis pólizas dispersas en seis compañías y las veas, compares y optimices en una sola app, con asesores independientes gratis por teléfono o mensajería y ofertas de más de 180 aseguradoras.',
+  pal:['agregador','ahorro','experto','simple'],
   ramos:['vida','salud','auto','hogar','rcgen','acc'],
   canal:['Directo digital (app)','Generación de leads','Adquisición de corredurías'],
   extras:['Gestor digital de todas las pólizas del cliente (agregador)','Asesoramiento y comparativa dentro de la app','finanzen Group: venta de leads a aseguradoras y mediadores (B2B)','Marcas propias de vida en Reino Unido: Anorak, TOM, Polly, Winston'],
@@ -2898,6 +2924,9 @@ const INTL=[
   figuraNota:'Grupo asegurador cotizado (NYSE: HIPO). Es dueño de Spinnaker Insurance Company —tres compañías, dos admitted y una E&S, licenciadas en los 50 estados, rating A- de AM Best— que suscribe su producto y además hace de fronting para MGAs de terceros.',
   cliente:['B2C','B2B'], foco:'nicho',
   focoNota:'El producto propio es hogar. La pata de fronting sí toca muchos ramos, pero como capacidad para terceros, no como oferta propia.',
+  vpClaim:'«Proactive, not reactive» — presupuesto a medida en menos de 60 segundos',
+  vp:'Invierte el planteamiento del seguro de hogar: en vez de esperar al siniestro y tramitar el parte, intenta que el siniestro no ocurra. Empaqueta la cobertura con sensores inteligentes y con Hippo Home Care, un servicio de mantenimiento y reparación preventiva incluido desde el primer día.',
+  pal:['prevencion','velocidad','cobertura'],
   ramos:['hogar'],
   canal:['Directo digital','Agentes independientes','Programas / fronting'],
   extras:['Insurance-as-a-Service: capacidad aseguradora y fronting para MGAs (30 programas activos, 618 M$ de prima en 2024)','First Connect: marketplace que da a agentes independientes acceso a decenas de aseguradoras','Prevención y cuidado del hogar: sensores, mantenimiento y servicios de reparación'],
@@ -2913,6 +2942,9 @@ const INTL=[
   figuraNota:'Corredor tecnológico. En 2025 vendió su MGA y su compañía aseguradora a Hiscox y volvió a ser corretaje puro, con un acuerdo de distribución plurianual con Hiscox.',
   cliente:['B2B'], foco:'cliente',
   focoNota:'Nicho de cliente llevado al extremo: startups y empresas tecnológicas en crecimiento, a las que vende las diez líneas que necesitan.',
+  vpClaim:'«Get covered fast with right-sized protection for your stage and industry»',
+  vp:'La cobertura calibrada al momento exacto de la empresa: la que aguanta ante inversores, reguladores y clientes en tu ronda actual, ni más ni menos. Solicitud en diez minutos, y la póliza se ajusta según contratas, levantas capital y creces, sin reseteos ni huecos.',
+  pal:['medida','velocidad','experto'],
   ramos:['do','rcpro','ciber','rcgen'],
   canal:['Directo digital','Partners (fondos de capital riesgo, aceleradoras, bancos)'],
   extras:['Asesoría de riesgos para fundadores','Cotización el mismo día en una sola solicitud','Canal de recomendación con fondos de capital riesgo y aceleradoras'],
@@ -2928,6 +2960,9 @@ const INTL=[
   figuraNota:'Thimble Insurance Services es corredor licenciado en los 50 estados. Desde abril de 2023 pertenece a Arch Insurance (grupo Arch Capital): distribución digital dentro de un grupo asegurador.',
   cliente:['B2B','B2B2C'], foco:'cliente',
   focoNota:'Microempresa y oficios: más de 140 profesiones, del manitas al DJ. Multirramo pero con tickets muy pequeños.',
+  vpClaim:'«Quick-thinking insurance for fast-moving small businesses» — por trabajo, por mes o por año, desde 17 $/mes',
+  vp:'Pagar seguro solo mientras estás trabajando. Rompe la unidad de venta del sector —la anualidad— y la sustituye por la duración real del trabajo, con alta, pausa, modificación o baja instantáneas y el certificado emitido al momento para enseñárselo al cliente.',
+  pal:['flex','velocidad','precio'],
   ramos:['rcgen','rcpro','mre','ciber','acc'],
   canal:['Directo digital (app y web)','Teléfono','API / embedded con partners'],
   extras:['Cobertura por horas, días, meses o año: seguro bajo demanda, su verdadero diferencial','Certificados de seguro instantáneos desde la app','API para que plataformas y marketplaces incrusten la cobertura'],
@@ -2943,6 +2978,9 @@ const INTL=[
   figuraNota:'Corredor registrado en Lloyd\'s desde 2020 —el primer insurtech británico en conseguirlo— y coverholder (suscripción delegada) desde 2019. Modelo multi-carrier con AXA, Beazley, RSA y MS Amlin.',
   cliente:['B2B','B2B2C'], foco:'cliente',
   focoNota:'Pymes, autónomos, propietarios en alquiler y empresas tecnológicas de alto crecimiento, con dos canales: autoservicio para riesgo simple y equipo asesor para riesgo complejo.',
+  vpClaim:'«Business insurance by monthly subscription» — eliges las coberturas que necesitas y quitas las que no',
+  vp:'Una póliza que se edita como una suscripción en vez de renegociarse cada año: añades y quitas garantías cuando cambia el negocio, sin comisiones por modificación. Cubre más de mil tipos de negocio, con autoservicio para el riesgo simple y equipo asesor para el complejo.',
+  pal:['flex','medida','simple'],
   ramos:['rcgen','rcpro','ciber','do','mre','acc','hogar'],
   canal:['Autoservicio online','Corretaje asesorado (SuperscriptQ)','Cobranded / embedded con marcas'],
   extras:['Plataforma de autoservicio con alta y gestión en minutos','Suscripción mensual flexible, ajustable mes a mes','Tarificación con machine learning propio','Ofertas cobranded con grandes plataformas (p. ej. Amazon Business)'],
@@ -2958,6 +2996,9 @@ const INTL=[
   figuraNota:'Comparador de precios (price comparison website) autorizado por la FCA para intermediar. Ingresa por clic, lead o venta, no por cartera renovada.',
   cliente:['B2C'], foco:'multi',
   focoNota:'Compara seguros y, cada vez más, cualquier gasto del hogar: la marca es de ahorro, no de seguro.',
+  vpClaim:'«Quick and easy quotes in minutes» — mira si puedes ahorrar hoy',
+  vp:'Ahorro sin esfuerzo y sin coste: ellos hacen la parte tediosa de comparar y el cliente solo elige. El producto no es el seguro sino la decisión, y el argumento de cierre es la nota de Trustpilot y la gratuidad del servicio.',
+  pal:['ahorro','simple','confianza'],
   ramos:['auto','hogar','mascotas','viaje','vida','salud','mre'],
   canal:['SEO / SEM','Marca y publicidad masiva','App'],
   extras:['Energía, banda ancha y servicios del hogar','Préstamos, hipotecas, tarjetas y financiación de coche','Renewal (ex-RNWL, adquirida en 2025): app para guardar y renovar pólizas','App con asistente conversacional para comparar auto, furgoneta y hogar'],
@@ -2973,6 +3014,9 @@ const INTL=[
   figuraNota:'Marketplace de dos lados cotizado (MONY Group, antes Moneysupermarket.com Group). Monetiza por comisión de afiliación, listado y publicidad.',
   cliente:['B2C','B2B'], foco:'multi',
   focoNota:'Cinco verticales —seguros, dinero, hogar, viajes y cashback— bajo seis marcas.',
+  vpClaim:'«Where better off begins» — siempre más formas de ahorrar',
+  vp:'Ahorro garantizado y recurrente sobre toda la factura del hogar, no solo sobre el seguro. Lo respalda con una garantía de precio —si encuentras el mismo producto más barato te igualan y te dan una tarjeta regalo— y con un club de fidelización para que el ahorro se repita cada año.',
+  pal:['ahorro','confianza','agregador'],
   ramos:['auto','hogar','mascotas','viaje','vida','salud'],
   canal:['SEO / SEM','Marca','Cashback y fidelización','B2B'],
   extras:['Dinero: tarjetas, préstamos, hipotecas, ahorro y cuentas','Hogar: energía y banda ancha','Viajes: TravelSupermarket e icelolly','Cashback: Quidco · Contenido: MoneySavingExpert','SuperSaveClub: programa de fidelización con más de 1,5 millones de miembros'],
@@ -2988,6 +3032,9 @@ const INTL=[
   figuraNota:'Aseguradora de salud con licencia propia, cotizada (NYSE: OSCR). Además vende su plataforma tecnológica a otros pagadores y proveedores bajo la marca +Oscar.',
   cliente:['B2C','B2B'], foco:'nicho',
   focoNota:'Solo salud, pero con toda la cadena: producto, red de proveedores, atención y tecnología.',
+  vpClaim:'«Health insurance made for real life»',
+  vp:'El seguro no termina en la póliza: incluye clínica virtual 24/7 a coste cero, un equipo de Care Guides con enfermera que conoce tu historial y te navega el sistema sanitario, y un asistente de salud con IA disponible a cualquier hora.',
+  pal:['prevencion','experto','simple'],
   ramos:['salud'],
   canal:['Directo digital','Corredores de salud','Mercados públicos (ACA)','Empresa (small group, ICHRA)'],
   extras:['Atención virtual y equipos de cuidado incluidos en la póliza','Planes de gestión de crónicos (diabetes, cardiovascular, pulmonar) con visitas y pruebas a coste cero','Buena Salud: producto y atención en español para la comunidad hispana','+Oscar: la plataforma tecnológica vendida como servicio a otros pagadores'],
@@ -3003,6 +3050,9 @@ const INTL=[
   figuraNota:'Correduría digital con MGA propia: diseña y suscribe sus programas (paquete para startups) y a la vez coloca riesgo como corredor. Oficinas en San Francisco, Chicago y Boston.',
   cliente:['B2B','B2B2C'], foco:'cliente',
   focoNota:'Startups, tecnológicas, despachos de abogados y servicios profesionales: nicho de cliente, cartera multirramo.',
+  vpClaim:'«Peace of mind for innovators» — el trato personal de un corredor con la velocidad de la tecnología',
+  vp:'No renuncia al corredor, lo acelera. Vende la tranquilidad de estar bien cubierto frente a los riesgos típicos de una empresa innovadora, con el argumento de que lo que antes costaba tres semanas de papeleo ahora se resuelve en sesenta segundos.',
+  pal:['velocidad','experto','medida'],
   ramos:['do','rcpro','ciber','rcgen','mre'],
   canal:['Directo digital','Embroker Access: canal para otras agencias y mayoristas'],
   extras:['Embroker Access: abre su producto y su motor de cotización a otras agencias y mayoristas (canal indirecto)','Paquete de arranque para fundadores con las coberturas mínimas en una sola póliza','Automatización de facturación y cobro integrada con la operativa de corretaje y MGA'],
@@ -3018,6 +3068,9 @@ const INTL=[
   figuraNota:'MGA autorizada por la FCA, con una segunda MGA europea abierta en Múnich. Suscribe con capacidad de Munich Re, Allianz y Ageas UK, y además licencia su plataforma.',
   cliente:['B2B2C'], foco:'nicho',
   focoNota:'Solo auto, y solo a través de marcas: no tiene cliente propio ni marca de cara al público.',
+  vpClaim:'«Reengineering the future of automotive insurance»',
+  vp:'Su cliente es la marca, no el conductor: le vende la posibilidad de lanzar y operar su propio seguro, con su nombre y su experiencia de cliente, sin montar una aseguradora. Aporta la capa de API entre el ecosistema del fabricante y el del asegurador, y los datos de cliente que el fabricante no tenía.',
+  pal:['embebido','velocidad','medida'],
   ramos:['auto'],
   canal:['Embedded en fabricantes de automoción','Marca blanca'],
   extras:['Plataforma de seguro embebido como servicio: la marca lanza su propio seguro en semanas','Marca blanca completa para fabricantes: BMW, MINI, Mercedes-Benz, Volvo, Jaguar Land Rover, Stellantis','Suscripción mensual flexible dentro del ecosistema de la marca'],
@@ -3033,6 +3086,9 @@ const INTL=[
   figuraNota:'Corredor inscrito en ORIAS (nº 18001949). El riesgo lo asumen terceros: Generali y Wakam en hogar, L\'Équité (Generali) y Allianz en auto.',
   cliente:['B2C'], foco:'multi',
   focoNota:'Multirramo de particulares empaquetado como suscripción única: hogar, auto, mascota y móvil en un mismo abono mensual sin permanencia.',
+  vpClaim:'«La primera aseguradora que vas a amar» — 100% online, 100% personalizable, 100% sin compromiso',
+  vp:'Todos los seguros del hogar digital en una única suscripción mensual: una sola factura, alta en dos minutos, garantías que se añaden o quitan sobre la marcha y baja con treinta días de preaviso. Vende la ausencia de ataduras tanto como la cobertura.',
+  pal:['flex','agregador','simple'],
   ramos:['hogar','auto','mascotas','device'],
   canal:['Directo digital','Partners y afiliación'],
   extras:['Suscripción mensual sin compromiso, modificable o cancelable en cualquier momento','Gestión y siniestros 100% en app','Producto de entrada a precio muy bajo (hogar desde 3,99 €/mes) como gancho de captación'],
@@ -3048,6 +3104,9 @@ const INTL=[
   figuraNota:'MGA con plataforma propia por API: pone precio, suscribe, distribuye y gestiona el siniestro. La capacidad la ponen Mobilitas, Incline y Gen Re.',
   cliente:['B2B2C','B2B'], foco:'nicho',
   focoNota:'Auto comercial para la economía bajo demanda: VTC, taxi, reparto y flotas privadas. Un solo ramo, un solo tipo de conductor.',
+  vpClaim:'«Fast & flexible insurance» — seguro embebido para la economía bajo demanda',
+  vp:'El seguro vive dentro de la aplicación con la que el conductor ya trabaja. El momento decisivo es el siniestro: se abre con un toque desde la app y los datos vienen ya cargados de la plataforma, sin formularios. Más de un millón de conductores y acuerdos con Uber y Amazon como prueba.',
+  pal:['embebido','siniestro','flex'],
   ramos:['auto'],
   canal:['Embedded en plataformas de movilidad','Directo a conductor','Flotas'],
   extras:['Plataforma por API: un operador de movilidad puede lanzar su seguro en horas','Gestión de siniestros integrada, no subcontratada','Producto por uso y bajo demanda para conductores que trabajan a tiempo parcial','Adquisición de American Business Insurance Services (2023) para ganar licencias y cartera'],
@@ -3063,6 +3122,9 @@ const INTL=[
   figuraNota:'Corredor digital que diseña sus productos con aseguradoras socias. Está construyendo además una plataforma para que otros corredores distribuyan su producto.',
   cliente:['B2B','B2B2C','B2B2B'], foco:'cliente',
   focoNota:'Micropymes, comerciantes y artesanos: más de 1.000 profesiones cubiertas, con el paquete completo que cada oficio necesita.',
+  vpClaim:'Seguro profesional «simple, rápido y sin sorpresas», con acompañamiento humano y personalizado',
+  vp:'Ataca de frente la queja del autónomo francés: un producto complejo, rígido y desconectado de su oficio. Responde con alta en menos de cinco minutos, precio claro, cobertura diseñada para cada una de más de 1.500 profesiones y herramientas de prevención, todo respaldado por un 4,9 sobre 5 en Trustpilot.',
+  pal:['simple','velocidad','medida','prevencion','confianza'],
   ramos:['rcpro','mre','decenal','salud'],
   canal:['Directo digital','Embedded con partners (p. ej. neobancos)','Plataforma para corredores (en despliegue)'],
   extras:['Prevención y asistencia incluidas, no solo indemnización','Plataforma digital para que corredores terceros vendan su producto','Integración embebida en servicios que ya usa el autónomo'],
@@ -3078,6 +3140,9 @@ const INTL=[
   figuraNota:'Opera como intermediario (Insify Broker B.V.) con producto propio suscrito con respaldo de Munich Re: en la práctica, corredor con capacidad delegada. La distribución combina venta directa, embedded y marca blanca.',
   cliente:['B2B','B2B2C'], foco:'cliente',
   focoNota:'Autónomos y pymes europeas, con el paquete de coberturas que necesita un profesional por cuenta propia.',
+  vpClaim:'«Snel, eerlijk, flexibel» — rápido, honesto y flexible',
+  vp:'Tres promesas explícitas y medibles: contratas en dos minutos, te explican con claridad qué está y qué no está cubierto, y puedes cancelar cualquier día. El producto se presenta por profesión, con precio de entrada visible desde la propia página.',
+  pal:['velocidad','flex','simple','medida'],
   ramos:['rcpro','rcgen','acc','mre'],
   canal:['Directo digital','Embedded con plataformas y comercio electrónico','Marca blanca para terceros'],
   extras:['Suscripción y alta asistidas por IA, con emisión en minutos','Solución en marca blanca para que otras empresas integren el seguro en su propio recorrido de cliente','Herramientas de gestión para los partners que distribuyen su producto'],
@@ -3093,6 +3158,9 @@ const INTL=[
   figuraNota:'Correduría 100% digital. Nombre comercial de ENTREPRENDRE L\'AVENIR, inscrita en ORIAS (nº 15002816) y supervisada por la ACPR. No asegura: coloca en contratos a medida negociados con varias aseguradoras francesas y europeas.',
   cliente:['B2B','B2B2C'], foco:'nicho',
   focoNota:'Prácticamente monoproducto: RC profesional, más la decenal para los oficios de construcción. Más de 1.300 actividades tarificadas.',
+  vpClaim:'«La RC Pro de los independientes al mejor precio de Francia» — desde 9,99 €/mes',
+  vp:'Precio como argumento único y explícito, sobre el único producto que el autónomo francés está obligado a tener. El cierre es operativo: el certificado de RC Pro en menos de tres minutos, tarificado sobre un catálogo de más de 1.300 actividades. «100% digital pero 100% humano, hecho por independientes para independientes».',
+  pal:['precio','velocidad','medida'],
   ramos:['rcpro','decenal'],
   canal:['Directo digital','Partners de autónomos y plataformas'],
   extras:['Tarificación por actividad sobre un catálogo de más de 1.300 oficios','Distribución vía portales y comunidades de autónomos (Auto-Entrepreneur.fr, Freeland, Simplebo)','Precio de entrada muy agresivo: RC Pro desde 9,99 €/mes y decenal desde 69 €/mes'],
@@ -3108,6 +3176,9 @@ const INTL=[
   figuraNota:'Grupo especializado que diseña el producto, lo distribuye y gestiona el siniestro con delegación de las aseguradoras que ponen el riesgo. Opera con tres marcas: Santévet, Bulle Bleue y Jim & Joe.',
   cliente:['B2C','B2B2C'], foco:'nicho',
   focoNota:'Solo salud animal —perro, gato, loro y pequeños mamíferos— pero en seis países.',
+  vpClaim:'Seguro veterinario con reembolso de hasta el 90% de los gastos, gestionado en 48 horas',
+  vp:'Que el dinero no decida el tratamiento del animal. Cuatro fórmulas para ajustar el gasto, un bonus de prevención que cubre vacunas, antiparasitarios y chip, libre elección de veterinario también en el extranjero y urgencias 24/7.',
+  pal:['cobertura','siniestro','prevencion'],
   ramos:['mascotas'],
   canal:['Directo digital','Canal veterinario','Partners y marcas'],
   extras:['Integración con más de 3.000 clínicas veterinarias: la póliza se activa en la propia consulta','Prevención incluida además de enfermedad y accidente','Estrategia multimarca para cubrir distintos segmentos de precio'],
@@ -3123,6 +3194,9 @@ const INTL=[
   figuraNota:'Intermediario del Espacio Económico Europeo que opera en España como sucursal (Barkibu Germany GmbH — Sucursal en España), bajo supervisión de conducta de la DGSFP. Diseña su producto con Munich Re; el riesgo lo asume Nordic Guarantee Försäkringsaktiebolag (Suecia).',
   cliente:['B2C','B2B2C'], foco:'nicho',
   focoNota:'Salud animal en exclusiva, con reembolso veterinario como producto central.',
+  vpClaim:'«El seguro de mascotas mejor valorado» — 80% de reembolso y el dinero de vuelta en menos de 72 horas',
+  vp:'Compite en cifras concretas frente al resto del mercado: límite anual de 3.000 € cuando la competencia se mueve entre 1.000 y 2.500, prevención hasta 100 € al año, cualquier veterinario sin red cerrada y seguro de por vida. Y regala lo que originó la empresa: Bai, una asistente veterinaria con IA para preguntar a cualquier hora.',
+  pal:['cobertura','siniestro','prevencion','confianza'],
   ramos:['mascotas'],
   canal:['Directo digital','Partners bancarios y de comercio electrónico'],
   extras:['Consultorio veterinario online con triaje asistido por IA: el origen del negocio y su motor de captación','Reembolso del 80% en menos de 72 horas desde la app','Tarjeta Barkibu para el copago directo en la clínica','Distribución a través de terceros, entre ellos Openbank'],
@@ -3138,6 +3212,9 @@ const INTL=[
   figuraNota:'Correduría de seguros española (NIF B66795436) especializada en viaje. El riesgo y la asistencia los ponen terceros: Groupe IMA en Francia, Clements Worldwide en EE.UU.',
   cliente:['B2C','B2B2C'], foco:'nicho',
   focoNota:'Solo seguro de viaje, pero vendido en cinco países y en varios idiomas.',
+  vpClaim:'«Asegura el viaje de tus sueños» — viaja con total tranquilidad',
+  vp:'El producto real no es la póliza, es el médico en el móvil cuando estás a diez mil kilómetros: chat y videoconsulta médica 24 h, llamadas de emergencia gratuitas por internet y gestión de incidencias desde la app, con la documentación disponible incluso sin conexión.',
+  pal:['siniestro','simple','medida'],
   ramos:['viaje'],
   canal:['Directo digital','Afiliación (blogs y creadores de viajes)','Agencias y partners'],
   extras:['App de asistencia 24 h con chat médico incluido en la póliza','Gestión de incidencias y siniestros desde el móvil durante el viaje','Programa de afiliación con creadores de contenido de viajes: su principal canal de captación'],
@@ -3153,6 +3230,9 @@ const INTL=[
   figuraNota:'Gestiona tres mutualidades recíprocas (Kin Interinsurance Network y Nexus Exchange, entre ellas) como attorney-in-fact: los tomadores se aseguran entre sí y Kin cobra un fee de gestión. Asume riesgo a través de esos vehículos, no en su propio balance.',
   cliente:['B2C'], foco:'nicho',
   focoNota:'Hogar en zonas de alto riesgo climático, empezando por Florida. El auto es un complemento del paquete.',
+  vpClaim:'«Change home insurance from what it is to what it should be»',
+  vp:'Elimina al agente —que se lleva entre el 15% y el 20% de comisión— y devuelve ese margen al cliente: 989 $ de ahorro medio anual declarado. Y llega donde las aseguradoras tradicionales se están retirando, tarificando con datos propios, machine learning y seguimiento meteorológico en tiempo real los estados expuestos a catástrofes.',
+  pal:['precio','cobertura','medida'],
   ramos:['hogar','auto'],
   canal:['Directo digital'],
   extras:['Brazo de financiación inmobiliaria lanzado en 2025: hipotecas, refinanciación, préstamos con garantía hipotecaria y HELOC','Inundación privada como complemento en estados seleccionados','Tarificación con datos de propiedad en mercados que las aseguradoras tradicionales abandonan'],
@@ -3183,14 +3263,15 @@ const INTL_GAPS=[
 ];
 
 // --- estado de la pestaña: filtros y ficha desplegada ---
-let INTL_F={fig:'all', cli:'all', foco:'all', reg:'all'};
+let INTL_F={fig:'all', cli:'all', foco:'all', reg:'all', pal:'all'};
 let INTL_OPEN=null;
 
 const intlRegion=c=> c.sede==='EE.UU.' ? 'EE.UU.' : (c.sede==='Reino Unido' ? 'Reino Unido' : 'Europa continental');
 const intlMatch=c=> (INTL_F.fig==='all'||c.figura===INTL_F.fig)
   && (INTL_F.cli==='all'||c.cliente.includes(INTL_F.cli))
   && (INTL_F.foco==='all'||c.foco===INTL_F.foco)
-  && (INTL_F.reg==='all'||intlRegion(c)===INTL_F.reg);
+  && (INTL_F.reg==='all'||intlRegion(c)===INTL_F.reg)
+  && (INTL_F.pal==='all'||c.pal.includes(INTL_F.pal));
 const intlList=()=> INTL.filter(intlMatch);
 const intlRamoLab=k=>{ const r=INTL_RAMOS.find(x=>x[0]===k); return r?r[1]:k; };
 const intlChip=(txt,color,title)=>`<span class="intl-chip" style="--c:${color}"${title?` title="${escAttr(title)}"`:''}>${escAttr(txt)}</span>`;
@@ -3236,6 +3317,7 @@ function intlPaintTable(){
         <td class="intl-name">
           <div class="intl-name-t">${escAttr(c.name)}<span class="intl-chev">${open?'▾':'▸'}</span></div>
           <div class="intl-name-s">${escAttr(c.sede)} · desde ${c.fund}</div>
+          <div class="intl-name-vp">${escAttr(c.vpClaim)}</div>
         </td>
         <td class="intl-l">${escAttr(c.paises.join(' · '))}</td>
         <td class="intl-l">${cli}</td>
@@ -3273,7 +3355,9 @@ function intlFicha(c){
         <a href="${escAttr(c.li)}" target="_blank" rel="noopener noreferrer">in LinkedIn</a>
       </div>
     </div>
+    <div class="intl-f-claim">${escAttr(c.vpClaim)}</div>
     <div class="intl-f-grid">
+      ${li('Propuesta de valor', escAttr(c.vp)+'<div class="intl-pal-row">'+c.pal.map(p=>intlChip(INTL_PAL[p].lab,INTL_PAL[p].color,INTL_PAL[p].desc)).join('')+'</div>')}
       ${li('Figura', `<b>${escAttr(F.lab)}</b>${c.conf==='media'?' <span class="intl-warn-inline">clasificación deducida, no declarada en registro</span>':''}<br>${escAttr(c.figuraNota)}`)}
       ${li('¿Asume riesgo?', escAttr(riesgo))}
       ${li('Amplitud', `<b>${escAttr(FO.lab)}</b><br>${escAttr(c.focoNota)}`)}
@@ -3323,7 +3407,28 @@ function intlPaintMatrix(){
     <tr><th></th>${th}<th class="intl-m-h"><span>Total</span></th></tr>${body}${tot}</table></div>`;
 }
 
-function intlPaint(){ intlPaintKpis(); intlPaintTable(); intlPaintDist(); intlPaintMatrix(); }
+// mapa de palancas: reparto y matriz palanca x compañía
+function intlPaintPal(){
+  const dist=document.getElementById('intlPalDist'), mat=document.getElementById('intlPalMatrix');
+  if(!dist||!mat) return;
+  const L=intlList(), n=L.length;
+  const keys=Object.keys(INTL_PAL);
+  const rows=keys.map(k=>[INTL_PAL[k].lab, intlCount(L,c=>c.pal.includes(k)), INTL_PAL[k].color, INTL_PAL[k].desc])
+                 .sort((a,b)=>b[1]-a[1]);
+  dist.innerHTML=`<div class="intl-dist-blk"><div class="intl-dist-t">Cuántas compañías usan cada palanca</div>
+    <p class="intl-dist-s">Una compañía puede apoyarse en varias. Pasa el cursor por una barra para ver qué significa.</p>${intlBars(rows,n)}</div>`;
+  if(!n){ mat.innerHTML=''; return; }
+  const usadas=keys.filter(k=>L.some(c=>c.pal.includes(k)));
+  const th=usadas.map(k=>`<th class="intl-m-h"><span>${escAttr(INTL_PAL[k].lab)}</span></th>`).join('');
+  const body=L.map(c=>`<tr><td class="intl-m-n">${escAttr(c.name)}</td>`+
+    usadas.map(k=>`<td class="intl-m-c">${c.pal.includes(k)?`<i style="background:${INTL_PAL[k].color}" title="${escAttr(c.name+' — '+INTL_PAL[k].lab)}"></i>`:''}</td>`).join('')+
+    `<td class="intl-m-t">${c.pal.length}</td></tr>`).join('');
+  const tot=`<tr class="dos-tot"><td>Compañías por palanca</td>`+
+    usadas.map(k=>`<td class="intl-m-c">${intlCount(L,c=>c.pal.includes(k))}</td>`).join('')+`<td></td></tr>`;
+  mat.innerHTML=`<div class="dos-scroll"><table class="dos-t intl-m">
+    <tr><th></th>${th}<th class="intl-m-h"><span>Total</span></th></tr>${body}${tot}</table></div>`;
+}
+function intlPaint(){ intlPaintKpis(); intlPaintTable(); intlPaintDist(); intlPaintPal(); intlPaintMatrix(); }
 
 function renderIntl(){
   const box=document.getElementById('intlBody'); if(!box || box.dataset.built) return;
@@ -3334,7 +3439,7 @@ function renderIntl(){
   box.innerHTML=`
     <div class="panel">
       <h2>Benchmark internacional: 19 formas de distribuir seguros</h2>
-      <p class="note" style="margin-top:0">Análisis de mercado de diecinueve insurtechs y distribuidores digitales de Europa y Estados Unidos. A diferencia de la pestaña <b>Compañías</b> —corredurías españolas comparadas por sus cuentas depositadas— aquí la comparación es <b>de modelo de negocio</b>: qué figura ocupa cada una en la cadena de valor, a quién le vende, qué ramos toca y de qué vive además del seguro. Pulsa cualquier fila para abrir su ficha completa con los enlaces a la web y a LinkedIn.</p>
+      <p class="note" style="margin-top:0">Análisis de mercado de diecinueve insurtechs y distribuidores digitales de Europa y Estados Unidos. A diferencia de la pestaña <b>Compañías</b> —corredurías españolas comparadas por sus cuentas depositadas— aquí la comparación es <b>de modelo de negocio</b>: qué figura ocupa cada una en la cadena de valor, a quién le vende, qué ramos toca, de qué vive además del seguro y <b>con qué argumento convence</b>. La propuesta de valor está leída del mensaje de su propia home: el titular en cursiva bajo cada nombre es su promesa tal y como ellos la cuentan. Pulsa cualquier fila para abrir la ficha completa, con los enlaces a la web y a LinkedIn.</p>
       <div class="mkt-kpis" id="intlKpis"></div>
       <div class="mkt-insight" style="margin-top:16px">La lectura de conjunto: solo tres de las diecinueve asumen riesgo con balance propio. Las otras dieciséis viven de <b>comisión, fee de gestión o venta de tráfico</b> —el mismo sitio de la cadena que ocupa tu correduría—. La diferencia entre ellas no está en la licencia, sino en <b>quién les trae el cliente</b>: unas lo compran en Google, otras lo reciben de una marca (el fabricante del coche, el banco, la clínica veterinaria) y otras lo heredan de un colaborador.</div>
     </div>
@@ -3346,6 +3451,9 @@ function renderIntl(){
         <div class="intl-fgrp"><span class="lab">Cliente</span>${seg('cli',[['all','Todos'],['B2C','B2C'],['B2B','B2B'],['B2B2C','B2B2C']])}</div>
         <div class="intl-fgrp"><span class="lab">Amplitud</span>${seg('foco',[['all','Todas'],['nicho','Nicho de ramo'],['cliente','Nicho de cliente'],['multi','Multirramo']])}</div>
         <div class="intl-fgrp"><span class="lab">Mercado</span>${seg('reg',[['all','Todos'],['Europa continental','Europa continental'],['Reino Unido','Reino Unido'],['EE.UU.','EE.UU.']])}</div>
+        <div class="intl-fgrp"><span class="lab">Palanca de valor</span>
+          <select id="intlPalSel"><option value="all">Todas</option>${Object.keys(INTL_PAL).map(k=>`<option value="${k}">${escAttr(INTL_PAL[k].lab)}</option>`).join('')}</select>
+        </div>
       </div>
       <div id="intlTable"></div>
       <p class="note">El signo <span class="intl-warn">≈</span> marca las clasificaciones deducidas de cómo opera la compañía, no declaradas en un registro público: conviene verificarlas antes de usarlas en una decisión.</p>
@@ -3355,6 +3463,14 @@ function renderIntl(){
       <h2>Cómo se reparte el mercado analizado</h2>
       <p class="note" style="margin-top:0">Los recuentos responden a los filtros de arriba: cambia un filtro y estas barras se recalculan sobre la selección.</p>
       <div id="intlDist" class="intl-dist"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Mapa de propuestas de valor</h2>
+      <p class="note" style="margin-top:0">Con qué argumento convence cada compañía, leído del mensaje de su propia home: el titular, el subtítulo y los bloques de «por qué nosotros». Casi ninguna se apoya en una sola palanca; lo interesante es qué combinan y qué evitan.</p>
+      <div id="intlPalDist" class="intl-paldist"></div>
+      <div id="intlPalMatrix" style="margin-top:18px"></div>
+      <div class="mkt-insight" style="margin-top:14px">Tres lecturas. Primera: <b>el precio casi no se usa como argumento principal</b> —solo tres de las diecinueve— y las tres lo consiguen quitando algo de la cadena, no apretando el margen: Thimble quita la anualidad, Simplis quita todo salvo un producto y Kin quita al agente. Segunda: <b>velocidad y simplicidad ya no diferencian</b>, las declara media lista; son la entrada, no la ventaja. Tercera, y la más relevante para una correduría: la palanca más repetida es <b>producto a medida</b> —cobertura construida para un oficio o una etapa concreta—, y es la única que un mediador puede construir sin poner capital ni comprar tráfico.</div>
     </div>
 
     <div class="panel">
@@ -3386,6 +3502,8 @@ function renderIntl(){
       INTL_F[key]=b.dataset.v; INTL_OPEN=null; intlPaint();
     });
   });
+  const palSel=document.getElementById('intlPalSel');
+  if(palSel) palSel.onchange=()=>{ INTL_F.pal=palSel.value; INTL_OPEN=null; intlPaint(); };
 }
 
 function closeDossier(){ document.getElementById('dosBackdrop').classList.remove('on'); document.body.style.overflow=''; }
