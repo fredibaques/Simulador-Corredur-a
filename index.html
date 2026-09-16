@@ -533,6 +533,18 @@
   .dos-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);
     border-radius:var(--radius);background:var(--card)}
 
+  /* ---- pestaña «Mercado»: separadores entre sus dos partes ---- */
+  .mkt-jump{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px}
+  .mkt-jump .lab{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground);font-weight:600}
+  .mkt-jump button{font-family:inherit;font-size:12px;font-weight:500;padding:5px 12px;cursor:pointer;
+    border:1px solid var(--border);background:var(--card);color:var(--primary);border-radius:999px}
+  .mkt-jump button:hover{border-color:var(--primary)}
+  .mkt-section{border-left:3px solid var(--primary);padding:2px 0 2px 14px;margin:8px 0 -4px;scroll-margin-top:72px}
+  .mkt-section-k{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground);font-weight:700}
+  .mkt-section h2{margin:3px 0 5px;font-size:19px;font-weight:600;letter-spacing:-.015em;color:var(--foreground)}
+  .mkt-section p{margin:0;font-size:12.5px;line-height:1.6;color:var(--muted-foreground);max-width:760px}
+  @media(max-width:680px){ .mkt-section h2{font-size:17px} }
+
   /* ---- pestaña «Benchmark internacional» ---- */
   .intl-filters{display:flex;flex-wrap:wrap;gap:10px 20px;margin:0 0 14px}
   .intl-fgrp{display:flex;align-items:center;gap:7px}
@@ -699,7 +711,6 @@
     <button class="tab" data-tab="comp">Comparativa</button>
     <button class="tab" data-tab="companies">Compañías</button>
     <button class="tab" data-tab="market">Mercado</button>
-    <button class="tab" data-tab="intl">Benchmark internacional</button>
   </div>
 </div>
 <div class="wrap">
@@ -840,9 +851,22 @@
       </div>
     </div>
     <div id="tab-market" class="tabpane" style="display:none">
+      <div class="mkt-jump">
+        <span class="lab">Ir a</span>
+        <button type="button" data-jump="mktSecEs">El mercado español</button>
+        <button type="button" data-jump="mktSecIntl">Benchmark internacional</button>
+      </div>
+      <div class="mkt-section" id="mktSecEs">
+        <div class="mkt-section-k">Parte 1</div>
+        <h2>El mercado español de la mediación</h2>
+        <p>Tamaño, estructura y rentabilidad por ramo del canal de corredores en España, con las cifras oficiales de la DGSFP. Es el mercado en el que compite tu correduría.</p>
+      </div>
       <div id="marketBody"></div>
-    </div>
-    <div id="tab-intl" class="tabpane" style="display:none">
+      <div class="mkt-section" id="mktSecIntl">
+        <div class="mkt-section-k">Parte 2</div>
+        <h2>Benchmark internacional</h2>
+        <p>El mismo negocio visto desde fuera: cómo distribuyen seguros diecinueve insurtechs de Europa y Estados Unidos, qué figura ocupan, a quién venden y con qué argumento convencen.</p>
+      </div>
       <div id="intlBody"></div>
     </div>
   </div>
@@ -988,7 +1012,8 @@ function applySnapshot(s){
   if(s.HY){ HY=s.HY; HM=HY*12; if(YF>HY) YF=0; }
   if(s.PHASE && typeof s.PHASE==='object') PHASE=migratePhase(s.PHASE);
   if(Array.isArray(s.CMP_SEL)) CMP_SEL=new Set(s.CMP_SEL);
-  if(s.ACTIVE_TAB) ACTIVE_TAB=(s.ACTIVE_TAB==='notes')?'dash':s.ACTIVE_TAB;
+  // 'notes' desapareció con la pestaña Dudas; 'intl' se fusionó dentro de Mercado
+  if(s.ACTIVE_TAB) ACTIVE_TAB=(s.ACTIVE_TAB==='notes')?'dash':((s.ACTIVE_TAB==='intl')?'market':s.ACTIVE_TAB);
   if(s.SCOPE && ['all','auto','mre'].includes(s.SCOPE)) SCOPE=s.SCOPE;
 }
 function saveState(){ try{ localStorage.setItem(LS_STATE, JSON.stringify(snapshot())); }catch(e){} }
@@ -1629,14 +1654,12 @@ function activateTab(id,doSave){
   document.getElementById('tab-comp').style.display=(id==='comp')?'flex':'none';
   document.getElementById('tab-companies').style.display=(id==='companies')?'flex':'none';
   document.getElementById('tab-market').style.display=(id==='market')?'flex':'none';
-  document.getElementById('tab-intl').style.display=(id==='intl')?'flex':'none';
-  // la gestión de compañías, el mercado y el benchmark no dependen de los filtros: allí la barra sobra
-  document.getElementById('filterbar').style.display=(id==='companies'||id==='market'||id==='intl')?'none':'flex';
+  // la gestión de compañías y el mercado no dependen de los filtros: allí la barra sobra
+  document.getElementById('filterbar').style.display=(id==='companies'||id==='market')?'none':'flex';
   if(id==='pl'||id==='dash') render();
   if(id==='comp') renderComp();
   if(id==='companies') renderCompanyList();
-  if(id==='market') renderMarket();
-  if(id==='intl') renderIntl();
+  if(id==='market'){ renderMarket(); renderIntl(); }   // el benchmark es la segunda parte de Mercado
   ACTIVE_TAB=id; if(doSave!==false) saveState();
 }
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>activateTab(t.dataset.tab)));
@@ -2787,7 +2810,7 @@ function renderMarket(){
   const cA='#1f3864', cB='#c55a11'; // corredores (identidad de la app) vs canal agencial/bancaseguros
   box.innerHTML=`
     <div class="panel">
-      <h2>El sector de la mediación de seguros en España</h2>
+      <h2>Tamaño y estructura del canal</h2>
       <p class="note" style="margin-top:0">Cifras del <b>Informe estadístico anual de mediación 2024</b> (Dirección General de Seguros y Fondos de Pensiones), sobre la actividad de corredores de seguros, agentes vinculados y operadores de banca-seguros. El registro está actualizado a 21/11/2025; la actividad intermediada corresponde al ejercicio 2024.</p>
       <div class="mkt-kpis">
         <div class="kpi"><div class="k">Corredores inscritos</div><div class="v">3.445</div><div class="s">-6,59% vs cierre 2024 · 884 físicas + 2.561 sociedades</div></div>
@@ -3438,8 +3461,8 @@ function renderIntl(){
   const gapBadge={ok:['Ya en la ficha','full'],parcial:['Parcial','partial'],falta:['Pendiente','miss']};
   box.innerHTML=`
     <div class="panel">
-      <h2>Benchmark internacional: 19 formas de distribuir seguros</h2>
-      <p class="note" style="margin-top:0">Análisis de mercado de diecinueve insurtechs y distribuidores digitales de Europa y Estados Unidos. A diferencia de la pestaña <b>Compañías</b> —corredurías españolas comparadas por sus cuentas depositadas— aquí la comparación es <b>de modelo de negocio</b>: qué figura ocupa cada una en la cadena de valor, a quién le vende, qué ramos toca, de qué vive además del seguro y <b>con qué argumento convence</b>. La propuesta de valor está leída del mensaje de su propia home: el titular en cursiva bajo cada nombre es su promesa tal y como ellos la cuentan. Pulsa cualquier fila para abrir la ficha completa, con los enlaces a la web y a LinkedIn.</p>
+      <h2>Diecinueve formas de distribuir seguros</h2>
+      <p class="note" style="margin-top:0">Diecinueve insurtechs y distribuidores digitales de Europa y Estados Unidos. Arriba has visto <b>cuánto</b> mueve el mercado español y en qué ramos; aquí se ve <b>de qué maneras distintas</b> se puede vender ese mismo seguro. Y a diferencia de la pestaña <b>Compañías</b> —corredurías españolas comparadas por sus cuentas depositadas— la comparación es <b>de modelo de negocio</b>: qué figura ocupa cada una en la cadena de valor, a quién le vende, qué ramos toca, de qué vive además del seguro y <b>con qué argumento convence</b>. La propuesta de valor está leída del mensaje de su propia home: el titular en cursiva bajo cada nombre es su promesa tal y como ellos la cuentan. Pulsa cualquier fila para abrir la ficha completa, con los enlaces a la web y a LinkedIn.</p>
       <div class="mkt-kpis" id="intlKpis"></div>
       <div class="mkt-insight" style="margin-top:16px">La lectura de conjunto: solo tres de las diecinueve asumen riesgo con balance propio. Las otras dieciséis viven de <b>comisión, fee de gestión o venta de tráfico</b> —el mismo sitio de la cadena que ocupa tu correduría—. La diferencia entre ellas no está en la licencia, sino en <b>quién les trae el cliente</b>: unas lo compran en Google, otras lo reciben de una marca (el fabricante del coche, el banco, la clínica veterinaria) y otras lo heredan de un colaborador.</div>
     </div>
@@ -3506,6 +3529,11 @@ function renderIntl(){
   if(palSel) palSel.onchange=()=>{ INTL_F.pal=palSel.value; INTL_OPEN=null; intlPaint(); };
 }
 
+// atajos para saltar entre las dos partes de la pestaña Mercado
+document.querySelectorAll('[data-jump]').forEach(b=>b.onclick=()=>{
+  const t=document.getElementById(b.dataset.jump);
+  if(t) t.scrollIntoView({block:'start',behavior:'smooth'});
+});
 function closeDossier(){ document.getElementById('dosBackdrop').classList.remove('on'); document.body.style.overflow=''; }
 document.getElementById('dosClose').addEventListener('click',closeDossier);
 document.getElementById('dosBackdrop').addEventListener('click',e=>{ if(e.target.id==='dosBackdrop') closeDossier(); });
