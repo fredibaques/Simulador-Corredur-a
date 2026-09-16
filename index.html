@@ -533,6 +533,77 @@
   .dos-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--border);
     border-radius:var(--radius);background:var(--card)}
 
+  /* ---- pestaña «Benchmark internacional» ---- */
+  .intl-filters{display:flex;flex-wrap:wrap;gap:10px 20px;margin:0 0 14px}
+  .intl-fgrp{display:flex;align-items:center;gap:7px}
+  .intl-fgrp .lab{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted-foreground);font-weight:600}
+  .intl-fgrp .seg{padding:2px}
+  .intl-fgrp .seg button{padding:3px 9px;font-size:11.5px}
+  .intl-chip{display:inline-block;font-size:10.5px;font-weight:600;line-height:1.5;padding:2px 8px;margin:1px 3px 1px 0;
+    border-radius:999px;white-space:nowrap;color:var(--c);background:color-mix(in srgb,var(--c) 11%,transparent);
+    border:1px solid color-mix(in srgb,var(--c) 30%,transparent)}
+  .intl-warn{display:inline-block;margin-left:4px;font-size:12px;font-weight:700;color:var(--warning);cursor:help}
+  .intl-warn-inline{font-size:10.5px;font-weight:600;color:var(--warning);background:var(--warning-bg);
+    border:1px solid var(--warning-border);border-radius:999px;padding:1px 7px;white-space:nowrap}
+  .intl-t td,.intl-t th{vertical-align:top}
+  .intl-t td.intl-l,.intl-t th{text-align:left;white-space:normal}
+  .intl-t th{font-size:10.5px;letter-spacing:.03em;text-transform:uppercase}
+  .intl-row{cursor:pointer}
+  .intl-row:hover>td{background:var(--muted-bg)}
+  .intl-row.on>td{background:var(--muted-bg)}
+  .intl-name{min-width:150px}
+  .intl-name-t{font-size:13px;font-weight:600;color:var(--foreground);display:flex;align-items:center;gap:6px}
+  .intl-chev{color:var(--muted-foreground);font-size:10px}
+  .intl-name-s{font-size:10.5px;color:var(--muted-foreground);margin-top:2px;font-weight:400}
+  .intl-ramos{display:flex;flex-wrap:wrap;gap:3px;max-width:230px}
+  .intl-ramo{font-size:10px;padding:1.5px 6px;border-radius:var(--radius-sm);background:var(--muted-bg);
+    color:var(--muted-foreground);white-space:nowrap}
+  .intl-detail-row>td{background:var(--muted-bg);padding:0 !important}
+  .intl-ficha{padding:16px 14px;border-top:2px solid var(--primary);white-space:normal}
+  .intl-f-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+  .intl-f-name{font-size:15px;font-weight:600;color:var(--foreground)}
+  .intl-f-sub{font-size:11.5px;color:var(--muted-foreground);margin-top:2px}
+  .intl-f-links{display:flex;gap:8px;flex-wrap:wrap}
+  .intl-f-links a{font-size:11.5px;font-weight:600;text-decoration:none;padding:5px 11px;border-radius:var(--radius-sm);
+    border:1px solid var(--border);background:var(--card);color:var(--primary);white-space:nowrap}
+  .intl-f-links a:hover{border-color:var(--primary);background:var(--card)}
+  .intl-f-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px 24px}
+  .intl-f-row{display:grid;grid-template-columns:132px 1fr;gap:12px;padding:7px 0;border-bottom:1px solid var(--border);align-items:start}
+  .intl-f-k{font-size:10.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--muted-foreground);font-weight:600;padding-top:1px}
+  .intl-f-v{font-size:12px;line-height:1.6;color:var(--foreground);white-space:normal}
+  .intl-ul{margin:0;padding-left:16px}
+  .intl-ul li{margin-bottom:3px}
+  .intl-f-take{margin-top:14px;padding:11px 13px;border-radius:var(--radius);background:var(--card);
+    border:1px solid var(--border);border-left:3px solid var(--primary);font-size:12.5px;line-height:1.6}
+  .intl-dist{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:22px 28px}
+  .intl-dist-t{font-size:12.5px;font-weight:600;color:var(--foreground)}
+  .intl-dist-s{font-size:11px;color:var(--muted-foreground);line-height:1.5;margin:3px 0 10px}
+  .intl-bars{display:flex;flex-direction:column;gap:7px}
+  .intl-bar-row{display:grid;grid-template-columns:1fr 90px 64px;gap:10px;align-items:center}
+  .intl-bar-lab{font-size:11.5px;color:var(--foreground);line-height:1.4}
+  .intl-bar-track{height:8px;background:var(--muted-bg);border-radius:4px;overflow:hidden}
+  .intl-bar-fill{height:100%;border-radius:4px;transition:width .25s ease}
+  .intl-bar-val{font-size:11.5px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+  .intl-bar-val span{font-weight:400;color:var(--muted-foreground)}
+  .intl-m td,.intl-m th{padding:6px 5px;text-align:center}
+  .intl-m th.intl-m-h{height:168px;vertical-align:bottom;padding:0 0 8px;white-space:nowrap}
+  .intl-m th.intl-m-h>span{display:inline-block;transform:rotate(-90deg);transform-origin:center;font-size:10.5px;
+    letter-spacing:0;text-transform:none;width:16px}
+  .intl-m td.intl-m-n{text-align:left;font-size:12px;font-weight:600;white-space:nowrap;padding-left:0}
+  .intl-m-c i{display:inline-block;width:9px;height:9px;border-radius:50%}
+  .intl-m-t{font-weight:600;font-variant-numeric:tabular-nums}
+  .intl-gap-t td,.intl-gap-t th{text-align:left;white-space:normal;vertical-align:top;font-size:11.5px;line-height:1.55}
+  .intl-gap-t td:first-child{min-width:130px}
+  .intl-gap-b{display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .intl-gap-b.full{background:var(--success-bg);color:#15803d}
+  .intl-gap-b.partial{background:var(--warning-bg);color:var(--warning)}
+  .intl-gap-b.miss{background:var(--muted-bg);color:var(--muted-foreground)}
+  @media(max-width:680px){
+    .intl-f-row{grid-template-columns:1fr;gap:2px}
+    .intl-bar-row{grid-template-columns:1fr 60px 58px}
+    .intl-ramos{max-width:none}
+  }
+
   /* ===== informe imprimible (sin cambios de identidad) ===== */
   #report{display:none}
   .rhead h1{font-size:18px;margin:0 0 4px;color:var(--primary)}
@@ -622,6 +693,7 @@
     <button class="tab" data-tab="comp">Comparativa</button>
     <button class="tab" data-tab="companies">Compañías</button>
     <button class="tab" data-tab="market">Mercado</button>
+    <button class="tab" data-tab="intl">Benchmark internacional</button>
   </div>
 </div>
 <div class="wrap">
@@ -763,6 +835,9 @@
     </div>
     <div id="tab-market" class="tabpane" style="display:none">
       <div id="marketBody"></div>
+    </div>
+    <div id="tab-intl" class="tabpane" style="display:none">
+      <div id="intlBody"></div>
     </div>
   </div>
 </div>
@@ -1548,12 +1623,14 @@ function activateTab(id,doSave){
   document.getElementById('tab-comp').style.display=(id==='comp')?'flex':'none';
   document.getElementById('tab-companies').style.display=(id==='companies')?'flex':'none';
   document.getElementById('tab-market').style.display=(id==='market')?'flex':'none';
-  // la gestión de compañías y el mercado no dependen de los filtros: allí la barra sobra
-  document.getElementById('filterbar').style.display=(id==='companies'||id==='market')?'none':'flex';
+  document.getElementById('tab-intl').style.display=(id==='intl')?'flex':'none';
+  // la gestión de compañías, el mercado y el benchmark no dependen de los filtros: allí la barra sobra
+  document.getElementById('filterbar').style.display=(id==='companies'||id==='market'||id==='intl')?'none':'flex';
   if(id==='pl'||id==='dash') render();
   if(id==='comp') renderComp();
   if(id==='companies') renderCompanyList();
   if(id==='market') renderMarket();
+  if(id==='intl') renderIntl();
   ACTIVE_TAB=id; if(doSave!==false) saveState();
 }
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>activateTab(t.dataset.tab)));
@@ -2760,6 +2837,557 @@ function renderMarket(){
     mktRamosPaint();
   });
 }
+
+// ================= pestaña «Benchmark internacional» =================
+// Análisis de mercado de 19 insurtechs y distribuidores digitales de referencia (Europa y EE.UU.).
+// Toda la ficha es cualitativa y está construida con fuentes públicas: web corporativa, notas de
+// prensa, registros de mediación (ORIAS, DGSFP, FCA, Lloyd's) y prensa sectorial. Foto a 16/09/2026.
+// `conf` califica la confianza de la clasificación regulatoria:
+//   'alta'  = figura declarada por la propia compañía o verificable en un registro público
+//   'media' = deducida de cómo opera (quién suscribe, quién asume el riesgo, quién gestiona siniestros)
+
+// --- figura en la cadena de valor: quién suscribe y quién asume el riesgo ---
+const INTL_FIG={
+ corredor:{lab:'Corredor / correduría', short:'Corredor', color:'#1f3864',
+  desc:'Intermedia por cuenta del cliente entre varias aseguradoras. No suscribe ni asume riesgo: cobra comisión sobre prima. Es la figura de tu modelo.'},
+ mixto:{lab:'Corredor + agencia de suscripción', short:'Corredor + MGA', color:'#2e5496',
+  desc:'Mantiene la correduría pero además tiene suscripción delegada de una o varias aseguradoras: diseña y tarifica su propio producto. Cobra comisión de corretaje y fee de gestión, sin poner capital de riesgo.'},
+ mga:{lab:'Agencia de suscripción (MGA)', short:'MGA', color:'#c55a11',
+  desc:'Suscribe con capacidad delegada de una aseguradora: fija precio, emite y suele gestionar el siniestro. Cobra fee de gestión y, con frecuencia, profit share. No pone balance.'},
+ aseguradora:{lab:'Aseguradora (asume riesgo)', short:'Aseguradora', color:'#7030a0',
+  desc:'Tiene licencia y balance propios: ingresa prima, no comisión, y responde del siniestro. Requiere capital regulatorio y su cuenta de resultados es un ratio combinado, no un margen sobre comisiones.'},
+ comparador:{lab:'Comparador / marketplace', short:'Comparador', color:'#059669',
+  desc:'Vende tráfico cualificado, no cartera: cobra por clic, lead o venta y normalmente no renueva. Su economía es de marketing, no de mediación.'}
+};
+// --- amplitud de la oferta ---
+const INTL_FOCO={
+ nicho:{lab:'Nicho de ramo', color:'#c55a11',
+  desc:'Un solo ramo o producto. Toda la compañía —marca, tarificación, siniestros— gira alrededor de él.'},
+ cliente:{lab:'Nicho de cliente, multirramo', color:'#d97706',
+  desc:'Se especializa en un segmento de cliente muy concreto y le vende todos los ramos que necesita. Es el modelo más replicado en B2B digital.'},
+ multi:{lab:'Multirramo', color:'#1f3864',
+  desc:'Oferta amplia sin especialización de ramo ni de cliente. Exige volumen y marca para sostener el coste de adquisición.'}
+};
+// --- ramos, para la matriz de cobertura ---
+const INTL_RAMOS=[
+ ['auto','Auto / movilidad'],['hogar','Hogar'],['salud','Salud'],['vida','Vida'],
+ ['mascotas','Mascotas'],['viaje','Viaje'],['rcpro','RC profesional / E&O'],['rcgen','RC general / explotación'],
+ ['do','D&O'],['ciber','Ciber'],['mre','Multirriesgo empresa'],['decenal','Decenal / construcción'],
+ ['acc','Accidentes / baja laboral'],['device','Dispositivos / gadgets']
+];
+
+const INTL=[
+ {key:'clark', name:'CLARK', web:'https://www.clark.de/', li:'https://www.linkedin.com/company/goclark',
+  sede:'Alemania', paises:['Alemania','Reino Unido','Francia','Países Bajos','Suiza'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Corredor de seguros digital (Versicherungsmakler). El grupo integra además finanzen Group, un negocio de generación de leads que vende tráfico a aseguradoras y mediadores.',
+  cliente:['B2C','B2B2C'], foco:'multi',
+  focoNota:'Gestor de toda la cartera del cliente particular: la propuesta es «tu seguro en una app», no un producto concreto.',
+  ramos:['vida','salud','auto','hogar','rcgen','acc'],
+  canal:['Directo digital (app)','Generación de leads','Adquisición de corredurías'],
+  extras:['Gestor digital de todas las pólizas del cliente (agregador)','Asesoramiento y comparativa dentro de la app','finanzen Group: venta de leads a aseguradoras y mediadores (B2B)','Marcas propias de vida en Reino Unido: Anorak, TOM, Polly, Winston'],
+  fund:2015, tam:'>600 empleados · >2 millones de clientes',
+  ingresos:'>135 M€ de ingresos en 2023 (+35%) y primer resultado operativo positivo de su historia.',
+  prop:'Capital privado (Allianz X entre los accionistas tras la integración de finanzen Group).',
+  hito:'Crecimiento por M&A de corredurías medianas en sus cinco mercados. En 2025 recortó ~20% de la plantilla en Alemania (sobre todo IT) mientras buscaba ~100 M€ de financiación. Salió de Austria en 2023 vía management buyout.',
+  lectura:'El caso europeo más parecido a «una correduría que escala»: mismo margen de comisión que tú, pero con coste de adquisición de cliente pagado con capital riesgo. Su recorte de 2025 tras alcanzar rentabilidad es el dato relevante: el modelo tarda en cuadrar.'},
+
+ {key:'hippo', name:'Hippo', web:'https://www.hippo.com/', li:'https://www.linkedin.com/company/hippo-insurance',
+  sede:'EE.UU.', paises:['EE.UU. (50 estados)'],
+  figura:'aseguradora', conf:'alta', riesgo:'si',
+  figuraNota:'Grupo asegurador cotizado (NYSE: HIPO). Es dueño de Spinnaker Insurance Company —tres compañías, dos admitted y una E&S, licenciadas en los 50 estados, rating A- de AM Best— que suscribe su producto y además hace de fronting para MGAs de terceros.',
+  cliente:['B2C','B2B'], foco:'nicho',
+  focoNota:'El producto propio es hogar. La pata de fronting sí toca muchos ramos, pero como capacidad para terceros, no como oferta propia.',
+  ramos:['hogar'],
+  canal:['Directo digital','Agentes independientes','Programas / fronting'],
+  extras:['Insurance-as-a-Service: capacidad aseguradora y fronting para MGAs (30 programas activos, 618 M$ de prima en 2024)','First Connect: marketplace que da a agentes independientes acceso a decenas de aseguradoras','Prevención y cuidado del hogar: sensores, mantenimiento y servicios de reparación'],
+  fund:2015, tam:'Cotizada en NYSE (HIPO)',
+  ingresos:'Vuelta a beneficio: de -41 M$ de pérdida neta a +58 M$ de resultado neto, con la prima bruta creciendo un 58% interanual.',
+  prop:'Cotizada (salida a bolsa vía SPAC en 2021).',
+  hito:'Ha reordenado el grupo en tres negocios: seguro de hogar propio, capacidad como servicio y servicios de fee. El crecimiento ya no viene del producto de hogar sino de alquilar su licencia a otros.',
+  lectura:'Ejemplo de escalón siguiente: cuando una distribuidora compra una aseguradora, deja de vivir de la comisión y pasa a vivir del ratio combinado —y de vender su licencia a otras distribuidoras.'},
+
+ {key:'vouch', name:'Vouch', web:'https://www.vouch.us/', li:'https://www.linkedin.com/company/vouch-group',
+  sede:'EE.UU.', paises:['EE.UU.'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Corredor tecnológico. En 2025 vendió su MGA y su compañía aseguradora a Hiscox y volvió a ser corretaje puro, con un acuerdo de distribución plurianual con Hiscox.',
+  cliente:['B2B'], foco:'cliente',
+  focoNota:'Nicho de cliente llevado al extremo: startups y empresas tecnológicas en crecimiento, a las que vende las diez líneas que necesitan.',
+  ramos:['do','rcpro','ciber','rcgen'],
+  canal:['Directo digital','Partners (fondos de capital riesgo, aceleradoras, bancos)'],
+  extras:['Asesoría de riesgos para fundadores','Cotización el mismo día en una sola solicitud','Canal de recomendación con fondos de capital riesgo y aceleradoras'],
+  fund:2018, tam:'+6.000 empresas aseguradas · NPS declarado >74',
+  ingresos:'No publica cifras. ~185 M$ levantados según fuentes de mercado.',
+  prop:'Capital privado (Ribbit Capital, SVB Financial entre los inversores iniciales).',
+  hito:'El movimiento de 2025 —vender la suscripción y quedarse la distribución— es el camino inverso al de Hippo. En 2026 amplía a servicios financieros, salud y ciencias de la vida, y servicios profesionales.',
+  lectura:'Prueba de que se puede desmontar el MGA y quedarse con el corretaje si la distribución es el activo. El canal de partners (fondos, aceleradoras) es su equivalente al colaborador de tu modelo.'},
+
+ {key:'thimble', name:'Thimble', web:'https://www.thimble.com/', li:'https://www.linkedin.com/company/thimble',
+  sede:'EE.UU.', paises:['EE.UU. (50 estados y DC)'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Thimble Insurance Services es corredor licenciado en los 50 estados. Desde abril de 2023 pertenece a Arch Insurance (grupo Arch Capital): distribución digital dentro de un grupo asegurador.',
+  cliente:['B2B','B2B2C'], foco:'cliente',
+  focoNota:'Microempresa y oficios: más de 140 profesiones, del manitas al DJ. Multirramo pero con tickets muy pequeños.',
+  ramos:['rcgen','rcpro','mre','ciber','acc'],
+  canal:['Directo digital (app y web)','Teléfono','API / embedded con partners'],
+  extras:['Cobertura por horas, días, meses o año: seguro bajo demanda, su verdadero diferencial','Certificados de seguro instantáneos desde la app','API para que plataformas y marketplaces incrusten la cobertura'],
+  fund:2016, tam:'+170.000 pólizas emitidas desde 2018',
+  ingresos:'No publica cifras desde la adquisición.',
+  prop:'Arch Insurance (Arch Capital Group) desde abril de 2023.',
+  hito:'Trabaja con varias aseguradoras además de su matriz (Markel, Employers), lo que le permite seguir siendo corredor y no canal cautivo.',
+  lectura:'El caso de venta a un asegurador: una distribuidora digital vale por su embudo y su tecnología de emisión, no por su cartera. Y el producto por horas abre un mercado que la póliza anual no captura.'},
+
+ {key:'superscript', name:'Superscript', web:'https://gosuperscript.com/', li:'https://uk.linkedin.com/company/superscript-insurance',
+  sede:'Reino Unido', paises:['Reino Unido','Espacio Económico Europeo'],
+  figura:'mixto', conf:'alta', riesgo:'no',
+  figuraNota:'Corredor registrado en Lloyd\'s desde 2020 —el primer insurtech británico en conseguirlo— y coverholder (suscripción delegada) desde 2019. Modelo multi-carrier con AXA, Beazley, RSA y MS Amlin.',
+  cliente:['B2B','B2B2C'], foco:'cliente',
+  focoNota:'Pymes, autónomos, propietarios en alquiler y empresas tecnológicas de alto crecimiento, con dos canales: autoservicio para riesgo simple y equipo asesor para riesgo complejo.',
+  ramos:['rcgen','rcpro','ciber','do','mre','acc','hogar'],
+  canal:['Autoservicio online','Corretaje asesorado (SuperscriptQ)','Cobranded / embedded con marcas'],
+  extras:['Plataforma de autoservicio con alta y gestión en minutos','Suscripción mensual flexible, ajustable mes a mes','Tarificación con machine learning propio','Ofertas cobranded con grandes plataformas (p. ej. Amazon Business)'],
+  fund:2015, tam:'Serie B de 45 M£ (2023)',
+  ingresos:'No publica cuenta de resultados. Serie B liderada por BHL UK (dueño de Comparethemarket) con The Hartford.',
+  prop:'Capital privado.',
+  hito:'La combinación corredor de Lloyd\'s + coverholder le deja jugar en los dos lados: coloca riesgo complejo y suscribe el simple.',
+  lectura:'El modelo híbrido más interesante para una correduría que quiera crecer: mantener el corretaje para el riesgo complejo y delegar la suscripción del riesgo estándar, donde el margen es mayor.'},
+
+ {key:'gocompare', name:'Go.Compare', web:'https://www.gocompare.com/', li:'https://uk.linkedin.com/company/gocompare',
+  sede:'Reino Unido', paises:['Reino Unido'],
+  figura:'comparador', conf:'alta', riesgo:'no',
+  figuraNota:'Comparador de precios (price comparison website) autorizado por la FCA para intermediar. Ingresa por clic, lead o venta, no por cartera renovada.',
+  cliente:['B2C'], foco:'multi',
+  focoNota:'Compara seguros y, cada vez más, cualquier gasto del hogar: la marca es de ahorro, no de seguro.',
+  ramos:['auto','hogar','mascotas','viaje','vida','salud','mre'],
+  canal:['SEO / SEM','Marca y publicidad masiva','App'],
+  extras:['Energía, banda ancha y servicios del hogar','Préstamos, hipotecas, tarjetas y financiación de coche','Renewal (ex-RNWL, adquirida en 2025): app para guardar y renovar pólizas','App con asistente conversacional para comparar auto, furgoneta y hogar'],
+  fund:2006, tam:'Parte de Future plc',
+  ingresos:'No se desglosa: consolida en Future plc.',
+  prop:'Future plc desde 2021 (compra de GoCo Group por 594 M£).',
+  hito:'Comprado por un grupo editorial, no por uno asegurador: el activo era la audiencia. En 2025-26 empuja la app de renovación para retener al usuario entre comparaciones.',
+  lectura:'El contramodelo de la correduría: capta barato y a escala, pero no tiene cartera —no renueva, no fideliza y depende del canal de tráfico. Útil para entender qué te compra un comparador y a qué precio.'},
+
+ {key:'msm', name:'MoneySuperMarket', web:'https://www.moneysupermarket.com/', li:'https://uk.linkedin.com/company/moneysupermarket-group',
+  sede:'Reino Unido', paises:['Reino Unido'],
+  figura:'comparador', conf:'alta', riesgo:'no',
+  figuraNota:'Marketplace de dos lados cotizado (MONY Group, antes Moneysupermarket.com Group). Monetiza por comisión de afiliación, listado y publicidad.',
+  cliente:['B2C','B2B'], foco:'multi',
+  focoNota:'Cinco verticales —seguros, dinero, hogar, viajes y cashback— bajo seis marcas.',
+  ramos:['auto','hogar','mascotas','viaje','vida','salud'],
+  canal:['SEO / SEM','Marca','Cashback y fidelización','B2B'],
+  extras:['Dinero: tarjetas, préstamos, hipotecas, ahorro y cuentas','Hogar: energía y banda ancha','Viajes: TravelSupermarket e icelolly','Cashback: Quidco · Contenido: MoneySavingExpert','SuperSaveClub: programa de fidelización con más de 1,5 millones de miembros'],
+  fund:1993, tam:'Cotizada en la Bolsa de Londres · ~600 empleados',
+  ingresos:'Seguros = 52% de los ingresos del ejercicio 2025 (233 M£), con margen EBITDA en torno al 60-65%; dinero = 24% (105 M£).',
+  prop:'Cotizada (MONY Group plc).',
+  hito:'Rebautizado como MONY Group en 2024 para dejar de ser solo un comparador. El club de fidelización es su respuesta al problema estructural del comparador: la falta de recurrencia.',
+  lectura:'La prueba de cuánto vale la distribución pura: 52% de ingresos en seguros con márgenes del 60% —muy por encima de cualquier correduría— pero sobre transacciones únicas y dependiente de Google.'},
+
+ {key:'oscar', name:'Oscar Health', web:'https://www.hioscar.com/', li:'https://www.linkedin.com/company/oscar-health',
+  sede:'EE.UU.', paises:['EE.UU. (18 estados, 504 mercados)'],
+  figura:'aseguradora', conf:'alta', riesgo:'si',
+  figuraNota:'Aseguradora de salud con licencia propia, cotizada (NYSE: OSCR). Además vende su plataforma tecnológica a otros pagadores y proveedores bajo la marca +Oscar.',
+  cliente:['B2C','B2B'], foco:'nicho',
+  focoNota:'Solo salud, pero con toda la cadena: producto, red de proveedores, atención y tecnología.',
+  ramos:['salud'],
+  canal:['Directo digital','Corredores de salud','Mercados públicos (ACA)','Empresa (small group, ICHRA)'],
+  extras:['Atención virtual y equipos de cuidado incluidos en la póliza','Planes de gestión de crónicos (diabetes, cardiovascular, pulmonar) con visitas y pruebas a coste cero','Buena Salud: producto y atención en español para la comunidad hispana','+Oscar: la plataforma tecnológica vendida como servicio a otros pagadores'],
+  fund:2012, tam:'Cotizada en NYSE (OSCR)',
+  ingresos:'Miles de millones de dólares en prima, pero con resultado volátil: recortó la previsión de 2025 y anticipó pérdidas por el deterioro del mercado ACA.',
+  prop:'Cotizada.',
+  hito:'Crecimiento por expansión geográfica año a año (Alabama y Misisipi en 2026) y por segmentación del producto en lugar de por nuevos ramos.',
+  lectura:'Recuerda el coste de asumir riesgo: con la misma tecnología y marca, el resultado depende de la siniestralidad y del regulador, no de la eficiencia comercial. Un año malo de ratio se lleva varios años de crecimiento.'},
+
+ {key:'embroker', name:'Embroker', web:'https://www.embroker.com/', li:'https://www.linkedin.com/company/embroker',
+  sede:'EE.UU.', paises:['EE.UU. (50 estados)'],
+  figura:'mixto', conf:'alta', riesgo:'no',
+  figuraNota:'Correduría digital con MGA propia: diseña y suscribe sus programas (paquete para startups) y a la vez coloca riesgo como corredor. Oficinas en San Francisco, Chicago y Boston.',
+  cliente:['B2B','B2B2C'], foco:'cliente',
+  focoNota:'Startups, tecnológicas, despachos de abogados y servicios profesionales: nicho de cliente, cartera multirramo.',
+  ramos:['do','rcpro','ciber','rcgen','mre'],
+  canal:['Directo digital','Embroker Access: canal para otras agencias y mayoristas'],
+  extras:['Embroker Access: abre su producto y su motor de cotización a otras agencias y mayoristas (canal indirecto)','Paquete de arranque para fundadores con las coberturas mínimas en una sola póliza','Automatización de facturación y cobro integrada con la operativa de corretaje y MGA'],
+  fund:2015, tam:'Ahorro medio declarado >25% frente al mercado',
+  ingresos:'No publica cifras.',
+  prop:'Capital privado.',
+  hito:'El lanzamiento de Embroker Access convierte su producto en materia prima para otros mediadores: pasa de vender pólizas a vender capacidad de suscripción.',
+  lectura:'El modelo más transferible a una correduría con producto propio: primero se vende directo, después se abre el producto a otros mediadores y la retrocesión se convierte en ingreso, no en coste.'},
+
+ {key:'wrisk', name:'Wrisk', web:'https://www.wrisk.co/', li:'https://uk.linkedin.com/company/wrisk',
+  sede:'Reino Unido', paises:['Reino Unido','Alemania','Europa'],
+  figura:'mga', conf:'alta', riesgo:'no',
+  figuraNota:'MGA autorizada por la FCA, con una segunda MGA europea abierta en Múnich. Suscribe con capacidad de Munich Re, Allianz y Ageas UK, y además licencia su plataforma.',
+  cliente:['B2B2C'], foco:'nicho',
+  focoNota:'Solo auto, y solo a través de marcas: no tiene cliente propio ni marca de cara al público.',
+  ramos:['auto'],
+  canal:['Embedded en fabricantes de automoción','Marca blanca'],
+  extras:['Plataforma de seguro embebido como servicio: la marca lanza su propio seguro en semanas','Marca blanca completa para fabricantes: BMW, MINI, Mercedes-Benz, Volvo, Jaguar Land Rover, Stellantis','Suscripción mensual flexible dentro del ecosistema de la marca'],
+  fund:2016, tam:'+100.000 pólizas · crecimiento de ingresos de tres dígitos en 2024',
+  ingresos:'Serie B de 12 M£ (13,9 M€) en 2025, co-liderada por Mundi Ventures y Opera Tech Ventures (BNP Paribas).',
+  prop:'Capital privado.',
+  hito:'Ha pasado de ser proveedor de BMW a serlo de media docena de fabricantes, y replica el modelo en el continente desde Múnich.',
+  lectura:'El caso puro de seguro embebido: coste de adquisición prácticamente cero porque el cliente llega con el coche. A cambio, no es dueño del cliente y depende de un puñado de contratos muy grandes.'},
+
+ {key:'lovys', name:'Lovys', web:'https://lovys.com/fr/', li:'https://fr.linkedin.com/company/lovys',
+  sede:'Francia', paises:['Francia','España','Portugal'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Corredor inscrito en ORIAS (nº 18001949). El riesgo lo asumen terceros: Generali y Wakam en hogar, L\'Équité (Generali) y Allianz en auto.',
+  cliente:['B2C'], foco:'multi',
+  focoNota:'Multirramo de particulares empaquetado como suscripción única: hogar, auto, mascota y móvil en un mismo abono mensual sin permanencia.',
+  ramos:['hogar','auto','mascotas','device'],
+  canal:['Directo digital','Partners y afiliación'],
+  extras:['Suscripción mensual sin compromiso, modificable o cancelable en cualquier momento','Gestión y siniestros 100% en app','Producto de entrada a precio muy bajo (hogar desde 3,99 €/mes) como gancho de captación'],
+  fund:2017, tam:'~49 empleados (2026)',
+  ingresos:'No publica cifras. ~24 M$ levantados en tres rondas; la última, una Serie A de 2021.',
+  prop:'Capital privado (entre los inversores, Adevinta Ventures).',
+  hito:'Sin ronda nueva desde 2021 y con plantilla contenida: el caso de una insurtech que se estabiliza en tamaño medio en lugar de escalar.',
+  lectura:'El modelo suscripción-sin-permanencia aplicado a la correduría. Baja la barrera de entrada pero castiga la retención, que es exactamente la variable de la que vive tu cuenta de resultados.'},
+
+ {key:'inshur', name:'INSHUR', web:'https://inshur.com/', li:'https://www.linkedin.com/company/inshur',
+  sede:'EE.UU.', paises:['EE.UU. (50 estados)','Reino Unido','Países Bajos'],
+  figura:'mga', conf:'alta', riesgo:'no',
+  figuraNota:'MGA con plataforma propia por API: pone precio, suscribe, distribuye y gestiona el siniestro. La capacidad la ponen Mobilitas, Incline y Gen Re.',
+  cliente:['B2B2C','B2B'], foco:'nicho',
+  focoNota:'Auto comercial para la economía bajo demanda: VTC, taxi, reparto y flotas privadas. Un solo ramo, un solo tipo de conductor.',
+  ramos:['auto'],
+  canal:['Embedded en plataformas de movilidad','Directo a conductor','Flotas'],
+  extras:['Plataforma por API: un operador de movilidad puede lanzar su seguro en horas','Gestión de siniestros integrada, no subcontratada','Producto por uso y bajo demanda para conductores que trabajan a tiempo parcial','Adquisición de American Business Insurance Services (2023) para ganar licencias y cartera'],
+  fund:2016, tam:'Presencia en tres países y los 50 estados de EE.UU.',
+  ingresos:'35 M$ levantados en 2025; 26 M$ en 2023.',
+  prop:'Capital privado.',
+  hito:'Se posiciona como el asegurador de referencia de la movilidad por plataforma, incluida la conducción autónoma.',
+  lectura:'Demuestra que un nicho aparentemente pequeño (el conductor de VTC) sostiene una compañía si controlas la suscripción y el siniestro. Sin ese control, el margen de intermediación no da.'},
+
+ {key:'orus', name:'Orus', web:'https://www.orus.eu/', li:'https://fr.linkedin.com/company/orus-insurance',
+  sede:'Francia', paises:['Francia','España'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Corredor digital que diseña sus productos con aseguradoras socias. Está construyendo además una plataforma para que otros corredores distribuyan su producto.',
+  cliente:['B2B','B2B2C','B2B2B'], foco:'cliente',
+  focoNota:'Micropymes, comerciantes y artesanos: más de 1.000 profesiones cubiertas, con el paquete completo que cada oficio necesita.',
+  ramos:['rcpro','mre','decenal','salud'],
+  canal:['Directo digital','Embedded con partners (p. ej. neobancos)','Plataforma para corredores (en despliegue)'],
+  extras:['Prevención y asistencia incluidas, no solo indemnización','Plataforma digital para que corredores terceros vendan su producto','Integración embebida en servicios que ya usa el autónomo'],
+  fund:2021, tam:'+30.000 empresas aseguradas · ~2.500 altas nuevas al mes',
+  ingresos:'Serie B de 25 M€ en 2025 liderada por Singular, con Notion Capital y Redstone.',
+  prop:'Capital privado.',
+  hito:'Ya opera en España y estudia Italia y Alemania para 2026. Con la Serie B abre canal indirecto además del directo.',
+  lectura:'El competidor europeo más directo del perfil «correduría digital de pymes»: 2.500 altas al mes es el orden de magnitud contra el que conviene medir cualquier hipótesis de captación de tu modelo.'},
+
+ {key:'insify', name:'Insify', web:'https://www.insify.nl/', li:'https://www.linkedin.com/company/insify',
+  sede:'Países Bajos', paises:['Países Bajos','Francia','Alemania'],
+  figura:'mixto', conf:'media', riesgo:'no',
+  figuraNota:'Opera como intermediario (Insify Broker B.V.) con producto propio suscrito con respaldo de Munich Re: en la práctica, corredor con capacidad delegada. La distribución combina venta directa, embedded y marca blanca.',
+  cliente:['B2B','B2B2C'], foco:'cliente',
+  focoNota:'Autónomos y pymes europeas, con el paquete de coberturas que necesita un profesional por cuenta propia.',
+  ramos:['rcpro','rcgen','acc','mre'],
+  canal:['Directo digital','Embedded con plataformas y comercio electrónico','Marca blanca para terceros'],
+  extras:['Suscripción y alta asistidas por IA, con emisión en minutos','Solución en marca blanca para que otras empresas integren el seguro en su propio recorrido de cliente','Herramientas de gestión para los partners que distribuyen su producto'],
+  fund:2020, tam:'51-200 empleados',
+  ingresos:'Serie B de 16,3 M€ (septiembre de 2025) liderada por Evli Growth Partners; ~48,8 M$ levantados en total. Ha más que triplicado la prima intermediada desde la ampliación de la Serie A.',
+  prop:'Capital privado (Accel, Munich Re Ventures, Visionaries Club, Frontline, Opera Tech Ventures).',
+  hito:'Tener a Munich Re como accionista y a la vez como soporte de riesgo le da capacidad estable, que es el cuello de botella habitual de una MGA joven.',
+  lectura:'El patrón «una aseguradora te financia y te da capacidad» es replicable a escala pequeña: vale la pena mirar qué pide un reasegurador a cambio de respaldar un producto propio.'},
+
+ {key:'simplis', name:'Simplis', web:'https://www.simplis.fr/', li:'https://fr.linkedin.com/company/simplis---l%27assurance-d%27entreprendre',
+  sede:'Francia', paises:['Francia'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Correduría 100% digital. Nombre comercial de ENTREPRENDRE L\'AVENIR, inscrita en ORIAS (nº 15002816) y supervisada por la ACPR. No asegura: coloca en contratos a medida negociados con varias aseguradoras francesas y europeas.',
+  cliente:['B2B','B2B2C'], foco:'nicho',
+  focoNota:'Prácticamente monoproducto: RC profesional, más la decenal para los oficios de construcción. Más de 1.300 actividades tarificadas.',
+  ramos:['rcpro','decenal'],
+  canal:['Directo digital','Partners de autónomos y plataformas'],
+  extras:['Tarificación por actividad sobre un catálogo de más de 1.300 oficios','Distribución vía portales y comunidades de autónomos (Auto-Entrepreneur.fr, Freeland, Simplebo)','Precio de entrada muy agresivo: RC Pro desde 9,99 €/mes y decenal desde 69 €/mes'],
+  fund:2015, tam:'Correduría pequeña, muy enfocada',
+  ingresos:'No publica cifras.',
+  prop:'Capital privado.',
+  hito:'Crece apoyándose en portales de terceros con audiencia de autónomos en vez de en marca propia.',
+  lectura:'El ejemplo más barato de replicar: un solo producto, tarificado por oficio, distribuido a través de quien ya tiene la audiencia. Es la versión digital del acuerdo con colaborador que ya modelas.'},
+
+ {key:'santevet', name:'Santévet', web:'https://www.santevet.es/', li:'https://www.linkedin.com/company/sant-vet/',
+  sede:'Francia', paises:['Francia','Bélgica','Alemania','España','Italia','Países Bajos'],
+  figura:'mga', conf:'media', riesgo:'no',
+  figuraNota:'Grupo especializado que diseña el producto, lo distribuye y gestiona el siniestro con delegación de las aseguradoras que ponen el riesgo. Opera con tres marcas: Santévet, Bulle Bleue y Jim & Joe.',
+  cliente:['B2C','B2B2C'], foco:'nicho',
+  focoNota:'Solo salud animal —perro, gato, loro y pequeños mamíferos— pero en seis países.',
+  ramos:['mascotas'],
+  canal:['Directo digital','Canal veterinario','Partners y marcas'],
+  extras:['Integración con más de 3.000 clínicas veterinarias: la póliza se activa en la propia consulta','Prevención incluida además de enfermedad y accidente','Estrategia multimarca para cubrir distintos segmentos de precio'],
+  fund:2003, tam:'~420-500 empleados en Lyon, Lille, Barcelona, Fráncfort y Milán',
+  ingresos:'170 M€ de prima en 2025 (+30%), ~500.000 pólizas en cartera; el negocio internacional ya pesa el 40%.',
+  prop:'Columna Capital (mayoritario desde 2017); ampliación de 150 M€ en 2022 para la expansión europea.',
+  hito:'Veinte años construyendo un nicho hasta convertirlo en líder europeo. El crecimiento actual viene de exportar el modelo país a país, no de añadir ramos.',
+  lectura:'La demostración de que un nicho aguanta dos décadas si controlas el canal de origen —aquí, la clínica veterinaria—. El equivalente en tu modelo es la gestoría que origina la transferencia de vehículo.'},
+
+ {key:'barkibu', name:'Barkibu', web:'https://www.barkibu.com/es/', li:'https://www.linkedin.com/company/barkibu',
+  sede:'España', paises:['España','Alemania','y otros mercados europeos'],
+  figura:'mixto', conf:'media', riesgo:'no',
+  figuraNota:'Intermediario del Espacio Económico Europeo que opera en España como sucursal (Barkibu Germany GmbH — Sucursal en España), bajo supervisión de conducta de la DGSFP. Diseña su producto con Munich Re; el riesgo lo asume Nordic Guarantee Försäkringsaktiebolag (Suecia).',
+  cliente:['B2C','B2B2C'], foco:'nicho',
+  focoNota:'Salud animal en exclusiva, con reembolso veterinario como producto central.',
+  ramos:['mascotas'],
+  canal:['Directo digital','Partners bancarios y de comercio electrónico'],
+  extras:['Consultorio veterinario online con triaje asistido por IA: el origen del negocio y su motor de captación','Reembolso del 80% en menos de 72 horas desde la app','Tarjeta Barkibu para el copago directo en la clínica','Distribución a través de terceros, entre ellos Openbank'],
+  fund:2015, tam:'+125.000 familias en siete países europeos',
+  ingresos:'Ronda de 40 M€ en diciembre de 2025. Reconocida en el Sifted Consumer 100 (#56).',
+  prop:'Capital privado.',
+  hito:'Empezó como servicio veterinario gratuito y monetizó después con seguro: el contenido y el triaje son el canal de adquisición, no un extra.',
+  lectura:'El caso español más instructivo sobre coste de adquisición: construyó primero la audiencia (consultas veterinarias gratis) y después le vendió la póliza. Invierte el orden habitual de la correduría.'},
+
+ {key:'heymondo', name:'Heymondo', web:'https://heymondo.es/', li:'https://es.linkedin.com/company/heymondo',
+  sede:'España', paises:['España','Italia','Francia','Portugal','EE.UU.'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Correduría de seguros española (NIF B66795436) especializada en viaje. El riesgo y la asistencia los ponen terceros: Groupe IMA en Francia, Clements Worldwide en EE.UU.',
+  cliente:['B2C','B2B2C'], foco:'nicho',
+  focoNota:'Solo seguro de viaje, pero vendido en cinco países y en varios idiomas.',
+  ramos:['viaje'],
+  canal:['Directo digital','Afiliación (blogs y creadores de viajes)','Agencias y partners'],
+  extras:['App de asistencia 24 h con chat médico incluido en la póliza','Gestión de incidencias y siniestros desde el móvil durante el viaje','Programa de afiliación con creadores de contenido de viajes: su principal canal de captación'],
+  fund:2017, tam:'~70-100 empleados, sede en Barcelona',
+  ingresos:'No publica cifras.',
+  prop:'J.C. Flowers & Co. adquirió una participación mayoritaria en 2025.',
+  hito:'La entrada de un fondo especializado en servicios financieros marca el salto de insurtech a plataforma consolidable.',
+  lectura:'Correduría española, nicho puro y canal de afiliación: el modelo más cercano a lo que puede hacer una correduría pequeña con marca propia. Y una referencia de a qué múltiplo se vende.'},
+
+ {key:'kin', name:'Kin', web:'https://www.kin.com/', li:'https://www.linkedin.com/company/kin-insurance',
+  sede:'EE.UU.', paises:['EE.UU. (Florida, AL, AZ, CO, GA, MS, SC, TN, TX, VA)'],
+  figura:'aseguradora', conf:'alta', riesgo:'si',
+  figuraNota:'Gestiona tres mutualidades recíprocas (Kin Interinsurance Network y Nexus Exchange, entre ellas) como attorney-in-fact: los tomadores se aseguran entre sí y Kin cobra un fee de gestión. Asume riesgo a través de esos vehículos, no en su propio balance.',
+  cliente:['B2C'], foco:'nicho',
+  focoNota:'Hogar en zonas de alto riesgo climático, empezando por Florida. El auto es un complemento del paquete.',
+  ramos:['hogar','auto'],
+  canal:['Directo digital'],
+  extras:['Brazo de financiación inmobiliaria lanzado en 2025: hipotecas, refinanciación, préstamos con garantía hipotecaria y HELOC','Inundación privada como complemento en estados seleccionados','Tarificación con datos de propiedad en mercados que las aseguradoras tradicionales abandonan'],
+  fund:2016, tam:'>600 M$ de prima directa en los recíprocos gestionados (2025)',
+  ingresos:'201,6 M$ de ingresos en el ejercicio 2025 (+29%), con un margen operativo récord del 49%. Programa de reaseguro de 1.400 M$ en Florida.',
+  prop:'Capital privado.',
+  hito:'La estructura recíproca le permite crecer en el mercado más caro de EE.UU. sin consumir capital propio, y además ha añadido producto financiero.',
+  lectura:'El modelo más creativo de la lista: separa el riesgo (la mutualidad) del negocio rentable (el fee de gestión, con 49% de margen). Es, en esencia, una correduría que cobra por administrar la aseguradora que ella misma creó.'}
+];
+
+// --- dimensiones que aún no están en la ficha y conviene incorporar ---
+// estado: 'ok' = ya capturado arriba · 'parcial' = capturado solo en algunas · 'falta' = pendiente
+const INTL_GAPS=[
+ ['Economía unitaria','Prima media, comisión media, CAC y LTV por cliente','Es lo único que permite comparar su modelo con el tuyo en el mismo lenguaje: tu simulador se mueve en prima media y % de comisión.','falta'],
+ ['Retención','Renovación anual y antigüedad media de la cartera','Separa al comparador (transacción única) de la correduría (cartera). En tu modelo la retención es la variable que más mueve el techo de facturación.','falta'],
+ ['Estructura de ingresos','Comisión vs. fee de gestión vs. profit share vs. SaaS vs. afiliación','Dos compañías con la misma figura legal pueden tener cuentas de resultados opuestas según de dónde venga el euro.','parcial'],
+ ['Quién asume el riesgo','Si pone balance, y con qué reaseguro','Determina si se compara por margen sobre comisiones o por ratio combinado. Ya está en la ficha como campo propio.','ok'],
+ ['Capacidad aseguradora','Con qué aseguradoras trabaja y en qué condiciones','El cuello de botella real de cualquier MGA joven; y para un corredor, su poder de negociación.','ok'],
+ ['Canal de adquisición','SEO, comparadores, embedded, afiliación, red de colaboradores','Es el equivalente directo del «% de pólizas vía colaborador» de tu modelo, y explica el coste de captación.','ok'],
+ ['Productividad','Ingresos por empleado y coste laboral medio','Son las dos métricas que ya usas en la pestaña Comparativa: incorporarlas aquí permitiría cruzar ambos análisis.','falta'],
+ ['Financiación y propiedad','Capital levantado, inversores, estado (independiente, comprada, cotizada)','Distingue el crecimiento financiado con capital riesgo del crecimiento autofinanciado, que es el tuyo.','ok'],
+ ['Rentabilidad','EBITDA, resultado y años hasta el punto de equilibrio','La mitad de la lista crece sin ganar dinero. Sin este dato, la comparativa premia al que más gasta.','parcial'],
+ ['Satisfacción','Trustpilot, NPS y quejas ante el supervisor','Proxy barato de la calidad del servicio y de la retención futura.','falta'],
+ ['Tecnología','Plataforma propia vs. de terceros, API pública, uso real de IA','Determina si el producto es defendible o si es una capa de marketing sobre el producto de un tercero.','parcial'],
+ ['Regulación y pasaporte','Licencias, pasaporte comunitario y cómo entran en cada país','Explica por qué unos escalan a seis países y otros se quedan en uno. Relevante si algún día sales de España.','parcial'],
+ ['Concentración','Peso del mayor partner o del mayor ramo sobre los ingresos','Un embedded con dos contratos y una correduría con 30.000 clientes tienen riesgos incomparables.','falta'],
+ ['Ticket y precio','Prima media y política de precio (mensual, anual, por uso)','El precio de entrada explica el volumen necesario para cubrir la estructura.','parcial']
+];
+
+// --- estado de la pestaña: filtros y ficha desplegada ---
+let INTL_F={fig:'all', cli:'all', foco:'all', reg:'all'};
+let INTL_OPEN=null;
+
+const intlRegion=c=> c.sede==='EE.UU.' ? 'EE.UU.' : (c.sede==='Reino Unido' ? 'Reino Unido' : 'Europa continental');
+const intlMatch=c=> (INTL_F.fig==='all'||c.figura===INTL_F.fig)
+  && (INTL_F.cli==='all'||c.cliente.includes(INTL_F.cli))
+  && (INTL_F.foco==='all'||c.foco===INTL_F.foco)
+  && (INTL_F.reg==='all'||intlRegion(c)===INTL_F.reg);
+const intlList=()=> INTL.filter(intlMatch);
+const intlRamoLab=k=>{ const r=INTL_RAMOS.find(x=>x[0]===k); return r?r[1]:k; };
+const intlChip=(txt,color,title)=>`<span class="intl-chip" style="--c:${color}"${title?` title="${escAttr(title)}"`:''}>${escAttr(txt)}</span>`;
+
+// barra horizontal de reparto: una fila por categoría, con recuento y porcentaje
+function intlBars(rows,total){
+  if(!total) return `<p class="cnd" style="font-size:12px;margin:0">Ninguna compañía cumple los filtros.</p>`;
+  const max=Math.max(...rows.map(r=>r[1]),1);
+  return `<div class="intl-bars">`+rows.map(([lab,n,color,desc])=>
+    `<div class="intl-bar-row"${desc?` title="${escAttr(desc)}"`:''}>
+      <div class="intl-bar-lab">${escAttr(lab)}</div>
+      <div class="intl-bar-track"><div class="intl-bar-fill" style="width:${n?Math.max(3,n/max*100):0}%;background:${color}"></div></div>
+      <div class="intl-bar-val">${n} <span>· ${Math.round(n/total*100)}%</span></div>
+    </div>`).join('')+`</div>`;
+}
+const intlCount=(list,fn)=>list.filter(fn).length;
+
+function intlPaintKpis(){
+  const box=document.getElementById('intlKpis'); if(!box) return;
+  const L=intlList(), n=L.length||1;
+  const paises=new Set(); L.forEach(c=>c.paises.forEach(p=>paises.add(p)));
+  const multipais=intlCount(L,c=>c.paises.length>1);
+  const sinRiesgo=intlCount(L,c=>c.riesgo==='no');
+  const b2b=intlCount(L,c=>c.cliente.includes('B2B')||c.cliente.includes('B2B2C')||c.cliente.includes('B2B2B'));
+  const nicho=intlCount(L,c=>c.foco!=='multi');
+  box.innerHTML=`
+    <div class="kpi"><div class="k">Compañías en el análisis</div><div class="v">${L.length}</div><div class="s">de ${INTL.length} en la muestra completa</div></div>
+    <div class="kpi"><div class="k">No asumen riesgo</div><div class="v">${Math.round(sinRiesgo/n*100)}%</div><div class="s">${sinRiesgo} de ${L.length} viven de comisión o fee, no de prima</div></div>
+    <div class="kpi"><div class="k">Especializadas</div><div class="v">${Math.round(nicho/n*100)}%</div><div class="s">${nicho} de ${L.length} son nicho de ramo o de cliente</div></div>
+    <div class="kpi"><div class="k">Venden a empresa</div><div class="v">${Math.round(b2b/n*100)}%</div><div class="s">${b2b} de ${L.length} tocan B2B, B2B2C o marca blanca</div></div>
+    <div class="kpi"><div class="k">Operan en más de un país</div><div class="v">${multipais}</div><div class="s">${paises.size} mercados distintos en total</div></div>`;
+}
+
+function intlPaintTable(){
+  const box=document.getElementById('intlTable'); if(!box) return;
+  const L=intlList();
+  if(!L.length){ box.innerHTML=`<p class="cnd" style="font-size:12.5px;margin:0">Ninguna compañía cumple los filtros seleccionados.</p>`; return; }
+  const row=c=>{
+    const F=INTL_FIG[c.figura], FO=INTL_FOCO[c.foco], open=INTL_OPEN===c.key;
+    const ramos=c.ramos.map(r=>`<span class="intl-ramo">${escAttr(intlRamoLab(r))}</span>`).join('');
+    const cli=c.cliente.map(x=>intlChip(x,x==='B2C'?'#1f3864':(x==='B2B'?'#c55a11':'#059669'))).join('');
+    return `<tr class="intl-row${open?' on':''}" data-co="${c.key}">
+        <td class="intl-name">
+          <div class="intl-name-t">${escAttr(c.name)}<span class="intl-chev">${open?'▾':'▸'}</span></div>
+          <div class="intl-name-s">${escAttr(c.sede)} · desde ${c.fund}</div>
+        </td>
+        <td class="intl-l">${escAttr(c.paises.join(' · '))}</td>
+        <td class="intl-l">${cli}</td>
+        <td class="intl-l">${intlChip(F.short,F.color,F.desc)}${c.conf==='media'?'<span class="intl-warn" title="Clasificación deducida de cómo opera, no declarada en un registro público">≈</span>':''}</td>
+        <td class="intl-l">${intlChip(FO.lab,FO.color,FO.desc)}</td>
+        <td class="intl-l"><div class="intl-ramos">${ramos}</div></td>
+        <td class="intl-l">${c.extras.length}</td>
+      </tr>`+
+      (open?`<tr class="intl-detail-row"><td colspan="7">${intlFicha(c)}</td></tr>`:'');
+  };
+  box.innerHTML=`<div class="dos-scroll"><table class="dos-t intl-t">
+    <tr><th>Compañía</th><th>Países</th><th>Cliente</th><th>Figura</th><th>Amplitud</th><th>Ramos</th><th title="Número de servicios o productos ajenos al seguro">Extras</th></tr>
+    ${L.map(row).join('')}
+  </table></div>`;
+  box.querySelectorAll('.intl-row').forEach(tr=>tr.onclick=()=>{
+    INTL_OPEN = (INTL_OPEN===tr.dataset.co) ? null : tr.dataset.co;
+    intlPaintTable();
+  });
+}
+
+// ficha completa de una compañía, desplegada bajo su fila
+function intlFicha(c){
+  const F=INTL_FIG[c.figura], FO=INTL_FOCO[c.foco];
+  const riesgo = c.riesgo==='si' ? 'Sí: tiene licencia o vehículo asegurador propio' : 'No: el riesgo lo asume un tercero';
+  const li=(t,v)=> v? `<div class="intl-f-row"><div class="intl-f-k">${t}</div><div class="intl-f-v">${v}</div></div>`:'';
+  const ul=arr=>`<ul class="intl-ul">${arr.map(x=>`<li>${escAttr(x)}</li>`).join('')}</ul>`;
+  return `<div class="intl-ficha">
+    <div class="intl-f-head">
+      <div>
+        <div class="intl-f-name">${escAttr(c.name)}</div>
+        <div class="intl-f-sub">${escAttr(c.sede)} · fundada en ${c.fund} · ${escAttr(c.tam)}</div>
+      </div>
+      <div class="intl-f-links">
+        <a href="${escAttr(c.web)}" target="_blank" rel="noopener noreferrer">↗ Web</a>
+        <a href="${escAttr(c.li)}" target="_blank" rel="noopener noreferrer">in LinkedIn</a>
+      </div>
+    </div>
+    <div class="intl-f-grid">
+      ${li('Figura', `<b>${escAttr(F.lab)}</b>${c.conf==='media'?' <span class="intl-warn-inline">clasificación deducida, no declarada en registro</span>':''}<br>${escAttr(c.figuraNota)}`)}
+      ${li('¿Asume riesgo?', escAttr(riesgo))}
+      ${li('Amplitud', `<b>${escAttr(FO.lab)}</b><br>${escAttr(c.focoNota)}`)}
+      ${li('Ramos', c.ramos.map(r=>escAttr(intlRamoLab(r))).join(' · '))}
+      ${li('Cliente', c.cliente.join(' · '))}
+      ${li('Canal', c.canal.map(escAttr).join(' · '))}
+      ${li('Países', c.paises.map(escAttr).join(' · '))}
+      ${li('Más allá del seguro', ul(c.extras))}
+      ${li('Tamaño y cifras', escAttr(c.ingresos))}
+      ${li('Propiedad', escAttr(c.prop))}
+      ${li('Qué ha hecho últimamente', escAttr(c.hito))}
+    </div>
+    <div class="intl-f-take"><b>Lectura para el modelo:</b> ${escAttr(c.lectura)}</div>
+  </div>`;
+}
+
+function intlPaintDist(){
+  const box=document.getElementById('intlDist'); if(!box) return;
+  const L=intlList(), n=L.length;
+  const figRows=Object.keys(INTL_FIG).map(k=>[INTL_FIG[k].lab, intlCount(L,c=>c.figura===k), INTL_FIG[k].color, INTL_FIG[k].desc]);
+  const focoRows=Object.keys(INTL_FOCO).map(k=>[INTL_FOCO[k].lab, intlCount(L,c=>c.foco===k), INTL_FOCO[k].color, INTL_FOCO[k].desc]);
+  const cliRows=[['B2C — vende al particular',intlCount(L,c=>c.cliente.includes('B2C')),'#1f3864'],
+                 ['B2B — vende a la empresa',intlCount(L,c=>c.cliente.includes('B2B')),'#c55a11'],
+                 ['B2B2C — vía la marca de un tercero',intlCount(L,c=>c.cliente.includes('B2B2C')),'#059669'],
+                 ['B2B2B — vende a otros mediadores',intlCount(L,c=>c.cliente.includes('B2B2B')),'#7030a0']];
+  const regRows=['Europa continental','Reino Unido','EE.UU.'].map((r,i)=>[r,intlCount(L,c=>intlRegion(c)===r),['#1f3864','#2e5496','#c55a11'][i]]);
+  const blk=(t,s,rows,tot)=>`<div class="intl-dist-blk"><div class="intl-dist-t">${t}</div><p class="intl-dist-s">${s}</p>${intlBars(rows,tot)}</div>`;
+  box.innerHTML=
+    blk('Por figura en la cadena de valor','Quién suscribe y quién responde del siniestro. Pasa el cursor por cada barra para ver qué implica cada figura.',figRows,n)+
+    blk('Por amplitud de la oferta','Especializarse en un ramo, en un tipo de cliente, o no especializarse.',focoRows,n)+
+    blk('Por tipo de cliente','No son excluyentes: una misma compañía puede vender directo y a través de marcas.',cliRows,n)+
+    blk('Por mercado de origen','Sede de la matriz, no mercados donde vende.',regRows,n);
+}
+
+function intlPaintMatrix(){
+  const box=document.getElementById('intlMatrix'); if(!box) return;
+  const L=intlList();
+  if(!L.length){ box.innerHTML=''; return; }
+  const usados=INTL_RAMOS.filter(([k])=>L.some(c=>c.ramos.includes(k)));
+  const th=usados.map(([k,lab])=>`<th class="intl-m-h"><span>${escAttr(lab)}</span></th>`).join('');
+  const body=L.map(c=>`<tr><td class="intl-m-n">${escAttr(c.name)}</td>`+
+    usados.map(([k])=>`<td class="intl-m-c">${c.ramos.includes(k)?`<i style="background:${INTL_FIG[c.figura].color}" title="${escAttr(c.name+' — '+intlRamoLab(k))}"></i>`:''}</td>`).join('')+
+    `<td class="intl-m-t">${c.ramos.length}</td></tr>`).join('');
+  const tot=`<tr class="dos-tot"><td>Compañías por ramo</td>`+
+    usados.map(([k])=>`<td class="intl-m-c">${intlCount(L,c=>c.ramos.includes(k))}</td>`).join('')+`<td></td></tr>`;
+  box.innerHTML=`<div class="dos-scroll"><table class="dos-t intl-m">
+    <tr><th></th>${th}<th class="intl-m-h"><span>Total</span></th></tr>${body}${tot}</table></div>`;
+}
+
+function intlPaint(){ intlPaintKpis(); intlPaintTable(); intlPaintDist(); intlPaintMatrix(); }
+
+function renderIntl(){
+  const box=document.getElementById('intlBody'); if(!box || box.dataset.built) return;
+  box.dataset.built='1';
+  const seg=(id,opts)=>`<span class="seg" data-fseg="${id}">`+
+    opts.map(([v,l],i)=>`<button data-v="${v}"${i===0?' class="on"':''}>${escAttr(l)}</button>`).join('')+`</span>`;
+  const gapBadge={ok:['Ya en la ficha','full'],parcial:['Parcial','partial'],falta:['Pendiente','miss']};
+  box.innerHTML=`
+    <div class="panel">
+      <h2>Benchmark internacional: 19 formas de distribuir seguros</h2>
+      <p class="note" style="margin-top:0">Análisis de mercado de diecinueve insurtechs y distribuidores digitales de Europa y Estados Unidos. A diferencia de la pestaña <b>Compañías</b> —corredurías españolas comparadas por sus cuentas depositadas— aquí la comparación es <b>de modelo de negocio</b>: qué figura ocupa cada una en la cadena de valor, a quién le vende, qué ramos toca y de qué vive además del seguro. Pulsa cualquier fila para abrir su ficha completa con los enlaces a la web y a LinkedIn.</p>
+      <div class="mkt-kpis" id="intlKpis"></div>
+      <div class="mkt-insight" style="margin-top:16px">La lectura de conjunto: solo tres de las diecinueve asumen riesgo con balance propio. Las otras dieciséis viven de <b>comisión, fee de gestión o venta de tráfico</b> —el mismo sitio de la cadena que ocupa tu correduría—. La diferencia entre ellas no está en la licencia, sino en <b>quién les trae el cliente</b>: unas lo compran en Google, otras lo reciben de una marca (el fabricante del coche, el banco, la clínica veterinaria) y otras lo heredan de un colaborador.</div>
+    </div>
+
+    <div class="panel">
+      <h2>Matriz comparativa</h2>
+      <div class="intl-filters">
+        <div class="intl-fgrp"><span class="lab">Figura</span>${seg('fig',[['all','Todas'],['corredor','Corredor'],['mixto','Corredor + MGA'],['mga','MGA'],['aseguradora','Aseguradora'],['comparador','Comparador']])}</div>
+        <div class="intl-fgrp"><span class="lab">Cliente</span>${seg('cli',[['all','Todos'],['B2C','B2C'],['B2B','B2B'],['B2B2C','B2B2C']])}</div>
+        <div class="intl-fgrp"><span class="lab">Amplitud</span>${seg('foco',[['all','Todas'],['nicho','Nicho de ramo'],['cliente','Nicho de cliente'],['multi','Multirramo']])}</div>
+        <div class="intl-fgrp"><span class="lab">Mercado</span>${seg('reg',[['all','Todos'],['Europa continental','Europa continental'],['Reino Unido','Reino Unido'],['EE.UU.','EE.UU.']])}</div>
+      </div>
+      <div id="intlTable"></div>
+      <p class="note">El signo <span class="intl-warn">≈</span> marca las clasificaciones deducidas de cómo opera la compañía, no declaradas en un registro público: conviene verificarlas antes de usarlas en una decisión.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Cómo se reparte el mercado analizado</h2>
+      <p class="note" style="margin-top:0">Los recuentos responden a los filtros de arriba: cambia un filtro y estas barras se recalculan sobre la selección.</p>
+      <div id="intlDist" class="intl-dist"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Matriz de cobertura: quién toca cada ramo</h2>
+      <p class="note" style="margin-top:0">Un punto por ramo cubierto, coloreado según la figura de la compañía. La última columna es el número de ramos de cada una: sirve para ver de un vistazo quién es nicho y quién multirramo.</p>
+      <div id="intlMatrix"></div>
+      <div class="mkt-insight" style="margin-top:14px">Casi todas las compañías de la lista se concentran en <b>uno o dos ramos</b>, o en un solo tipo de cliente. Solo cuatro son multirramo: los dos comparadores británicos, CLARK y Lovys —y las tres primeras se lo pueden permitir porque tienen marca de consumo y presupuesto de publicidad detrás—. Es la señal más clara del benchmark: <b>sin marca masiva, la especialización no es una opción, es el requisito</b>.</div>
+    </div>
+
+    <div class="panel">
+      <h2>Qué más deberíamos mirar</h2>
+      <p class="note" style="margin-top:0">Las siete dimensiones que pediste describen <i>qué</i> vende cada compañía. Para poder compararlas con tu modelo hace falta además saber <i>cómo le sale la cuenta</i>. Estas son las dimensiones que propongo añadir, con el estado de cada una en la ficha actual.</p>
+      <div class="dos-scroll"><table class="dos-t intl-gap-t">
+        <tr><th>Dimensión</th><th>Qué recoger</th><th>Por qué importa</th><th>Estado</th></tr>
+        ${INTL_GAPS.map(([d,q,p,st])=>`<tr><td><b>${escAttr(d)}</b></td><td>${escAttr(q)}</td><td>${escAttr(p)}</td>
+          <td style="text-align:center"><span class="intl-gap-b ${gapBadge[st][1]}">${gapBadge[st][0]}</span></td></tr>`).join('')}
+      </table></div>
+      <div class="mkt-insight" style="margin-top:14px">Las cuatro que marcaría como prioritarias son <b>economía unitaria, retención, estructura de ingresos y productividad por empleado</b>: son exactamente las variables que ya mueve tu simulador, así que son las únicas que permiten poner a estas compañías y a tu modelo en la misma tabla. El resto son contexto.</div>
+    </div>
+
+    <div class="panel">
+      <p class="mkt-fuente"><b>Fuentes y método:</b> elaboración propia a partir de las webs corporativas, notas de prensa y cuentas o presentaciones a inversores de cada compañía, registros públicos de mediación (ORIAS en Francia, DGSFP en España, FCA y Lloyd's en Reino Unido, registros estatales en EE.UU.) y prensa sectorial. Foto a 16/09/2026. La clasificación por figura responde a <b>cómo opera</b> cada compañía —quién tarifica, quién emite, quién gestiona el siniestro y quién responde de él—, que no siempre coincide con su forma jurídica; las clasificaciones deducidas van marcadas con ≈. Las cifras de plantilla, prima e ingresos son las últimas publicadas por cada compañía y no corresponden todas al mismo ejercicio, así que sirven para ordenar magnitudes, no para comparar al euro.</p>
+    </div>`;
+  intlPaint();
+  box.querySelectorAll('[data-fseg]').forEach(s=>{
+    const key=s.dataset.fseg;
+    s.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+      [...s.children].forEach(x=>x.classList.toggle('on',x===b));
+      INTL_F[key]=b.dataset.v; INTL_OPEN=null; intlPaint();
+    });
+  });
+}
+
 function closeDossier(){ document.getElementById('dosBackdrop').classList.remove('on'); document.body.style.overflow=''; }
 document.getElementById('dosClose').addEventListener('click',closeDossier);
 document.getElementById('dosBackdrop').addEventListener('click',e=>{ if(e.target.id==='dosBackdrop') closeDossier(); });
