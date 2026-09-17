@@ -865,7 +865,7 @@
       <div class="mkt-section" id="mktSecIntl">
         <div class="mkt-section-k">Parte 2</div>
         <h2>Benchmark internacional</h2>
-        <p>El mismo negocio visto desde fuera: cómo distribuyen seguros diecinueve insurtechs de Europa y Estados Unidos, qué figura ocupan, a quién venden y con qué argumento convencen.</p>
+        <p>El mismo negocio visto desde fuera: cómo distribuyen seguros diecinueve insurtechs de Europa y Estados Unidos —más una correduría española como contraste—, qué figura ocupan, a quién venden y con qué argumento convencen.</p>
       </div>
       <div id="intlBody"></div>
     </div>
@@ -2868,7 +2868,8 @@ function renderMarket(){
 }
 
 // ================= pestaña «Benchmark internacional» =================
-// Análisis de mercado de 19 insurtechs y distribuidores digitales de referencia (Europa y EE.UU.).
+// Análisis de mercado de 20 distribuidores de seguros: 19 insurtechs de Europa y EE.UU. y una
+// correduría española tradicional (II-BROKER), incorporada como contraste del modelo offline.
 // Toda la ficha es cualitativa y está construida con fuentes públicas: web corporativa, notas de
 // prensa, registros de mediación (ORIAS, DGSFP, FCA, Lloyd's) y prensa sectorial. Foto a 16/09/2026.
 // `conf` califica la confianza de la clasificación regulatoria:
@@ -2919,7 +2920,8 @@ const INTL_RAMOS=[
  ['auto','Auto / movilidad'],['hogar','Hogar'],['salud','Salud'],['vida','Vida'],
  ['mascotas','Mascotas'],['viaje','Viaje'],['rcpro','RC profesional / E&O'],['rcgen','RC general / explotación'],
  ['do','D&O'],['ciber','Ciber'],['mre','Multirriesgo empresa'],['decenal','Decenal / construcción'],
- ['acc','Accidentes / baja laboral'],['device','Dispositivos / gadgets']
+ ['acc','Accidentes / baja laboral'],['device','Dispositivos / gadgets'],
+ ['transporte','Transportes'],['credito','Crédito y caución']
 ];
 
 const INTL=[
@@ -3263,7 +3265,27 @@ const INTL=[
   ingresos:'201,6 M$ de ingresos en el ejercicio 2025 (+29%), con un margen operativo récord del 49%. Programa de reaseguro de 1.400 M$ en Florida.',
   prop:'Capital privado.',
   hito:'La estructura recíproca le permite crecer en el mercado más caro de EE.UU. sin consumir capital propio, y además ha añadido producto financiero.',
-  lectura:'El modelo más creativo de la lista: separa el riesgo (la mutualidad) del negocio rentable (el fee de gestión, con 49% de margen). Es, en esencia, una correduría que cobra por administrar la aseguradora que ella misma creó.'}
+  lectura:'El modelo más creativo de la lista: separa el riesgo (la mutualidad) del negocio rentable (el fee de gestión, con 49% de margen). Es, en esencia, una correduría que cobra por administrar la aseguradora que ella misma creó.'},
+
+ // Único caso español y único no digital de la lista: se incorpora como contraste porque su forma de
+ // crecer —comprar corredurías— es justo la alternativa a captar cliente a cliente que modela la app.
+ {key:'iibroker', name:'II-BROKER', web:'https://ii-broker.com/', li:'https://es.linkedin.com/company/ii-broker',
+  sede:'España', paises:['España'],
+  figura:'corredor', conf:'alta', riesgo:'no',
+  figuraNota:'Correduría de seguros multirramo (Internacional Insurance Broker · Incorporate Insurance Broker). No suscribe ni asume riesgo: coloca en el mercado asegurador y vive de la comisión. Lo distintivo no es la figura, que es exactamente la tuya, sino cómo crece: comprando otras corredurías e integrándolas en la red.',
+  vpClaim:'«Riesgos complejos, soluciones claras» — más de 30 años y 17 oficinas protegiendo a empresas, autónomos y particulares',
+  vp:'No compite en precio ni en velocidad: compite en criterio. Vende análisis del riesgo, anticipación de escenarios y gestión del siniestro con equipo propio, apoyada en independencia, especialización y cercanía física a través de su red de oficinas. Es la propuesta clásica de la correduría, sostenida con tamaño y trayectoria en vez de con tecnología.',
+  pal:['experto','medida','confianza'],
+  cliente:['B2B','B2C'], foco:'multi',
+  focoNota:'Correduría generalista: todos los ramos para empresa, autónomo y particular, decesos incluidos. Lo que reivindica como especialización es el riesgo complejo y la gestión del siniestro, no un ramo ni un segmento concreto.',
+  ramos:['auto','hogar','salud','vida','rcpro','rcgen','do','ciber','mre','decenal','acc','transporte','credito'],
+  canal:['Red de oficinas propias','Equipo comercial y gestor asignado','Adquisición e integración de corredurías'],
+  extras:['Gestión de siniestros con equipo propio: su argumento central de servicio, no un trámite externalizado','Consultoría y análisis de riesgos antes de colocar la póliza','Plan de adquisiciones: compra corredurías con relevo generacional sin resolver y les aporta estructura, tecnología y acceso a mercado','Cobertura internacional para empresas españolas con actividad fuera'],
+  fund:null, fundTxt:'más de 30 años de actividad', tam:'17 oficinas en España · equipo propio de riesgos y siniestros',
+  ingresos:'No publica cuenta de resultados consolidada. Como referencia de magnitud, proyectaba unos 7 M€ de primas intermediadas solo en Canarias al cierre de 2025.',
+  prop:'Capital privado. José Sánchez, presidente ejecutivo.',
+  hito:'Plan estratégico de adquisiciones 2025-2026, con seis operaciones en Iberia: Foro-90 (Madrid), Casal y Asociados Consultores (Pontevedra), Hermeiza e Hijos (Tenerife), Serglobal Universal y Ramiro Paz y Asociados (Galicia), entre otras. Oficinas propias en Madrid, Talavera, Palma, Tenerife, La Palma, La Orotava, Barcelona, Almendralejo, Logroño y Vigo.',
+  lectura:'El competidor más parecido a ti de toda la lista —misma figura, mismo mercado, mismos ramos— y el único que crece comprando en vez de captando. Mientras las otras diecinueve queman capital riesgo en coste de adquisición de cliente, II-BROKER compra carteras ya hechas a corredurías sin relevo generacional. Es la vía alternativa al techo de facturación de tu modelo: en vez de más transferencias al mes, la cartera del de al lado.'}
 ];
 
 // --- dimensiones que aún no están en la ficha y conviene incorporar ---
@@ -3289,7 +3311,8 @@ const INTL_GAPS=[
 let INTL_F={fig:'all', cli:'all', foco:'all', reg:'all', pal:'all'};
 let INTL_OPEN=null;
 
-const intlRegion=c=> c.sede==='EE.UU.' ? 'EE.UU.' : (c.sede==='Reino Unido' ? 'Reino Unido' : 'Europa continental');
+const intlRegion=c=> c.sede==='EE.UU.' ? 'EE.UU.'
+  : (c.sede==='Reino Unido' ? 'Reino Unido' : (c.sede==='España' ? 'España' : 'Europa continental'));
 const intlMatch=c=> (INTL_F.fig==='all'||c.figura===INTL_F.fig)
   && (INTL_F.cli==='all'||c.cliente.includes(INTL_F.cli))
   && (INTL_F.foco==='all'||c.foco===INTL_F.foco)
@@ -3297,6 +3320,8 @@ const intlMatch=c=> (INTL_F.fig==='all'||c.figura===INTL_F.fig)
   && (INTL_F.pal==='all'||c.pal.includes(INTL_F.pal));
 const intlList=()=> INTL.filter(intlMatch);
 const intlRamoLab=k=>{ const r=INTL_RAMOS.find(x=>x[0]===k); return r?r[1]:k; };
+const intlFund=c=> c.fund? ('desde '+c.fund) : (c.fundTxt||'');
+const intlFundLargo=c=> c.fund? ('fundada en '+c.fund) : (c.fundTxt||'');
 const intlChip=(txt,color,title)=>`<span class="intl-chip" style="--c:${color}"${title?` title="${escAttr(title)}"`:''}>${escAttr(txt)}</span>`;
 
 // barra horizontal de reparto: una fila por categoría, con recuento y porcentaje
@@ -3339,7 +3364,7 @@ function intlPaintTable(){
     return `<tr class="intl-row${open?' on':''}" data-co="${c.key}">
         <td class="intl-name">
           <div class="intl-name-t">${escAttr(c.name)}<span class="intl-chev">${open?'▾':'▸'}</span></div>
-          <div class="intl-name-s">${escAttr(c.sede)} · desde ${c.fund}</div>
+          <div class="intl-name-s">${escAttr(c.sede)} · ${escAttr(intlFund(c))}</div>
           <div class="intl-name-vp">${escAttr(c.vpClaim)}</div>
         </td>
         <td class="intl-l">${escAttr(c.paises.join(' · '))}</td>
@@ -3371,7 +3396,7 @@ function intlFicha(c){
     <div class="intl-f-head">
       <div>
         <div class="intl-f-name">${escAttr(c.name)}</div>
-        <div class="intl-f-sub">${escAttr(c.sede)} · fundada en ${c.fund} · ${escAttr(c.tam)}</div>
+        <div class="intl-f-sub">${escAttr(c.sede)} · ${escAttr(intlFundLargo(c))} · ${escAttr(c.tam)}</div>
       </div>
       <div class="intl-f-links">
         <a href="${escAttr(c.web)}" target="_blank" rel="noopener noreferrer">↗ Web</a>
@@ -3406,7 +3431,7 @@ function intlPaintDist(){
                  ['B2B — vende a la empresa',intlCount(L,c=>c.cliente.includes('B2B')),'#c55a11'],
                  ['B2B2C — vía la marca de un tercero',intlCount(L,c=>c.cliente.includes('B2B2C')),'#059669'],
                  ['B2B2B — vende a otros mediadores',intlCount(L,c=>c.cliente.includes('B2B2B')),'#7030a0']];
-  const regRows=['Europa continental','Reino Unido','EE.UU.'].map((r,i)=>[r,intlCount(L,c=>intlRegion(c)===r),['#1f3864','#2e5496','#c55a11'][i]]);
+  const regRows=['España','Europa continental','Reino Unido','EE.UU.'].map((r,i)=>[r,intlCount(L,c=>intlRegion(c)===r),['#c00000','#1f3864','#2e5496','#c55a11'][i]]);
   const blk=(t,s,rows,tot)=>`<div class="intl-dist-blk"><div class="intl-dist-t">${t}</div><p class="intl-dist-s">${s}</p>${intlBars(rows,tot)}</div>`;
   box.innerHTML=
     blk('Por figura en la cadena de valor','Quién suscribe y quién responde del siniestro. Pasa el cursor por cada barra para ver qué implica cada figura.',figRows,n)+
@@ -3461,10 +3486,10 @@ function renderIntl(){
   const gapBadge={ok:['Ya en la ficha','full'],parcial:['Parcial','partial'],falta:['Pendiente','miss']};
   box.innerHTML=`
     <div class="panel">
-      <h2>Diecinueve formas de distribuir seguros</h2>
-      <p class="note" style="margin-top:0">Diecinueve insurtechs y distribuidores digitales de Europa y Estados Unidos. Arriba has visto <b>cuánto</b> mueve el mercado español y en qué ramos; aquí se ve <b>de qué maneras distintas</b> se puede vender ese mismo seguro. Y a diferencia de la pestaña <b>Compañías</b> —corredurías españolas comparadas por sus cuentas depositadas— la comparación es <b>de modelo de negocio</b>: qué figura ocupa cada una en la cadena de valor, a quién le vende, qué ramos toca, de qué vive además del seguro y <b>con qué argumento convence</b>. La propuesta de valor está leída del mensaje de su propia home: el titular en cursiva bajo cada nombre es su promesa tal y como ellos la cuentan. Pulsa cualquier fila para abrir la ficha completa, con los enlaces a la web y a LinkedIn.</p>
+      <h2>Veinte formas de distribuir seguros</h2>
+      <p class="note" style="margin-top:0">Diecinueve insurtechs y distribuidores digitales de Europa y Estados Unidos, más <b>II-BROKER</b>, correduría española multirramo incorporada porque es la que más se parece a tu negocio y la única que crece comprando corredurías en vez de captando clientes. Arriba has visto <b>cuánto</b> mueve el mercado español y en qué ramos; aquí se ve <b>de qué maneras distintas</b> se puede vender ese mismo seguro. Y a diferencia de la pestaña <b>Compañías</b> —corredurías españolas comparadas por sus cuentas depositadas— la comparación es <b>de modelo de negocio</b>: qué figura ocupa cada una en la cadena de valor, a quién le vende, qué ramos toca, de qué vive además del seguro y <b>con qué argumento convence</b>. La propuesta de valor está leída del mensaje de su propia home: el titular en cursiva bajo cada nombre es su promesa tal y como ellos la cuentan. Pulsa cualquier fila para abrir la ficha completa, con los enlaces a la web y a LinkedIn.</p>
       <div class="mkt-kpis" id="intlKpis"></div>
-      <div class="mkt-insight" style="margin-top:16px">La lectura de conjunto: solo tres de las diecinueve asumen riesgo con balance propio. Las otras dieciséis viven de <b>comisión, fee de gestión o venta de tráfico</b> —el mismo sitio de la cadena que ocupa tu correduría—. La diferencia entre ellas no está en la licencia, sino en <b>quién les trae el cliente</b>: unas lo compran en Google, otras lo reciben de una marca (el fabricante del coche, el banco, la clínica veterinaria) y otras lo heredan de un colaborador.</div>
+      <div class="mkt-insight" style="margin-top:16px">La lectura de conjunto: solo tres de las veinte asumen riesgo con balance propio. Las otras diecisiete viven de <b>comisión, fee de gestión o venta de tráfico</b> —el mismo sitio de la cadena que ocupa tu correduría—. La diferencia entre ellas no está en la licencia, sino en <b>quién les trae el cliente</b>: unas lo compran en Google, otras lo reciben de una marca (el fabricante del coche, el banco, la clínica veterinaria) y otras lo heredan de un colaborador.</div>
     </div>
 
     <div class="panel">
@@ -3473,7 +3498,7 @@ function renderIntl(){
         <div class="intl-fgrp"><span class="lab">Figura</span>${seg('fig',[['all','Todas'],['corredor','Corredor'],['mixto','Corredor + MGA'],['mga','MGA'],['aseguradora','Aseguradora'],['comparador','Comparador']])}</div>
         <div class="intl-fgrp"><span class="lab">Cliente</span>${seg('cli',[['all','Todos'],['B2C','B2C'],['B2B','B2B'],['B2B2C','B2B2C']])}</div>
         <div class="intl-fgrp"><span class="lab">Amplitud</span>${seg('foco',[['all','Todas'],['nicho','Nicho de ramo'],['cliente','Nicho de cliente'],['multi','Multirramo']])}</div>
-        <div class="intl-fgrp"><span class="lab">Mercado</span>${seg('reg',[['all','Todos'],['Europa continental','Europa continental'],['Reino Unido','Reino Unido'],['EE.UU.','EE.UU.']])}</div>
+        <div class="intl-fgrp"><span class="lab">Mercado</span>${seg('reg',[['all','Todos'],['España','España'],['Europa continental','Europa continental'],['Reino Unido','Reino Unido'],['EE.UU.','EE.UU.']])}</div>
         <div class="intl-fgrp"><span class="lab">Palanca de valor</span>
           <select id="intlPalSel"><option value="all">Todas</option>${Object.keys(INTL_PAL).map(k=>`<option value="${k}">${escAttr(INTL_PAL[k].lab)}</option>`).join('')}</select>
         </div>
@@ -3493,14 +3518,14 @@ function renderIntl(){
       <p class="note" style="margin-top:0">Con qué argumento convence cada compañía, leído del mensaje de su propia home: el titular, el subtítulo y los bloques de «por qué nosotros». Casi ninguna se apoya en una sola palanca; lo interesante es qué combinan y qué evitan.</p>
       <div id="intlPalDist" class="intl-paldist"></div>
       <div id="intlPalMatrix" style="margin-top:18px"></div>
-      <div class="mkt-insight" style="margin-top:14px">Tres lecturas. Primera: <b>el precio casi no se usa como argumento principal</b> —solo tres de las diecinueve— y las tres lo consiguen quitando algo de la cadena, no apretando el margen: Thimble quita la anualidad, Simplis quita todo salvo un producto y Kin quita al agente. Segunda: <b>velocidad y simplicidad ya no diferencian</b>, las declara media lista; son la entrada, no la ventaja. Tercera, y la más relevante para una correduría: la palanca más repetida es <b>producto a medida</b> —cobertura construida para un oficio o una etapa concreta—, y es la única que un mediador puede construir sin poner capital ni comprar tráfico.</div>
+      <div class="mkt-insight" style="margin-top:14px">Tres lecturas. Primera: <b>el precio casi no se usa como argumento principal</b> —solo tres de las veinte— y las tres lo consiguen quitando algo de la cadena, no apretando el margen: Thimble quita la anualidad, Simplis quita todo salvo un producto y Kin quita al agente. Segunda: <b>velocidad y simplicidad ya no diferencian</b>, las declara casi la mitad de la lista; son la entrada, no la ventaja. Tercera, y la más relevante para una correduría: la palanca más repetida es <b>producto a medida</b> —cobertura construida para un oficio o una etapa concreta—, y es la única que un mediador puede construir sin poner capital ni comprar tráfico. Fíjate además en lo que <b>II-BROKER no dice</b>: ni precio, ni velocidad, ni simplicidad. Vende criterio, cobertura a medida y treinta años de trayectoria, que es exactamente el discurso que una correduría puede sostener sin tecnología, pero también el que no escala solo.</div>
     </div>
 
     <div class="panel">
       <h2>Matriz de cobertura: quién toca cada ramo</h2>
       <p class="note" style="margin-top:0">Un punto por ramo cubierto, coloreado según la figura de la compañía. La última columna es el número de ramos de cada una: sirve para ver de un vistazo quién es nicho y quién multirramo.</p>
       <div id="intlMatrix"></div>
-      <div class="mkt-insight" style="margin-top:14px">Casi todas las compañías de la lista se concentran en <b>uno o dos ramos</b>, o en un solo tipo de cliente. Solo cuatro son multirramo: los dos comparadores británicos, CLARK y Lovys —y las tres primeras se lo pueden permitir porque tienen marca de consumo y presupuesto de publicidad detrás—. Es la señal más clara del benchmark: <b>sin marca masiva, la especialización no es una opción, es el requisito</b>.</div>
+      <div class="mkt-insight" style="margin-top:14px">Casi todas las compañías de la lista se concentran en <b>uno o dos ramos</b>, o en un solo tipo de cliente. Solo cinco son multirramo, y llegan ahí por dos caminos muy distintos: los dos comparadores británicos, CLARK y Lovys lo sostienen con marca de consumo y presupuesto de publicidad; <b>II-BROKER lo sostiene con oficinas y adquisiciones</b>. La conclusión para una correduría digital sigue siendo la misma —<b>sin marca masiva, la especialización no es una opción sino el requisito</b>— pero la excepción es reveladora: el multirramo también se puede comprar hecho.<br><br>Los dos últimos ramos de la tabla, <b>transportes y crédito y caución</b>, los toca una sola compañía, y es la española tradicional. Cruza ese dato con la tabla de ramos de la Parte 1: transportes mueve 633 M€ de primas intermediadas por corredores en España, y crédito más caución otros 757 M€. Casi <b>1.400 M€ que ninguna de las diecinueve insurtechs ha tocado</b>: son riesgos que exigen suscripción negociada y criterio técnico, justo lo que un embudo digital no resuelve.</div>
     </div>
 
     <div class="panel">
@@ -3515,7 +3540,7 @@ function renderIntl(){
     </div>
 
     <div class="panel">
-      <p class="mkt-fuente"><b>Fuentes y método:</b> elaboración propia a partir de las webs corporativas, notas de prensa y cuentas o presentaciones a inversores de cada compañía, registros públicos de mediación (ORIAS en Francia, DGSFP en España, FCA y Lloyd's en Reino Unido, registros estatales en EE.UU.) y prensa sectorial. Foto a 16/09/2026. La clasificación por figura responde a <b>cómo opera</b> cada compañía —quién tarifica, quién emite, quién gestiona el siniestro y quién responde de él—, que no siempre coincide con su forma jurídica; las clasificaciones deducidas van marcadas con ≈. Las cifras de plantilla, prima e ingresos son las últimas publicadas por cada compañía y no corresponden todas al mismo ejercicio, así que sirven para ordenar magnitudes, no para comparar al euro.</p>
+      <p class="mkt-fuente"><b>Fuentes y método:</b> elaboración propia a partir de las webs corporativas, notas de prensa y cuentas o presentaciones a inversores de cada compañía, registros públicos de mediación (ORIAS en Francia, DGSFP en España, FCA y Lloyd's en Reino Unido, registros estatales en EE.UU.) y prensa sectorial. Foto a 17/09/2026. La propuesta de valor de cada una está leída del mensaje de su propia home. Los datos de II-BROKER proceden de su web y de la prensa de mediación española que ha cubierto sus adquisiciones. La clasificación por figura responde a <b>cómo opera</b> cada compañía —quién tarifica, quién emite, quién gestiona el siniestro y quién responde de él—, que no siempre coincide con su forma jurídica; las clasificaciones deducidas van marcadas con ≈. Las cifras de plantilla, prima e ingresos son las últimas publicadas por cada compañía y no corresponden todas al mismo ejercicio, así que sirven para ordenar magnitudes, no para comparar al euro.</p>
     </div>`;
   intlPaint();
   box.querySelectorAll('[data-fseg]').forEach(s=>{
