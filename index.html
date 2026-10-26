@@ -128,12 +128,6 @@
   .drange{display:inline-flex;align-items:center;gap:6px}
   .drange .arrow{color:var(--muted-foreground);font-size:12px}
   .fhint{font-size:11.5px;color:var(--muted-foreground);white-space:nowrap}
-  /* selector de mes (fecha) con el aspecto de un input de shadcn */
-  input[type=month]{font:inherit;font-size:12.5px;padding:0 8px;height:32px;border:1px solid var(--input);
-    border-radius:var(--radius);background:var(--background);color:var(--foreground);min-width:0;
-    font-variant-numeric:tabular-nums;transition:border-color .15s}
-  input[type=month]:hover{border-color:#cbd5e1}
-  input[type=month]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.6}
   .filterbar .seg{padding:2px;border-radius:var(--radius)}
   .filterbar .seg button{padding:5px 11px;font-size:12px}
   /* segmented control (estilo tabs de shadcn) */
@@ -156,7 +150,7 @@
     background:var(--warning-bg);color:#92400e;border:1px solid var(--warning-border);white-space:nowrap}
   .dirty.ok{background:var(--success-bg);color:#15803d;border-color:var(--success-border)}
   .dirty:empty{display:none}
-  .lab-grid{display:grid;grid-template-columns:minmax(0,370px) minmax(0,1fr);gap:16px;align-items:start}
+  .lab-grid{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:16px;align-items:start}
   .lab-grid.params-off{grid-template-columns:minmax(0,1fr)}
   .lab-grid.params-off .controls{display:none}
   .lab-results{min-width:0;display:flex;flex-direction:column;gap:16px}
@@ -164,7 +158,17 @@
   .ctrl-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
   .ctrl-h h2{margin:0}
   /* con el ámbito en un ramo concreto solo se ven sus parámetros y los comunes se ocultan */
-  #form .acc-item[hidden]{display:none}
+  #form .acc-item[hidden],#form .row[hidden],#form .pgrp[hidden],#form .phinline[hidden],.seg button[hidden]{display:none}
+  .acc-head.grp-ven{background:var(--primary)} .acc-head.grp-rrhh{background:#475569}
+  .pgrp+.pgrp{border-top:1px solid var(--border);margin-top:4px;padding-top:6px}
+  .pgrp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:8px 0 2px;
+    font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground)}
+  .pgrp-note{font-size:11.5px;color:var(--muted-foreground);background:var(--muted-bg);border-radius:var(--radius-sm);padding:6px 9px;margin:6px 0 2px;line-height:1.5}
+  .pgrp-note b{color:var(--foreground)}
+  .seg.seg-xs{padding:2px}
+  .seg.seg-xs button{padding:2px 8px;font-size:11px;text-transform:none;letter-spacing:0}
+  .rpill{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.02em;color:#fff;border-radius:4px;padding:1px 5px;margin-right:6px;vertical-align:1px}
+  .rpill.auto{background:var(--auto)} .rpill.mre{background:var(--mre)}
   .ctrl-scope{font-size:12px;color:var(--muted-foreground);margin:0 0 14px;padding:9px 12px;
     border:1px solid var(--border);border-radius:var(--radius);background:var(--muted-bg)}
   .controls::-webkit-scrollbar{width:9px}
@@ -210,6 +214,150 @@
     color:var(--muted-foreground);font-size:13px;line-height:1.6;background:var(--muted-bg)}
   .scmp-t td.best{color:var(--success);font-weight:700}
   .scmp-t td.cur-row,.scmp-t tr.cur-row td{font-weight:600}
+  /* ===== modal propio: avisos, confirmaciones y nombres (sustituye a alert/confirm/prompt) ===== */
+  .ui-backdrop{position:fixed;inset:0;background:rgb(15 23 42 / .55);backdrop-filter:blur(2px);z-index:1400;
+    display:flex;align-items:center;justify-content:center;padding:16px;animation:fade .15s ease-out}
+  .ui-modal{background:var(--popover);color:var(--foreground);border:1px solid var(--border);border-radius:var(--radius-xl);
+    width:100%;max-width:440px;max-height:calc(100vh - 32px);overflow:auto;box-shadow:var(--shadow-xl);padding:22px 22px 18px;animation:pop .16s ease-out}
+  .ui-modal.wide{max-width:580px}
+  .ui-ico{width:40px;height:40px;border-radius:999px;display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:700;margin-bottom:12px;background:var(--accent);color:var(--primary)}
+  .ui-ico.k-success{background:var(--success-bg);color:var(--success)}
+  .ui-ico.k-warn{background:var(--warning-bg);color:var(--warning)}
+  .ui-ico.k-danger{background:var(--destructive-bg);color:var(--destructive)}
+  .ui-ico.k-info{font-family:Georgia,serif;font-style:italic}
+  .ui-title{font-size:16.5px;font-weight:600;letter-spacing:-.01em;margin:0 0 6px}
+  .ui-msg{font-size:13px;color:var(--muted-foreground);line-height:1.6;overflow-wrap:anywhere}
+  .ui-msg b{color:var(--foreground)}
+  .ui-field{display:block;margin-top:14px}
+  .ui-lab{display:block;font-size:12.5px;font-weight:500;color:var(--foreground);margin-bottom:5px}
+  .ui-in{width:100%;padding:8px 11px;border:1px solid var(--input);border-radius:var(--radius);font:inherit;font-size:13px;
+    background:var(--background);color:var(--foreground);transition:border-color .15s}
+  .ui-in:hover{border-color:#cbd5e1}
+  textarea.ui-in{resize:vertical;line-height:1.5}
+  .ui-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;flex-wrap:wrap}
+  .btn-danger-solid{background:var(--destructive);border-color:transparent;color:var(--destructive-foreground)}
+  .btn-danger-solid:hover{background:#b91c1c}
+  .ui-err{font-size:12px;color:var(--destructive);margin-top:6px;min-height:16px}
+  .tpl-list{display:flex;flex-direction:column;gap:8px}
+  .tpl{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;cursor:pointer;transition:border-color .15s,background .15s}
+  .tpl:hover{background:var(--muted-bg)}
+  .tpl:has(input:checked){border-color:var(--primary);background:var(--accent)}
+  .tpl input{margin-top:3px;accent-color:var(--primary)}
+  .tpl b{display:block;font-size:13px;color:var(--foreground)}
+  .tpl span{font-size:12px;color:var(--muted-foreground)}
+  .chk-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:4px;font-size:13px}
+  .chk-row label{display:inline-flex;gap:7px;align-items:center;cursor:pointer}
+  .chk-row input{accent-color:var(--primary);width:15px;height:15px}
+
+  /* ===== selector de fechas propio: mes y rango de meses, con atajos ===== */
+  .dp-trigger{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 11px 0 9px;border:1px solid var(--input);
+    border-radius:var(--radius);background:var(--background);color:var(--foreground);font:inherit;font-size:12.5px;font-weight:500;
+    cursor:pointer;white-space:nowrap;font-variant-numeric:tabular-nums;transition:border-color .15s,box-shadow .15s}
+  .dp-trigger:hover{border-color:#cbd5e1;background:var(--muted-bg)}
+  .dp-trigger.open{border-color:var(--ring);box-shadow:0 0 0 3px rgb(31 56 100 / .14)}
+  .dp-trigger svg{width:15px;height:15px;flex:0 0 auto;fill:none;stroke:var(--muted-foreground);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .dp-trigger .ph{color:var(--muted-foreground);font-weight:400}
+  .dp-trigger .dp-sep{color:var(--muted-foreground);font-weight:400}
+  .dp-trigger .dp-chev{font-size:10px;color:var(--muted-foreground);margin-left:2px}
+  .dp-trigger.sm{height:28px;font-size:11.5px;padding:0 8px 0 7px;gap:6px}
+  .dp-trigger.sm svg{width:13px;height:13px}
+  .dp-pop{position:fixed;z-index:1300;background:var(--popover);border:1px solid var(--border);border-radius:var(--radius-lg);
+    box-shadow:var(--shadow-xl);padding:12px;display:flex;gap:12px;max-width:calc(100vw - 16px);animation:pop .14s ease-out}
+  .dp-presets{display:flex;flex-direction:column;gap:2px;min-width:150px;max-width:190px;border-right:1px solid var(--border);
+    padding-right:10px;max-height:320px;overflow:auto}
+  .dp-ph{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--muted-foreground);padding:6px 8px 3px}
+  .dp-presets>button{text-align:left;border:0;background:transparent;padding:6px 8px;border-radius:var(--radius-sm);
+    font:inherit;font-size:12.5px;cursor:pointer;color:var(--foreground)}
+  .dp-presets>button:hover{background:var(--accent)}
+  .dp-presets>button.on{background:var(--accent);font-weight:600;color:var(--primary)}
+  .dp-years{display:flex;flex-wrap:wrap;gap:4px;padding:2px 6px 4px}
+  .dp-years button{font:inherit;font-size:11.5px;padding:3px 7px;border:1px solid var(--border);border-radius:var(--radius-sm);
+    background:var(--background);cursor:pointer;color:var(--foreground);font-variant-numeric:tabular-nums}
+  .dp-years button:hover{background:var(--accent)}
+  .dp-years button.on{background:var(--primary);border-color:var(--primary);color:var(--primary-foreground)}
+  .dp-cal{width:240px}
+  .dp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .dp-head b{font-size:13.5px;font-variant-numeric:tabular-nums}
+  .dp-nav{width:30px;height:30px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--background);
+    cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:15px;color:var(--foreground)}
+  .dp-nav:hover:not(:disabled){background:var(--accent)}
+  .dp-nav:disabled{opacity:.35;cursor:default}
+  .dp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 0}
+  .dp-m{height:38px;border:0;margin:0;background:transparent;font:inherit;font-size:12.5px;cursor:pointer;color:var(--foreground);
+    border-radius:var(--radius-sm);text-transform:capitalize}
+  .dp-m:hover:not(:disabled){background:var(--accent)}
+  .dp-m:disabled{color:#cbd5e1;cursor:default}
+  .dp-m.in{background:#e6edf8;border-radius:0}
+  .dp-m.in:hover:not(:disabled){background:#d7e2f4}
+  .dp-m.sel{background:var(--primary);color:var(--primary-foreground);font-weight:600}
+  .dp-m.sel:hover:not(:disabled){background:var(--primary-hover)}
+  .dp-m.a{border-radius:var(--radius-sm) 0 0 var(--radius-sm)} .dp-m.b{border-radius:0 var(--radius-sm) var(--radius-sm) 0}
+  .dp-m.a.b{border-radius:var(--radius-sm)}
+  .dp-m.cur{box-shadow:inset 0 0 0 1px #cbd5e1}
+  .dp-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding-top:10px;
+    border-top:1px solid var(--border);font-size:11.5px;color:var(--muted-foreground)}
+  @media(max-width:560px){
+    .dp-pop{flex-direction:column}
+    .dp-presets{max-width:none;border-right:0;border-bottom:1px solid var(--border);padding:0 0 8px;max-height:150px}
+    .dp-cal{width:100%}
+  }
+
+  /* ===== submenú de modelos de negocio del Lab ===== */
+  .nav-item .nav-txt{flex:1 1 auto;min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.35}
+  .nav-item .nav-count{flex:0 0 auto;font-size:10.5px;font-weight:500;color:var(--muted-foreground);background:var(--muted-bg);
+    border-radius:999px;padding:0 7px;line-height:17px}
+  .nav-item.nav-add{color:var(--muted-foreground);font-size:12px}
+  .nav-item.nav-add:hover{color:var(--primary)}
+  .ramo-dots{display:inline-flex;gap:3px;flex:0 0 auto}
+  .ramo-dots i{width:7px;height:7px;border-radius:999px;display:block}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .chip-ramo{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;color:#fff;white-space:nowrap}
+  .chip-ramo.auto{background:var(--auto)} .chip-ramo.mre{background:var(--mre)}
+  .eyebrow{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-foreground);margin-bottom:3px}
+  .model-desc{font-size:12.5px;color:var(--muted-foreground);margin:4px 0 0;max-width:760px}
+  .linkbtn{border:0;background:none;padding:0;font:inherit;color:var(--primary);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin-bottom:14px}
+  .panel-head h2{margin:0}
+  /* tarjetas de modelo en Inicio */
+  .model-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:14px}
+  .model-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--card);min-width:0}
+  .model-card.cur{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+  .model-card h3{margin:0;font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .home-group{margin-top:6px}
+  .home-group+.home-group{margin-top:22px}
+  .home-group-h{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;margin:0 0 10px}
+  .home-group-h span{font-weight:400;color:var(--muted-foreground);font-size:12px}
+  .scen-card{cursor:pointer}
+  .scen-card:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+
+  /* ===== página de detalle de un escenario ===== */
+  .crumbs{font-size:12.5px;color:var(--muted-foreground);display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+  .crumbs button{border:0;background:none;padding:0;color:var(--muted-foreground);cursor:pointer;font:inherit}
+  .crumbs button:hover{color:var(--foreground);text-decoration:underline}
+  .metric-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr));gap:12px}
+  .metric{border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;background:var(--card);min-width:0}
+  .metric .k{font-size:11.5px;color:var(--muted-foreground);font-weight:500}
+  .metric .v{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-top:3px;font-variant-numeric:tabular-nums;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .metric .s{font-size:11px;color:var(--muted-foreground);margin-top:2px;line-height:1.45}
+  .det-charts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .det-charts .rimgw{border:1px solid var(--border);border-radius:var(--radius);padding:10px;background:var(--card)}
+  .det-charts .rimgt{font-size:12.5px;font-weight:600;margin-bottom:6px}
+  .det-charts img{width:100%;display:block}
+  @media(max-width:1100px){.det-charts{grid-template-columns:1fr 1fr}}
+  @media(max-width:700px){.det-charts{grid-template-columns:1fr}}
+  .yr-t td:first-child,.yr-t th:first-child{min-width:170px}
+  .par-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(380px,100%),1fr));gap:14px;align-items:start}
+  .par-box{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .par-box .acc-head{cursor:default}
+  .par-t{font-size:12.5px}
+  .par-t td{padding:7px 12px;white-space:normal;vertical-align:top}
+  .par-t td:first-child{position:static;background:transparent}
+  .par-t td.pv{font-weight:600;white-space:nowrap;text-align:right}
+  .par-t tr.chg td{background:var(--warning-bg)}
+  .par-t .pd{display:block;font-size:10.5px;font-weight:400;color:var(--muted-foreground)}
+  .det-sec{margin:6px 0 -4px;font-size:16px;font-weight:600;letter-spacing:-.01em}
   /* menú desplegable (exportar) */
   .menu-wrap{position:relative}
   .menu{display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:250px;background:var(--popover);
@@ -219,11 +367,6 @@
     padding:8px 10px;border-radius:var(--radius-sm);font-size:12.5px;cursor:pointer;color:var(--foreground)}
   .menu button:hover{background:var(--accent)}
   .menu .msep{height:1px;background:var(--border);margin:5px 4px}
-  /* aviso flotante */
-  .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,8px);background:var(--foreground);
-    color:var(--primary-foreground);font-size:12.5px;padding:9px 16px;border-radius:var(--radius);box-shadow:var(--shadow-lg);
-    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:1500;max-width:calc(100vw - 32px)}
-  .toast.on{opacity:1;transform:translate(-50%,0)}
 
   /* ===== accordion ===== */
   .acc-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;background:var(--card)}
@@ -341,9 +484,19 @@
   .chartbox canvas{display:block;width:100%;height:100%}
   .chart-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
   /* ===== rejilla de gráficos del dashboard: todos a la vez, sin selector ===== */
-  .charts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:16px}
-  .charts-grid>.chart-card:last-child:nth-child(odd){grid-column:1/-1}
-  .chart-card .chartbox{height:250px}
+  /* Lab: gráficos en tres columnas; dos en pantallas medias y una en móvil */
+  .charts-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .charts-grid>.chart-card:last-child:nth-child(3n+1){grid-column:1/-1}
+  .chart-card{padding:16px}
+  .chart-card h2{font-size:13.5px;margin-bottom:10px}
+  .chart-card .chartbox{height:220px}
+  .chart-card .legend{gap:10px 14px;font-size:11.5px}
+  @media(max-width:1280px){
+    .charts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .charts-grid>.chart-card:last-child:nth-child(3n+1){grid-column:auto}
+    .charts-grid>.chart-card:last-child:nth-child(odd){grid-column:1/-1}
+  }
+  @media(max-width:760px){.charts-grid{grid-template-columns:1fr}}
   .legend{display:flex;gap:18px;font-size:12px;margin-top:10px;color:var(--muted-foreground);flex-wrap:wrap}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 
@@ -516,7 +669,6 @@
   .phinline{margin:0 0 10px;padding:8px 10px;background:var(--muted-bg);border:1px solid var(--border);
     border-radius:var(--radius-sm);font-size:11.5px;color:var(--muted-foreground)}
   .phinline .phline{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-  .phinline input[type=month]{width:132px;height:28px;padding:0 6px;font-size:11.5px;text-align:left}
   .phinline .phscope{font-size:10.5px;color:#94a3b8;margin-top:3px}
   .phinline .phhint{margin-top:4px}
 
@@ -608,7 +760,7 @@
   #report td:first-child,#report th:first-child{position:static}
   .rfoot{font-size:10px;color:#888;margin-top:10px}
   @media print{
-    .app,#tooltip,#chartTip,.toast{display:none !important}
+    .app,#tooltip,#chartTip,.ui-backdrop,.dp-pop{display:none !important}
     #report{display:block !important;padding:0}
     body{background:#fff}
     @page portrait{ size:A4 portrait; margin:14mm }
@@ -651,7 +803,7 @@
     .kpi{padding:14px}
     .kpi .v{font-size:19px}
     .panel{padding:14px}
-    #ue{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    #ue,.ue-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
     .ue-t{min-width:380px}
     .chartbox{height:300px}
     .dos-backdrop{padding:0}
@@ -674,8 +826,10 @@
     <div class="sb-brand"><span class="sb-logo">M</span><span>Modeloo</span></div>
     <nav class="sb-nav">
       <button class="nav-item" data-page="home"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>Inicio</button>
-      <button class="nav-item" data-page="lab"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6.5L4.6 18.6A1.6 1.6 0 0 0 6 21h12a1.6 1.6 0 0 0 1.4-2.4L14 9.5V3"/><path d="M7.5 15h9"/></svg>Lab</button>
-      <button class="nav-item" data-page="ue"><svg class="nav-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Unit economics</button>
+      <div class="nav-group">
+        <div class="nav-group-h"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6.5L4.6 18.6A1.6 1.6 0 0 0 6 21h12a1.6 1.6 0 0 0 1.4-2.4L14 9.5V3"/><path d="M7.5 15h9"/></svg>Lab</div>
+        <div class="nav-children" id="navModels"></div>
+      </div>
       <div class="nav-group">
         <div class="nav-group-h"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Mercado</div>
         <div class="nav-children">
@@ -700,15 +854,18 @@
       <div class="page-head">
         <div>
           <h1>Inicio</h1>
-          <p class="page-sub">Los escenarios que has guardado desde el Lab. Ábrelos para seguir jugando con los parámetros o compáralos entre sí.</p>
+          <p class="page-sub">Tus modelos de negocio y los escenarios que has guardado en cada uno. Pulsa un escenario para ver su ficha completa.</p>
         </div>
         <div class="page-actions">
-          <button class="btn" id="btnImport" title="Cargar escenarios desde un archivo">⤒ Importar</button>
-          <button class="btn" id="btnExport" title="Descargar todos los escenarios a un archivo">⤓ Exportar todos</button>
-          <button class="btn btn-primary" id="homeNew">＋ Nuevo escenario</button>
+          <button class="btn" id="btnImport" title="Cargar modelos y escenarios desde un archivo">⤒ Importar</button>
+          <button class="btn" id="btnExport" title="Descargar todos los modelos y escenarios a un archivo">⤓ Exportar todo</button>
+          <button class="btn btn-primary" id="homeNewModel">＋ Nuevo modelo</button>
         </div>
       </div>
-      <div class="panel home-cur" id="homeCur"></div>
+      <div class="panel">
+        <h2>Modelos de negocio <span class="h2-sub">lo que tienes ahora en cada Lab</span></h2>
+        <div class="model-grid" id="homeModels"></div>
+      </div>
       <div class="panel">
         <h2>Escenarios guardados <span class="h2-sub" id="homeCount"></span></h2>
         <div id="homeScen"></div>
@@ -719,12 +876,17 @@
       </div>
     </section>
 
-    <!-- ================= LAB ================= -->
+    <!-- ================= DETALLE DE UN ESCENARIO ================= -->
+    <section id="page-scen" class="page"></section>
+
+    <!-- ================= LAB (un modelo de negocio) ================= -->
     <section id="page-lab" class="page">
       <div class="page-head">
         <div>
-          <h1>Lab</h1>
-          <div class="scen-status"><span>Escenario:</span><b id="labScenName"></b><span class="dirty" id="labDirty"></span></div>
+          <div class="eyebrow">Lab · modelo de negocio</div>
+          <h1 id="labModelName"></h1>
+          <div class="chips" id="labModelInfo" style="margin-top:6px"></div>
+          <div class="scen-status"><span>Escenario:</span><b id="labScenName"></b><span class="dirty" id="labDirty"></span><span id="labScenLink"></span></div>
         </div>
         <div class="page-actions">
           <button class="btn" id="ctrlToggle" aria-controls="ctrlPanel" aria-expanded="true" title="Mostrar u ocultar los parámetros del negocio">⚙ Parámetros</button>
@@ -740,21 +902,25 @@
               <button id="btnMail">✉ Compartir por correo</button>
             </div>
           </div>
+          <div class="menu-wrap">
+            <button class="btn btn-icon" id="btnModelMenu" aria-expanded="false" aria-controls="modelMenu" title="Opciones del modelo">⋯</button>
+            <div class="menu" id="modelMenu">
+              <button id="mmNewScen">✦ Nuevo escenario en blanco</button>
+              <div class="msep"></div>
+              <button id="mmEdit">✎ Editar modelo (nombre, ramos…)</button>
+              <button id="mmDup">⧉ Duplicar modelo</button>
+              <button id="mmDel" style="color:var(--destructive)">🗑 Eliminar modelo</button>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="filterbar" id="filterbar">
         <div class="fgrp"><span class="lab">Horizonte del plan</span>
-          <div class="frow">
-            <span class="drange"><input type="month" id="dStart" aria-label="Inicio del plan"><span class="arrow">→</span><input type="month" id="dEnd" aria-label="Fin del plan"></span>
-            <span class="fhint" id="hzHint"></span>
-          </div>
+          <div class="frow"><span id="dpStart"></span><span class="arrow" style="color:var(--muted-foreground)">→</span><span id="dpEnd"></span><span class="fhint" id="hzHint"></span></div>
         </div>
         <div class="fgrp"><span class="lab">Periodo mostrado</span>
-          <div class="frow">
-            <span class="drange"><input type="month" id="pFrom" aria-label="Periodo desde"><span class="arrow">→</span><input type="month" id="pTo" aria-label="Periodo hasta"></span>
-            <button class="btn btn-sm" id="pAll" title="Mostrar todo el horizonte del plan">Todo el plan</button>
-          </div>
+          <div class="frow"><span id="dpPeriod"></span></div>
         </div>
         <div class="fgrp"><span class="lab">Agrupar por</span>
           <span class="seg" id="segGran">
@@ -790,25 +956,17 @@
             <div class="tblscroll"><table id="tbl"></table></div>
             <div class="note" id="note"></div>
           </div>
+          <div class="panel" id="uePanel">
+            <div class="panel-head">
+              <h2>Unit economics <span class="h2-sub">rentabilidad por póliza y valor del cliente</span></h2>
+              <div class="frow"><span class="fhint">Run-rate a</span><span id="dpUe"></span></div>
+            </div>
+            <div id="ue"></div>
+          </div>
           <h3 class="sec-h">Techo de facturación</h3>
           <div id="ceil"></div>
         </div>
       </div>
-    </section>
-
-    <!-- ================= UNIT ECONOMICS ================= -->
-    <section id="page-ue" class="page">
-      <div class="page-head">
-        <div>
-          <h1>Unit economics</h1>
-          <p class="page-sub">Rentabilidad por póliza y valor del cliente del escenario que tienes en el Lab, al ritmo (run-rate) del mes que elijas.</p>
-        </div>
-        <div class="page-actions">
-          <div class="fgrp"><span class="lab" style="font-size:11px;color:var(--muted-foreground);font-weight:500">Run-rate a fecha de</span>
-            <input type="month" id="ueRef" aria-label="Mes de referencia del run-rate"></div>
-        </div>
-      </div>
-      <div class="panel"><h2 id="ueTitle">Unit economics</h2><div id="ue"></div></div>
     </section>
 
     <!-- ================= MERCADO · SECTOR ================= -->
@@ -839,7 +997,7 @@
       <div id="tab-comp" class="tabpane">
         <div class="filterbar">
           <div class="fgrp"><span class="lab">Tu modelo: 12 meses hasta</span>
-            <div class="frow"><input type="month" id="cmpRef" aria-label="Último mes de la ventana comparada"><span class="fhint" id="cmpRefHint"></span></div>
+            <div class="frow"><span id="dpCmp"></span><span class="fhint" id="cmpRefHint"></span></div>
           </div>
         </div>
         <div class="panel">
@@ -897,7 +1055,6 @@
   </div>
 </div>
 <input type="file" id="fileImport" accept="application/json,.json" style="display:none">
-<div class="toast" id="savedFlash" role="status" aria-live="polite"></div>
 <div id="dosBackdrop" class="dos-backdrop">
   <div class="dos-modal">
     <div class="dos-head">
@@ -911,58 +1068,78 @@
 <div id="report"></div>
 <script>
 const DEF = {
-  opsAuto:2800, gAuto:0, captAuto:5, primaAuto:450, ipsAuto:8, comAuto:11, retAuto:88, colabAuto:100, retroAutoNew:30, retroAutoRen:30,
-  crossMre:2, propMre:8, gMre:0, primaMre:700, ipsMre:8, comMre:20, retMre:87, colabMre:0, retroMreNew:0, retroMreRen:0,
+  opsAuto:2800, gAuto:0, captAuto:5, primaAuto:450, ipsAuto:8, comAuto:11, pagoAuto:90, churnAuto:12, colabAuto:100, retroAutoNew:30, retroAutoRen:30,
+  crossMre:2, propMre:8, gMre:0, primaMre:700, ipsMre:8, comMre:20, pagoMre:90, churnMre:13, colabMre:0, retroMreNew:0, retroMreRen:0,
   polEmpAuto:1200, salDirAuto:2100, polEmpMre:1200, salDirMre:2100, ss:31.5,
   alq:1200, puesto:150, swbase:300, swemp:80, rcbase:3000, rcpct:0.10, ases:350, cuotas:100, otros:5, infl:3
 };
-// Cada grupo declara su ámbito: el panel de parámetros muestra solo los del ramo que se
-// está viendo en el dashboard ('common' = costes compartidos, visibles en Todo el negocio).
-const CFG = [
- ['AUTO','grp-auto','auto',[
-   ['opsAuto','Transferencias de vehículos / mes','num',null,'expedientes de la gestoría → leads de auto','Operaciones de transferencia de vehículos que tramita la gestoría cada mes. Son la fuente de clientes potenciales: una parte (la tasa de captación) se convierte en póliza de auto.'],
-   ['gAuto','Crecimiento mensual del flujo','pct',[0,3,0.25],'compuesto mes a mes','Ritmo al que crece cada mes el número de transferencias. Se aplica de forma compuesta (cada mes sobre el anterior).'],
-   ['captAuto','Tasa de captación sobre el flujo','pct',[0,30,0.5],'% de transferencias que acaban en póliza','De cada 100 transferencias tramitadas, cuántas terminan contratando una póliza de auto.'],
-   ['primaAuto','Prima media anual (€)','eur',null,'importe total que paga el cliente al año (con impuestos)','Prima media anual por cliente de auto, impuestos incluidos. Las comisiones se calculan sobre la prima neta (sin impuestos).'],
-   ['ipsAuto','Impuestos sobre prima — IPS (%)','pct',[0,15,0.5],'se restan antes de calcular comisiones','Impuestos sobre la prima (IPS y recargos). Se descuentan de la prima para obtener la prima neta; la comisión de la correduría y la retrocesión al colaborador se calculan sobre esa prima neta.'],
-   ['comAuto','Comisión sobre prima neta','pct',[0,30,0.5],'% de la prima neta (sin impuestos) que cobra la correduría','Porcentaje de la prima NETA (ya descontados los impuestos) que la compañía paga a la correduría como comisión.'],
-   ['retAuto','Retención anual','pct',[50,99,1],'% de pólizas que renueva cada año','Porcentaje de clientes que renuevan al cumplir el año. Una retención del 88% implica perder un 12% de la cartera al año.'],
-   ['colabAuto','% pólizas vía colaborador','pct',[0,100,5],'aportadas por un agente externo','Porcentaje de pólizas aportadas por un colaborador (agente o introductor externo) a cambio de cederle parte de la comisión, lo que se llama retrocesión.'],
-   ['retroAutoNew','% retrocesión · nueva producción','pct',[0,60,1],'sobre la comisión de pólizas nuevas','Retrocesión = parte de la comisión que se cede al colaborador. Aquí, sobre las pólizas nuevas que aporta.'],
-   ['retroAutoRen','% retrocesión · renovaciones','pct',[0,60,1],'sobre la comisión de renovaciones','Parte de la comisión de las renovaciones que se cede al colaborador año tras año.'],
-   ['polEmpAuto','Pólizas por empleado · Auto','num',[200,12000,100],'capacidad de un empleado dedicado a Auto','Cuántas pólizas de Auto puede llevar un empleado a tiempo completo: venderlas, administrarlas, atenderlas y renovarlas. La plantilla de Auto = cartera de Auto ÷ este número, redondeando al alza. Auto suele admitir muchas más pólizas por persona que Multirriesgo: son operaciones más estandarizadas.'],
-   ['salDirAuto','Salario bruto por empleado · Auto (€/mes)','eur',null,'plantilla especializada en Auto','Salario bruto mensual de una persona dedicada a Auto.'],
- ]],
- ['MULTIRRIESGO EMPRESAS','grp-mre','mre',[
-   ['crossMre','Venta cruzada anual sobre cartera auto','pct',[0,20,0.5],'% de clientes auto que cada año contratan un MRE','Venta cruzada (cross-sell): porcentaje de la cartera de auto que cada año contrata además un seguro multirriesgo de empresa.'],
-   ['propMre','Producción propia (pólizas/mes)','num',null,'venta directa, no procede de la cartera auto','Pólizas de multirriesgo captadas directamente por la correduría cada mes, al margen de la venta cruzada sobre la cartera de auto.'],
-   ['gMre','Crecimiento mensual prod. propia','pct',[0,3,0.25],'compuesto mes a mes','Ritmo de crecimiento mensual (compuesto) de la producción propia de multirriesgo.'],
-   ['primaMre','Prima media anual (€)','eur',null,'importe total que paga el cliente al año (con impuestos)','Prima media anual por cliente de multirriesgo de empresa, impuestos incluidos. Las comisiones se calculan sobre la prima neta.'],
-   ['ipsMre','Impuestos sobre prima — IPS (%)','pct',[0,15,0.5],'se restan antes de calcular comisiones','Impuestos sobre la prima de multirriesgo. Se descuentan para obtener la prima neta, base sobre la que se calculan la comisión y la retrocesión.'],
-   ['comMre','Comisión sobre prima neta','pct',[0,35,0.5],'% de la prima neta (sin impuestos) que cobra la correduría','Porcentaje de la prima NETA (sin impuestos) que la compañía paga como comisión en multirriesgo.'],
-   ['retMre','Retención anual','pct',[50,99,1],'% de pólizas que renueva cada año','Porcentaje de clientes de multirriesgo que renuevan cada año.'],
-   ['colabMre','% pólizas vía colaborador','pct',[0,100,5],'aportadas por un agente externo','Porcentaje de pólizas de multirriesgo aportadas por un colaborador externo a cambio de retrocesión.'],
-   ['retroMreNew','% retrocesión · nueva producción','pct',[0,60,1],'sobre la comisión de pólizas nuevas','Parte de la comisión de las pólizas nuevas de multirriesgo que se cede al colaborador.'],
-   ['retroMreRen','% retrocesión · renovaciones','pct',[0,60,1],'sobre la comisión de renovaciones','Parte de la comisión de las renovaciones de multirriesgo que se cede al colaborador.'],
-   ['polEmpMre','Pólizas por empleado · MRE','num',[200,12000,100],'capacidad de un empleado dedicado a Multirriesgo','Cuántas pólizas de Multirriesgo Empresas puede llevar un empleado a tiempo completo. La plantilla de MRE = cartera de MRE ÷ este número, redondeando al alza. Suele ser bastante menor que en Auto: son riesgos a medida, con más análisis y más trato con el cliente.'],
-   ['salDirMre','Salario bruto por empleado · MRE (€/mes)','eur',null,'plantilla especializada en Multirriesgo','Salario bruto mensual de una persona dedicada a Multirriesgo Empresas. Suele estar por encima del de Auto por el perfil técnico que exige.'],
- ]],
- ['PERSONAL Y COSTES COMUNES','grp-per','common',[
-   ['ss','Seguridad Social sobre bruto','pct',[0,40,0.5],'cotización a cargo de la empresa','Cotización a la Seguridad Social que paga la empresa, como porcentaje del salario bruto. Se aplica a los sueldos de los dos ramos.'],
-   ['infl','Inflación anual de salarios','pct',[0,10,0.25],'solo afecta a los sueldos','Subida anual aplicada únicamente a los salarios de ambos ramos; el resto de gastos no se inflaciona en el modelo.'],
- ]],
- ['GASTOS GENERALES Y SEGUROS','grp-gen','common',[
-   ['alq','Alquiler y oficina base (€/mes)','eur',null,'coste fijo, no escala con la plantilla','Alquiler y gastos de oficina base. Coste fijo que no depende del número de empleados.'],
-   ['puesto','Coste puesto por empleado (€/mes)','eur',null,'puesto físico y equipamiento, no software','Coste del puesto físico por empleado: mobiliario, suministros, equipamiento. No incluye software (eso va en Tecnología).'],
-   ['swbase','Tecnología (coste fijo) (€/mes)','eur',null,'plataforma/core fijo, independiente de la plantilla','Software base del negocio (plataforma de correduría, web, integraciones con compañías…). Coste fijo, igual con 1 o con 20 empleados.'],
-   ['swemp','Tecnología (coste variable) (€/mes)','eur',null,'licencias por usuario × nº de empleados','Licencias de software por usuario (CRM, ofimática…). Se multiplica por el número total de empleados.'],
-   ['rcbase','RC Profesional — prima base (€/año)','eur',null,'seguro de responsabilidad civil del mediador','Prima fija anual del seguro de Responsabilidad Civil (RC) profesional obligatorio del mediador.'],
-   ['rcpct','RC — % adicional sobre facturación','pct',[0,1,0.01],'100 €/año por cada 100.000 € de facturación (0,1%)','Parte variable del seguro de RC, calculada sobre la facturación (comisiones) de la correduría, no sobre las primas intermediadas. Por defecto 0,1%, equivalente a 100 € al año por cada 100.000 € de facturación.'],
-   ['ases','Asesoría/auditoría/gestoría (€/mes)','eur',null,'coste mensual de servicios externos','Coste mensual de asesoría contable y fiscal, auditoría y gestoría.'],
-   ['cuotas','Cuotas DGSFP (regulador) y colegio (€/mes)','eur',null,'tasas del regulador de seguros y del colegio','Cuotas a la DGSFP (Dirección General de Seguros y Fondos de Pensiones, el regulador de seguros) y al colegio de mediadores.'],
-   ['otros','Otros e imprevistos (% sobre gastos)','pct',[0,15,0.5],'colchón sobre el resto de gastos','Margen para gastos no previstos, como porcentaje del resto de gastos (personal y estructura, sin contar la comisión a colaboradores).'],
- ]],
+/* ---- parámetros del negocio ----
+   PARAMS: clave → [etiqueta, tipo, [mín,máx,paso] o null (campo numérico), subtítulo, ayuda, ramo]
+   ramo = 'auto' | 'mre' | null (común). En las etiquetas, {u} es la unidad de producción (mes/año).
+   SECTIONS ordena el panel en Ventas / Recursos humanos / Costes generales, cada una con sus apartados. */
+const PARAMS={
+ opsAuto:["Transferencias de vehículos / {u}","num",null,"expedientes de la gestoría: son los leads de auto","Operaciones de transferencia de vehículos que tramita la gestoría cada mes. Son la fuente de clientes potenciales: una parte (la tasa de captación) se convierte en póliza de auto.","auto"],
+ captAuto:["Tasa de captación sobre el flujo","pct",[0, 30, 0.5],"% de transferencias que acaban en póliza","De cada 100 transferencias tramitadas, cuántas terminan contratando una póliza de auto.","auto"],
+ gAuto:["Crecimiento mensual de las transferencias","pct",[0, 3, 0.25],"compuesto mes a mes","Ritmo al que crece cada mes el número de transferencias. Se aplica de forma compuesta (cada mes sobre el anterior).","auto"],
+ propMre:["Producción propia (pólizas / {u})","num",null,"venta directa, no procede de la cartera de auto","Pólizas de multirriesgo captadas directamente por la correduría cada mes, al margen de la venta cruzada sobre la cartera de auto.","mre"],
+ gMre:["Crecimiento mensual de la producción propia","pct",[0, 3, 0.25],"compuesto mes a mes","Ritmo de crecimiento mensual (compuesto) de la producción propia de multirriesgo.","mre"],
+ crossMre:["Venta cruzada anual sobre cartera auto","pct",[0, 20, 0.5],"% de clientes auto que cada año contratan un MRE","Venta cruzada (cross-sell): porcentaje de la cartera de auto que cada año contrata además un seguro multirriesgo de empresa.","mre"],
+ primaAuto:["Prima media anual (€)","eur",null,"importe total que paga el cliente al año (con impuestos)","Prima media anual por cliente de auto, impuestos incluidos. Las comisiones se calculan sobre la prima neta (sin impuestos).","auto"],
+ ipsAuto:["Impuestos sobre prima — IPS (%)","pct",[0, 15, 0.5],"se restan antes de calcular comisiones","Impuestos sobre la prima (IPS y recargos). Se descuentan de la prima para obtener la prima neta; la comisión de la correduría y la retrocesión al colaborador se calculan sobre esa prima neta.","auto"],
+ comAuto:["Comisión sobre prima neta","pct",[0, 30, 0.5],"% de la prima neta (sin impuestos) que cobra la correduría","Porcentaje de la prima NETA (ya descontados los impuestos) que la compañía paga a la correduría como comisión.","auto"],
+ pagoAuto:["Clientes que pagan la prima anual","pct",[0, 100, 5],"la comisión del año se cobra de golpe","Porcentaje de pólizas cuyo cliente paga la prima del año de una vez, que es lo habitual. Entonces la aseguradora abona a la correduría toda la comisión anual de golpe: el mes de la emisión y, después, en cada renovación. El resto (pago fraccionado) se cobra mes a mes.","auto"],
+ primaMre:["Prima media anual (€)","eur",null,"importe total que paga el cliente al año (con impuestos)","Prima media anual por cliente de multirriesgo de empresa, impuestos incluidos. Las comisiones se calculan sobre la prima neta.","mre"],
+ ipsMre:["Impuestos sobre prima — IPS (%)","pct",[0, 15, 0.5],"se restan antes de calcular comisiones","Impuestos sobre la prima de multirriesgo. Se descuentan para obtener la prima neta, base sobre la que se calculan la comisión y la retrocesión.","mre"],
+ comMre:["Comisión sobre prima neta","pct",[0, 35, 0.5],"% de la prima neta (sin impuestos) que cobra la correduría","Porcentaje de la prima NETA (sin impuestos) que la compañía paga como comisión en multirriesgo.","mre"],
+ pagoMre:["Clientes que pagan la prima anual","pct",[0, 100, 5],"la comisión del año se cobra de golpe","Porcentaje de pólizas cuyo cliente paga la prima del año de una vez, que es lo habitual. Entonces la aseguradora abona a la correduría toda la comisión anual de golpe: el mes de la emisión y, después, en cada renovación. El resto (pago fraccionado) se cobra mes a mes.","mre"],
+ churnAuto:["Churn anual","pct",[1, 50, 1],"% de pólizas que no renuevan cada año","Porcentaje de clientes de auto que se dan de baja al llegar el vencimiento anual. Un churn del 12% equivale a una retención del 88%; la vida media del cliente es 1 ÷ churn.","auto"],
+ churnMre:["Churn anual","pct",[1, 50, 1],"% de pólizas que no renuevan cada año","Porcentaje de clientes de multirriesgo que se dan de baja cada año al vencimiento. La vida media del cliente es 1 ÷ churn.","mre"],
+ colabAuto:["% pólizas vía colaborador","pct",[0, 100, 5],"aportadas por un agente externo","Porcentaje de pólizas aportadas por un colaborador (agente o introductor externo) a cambio de cederle parte de la comisión, lo que se llama retrocesión.","auto"],
+ retroAutoNew:["% retrocesión · nueva producción","pct",[0, 60, 1],"sobre la comisión de pólizas nuevas","Retrocesión = parte de la comisión que se cede al colaborador. Aquí, sobre las pólizas nuevas que aporta.","auto"],
+ retroAutoRen:["% retrocesión · renovaciones","pct",[0, 60, 1],"sobre la comisión de renovaciones","Parte de la comisión de las renovaciones que se cede al colaborador año tras año.","auto"],
+ colabMre:["% pólizas vía colaborador","pct",[0, 100, 5],"aportadas por un agente externo","Porcentaje de pólizas de multirriesgo aportadas por un colaborador externo a cambio de retrocesión.","mre"],
+ retroMreNew:["% retrocesión · nueva producción","pct",[0, 60, 1],"sobre la comisión de pólizas nuevas","Parte de la comisión de las pólizas nuevas de multirriesgo que se cede al colaborador.","mre"],
+ retroMreRen:["% retrocesión · renovaciones","pct",[0, 60, 1],"sobre la comisión de renovaciones","Parte de la comisión de las renovaciones de multirriesgo que se cede al colaborador.","mre"],
+ salDirAuto:["Salario bruto por empleado (€/mes)","eur",null,"plantilla especializada en Auto","Salario bruto mensual de una persona dedicada a Auto.","auto"],
+ polEmpAuto:["Pólizas por empleado","num",[200, 12000, 100],"capacidad de un empleado dedicado a Auto","Cuántas pólizas de Auto puede llevar un empleado a tiempo completo: venderlas, administrarlas, atenderlas y renovarlas. La plantilla de Auto = cartera de Auto ÷ este número, redondeando al alza. Auto suele admitir muchas más pólizas por persona que Multirriesgo: son operaciones más estandarizadas.","auto"],
+ salDirMre:["Salario bruto por empleado (€/mes)","eur",null,"plantilla especializada en Multirriesgo","Salario bruto mensual de una persona dedicada a Multirriesgo Empresas. Suele estar por encima del de Auto por el perfil técnico que exige.","mre"],
+ polEmpMre:["Pólizas por empleado","num",[200, 12000, 100],"capacidad de un empleado dedicado a Multirriesgo","Cuántas pólizas de Multirriesgo Empresas puede llevar un empleado a tiempo completo. La plantilla de MRE = cartera de MRE ÷ este número, redondeando al alza. Suele ser bastante menor que en Auto: son riesgos a medida, con más análisis y más trato con el cliente.","mre"],
+ infl:["Subida salarial anual","pct",[0, 10, 0.25],"solo afecta a los sueldos","Subida anual aplicada únicamente a los salarios de ambos ramos; el resto de gastos no se inflaciona en el modelo.",null],
+ ss:["Seguridad Social sobre bruto","pct",[0, 40, 0.5],"cotización a cargo de la empresa","Cotización a la Seguridad Social que paga la empresa, como porcentaje del salario bruto. Se aplica a los sueldos de los dos ramos.",null],
+ puesto:["Puesto y ordenador por empleado (€/mes)","eur",null,"equipo, mobiliario y suministros de cada persona","Coste del puesto físico por empleado: mobiliario, suministros, equipamiento. No incluye software (eso va en Tecnología).",null],
+ swemp:["Licencias de software por empleado (€/mes)","eur",null,"CRM, ofimática… × nº de empleados","Licencias de software por usuario (CRM, ofimática…). Se multiplica por el número total de empleados.",null],
+ alq:["Alquiler y gastos de oficina (€/mes)","eur",null,"coste fijo, no escala con la plantilla","Alquiler y gastos de oficina base. Coste fijo que no depende del número de empleados.",null],
+ swbase:["Plataforma tecnológica común (€/mes)","eur",null,"plataforma/core fijo, independiente de la plantilla","Software base del negocio (plataforma de correduría, web, integraciones con compañías…). Coste fijo, igual con 1 o con 20 empleados.",null],
+ rcbase:["RC Profesional — prima base (€/año)","eur",null,"seguro de responsabilidad civil del mediador","Prima fija anual del seguro de Responsabilidad Civil (RC) profesional obligatorio del mediador.",null],
+ rcpct:["RC — % adicional sobre facturación","pct",[0, 1, 0.01],"100 €/año por cada 100.000 € de facturación (0,1%)","Parte variable del seguro de RC, calculada sobre la facturación (comisiones) de la correduría, no sobre las primas intermediadas. Por defecto 0,1%, equivalente a 100 € al año por cada 100.000 € de facturación.",null],
+ ases:["Asesoría/auditoría/gestoría (€/mes)","eur",null,"coste mensual de servicios externos","Coste mensual de asesoría contable y fiscal, auditoría y gestoría.",null],
+ cuotas:["Cuotas DGSFP (regulador) y colegio (€/mes)","eur",null,"tasas del regulador de seguros y del colegio","Cuotas a la DGSFP (Dirección General de Seguros y Fondos de Pensiones, el regulador de seguros) y al colegio de mediadores.",null],
+ otros:["Otros e imprevistos (% sobre gastos)","pct",[0, 15, 0.5],"colchón sobre el resto de gastos","Margen para gastos no previstos, como porcentaje del resto de gastos (personal y estructura, sin contar la comisión a colaboradores).",null],
+};
+const SECTIONS=[
+ {title:"VENTAS", cls:"grp-ven", groups:[
+   {title:"Pólizas generadas", unit:true, keys:["opsAuto", "captAuto", "gAuto", "propMre", "gMre", "crossMre"]},
+   {title:"Precio y comisión de la aseguradora", keys:["primaAuto", "ipsAuto", "comAuto", "pagoAuto", "primaMre", "ipsMre", "comMre", "pagoMre"]},
+   {title:"Churn", keys:["churnAuto", "churnMre"]},
+   {title:"Comisiones a colaboradores", keys:["colabAuto", "retroAutoNew", "retroAutoRen", "colabMre", "retroMreNew", "retroMreRen"]},
+ ]},
+ {title:"RECURSOS HUMANOS", cls:"grp-rrhh", groups:[
+   {title:"Sueldos y capacidad", keys:["salDirAuto", "polEmpAuto", "salDirMre", "polEmpMre", "infl"]},
+   {title:"Seguridad Social", keys:["ss"]},
+   {title:"Licencias y ordenadores", keys:["puesto", "swemp"]},
+ ]},
+ {title:"COSTES GENERALES", cls:"grp-gen", groups:[
+   {title:"Oficina", keys:["alq"]},
+   {title:"Tecnología común", keys:["swbase"]},
+   {title:"Seguros", keys:["rcbase", "rcpct"]},
+   {title:"Asesoría y cuotas", keys:["ases", "cuotas"]},
+   {title:"Imprevistos", keys:["otros"]},
+ ]},
 ];
+const RAMO_PRE={auto:'Auto · ', mre:'MRE · '};
+// vista plana por sección para informes, Excel y fichas: [título, clase, ámbito, [[clave, etiqueta, tipo, rango, sub, ayuda]]]
+const CFG=SECTIONS.map(S=>[S.title,S.cls,'common',S.groups.flatMap(g=>g.keys.map(k=>{
+  const [l,t,r,sub,h,ramo]=PARAMS[k]; return [k,(ramo?RAMO_PRE[ramo]:'')+l.replace('{u}','mes'),t,r,sub,h]; }))]);
 let V = {...DEF};
 let GRAN='año';
 /* ---- calendario del plan: fechas reales en vez de «Año N» ----
@@ -1013,7 +1190,7 @@ let PHASE={};  // { clave: {on:bool, from:int, to:int} }   to=0 => hasta el fina
 let CMP_SEL=null;  // Set de claves de competidores seleccionados; se inicializa tras definir BENCH
 let ACTIVE_TAB='home';  // página activa del menú lateral; se restaura al refrescar
 let COMP_SUB='cmp';     // dentro de Competencia: 'cmp' (comparativa) | 'companies' (fichas)
-let CUR_SCEN=null;      // nombre del escenario guardado que hay cargado en el Lab (null = sin guardar)
+let CUR_SCEN=null;      // id del escenario guardado que hay cargado en el Lab (null = sin guardar)
 let SCOPE='all';        // ámbito del dashboard: 'all' | 'auto' | 'mre'
 const PHASE_KEYS=[['salDirAuto','Sueldo plantilla Auto'],['salDirMre','Sueldo plantilla MRE'],['alq','Alquiler y oficina'],['pue','Suministros / puesto'],['sw','Software y CRM'],['rc','RC y seguros'],['ase','Asesoría / gestoría'],['cuo','Cuotas DGSFP']];
 // N = horizonte sobre el que se resuelve la ventana (por defecto el del plan; la proyección
@@ -1025,45 +1202,56 @@ const PHASE_SCOPE={salDirAuto:'afecta al sueldo de la plantilla de Auto (y su pa
 const PHASE_APPLY={};
 function makePhaseRow(pk){
   const wrap=document.createElement('div'); wrap.className='phinline';
-  const p=PHASE[pk]||{}, scope=PHASE_SCOPE[pk]?`<div class="phscope">${PHASE_SCOPE[pk]}</div>`:'';
+  const scope=PHASE_SCOPE[pk]?`<div class="phscope">${PHASE_SCOPE[pk]}</div>`:'';
   // ventana de coste con dos selectores de mes; internamente se guarda como meses del plan (1-based)
-  wrap.innerHTML=`<div class="phline">📅 con coste de <input type="month" id="ph_from_${pk}" aria-label="Con coste desde"> a <input type="month" id="ph_to_${pk}" aria-label="Con coste hasta (vacío = hasta el final)"></div>${scope}<div class="phhint" id="ph_hint_${pk}"></div>`;
-  const fr=wrap.querySelector('#ph_from_'+pk), to=wrap.querySelector('#ph_to_'+pk), hint=wrap.querySelector('#ph_hint_'+pk);
-  const apply=(doRender)=>{
-    const fi=ym2idx(fr.value), ti=ym2idx(to.value);
-    const from= fi==null? 1 : Math.max(1,fi+1), tov= ti==null? 0 : Math.max(1,ti+1);
-    const restrict=(from>1)||(tov>0&&tov<HM), end= tov>0?Math.min(tov,HM):HM;
-    PHASE[pk]={on:restrict, from, to:tov};
-    if(hint){ hint.textContent= !restrict?'✓ con coste todos los meses del plan' : (end<from?'✕ sin coste ningún mes (desactivada)':`con coste de ${mLabel(from-1)} a ${mLabel(end-1)}; el resto, 0`);
-      hint.classList.toggle('on',restrict); }
-    if(doRender) render();
-  };
-  fr.addEventListener('change',()=>apply(true)); to.addEventListener('change',()=>apply(true));
-  PHASE_APPLY[pk]=apply; setPhaseInputs(pk,fr,to); apply(false);
+  wrap.innerHTML=`<div class="phline">📅 con coste de <span data-f></span> a <span data-t></span></div>${scope}<div class="phhint"></div>`;
+  const hint=wrap.querySelector('.phhint');
+  const cur=()=>{ const p=PHASE[pk]||{}; return {from:Math.max(1,p.from||1), to:p.to||0}; };
+  const paint=()=>{ const {from,to}=cur(), restrict=(from>1)||(to>0&&to<HM), end= to>0?Math.min(to,HM):HM;
+    PHASE[pk]={on:restrict, from, to};
+    hint.textContent= !restrict?'✓ con coste todos los meses del plan' : (end<from?'✕ sin coste ningún mes (desactivada)':`con coste de ${mLabel(from-1)} a ${mLabel(end-1)}; el resto, 0`);
+    hint.classList.toggle('on',restrict); };
+  const setW=(from,to)=>{ PHASE[pk]={from,to}; paint(); render(); };
+  const lim={min:()=>idx2ym(0), max:()=>idx2ym(HM-1)};
+  const pf=MonthPicker(wrap.querySelector('[data-f]'),{...lim, size:'sm', label:'Con coste desde',
+    get:()=>idx2ym(cur().from-1),
+    set:ym=>{ const i=ym2idx(ym); setW(i==null?1:Math.max(1,i+1), cur().to); },
+    presets:()=>[{label:'Inicio del plan', ym:idx2ym(0)}]});
+  const pt=MonthPicker(wrap.querySelector('[data-t]'),{...lim, size:'sm', label:'Con coste hasta', empty:'hasta el final',
+    get:()=>{ const t=cur().to; return t? idx2ym(t-1) : ''; },
+    set:ym=>{ const i=ym2idx(ym); setW(cur().from, i==null? 0 : Math.max(1,i+1)); }});
+  PHASE_APPLY[pk]=()=>{ paint(); pf.refresh(); pt.refresh(); };
+  paint();
   return wrap;
 }
-// vuelca PHASE en los selectores de mes (y acota su rango al horizonte del plan)
-function setPhaseInputs(pk,fr,to){
-  fr=fr||document.getElementById('ph_from_'+pk); to=to||document.getElementById('ph_to_'+pk);
-  if(!fr||!to) return; const p=PHASE[pk]||{};
-  [fr,to].forEach(el=>{ el.min=idx2ym(0); el.max=idx2ym(HM-1); });
-  fr.value=idx2ym(Math.max(1,p.from||1)-1); to.value=p.to? idx2ym(p.to-1) : '';
-}
-function syncPhaseControls(){
-  Object.values(PHASE_ANCHOR).forEach(pk=>{
-    if(!document.getElementById('ph_from_'+pk)) return;
-    setPhaseInputs(pk);
-    if(PHASE_APPLY[pk]) PHASE_APPLY[pk](false);
-  });
-}
+function syncPhaseControls(){ Object.values(PHASE_ANCHOR).forEach(pk=>{ if(PHASE_APPLY[pk]) PHASE_APPLY[pk](); }); }
 
-/* ---- persistencia y escenarios (localStorage) ---- */
-const LS_STATE='cbp_state_v1', LS_PRESETS='cbp_presets_v1';
-function snapshot(){ return {V:{...V}, GRAN, START, HM, PF, PT, UE_END, CMP_END, PHASE:JSON.parse(JSON.stringify(PHASE)), CMP_SEL: CMP_SEL?[...CMP_SEL]:null, ACTIVE_TAB, COMP_SUB, SCOPE}; }
+/* ---- persistencia (localStorage): modelos de negocio del Lab, sus escenarios y la interfaz ----
+   cbp_models_v1 → [{id,name,desc,ramos:{auto,mre},createdAt,state,scen}]   state = lo que hay en su Lab
+   cbp_scen_v2   → {id:{id,name,model,savedAt,snap}}                        escenarios guardados
+   cbp_state_v1  → página activa, modelo activo, selección de competidoras…                         */
+const LS_STATE='cbp_state_v1', LS_PRESETS='cbp_presets_v1', LS_MODELS='cbp_models_v1', LS_SCEN='cbp_scen_v2';
+const RAMOS={auto:{label:'Auto', color:'#2e5496'}, mre:{label:'Multirriesgo Empresas', short:'MRE', color:'#c55a11'}};
+// parámetros que generan producción en cada ramo: un ramo desactivado en el modelo los tiene a cero
+const RAMO_KEYS={auto:['opsAuto'], mre:['propMre','crossMre']};
+let MODELS=[], SCENS={}, ACTIVE_MODEL=null, SCEN_VIEW=null, PROD_UNIT_INIT='mes';
+let _uidN=0;
+const uid=p=>p+Date.now().toString(36)+(_uidN++).toString(36)+Math.random().toString(36).slice(2,5);
+function lsGet(k,d){ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null? d : v; }catch(e){ return d; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+const modelOf=id=>MODELS.find(m=>m.id===id);
+const curModel=()=>modelOf(ACTIVE_MODEL)||MODELS[0];
+const scenName=id=> id&&SCENS[id]? SCENS[id].name : null;
+const ramoOn=(r,m)=>{ m=m||curModel(); return !m || !m.ramos || m.ramos[r]!==false; };
+function saveModels(){ lsSet(LS_MODELS,MODELS); }
+function saveScens(){ lsSet(LS_SCEN,SCENS); }
+// estado de trabajo de un modelo (lo que define la proyección y cómo se está mirando)
+function snapshot(){ return {V:{...V}, GRAN, START, HM, PF, PT, UE_END, CMP_END, PHASE:JSON.parse(JSON.stringify(PHASE)), SCOPE}; }
 /* Migración de escenarios guardados. Dos saltos acumulados:
    1) capGest/capCom/maxCarga → polEmp, y salG/salC → salDir (plantilla polivalente única)
    2) polEmp/salDir → un juego por ramo (polEmpAuto/Mre, salDirAuto/Mre), y desaparece la
-      capa de estructura (estThreshold/estRatio/salE), que ya no se tiene en cuenta.       */
+      capa de estructura (estThreshold/estRatio/salE), que ya no se tiene en cuenta.
+   3) retAuto/retMre (retención) → churnAuto/churnMre (churn = 100 − retención).          */
 function migrateV(o){
   const v={...o};
   if(v.polEmp==null && v.capGest!=null) v.polEmp=v.capGest;
@@ -1072,7 +1260,10 @@ function migrateV(o){
   if(v.polEmpMre ==null && v.polEmp!=null) v.polEmpMre =v.polEmp;
   if(v.salDirAuto==null && v.salDir!=null) v.salDirAuto=v.salDir;
   if(v.salDirMre ==null && v.salDir!=null) v.salDirMre =v.salDir;
-  ['capGest','capCom','maxCarga','salG','salC','polEmp','salDir','estThreshold','estRatio','salE'].forEach(k=>delete v[k]);
+  // 3) la retención anual pasa a expresarse como churn (bajas anuales): churn = 100 − retención
+  if(v.churnAuto==null && v.retAuto!=null) v.churnAuto=Math.round((100-v.retAuto)*100)/100;
+  if(v.churnMre ==null && v.retMre !=null) v.churnMre =Math.round((100-v.retMre )*100)/100;
+  ['capGest','capCom','maxCarga','salG','salC','polEmp','salDir','estThreshold','estRatio','salE','retAuto','retMre'].forEach(k=>delete v[k]);
   return v;
 }
 function migratePhase(p){
@@ -1083,9 +1274,11 @@ function migratePhase(p){
   ['salG','salC','salDir','salE'].forEach(k=>delete q[k]);
   return q;
 }
-// páginas de la versión con pestañas → página del menú lateral
-const OLD_TAB={dash:'lab', pl:'lab', notes:'lab', market:'sector', companies:'comp'};
-const PAGES=['home','lab','ue','sector','comp'];
+// páginas de versiones anteriores → página actual
+const OLD_TAB={dash:'lab', pl:'lab', notes:'lab', ue:'lab', market:'sector', companies:'comp'};
+const PAGES=['home','lab','scen','sector','comp'];
+// vuelve el estado de trabajo a los valores de partida (antes de cargar otro)
+function resetWork(){ V={...DEF}; PHASE={}; START=defStart(); setHM(120); PF=0; PT=0; UE_END=0; CMP_END=0; GRAN='año'; SCOPE='all'; }
 /* Escenarios anteriores a las fechas: tenían HY (años) e YF (año filtrado, 0 = todos).
    Se convierten a meses y a un periodo [PF,PT); el plan empieza en la fecha por defecto. */
 function applySnapshot(s){
@@ -1100,23 +1293,72 @@ function applySnapshot(s){
   UE_END= (s.UE_END>0&&s.UE_END<HM)? s.UE_END : 0;
   CMP_END= (s.CMP_END>0&&s.CMP_END<HM)? s.CMP_END : 0;
   if(s.PHASE && typeof s.PHASE==='object') PHASE=migratePhase(s.PHASE);
-  if(Array.isArray(s.CMP_SEL)) CMP_SEL=new Set(s.CMP_SEL);
-  if(s.ACTIVE_TAB){ const t=OLD_TAB[s.ACTIVE_TAB]||s.ACTIVE_TAB; if(PAGES.includes(t)) ACTIVE_TAB=t;
-    if(s.ACTIVE_TAB==='companies') COMP_SUB='companies'; }
-  if(s.COMP_SUB==='cmp'||s.COMP_SUB==='companies') COMP_SUB=s.COMP_SUB;
   if(s.SCOPE && ['all','auto','mre'].includes(s.SCOPE)) SCOPE=s.SCOPE;
 }
-function saveState(){ try{ localStorage.setItem(LS_STATE, JSON.stringify({...snapshot(), CUR_SCEN})); }catch(e){} }
-function loadState(){ try{ return JSON.parse(localStorage.getItem(LS_STATE)); }catch(e){ return null; } }
-function loadPresets(){ try{ return JSON.parse(localStorage.getItem(LS_PRESETS))||{}; }catch(e){ return {}; } }
-function savePresets(p){ try{ localStorage.setItem(LS_PRESETS, JSON.stringify(p)); }catch(e){} }
-// restaura los últimos valores antes de construir el formulario
-(function(){ const st=loadState(); applySnapshot(st);
-  if(st && typeof st.CUR_SCEN==='string') CUR_SCEN=st.CUR_SCEN; })();
-// si se abre con un enlace compartido (#s=...), ese escenario tiene prioridad y se abre en el Lab
+// un ramo desactivado en el modelo no produce: sus parámetros de captación quedan a cero
+function enforceRamos(m){
+  m=m||curModel();
+  Object.keys(RAMO_KEYS).forEach(r=>{ if(!ramoOn(r,m)) RAMO_KEYS[r].forEach(k=>V[k]=0); });
+  if(!ramoOn('auto',m)) V.crossMre=0;                      // sin cartera de auto no hay venta cruzada
+  if(SCOPE!=='all' && !ramoOn(SCOPE,m)) SCOPE='all';
+}
+// valores de partida de un modelo: los de por defecto, con los ramos que no trabaja a cero
+function modelDefaults(m){ const v={...DEF}; Object.keys(RAMO_KEYS).forEach(r=>{ if(!ramoOn(r,m)) RAMO_KEYS[r].forEach(k=>v[k]=0); });
+  if(!ramoOn('auto',m)) v.crossMre=0; return v; }
+function loadWork(m){
+  resetWork(); V=modelDefaults(m); applySnapshot(m.state); enforceRamos(m);
+  CUR_SCEN= m.scen && SCENS[m.scen]? m.scen : null;
+}
+function uiState(){ return {ACTIVE_TAB, ACTIVE_MODEL, SCEN_VIEW, COMP_SUB, PROD_UNIT, CMP_SEL: CMP_SEL?[...CMP_SEL]:null}; }
+function saveState(){
+  const m=curModel(); if(m){ m.state=snapshot(); m.scen=CUR_SCEN; saveModels(); }
+  lsSet(LS_STATE,uiState());
+}
+function newModel(o){
+  const m={id:uid('m'), name:o.name, desc:o.desc||'', ramos:{auto:o.ramos.auto!==false, mre:o.ramos.mre!==false},
+    createdAt:new Date().toISOString(), state:o.state||null, scen:null};
+  MODELS.push(m); saveModels(); return m;
+}
+// arranque: carga modelos y escenarios; la primera vez, el estado y los escenarios de la versión
+// anterior pasan a un modelo base «Auto + Multirriesgo Empresas»
+(function initStore(){
+  const st=lsGet(LS_STATE,null);
+  MODELS=lsGet(LS_MODELS,null); SCENS=lsGet(LS_SCEN,null);
+  if(!SCENS||typeof SCENS!=='object'||Array.isArray(SCENS)) SCENS={};
+  if(!Array.isArray(MODELS)||!MODELS.length){
+    MODELS=[];
+    const m=newModel({name:'Auto + Multirriesgo Empresas', desc:'Captación de pólizas de auto a través de la gestoría y venta cruzada de multirriesgo a empresas.',
+      ramos:{auto:true,mre:true}, state:(st&&st.V)? st : null});
+    const old=lsGet(LS_PRESETS,{});
+    Object.keys(old||{}).forEach(name=>{ const id=uid('s');
+      SCENS[id]={id, name, model:m.id, savedAt:old[name].savedAt||null, snap:old[name]};
+      if(st && st.CUR_SCEN===name) m.scen=id; });
+    saveModels(); saveScens();
+  }
+  ACTIVE_MODEL= st && modelOf(st.ACTIVE_MODEL)? st.ACTIVE_MODEL : MODELS[0].id;
+  if(st){
+    if(st.ACTIVE_TAB){ const t=OLD_TAB[st.ACTIVE_TAB]||st.ACTIVE_TAB; if(PAGES.includes(t)) ACTIVE_TAB=t;
+      if(st.ACTIVE_TAB==='companies') COMP_SUB='companies'; }
+    if(st.COMP_SUB==='cmp'||st.COMP_SUB==='companies') COMP_SUB=st.COMP_SUB;
+    if(Array.isArray(st.CMP_SEL)) CMP_SEL=new Set(st.CMP_SEL);
+    if(st.SCEN_VIEW && SCENS[st.SCEN_VIEW]) SCEN_VIEW=st.SCEN_VIEW;
+    if(st.PROD_UNIT==='año') PROD_UNIT_INIT='año';
+  }
+  if(ACTIVE_TAB==='scen' && !SCEN_VIEW) ACTIVE_TAB='home';
+  loadWork(curModel());
+})();
+// enlace compartido (#s=...): se abre en el Lab del modelo activo, o en un modelo nuevo si sus ramos no coinciden
 (function(){ try{ const h=(location.hash||'').match(/[#&]s=([^&]+)/);
-  if(h){ const json=decodeURIComponent(escape(atob(decodeURIComponent(h[1])))); applySnapshot(JSON.parse(json));
-    CUR_SCEN=null; ACTIVE_TAB='lab'; }
+  if(!h) return;
+  const snap=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(h[1])))));
+  const r=snap.RAMOS, m=curModel();
+  if(r && (!!r.auto!==ramoOn('auto',m) || !!r.mre!==ramoOn('mre',m))){
+    const nm=newModel({name:snap.MODEL_NAME? snap.MODEL_NAME+' (compartido)' : 'Modelo compartido', ramos:r});
+    ACTIVE_MODEL=nm.id;
+  }
+  resetWork(); V=modelDefaults(curModel()); applySnapshot(snap); enforceRamos();
+  CUR_SCEN=null; ACTIVE_TAB='lab';
+  history.replaceState(null,'',location.href.split('#')[0]);   // que recargar no vuelva a pisar el Lab
 }catch(e){} })();
 
 // NM = nº de meses a simular; por defecto el horizonte del plan. El cálculo del techo de
@@ -1125,11 +1367,18 @@ function compute(v,NM){
   const N=NM||HM;
   const f=k=>v[k]/100;
   const WIN={}; PHASE_KEYS.forEach(([k])=>WIN[k]=phaseWin(k,N));  // ventanas de activación de partidas
-  const rmA=Math.pow(f('retAuto'),1/12), rmM=Math.pow(f('retMre'),1/12);
+  const retA=1-f('churnAuto'), retM=1-f('churnMre');             // retención anual = 1 − churn
+  const rmA=Math.pow(retA,1/12), rmM=Math.pow(retM,1/12);
+  /* Cobro de la comisión: la aseguradora paga la anualidad de golpe cuando el cliente paga la
+     prima anual (lo habitual): toda la comisión del año entra el mes de la emisión y, después,
+     en cada aniversario de las pólizas que renuevan. Las de pago fraccionado se cobran mes a mes.
+     rnw[i] = pólizas que cumplen aniversario y renuevan en el mes i:
+              rnw[i] = retención × (altas[i−12] + rnw[i−12])                                    */
+  const pA=f('pagoAuto'), pM=f('pagoMre');
   const primaNetaA=v.primaAuto*(1-f('ipsAuto')), primaNetaM=v.primaMre*(1-f('ipsMre'));
   const CpolA=primaNetaA*f('comAuto'), CpolM=primaNetaM*f('comMre');
-  const A={new:[],cini:[],cfin:[],cnew:[],cren:[],inew:[],iren:[],itot:[],colab:[]};
-  const M={new:[],cini:[],cfin:[],cnew:[],cren:[],inew:[],iren:[],itot:[],colab:[]};
+  const A={new:[],cini:[],cfin:[],cnew:[],cren:[],rnw:[],inew:[],iren:[],itot:[],colab:[]};
+  const M={new:[],cini:[],cfin:[],cnew:[],cren:[],rnw:[],inew:[],iren:[],itot:[],colab:[]};
   const MKMON=()=>({a_inew:[],a_iren:[],ingA:[],m_inew:[],m_iren:[],ingM:[],itot:[],
     dir:[],dirA:[],dirM:[],dNeed:[],cdir:[],sal:[],ss:[],psub:[],
     alq:[],pue:[],sw:[],rc:[],ase:[],cuo:[],colab:[],otr:[],esub:[],gtot:[],
@@ -1142,17 +1391,23 @@ function compute(v,NM){
     A.new[i]=opsA*f('captAuto');
     A.cini[i]= i===0?0:A.cfin[i-1];
     A.cfin[i]=A.cini[i]*rmA+A.new[i];
-    A.cnew[i]= i===0? A.new[i] : (i<12? A.cnew[i-1]*rmA+A.new[i] : A.cnew[i-1]*rmA+A.new[i]-A.new[i-12]*f('retAuto'));
+    A.cnew[i]= i===0? A.new[i] : (i<12? A.cnew[i-1]*rmA+A.new[i] : A.cnew[i-1]*rmA+A.new[i]-A.new[i-12]*retA);
     A.cren[i]=A.cfin[i]-A.cnew[i];
-    A.inew[i]=A.cnew[i]*CpolA/12; A.iren[i]=A.cren[i]*CpolA/12; A.itot[i]=A.inew[i]+A.iren[i];
+    A.rnw[i]= i<12? 0 : retA*(A.new[i-12]+A.rnw[i-12]);
+    A.inew[i]=(1-pA)*A.cnew[i]*CpolA/12 + pA*A.new[i]*CpolA;      // fraccionado mes a mes + anual de golpe
+    A.iren[i]=(1-pA)*A.cren[i]*CpolA/12 + pA*A.rnw[i]*CpolA;
+    A.itot[i]=A.inew[i]+A.iren[i];
     A.colab[i]=f('colabAuto')*(f('retroAutoNew')*A.inew[i]+f('retroAutoRen')*A.iren[i]);
     const xs=A.cini[i]*f('crossMre')/12, prop=v.propMre*Math.pow(1+f('gMre'),i);
     M.new[i]=xs+prop;
     M.cini[i]= i===0?0:M.cfin[i-1];
     M.cfin[i]=M.cini[i]*rmM+M.new[i];
-    M.cnew[i]= i===0? M.new[i] : (i<12? M.cnew[i-1]*rmM+M.new[i] : M.cnew[i-1]*rmM+M.new[i]-M.new[i-12]*f('retMre'));
+    M.cnew[i]= i===0? M.new[i] : (i<12? M.cnew[i-1]*rmM+M.new[i] : M.cnew[i-1]*rmM+M.new[i]-M.new[i-12]*retM);
     M.cren[i]=M.cfin[i]-M.cnew[i];
-    M.inew[i]=M.cnew[i]*CpolM/12; M.iren[i]=M.cren[i]*CpolM/12; M.itot[i]=M.inew[i]+M.iren[i];
+    M.rnw[i]= i<12? 0 : retM*(M.new[i-12]+M.rnw[i-12]);
+    M.inew[i]=(1-pM)*M.cnew[i]*CpolM/12 + pM*M.new[i]*CpolM;
+    M.iren[i]=(1-pM)*M.cren[i]*CpolM/12 + pM*M.rnw[i]*CpolM;
+    M.itot[i]=M.inew[i]+M.iren[i];
     M.colab[i]=f('colabMre')*(f('retroMreNew')*M.inew[i]+f('retroMreRen')*M.iren[i]);
     const itot=A.itot[i]+M.itot[i], cart=A.cfin[i]+M.cfin[i], newt=A.new[i]+M.new[i];
     const prim=A.cfin[i]*v.primaAuto+M.cfin[i]*v.primaMre;
@@ -1218,7 +1473,9 @@ function compute(v,NM){
     ebacA+=split(monA,A,dirA,cdirA,kiA,v.primaAuto,true);      monA.ebac[i]=ebacA;
     ebacM+=split(monM,M,dirM,cdirM,1-kiA,v.primaMre,false);    monM.ebac[i]=ebacM;
   }
-  const be=m=>{ const i=m.ebi.findIndex(x=>x>0); return i<0?null:i+1; };
+  /* break-even = primer mes en que el EBITDA de los últimos 12 meses es positivo. El EBITDA de un
+     mes suelto no sirve: la comisión anual entra de golpe y cada contratación lo hace oscilar. */
+  const be=m=>{ let s12=0; for(let i=0;i<m.ebi.length;i++){ s12+=m.ebi[i]-(i>=12?m.ebi[i-12]:0); if(s12>0) return i+1; } return null; };
   const beM=be(mon), beAcc=mon.ebac.findIndex(x=>x>0);
   return {mon,monA,monM,beM,beAcc:beAcc<0?null:beAcc+1,cartBE:beM?mon.cart[beM-1]:null,
     beA:be(monA),beMre:be(monM)};
@@ -1259,7 +1516,7 @@ const CEIL_CAP_M=12*100;   // tope de búsqueda del tiempo hasta el techo: 100 a
 const CEIL_MARKS=[0.90,0.95,0.99];
 function ceilingCalc(v){
   const f=k=>v[k]/100;
-  const rmA=Math.pow(f('retAuto'),1/12), rmM=Math.pow(f('retMre'),1/12);
+  const rmA=Math.pow(1-f('churnAuto'),1/12), rmM=Math.pow(1-f('churnMre'),1/12);
   const CpolA=v.primaAuto*(1-f('ipsAuto'))*f('comAuto');
   const CpolM=v.primaMre*(1-f('ipsMre'))*f('comMre');
   const growing= v.gAuto>0 || v.gMre>0;
@@ -1300,14 +1557,14 @@ const pct=x=>(x*100).toFixed(1).replace('.',',')+'%';
 const LINES=[
  {sec:'INGRESOS'},
  {key:'newt',label:'Pólizas nuevas (uds)',fmt:num0,help:'Auto (operaciones × tasa de captación) + MRE (cross-sell sobre la cartera de auto + producción propia). Sumado en el periodo.'},
- {key:'cart',label:'Cartera total en vigor (uds)',fmt:num0,help:'Cartera Auto + MRE a fin de periodo. Cada mes: cartera inicio × retención mensual + pólizas nuevas.'},
+ {key:'cart',label:'Cartera total en vigor (uds)',fmt:num0,help:'Cartera Auto + MRE a fin de periodo. Cada mes: cartera inicio × (1 − churn) mensual + pólizas nuevas.'},
  {key:'prim',label:'Primas intermediadas (€/año)',fmt:eur,help:'Cartera Auto × prima auto + cartera MRE × prima MRE. Volumen anual de primas intermediadas a fin de periodo.'},
  {key:'ingA',label:'Total Auto',fmt:eur,cls:'st',help:'Comisión Auto de nueva producción + renovaciones. Pulsa para plegar/desplegar el detalle.'},
- {key:'a_inew',label:'Auto · nueva producción',fmt:eur,sub:1,help:'Pólizas de Auto con menos de 12 meses × (prima media × % comisión) ÷ 12. Es la comisión devengada cada mes por la cartera de auto en su primer año.'},
- {key:'a_iren',label:'Auto · renovaciones',fmt:eur,sub:1,help:'Pólizas de Auto con 12 meses o más (renovadas) × (prima media × % comisión) ÷ 12. Comisión recurrente de la cartera que ya cumplió aniversario.'},
+ {key:'a_inew',label:'Auto · nueva producción',fmt:eur,sub:1,help:'Comisión de las pólizas nuevas de Auto. Con pago anual (lo habitual) la aseguradora paga la anualidad entera de golpe el mes de la emisión; las de pago fraccionado se cobran mes a mes durante su primer año.'},
+ {key:'a_iren',label:'Auto · renovaciones',fmt:eur,sub:1,help:'Comisión de las renovaciones de Auto. Las de pago anual cobran la anualidad entera en el mes del aniversario de cada póliza que renueva; las fraccionadas, mes a mes.'},
  {key:'ingM',label:'Total Multirriesgo Empresas',fmt:eur,cls:'st',help:'Comisión MRE de nueva producción + renovaciones. Pulsa para plegar/desplegar el detalle.'},
- {key:'m_inew',label:'MRE · nueva producción',fmt:eur,sub:1,help:'Pólizas de Multirriesgo Empresas con menos de 12 meses × (prima × % comisión) ÷ 12.'},
- {key:'m_iren',label:'MRE · renovaciones',fmt:eur,sub:1,help:'Pólizas de MRE renovadas (≥12 meses) × (prima × % comisión) ÷ 12.'},
+ {key:'m_inew',label:'MRE · nueva producción',fmt:eur,sub:1,help:'Comisión de las pólizas nuevas de MRE: la anualidad entera el mes de la emisión si el cliente paga anual; mes a mes si paga fraccionado.'},
+ {key:'m_iren',label:'MRE · renovaciones',fmt:eur,sub:1,help:'Comisión de las renovaciones de MRE: la anualidad entera en cada aniversario (pago anual) o mes a mes (pago fraccionado).'},
  {key:'itot',label:'TOTAL INGRESOS',fmt:eur,cls:'tot',help:'Total Auto + Total Multirriesgo Empresas.'},
  {sec:'GASTOS — PERSONAL (plantilla)'},
  {key:'sal',label:'Salarios brutos (total plantilla)',fmt:eur,cls:'st',help:'Coste bruto de las dos plantillas: la de Auto y la de Multirriesgo. Pulsa para plegar/desplegar el detalle.'},
@@ -1391,28 +1648,31 @@ function plTable(buckets,tot,opts){
   return head+body+'</tbody>';
 }
 
+// suma de los 12 meses que acaban en el mes «end» (1-based); si aún no hay 12, se anualiza
+function ttm(a,end){ const e=Math.max(1,Math.min(end,a.length)), s=Math.max(0,e-12); let x=0; for(let i=s;i<e;i++) x+=a[i]||0; return x*12/(e-s); }
 function ueHTML(R,opt){
   opt=opt||{}; const end= opt.end || UE_END || HM, li=end-1;
   const lbl= opt.label || mLabel(li);
-  const c=R.mon.cart[li];
-  const ingPP= c? R.mon.itot[li]*12/c : 0;
-  const colabPP= c? R.mon.colab[li]*12/c : 0;
-  const servPP= c? (R.mon.gtot[li]-R.mon.colab[li])*12/c : 0;
+  // flujos de los 12 meses que acaban en «end» (con la anualidad cobrada de golpe, un mes × 12 no es representativo)
+  const t=k=>ttm(R.mon[k],end), c=R.mon.cart[li];
+  const ingPP= c? t('itot')/c : 0;
+  const colabPP= c? t('colab')/c : 0;
+  const servPP= c? (t('gtot')-t('colab'))/c : 0;
   const ebPP= ingPP-colabPP-servPP, mPP= ingPP? ebPP/ingPP : 0;
   const ve=(pr,co,re,cl,rtN,rtR)=>{const cy=pr*co, life= re<1? 1/(1-re):99, ry=cl*cy*(rtN+rtR*(life-1)), ln=cy*life-ry; return {cy,life,ry,cn:ln/life,ln};};
-  const a=ve(V.primaAuto*(1-V.ipsAuto/100),V.comAuto/100,V.retAuto/100,V.colabAuto/100,V.retroAutoNew/100,V.retroAutoRen/100);
-  const m=ve(V.primaMre*(1-V.ipsMre/100),V.comMre/100,V.retMre/100,V.colabMre/100,V.retroMreNew/100,V.retroMreRen/100);
+  const a=ve(V.primaAuto*(1-V.ipsAuto/100),V.comAuto/100,1-V.churnAuto/100,V.colabAuto/100,V.retroAutoNew/100,V.retroAutoRen/100);
+  const m=ve(V.primaMre*(1-V.ipsMre/100),V.comMre/100,1-V.churnMre/100,V.colabMre/100,V.retroMreNew/100,V.retroMreRen/100);
   const neg=x=>`<span class="neg">${eur2(-x)}</span>`;
   // métricas comparables con benchmark Pacc (run-rate fin de periodo)
   const hc=R.mon.dir[li]||0;
-  const annComm=R.mon.itot[li]*12;
+  const annComm=t('itot');
   const comPrima= R.mon.prim[li]? annComm/R.mon.prim[li]:0;
-  const retroEff= R.mon.itot[li]? R.mon.colab[li]/R.mon.itot[li]:0;
-  const ebitMargin= R.mon.itot[li]? R.mon.ebi[li]/R.mon.itot[li]:0;
-  const primEmp= hc? R.mon.prim[li]/hc:0, commEmp= hc? annComm/hc:0, persEmp= hc? R.mon.psub[li]*12/hc:0;
+  const retroEff= annComm? t('colab')/annComm:0;
+  const ebitMargin= annComm? t('ebi')/annComm:0;
+  const primEmp= hc? R.mon.prim[li]/hc:0, commEmp= hc? annComm/hc:0, persEmp= hc? t('psub')/hc:0;
   return `<div class="ue-grid">
     <div class="ue-col">
-      <div class="ue-h">Por póliza · €/año (run-rate ${lbl})</div>
+      <div class="ue-h">Por póliza · €/año (12 meses hasta ${lbl})</div>
       <table class="ue-t">
         <tr><td>Comisión media por póliza</td><td>${eur2(ingPP)}</td></tr>
         <tr><td>− Comisión a colaborador</td><td>${neg(colabPP)}</td></tr>
@@ -1458,11 +1718,12 @@ const SCOPES={
         mon:R=>R.monM, be:R=>R.beMre, cap:C=>C.cap.mre,  hit:C=>C.hit.mre},
 };
 // el gráfico de mezcla por vertical no tiene sentido dentro de un único ramo
-const chartKeysFor=s=> Object.keys(CHARTS).filter(k=> s==='all' || k!=='vert');
+// el gráfico de mezcla por vertical solo tiene sentido con los dos ramos y en el negocio completo
+const chartKeysFor=s=> Object.keys(CHARTS).filter(k=> k!=='vert' || (s==='all' && ramoOn('auto') && ramoOn('mre')));
 
 function ceilPanelHTML(scope,C,monS){
   const S=SCOPES[scope], cap=S.cap(C), hit=S.hit(C);
-  const nowRR=(monS.itot[HM-1]||0)*12;   // facturación anual al ritmo del último mes del plan
+  const nowRR=ttm(monS.itot,HM);         // facturación de los últimos 12 meses del plan
   const card=(k,v,sub,cls)=>`<div class="panel cl-card${cls?' '+cls:''}"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`;
   if(C.growing) return `<div class="panel cl-card cl-wide"><div class="k">Techo de facturación · ${S.label}</div>
       <div class="v" style="font-size:20px">Este escenario no tiene techo</div>
@@ -1474,8 +1735,8 @@ function ceilPanelHTML(scope,C,monS){
   const fmtHit=k=>{const m=hit[k], p=Math.round(k*100);
     if(m==null) return `<div class="cl-row out"><span>${p}% del techo</span><b>+100 años</b></div>`;
     return `<div class="cl-row${m>HM?' out':''}"><span>${p}% del techo</span><b>${mLabel(m-1)}</b></div>`;};
-  const ret= scope==='mre'? ('del '+num1(V.retMre)+'%') : scope==='auto'? ('del '+num1(V.retAuto)+'%')
-           : ('del '+num1(V.retAuto)+'% en Auto y del '+num1(V.retMre)+'% en MRE');
+  const ret= scope==='mre'? ('del '+num1(100-V.churnMre)+'%') : scope==='auto'? ('del '+num1(100-V.churnAuto)+'%')
+           : ('del '+num1(100-V.churnAuto)+'% en Auto y del '+num1(100-V.churnMre)+'% en MRE');
   return card('Facturación máxima', eur(cap.fact), `comisión al año con la cartera ${S.of} saturada`)
     + card('Tiempo hasta el techo',
         t95!=null? mLabel(t95-1) : '+100 años',
@@ -1514,12 +1775,10 @@ function render(){
    <div class="kpi"><div class="k">Empleados a ${mLabel(p1-1)}</div><div class="v">${num0(tot.dir||0)}</div><div class="s">${empSuffix}</div></div>
    <div class="kpi"><div class="k">Break-even · ${S.label}</div><div class="v ${beS?'pos':'neg'}">${beS?mLabel(beS-1):'No alcanzado'}</div><div class="s">${beS?(after(beS)+' · cartera ≈ '+eur0(cartBE)+' pólizas'):('no antes de '+mLabel(HM-1))}</div></div>`;
   document.getElementById('be').innerHTML = beS
-    ? `<b>Punto de equilibrio ${S.of}:</b> el EBITDA mensual se vuelve positivo en <b>${mLabel(beS-1)}</b> (${after(beS)}; cartera ≈ ${eur0(cartBE)} pólizas).${SCOPE==='all'?` El EBITDA acumulado pasa a positivo ${R.beAcc?('en '+mLabel(R.beAcc-1)):('después del fin del plan ('+mLabel(HM-1)+')')}.`:''}`
-    : `<b>Punto de equilibrio ${S.of}:</b> con estos supuestos <b>no se alcanza break-even mensual antes de ${mLabel(HM-1)}</b>. Sube captación/comisión, reduce retrocesión o sube las pólizas por empleado.`;
+    ? `<b>Punto de equilibrio ${S.of}:</b> el EBITDA de los últimos 12 meses pasa a positivo en <b>${mLabel(beS-1)}</b> (${after(beS)}; cartera ≈ ${eur0(cartBE)} pólizas).${SCOPE==='all'?` El EBITDA acumulado pasa a positivo ${R.beAcc?('en '+mLabel(R.beAcc-1)):('después del fin del plan ('+mLabel(HM-1)+')')}.`:''}`
+    : `<b>Punto de equilibrio ${S.of}:</b> con estos supuestos el EBITDA de 12 meses <b>no llega a ser positivo antes de ${mLabel(HM-1)}</b>. Sube captación/comisión, reduce retrocesión o sube las pólizas por empleado.`;
   document.getElementById('ceil').innerHTML=ceilPanelHTML(SCOPE,C,monS);
 
-  const ueEnd=UE_END||HM;
-  document.getElementById('ueTitle').textContent=`Run-rate a ${mLabel(ueEnd-1)}`;
   document.getElementById('ue').innerHTML=ueHTML(R);
   const buckets=bucketize(monS,GRAN,p0,p1);
   const gl={mes:'mes',tri:'trimestre natural','año':'año natural'}[GRAN];
@@ -1538,7 +1797,7 @@ function render(){
 function legendHTML(S){
   return S.map(s=>`<span><i style="background:${s.color}"></i>${s.name}</span>`).join('');
 }
-const CPAD={l:64,r:14,t:10,b:26};
+const CPAD={l:54,r:12,t:10,b:26};
 function modeFor(cfg,gran){ return cfg.mode==='auto'?(gran==='mes'?'line':'bars'):cfg.mode; }
 function drawCore(x,W,H,cfg,buckets,mode,hover){
   const pad=CPAD, n=buckets.length;
@@ -1553,7 +1812,9 @@ function drawCore(x,W,H,cfg,buckets,mode,hover){
   for(let g=0;g<=4;g++){const val=mn+(mx-mn)*g/4, yy=py(val);
     x.beginPath();x.moveTo(pad.l,yy);x.lineTo(W-pad.r,yy);x.stroke(); x.fillText(yfmt(val),pad.l-6,yy+3);}
   if(mn<0&&mx>0){x.strokeStyle='#9aa4b2';x.setLineDash([4,3]);x.beginPath();x.moveTo(pad.l,py(0));x.lineTo(W-pad.r,py(0));x.stroke();x.setLineDash([]);}
-  const lblStep=Math.max(1,Math.ceil(n/12)), plotW=W-pad.l-pad.r, band=plotW/n, showLbl=i=>(i%lblStep===0);
+  // nº de etiquetas del eje X según el ancho disponible (los gráficos del Lab van en tres columnas)
+  const plotW=W-pad.l-pad.r, maxL=Math.max(2,Math.min(12,Math.floor(plotW/48)));
+  const lblStep=Math.max(1,Math.ceil(n/maxL)), band=plotW/n, showLbl=i=>(i%lblStep===0);
   if(mode==='line'){
     const px=i=> n>1? pad.l+plotW*(i/(n-1)) : pad.l+plotW/2;
     S.forEach(se=>{x.strokeStyle=se.color;x.lineWidth=2;x.beginPath();
@@ -1642,57 +1903,286 @@ function chartImage(type,buckets,gran,W,H){
   return cv.toDataURL('image/png');
 }
 
-// build accordion form
+/* ===================================================================================
+   Modal propio: avisos, confirmaciones y peticiones de texto. Sustituye a alert/confirm/
+   prompt del navegador. Devuelve una promesa; si se pide otro modal con uno abierto, espera.
+     uiModal({title, html, icon, input, buttons:[{label,value,kind}], cancelValue, wide, body})
+     · value puede ser una función (el modal) → valor; si devuelve undefined, el modal sigue abierto
+   =================================================================================== */
+let UI_Q=Promise.resolve();
+function uiModal(o){
+  const run=()=>new Promise(res=>{
+    const bd=document.createElement('div'); bd.className='ui-backdrop';
+    const ico={success:'✓',info:'i',warn:'!',danger:'!'}[o.icon]||'';
+    bd.innerHTML=`<div class="ui-modal${o.wide?' wide':''}" role="dialog" aria-modal="true" aria-labelledby="uiTitle">`+
+      (ico?`<div class="ui-ico k-${o.icon}" aria-hidden="true">${ico}</div>`:'')+
+      `<h3 class="ui-title" id="uiTitle">${o.title}</h3>`+(o.html?`<div class="ui-msg">${o.html}</div>`:'')+
+      (o.input?`<label class="ui-field"><span class="ui-lab">${o.input.label||''}</span><input class="ui-in" type="text" maxlength="80" placeholder="${escAttr(o.input.placeholder||'')}" value="${escAttr(o.input.value||'')}"><div class="ui-err"></div></label>`:'')+
+      `<div class="ui-btns">${o.buttons.map((b,i)=>`<button type="button" class="btn ${b.kind==='primary'?'btn-primary':b.kind==='danger'?'btn-danger-solid':''}" data-i="${i}">${b.label}</button>`).join('')}</div></div>`;
+    const modal=bd.querySelector('.ui-modal'), prev=document.activeElement;
+    const done=v=>{ bd.remove(); document.removeEventListener('keydown',key,true);
+      if(prev && prev.focus && document.contains(prev)) prev.focus(); res(v); };
+    const fire=B=>{ const v= typeof B.value==='function'? B.value(modal) : B.value; if(v!==undefined) done(v); };
+    const main=o.buttons.find(b=>b.kind==='primary'||b.kind==='danger')||o.buttons[o.buttons.length-1];
+    const key=e=>{
+      if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); done(o.cancelValue); return; }
+      if(e.key==='Enter' && !e.shiftKey && e.target.tagName!=='BUTTON' && e.target.tagName!=='TEXTAREA'){ e.preventDefault(); fire(main); return; }
+      if(e.key==='Tab'){   // el foco no sale del modal
+        const f=[...modal.querySelectorAll('button,input,textarea,select,[tabindex]:not([tabindex="-1"])')].filter(x=>!x.disabled);
+        if(!f.length) return; const i=f.indexOf(document.activeElement);
+        if(e.shiftKey && i<=0){ e.preventDefault(); f[f.length-1].focus(); }
+        else if(!e.shiftKey && i===f.length-1){ e.preventDefault(); f[0].focus(); }
+      }
+    };
+    bd.addEventListener('mousedown',e=>{ if(e.target===bd) done(o.cancelValue); });
+    modal.addEventListener('click',e=>{ const b=e.target.closest('[data-i]'); if(b) fire(o.buttons[+b.dataset.i]); });
+    document.addEventListener('keydown',key,true);
+    document.body.appendChild(bd);
+    if(o.body) o.body(modal);
+    const first=modal.querySelector('.ui-in')||modal.querySelector('[autofocus]')||modal.querySelector('.btn-primary,.btn-danger-solid')||modal.querySelector('button');
+    first.focus(); if(first.select) first.select();
+  });
+  const p=UI_Q.then(run); UI_Q=p.catch(()=>{}); return p;
+}
+const uiAlert=(title,html,icon)=>uiModal({title, html, icon:icon||'success', buttons:[{label:'Entendido',value:true,kind:'primary'}], cancelValue:true});
+const uiConfirm=(title,html,o={})=>uiModal({title, html, icon:o.icon||(o.danger?'danger':'warn'),
+  buttons:[{label:o.cancel||'Cancelar',value:false},{label:o.ok||'Aceptar',value:true,kind:o.danger?'danger':'primary'}], cancelValue:false});
+// pide un texto; check(texto) puede devolver un mensaje de error para no cerrar
+const uiPrompt=(title,label,value,o={})=>uiModal({title, html:o.html, icon:o.icon, input:{label,value,placeholder:o.placeholder},
+  buttons:[{label:'Cancelar',value:null},{label:o.ok||'Guardar',kind:'primary',value:m=>{
+    const inp=m.querySelector('.ui-in'), v=inp.value.trim(), err=m.querySelector('.ui-err');
+    const msg= !v? 'Escribe un nombre.' : (o.check? o.check(v) : '');
+    if(msg){ err.textContent=msg; inp.focus(); return undefined; }
+    return v; }}], cancelValue:null});
+
+/* ===================================================================================
+   Selectores de fecha propios (mes y rango de meses), con atajos. El panel flota sobre la
+   página, se cierra al pulsar fuera, con Esc o al hacer scroll, y se maneja con el teclado.
+   =================================================================================== */
+const DP_ICO='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>';
+const ymAbs=ym=>{ const p=ymParts(ym); return p? p.y*12+p.m : null; };
+const absYm=t=>Math.floor(t/12)+'-'+String(t%12+1).padStart(2,'0');
+const ymLabel=ym=>{ const p=ymParts(ym); return p? MESES[p.m]+' '+p.y : ''; };
+let DP_OPEN=null;
+function dpClose(){ if(!DP_OPEN) return; const o=DP_OPEN; DP_OPEN=null; o.pop.remove();
+  o.btn.classList.remove('open'); o.btn.setAttribute('aria-expanded','false'); }
+document.addEventListener('mousedown',e=>{ if(DP_OPEN && !DP_OPEN.pop.contains(e.target) && !DP_OPEN.btn.contains(e.target)) dpClose(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && DP_OPEN){ const b=DP_OPEN.btn; dpClose(); b.focus(); } });
+// con scroll el panel acompaña a su botón; si el botón sale de la pantalla, se cierra
+window.addEventListener('scroll',e=>{ if(!DP_OPEN || DP_OPEN.pop.contains(e.target)) return;
+  const r=DP_OPEN.btn.getBoundingClientRect(); if(r.bottom<0||r.top>innerHeight) dpClose(); else dpPlace(DP_OPEN.pop,DP_OPEN.btn); },true);
+window.addEventListener('resize',()=>dpClose());
+function dpPlace(pop,btn){
+  const r=btn.getBoundingClientRect(), w=pop.offsetWidth, h=pop.offsetHeight;
+  const left=Math.max(8,Math.min(r.left, innerWidth-w-8));
+  let top=r.bottom+6; if(top+h>innerHeight-8 && r.top-6-h>8) top=r.top-6-h;
+  pop.style.left=left+'px'; pop.style.top=Math.max(8,Math.min(top,innerHeight-8-h))+'px';
+}
+// esqueleto común: botón disparador + panel; draw(pop) pinta el contenido y onClick gestiona los clics
+function dpBase(host,o){
+  const btn=document.createElement('button'); btn.type='button';
+  btn.className='dp-trigger'+(o.size==='sm'?' sm':''); btn.setAttribute('aria-haspopup','dialog'); btn.setAttribute('aria-expanded','false');
+  if(o.label) btn.setAttribute('aria-label',o.label);
+  host.innerHTML=''; host.appendChild(btn);
+  const api={btn, refresh(){ btn.innerHTML=DP_ICO+o.text()+'<span class="dp-chev">▾</span>'; }};
+  btn.onclick=()=>{
+    if(DP_OPEN && DP_OPEN.btn===btn){ dpClose(); return; }
+    dpClose();
+    const pop=document.createElement('div'); pop.className='dp-pop'; pop.setAttribute('role','dialog');
+    if(o.label) pop.setAttribute('aria-label',o.label);
+    const st=o.open();
+    const draw=()=>{ o.draw(pop,st); };
+    draw();
+    pop.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b||b.disabled) return;
+      if(b.dataset.y){ st.year+=+b.dataset.y; draw(); const n=pop.querySelector('.dp-nav[data-y="'+b.dataset.y+'"]'); if(n&&!n.disabled) n.focus(); return; }
+      const v=o.click(b,st); if(v==='redraw'){ draw(); const f=pop.querySelector('[data-t="'+b.dataset.t+'"]'); if(f) f.focus(); return; }
+      if(v){ dpClose(); api.refresh(); btn.focus(); } });
+    if(o.hover) pop.addEventListener('mouseover',e=>{ const b=e.target.closest('.dp-m'); if(b && o.hover(+b.dataset.t,st)) draw(); });
+    pop.addEventListener('keydown',e=>{   // flechas para moverse por los meses (3 columnas)
+      const d={ArrowLeft:-1,ArrowRight:1,ArrowUp:-3,ArrowDown:3}[e.key]; if(!d) return;
+      const ms=[...pop.querySelectorAll('.dp-m')], i=ms.indexOf(document.activeElement); if(i<0) return;
+      e.preventDefault(); let j=i+d; while(ms[j] && ms[j].disabled) j+=d; if(ms[j]) ms[j].focus(); });
+    document.body.appendChild(pop);
+    btn.classList.add('open'); btn.setAttribute('aria-expanded','true');
+    DP_OPEN={pop,btn}; dpPlace(pop,btn);
+    (pop.querySelector('.dp-m.sel')||pop.querySelector('.dp-m:not(:disabled)')||pop.querySelector('button')).focus();
+  };
+  api.refresh();
+  return api;
+}
+// rejilla de 12 meses de un año; cls(t) añade clases a cada mes
+function dpCal(year,mn,mx,cls){
+  let h=`<div class="dp-cal"><div class="dp-head"><button type="button" class="dp-nav" data-y="-1" ${mn!=null&&year*12<=mn?'disabled':''} aria-label="Año anterior">‹</button>`+
+    `<b>${year}</b><button type="button" class="dp-nav" data-y="1" ${mx!=null&&year*12+11>=mx?'disabled':''} aria-label="Año siguiente">›</button></div><div class="dp-grid">`;
+  for(let m=0;m<12;m++){ const t=year*12+m, dis=(mn!=null&&t<mn)||(mx!=null&&t>mx);
+    h+=`<button type="button" class="dp-m ${cls(t)}" data-t="${t}" ${dis?'disabled':''} aria-label="${MESES[m]} ${year}">${MESES[m]}</button>`; }
+  return h+'</div></div>';
+}
+const dpYearIn=(y,mn,mx)=>{ if(mn!=null && y*12+11<mn) y=Math.floor(mn/12); if(mx!=null && y*12>mx) y=Math.floor(mx/12); return y; };
+/* Selector de un mes. o: {get()→'AAAA-MM'|'', set(ym), min(), max(), presets()→[{label,ym}], empty:'texto', size, label} */
+function MonthPicker(host,o){
+  const lim=()=>[ymAbs(o.min&&o.min()), ymAbs(o.max&&o.max())];
+  return dpBase(host,{...o,
+    text:()=>{ const v=o.get(); return v? `<span>${ymLabel(v)}</span>` : `<span class="ph">${o.empty||'Elegir mes'}</span>`; },
+    open:()=>{ const [mn,mx]=lim(), v=ymAbs(o.get()); return {year:dpYearIn(Math.floor((v!=null?v:(mn!=null?mn:ymAbs(defStart())))/12),mn,mx)}; },
+    draw:(pop,st)=>{
+      const [mn,mx]=lim(), sel=ymAbs(o.get()), pres=o.presets? o.presets() : [];
+      let h='';
+      if(pres.length||o.empty) h+='<div class="dp-presets"><div class="dp-ph">Atajos</div>'+
+        pres.map((p,i)=>`<button type="button" data-p="${i}" class="${ymAbs(p.ym)===sel?'on':''}">${p.label}</button>`).join('')+
+        (o.empty?`<button type="button" data-empty="1" class="${sel==null?'on':''}">${o.empty[0].toUpperCase()+o.empty.slice(1)}</button>`:'')+'</div>';
+      pop.innerHTML=h+dpCal(st.year,mn,mx,t=> t===sel?'sel a b':'');
+    },
+    click:(b)=>{
+      if(b.dataset.t){ o.set(absYm(+b.dataset.t)); return true; }
+      if(b.dataset.p){ o.set(o.presets()[+b.dataset.p].ym); return true; }
+      if(b.dataset.empty){ o.set(''); return true; }
+    }});
+}
+/* Selector de rango de meses: primer clic = mes inicial, segundo = mes final (se ve el rango al pasar el ratón).
+   o: {get()→{from,to}, set(from,to), min(), max(), presets()→[{label,from,to}], years:true, label} */
+function RangePicker(host,o){
+  const lim=()=>[ymAbs(o.min()), ymAbs(o.max())];
+  return dpBase(host,{...o,
+    text:()=>{ const {from,to}=o.get(); return `<span>${ymLabel(from)}</span><span class="dp-sep">→</span><span>${ymLabel(to)}</span>`; },
+    open:()=>{ const [mn,mx]=lim(); return {year:dpYearIn(Math.floor(ymAbs(o.get().from)/12),mn,mx), pend:null, hov:null}; },
+    draw:(pop,st)=>{
+      const [mn,mx]=lim(), cur=o.get(), a0=ymAbs(cur.from), b0=ymAbs(cur.to);
+      let a=a0, b=b0;
+      if(st.pend!=null){ a=Math.min(st.pend, st.hov!=null?st.hov:st.pend); b=Math.max(st.pend, st.hov!=null?st.hov:st.pend); }
+      const pres=o.presets? o.presets() : [];
+      let h='<div class="dp-presets"><div class="dp-ph">Atajos</div>'+pres.map((p,i)=>
+        `<button type="button" data-p="${i}" class="${ymAbs(p.from)===a0&&ymAbs(p.to)===b0?'on':''}">${p.label}</button>`).join('');
+      if(o.years && mn!=null && mx!=null){
+        h+='<div class="dp-ph">Años naturales</div><div class="dp-years">';
+        for(let y=Math.floor(mn/12);y<=Math.floor(mx/12);y++){
+          const ya=Math.max(mn,y*12), yb=Math.min(mx,y*12+11);
+          h+=`<button type="button" data-yr="${y}" class="${ya===a0&&yb===b0?'on':''}">${y}</button>`; }
+        h+='</div>';
+      }
+      h+='</div><div>'+dpCal(st.year,mn,mx,t=>{ const c=[]; if(t>=a&&t<=b) c.push(t===a||t===b?'sel':'in'); if(t===a) c.push('a'); if(t===b) c.push('b'); return c.join(' '); })+
+        `<div class="dp-foot"><span>${st.pend!=null? 'Ahora elige el mes final' : 'Elige el mes inicial y luego el final'}</span></div></div>`;
+      pop.innerHTML=h;
+    },
+    hover:(t,st)=>{ if(st.pend==null||st.hov===t) return false; st.hov=t; return true; },
+    click:(b,st)=>{
+      const [mn,mx]=lim();
+      if(b.dataset.t){ const t=+b.dataset.t;
+        if(st.pend==null){ st.pend=t; st.hov=t; return 'redraw'; }
+        o.set(absYm(Math.min(st.pend,t)), absYm(Math.max(st.pend,t))); return true; }
+      if(b.dataset.p){ const p=o.presets()[+b.dataset.p]; o.set(p.from,p.to); return true; }
+      if(b.dataset.yr){ const y=+b.dataset.yr; o.set(absYm(Math.max(mn,y*12)), absYm(Math.min(mx,y*12+11))); return true; }
+    }});
+}
+
+// ---- panel de parámetros: secciones (acordeón) → apartados → filas ----
+// la producción (transferencias de auto y producción propia de MRE) se puede introducir por mes o por año;
+// internamente el modelo siempre trabaja con valores mensuales
+const PROD_KEYS=['opsAuto','propMre'];
+let PROD_UNIT=PROD_UNIT_INIT;
+const uF=k=> PROD_KEYS.includes(k)&&PROD_UNIT==='año'? 12 : 1;
+const inpVal=k=>Math.round(V[k]*uF(k)*1e4)/1e4;
+const pLabel=k=>PARAMS[k][0].replace('{u}',PROD_UNIT);
+// un parámetro se ve si su ramo está en el modelo (la venta cruzada de MRE necesita cartera de auto)
+function paramVisible(k,m){ const r=PARAMS[k][5]; if(r && !ramoOn(r,m)) return false; if(k==='crossMre' && !ramoOn('auto',m)) return false; return true; }
 const form=document.getElementById('form');
-CFG.forEach(([title,cls,scope,items],gi)=>{
-  const item=document.createElement('div'); item.className='acc-item'; item.dataset.scope=scope;
-  const head=document.createElement('div'); head.className='acc-head '+cls;
-  head.innerHTML=`<span>${title}</span><span class="chev">▾</span>`;
+SECTIONS.forEach(S=>{
+  const item=document.createElement('div'); item.className='acc-item'; item.dataset.scope='common';
+  const head=document.createElement('div'); head.className='acc-head '+S.cls;
+  head.innerHTML=`<span>${S.title}</span><span class="chev">▾</span>`;
   head.onclick=()=>item.classList.toggle('collapsed');
   const bodyEl=document.createElement('div'); bodyEl.className='acc-body';
-  items.forEach(([key,label,type,rng,sub,help])=>{
-    const row=document.createElement('div');row.className='row';
-    const left=document.createElement('div');
-    const ic= help? ` <span class="info" data-tip="${escAttr(help)}">i</span>`:'';
-    left.innerHTML=`<label>${label}${ic}</label>${sub?`<div class="sub">${sub}</div>`:''}`;
-    const right=document.createElement('div');
-    if(rng){
-      const [mn,mx,st]=rng;
-      right.innerHTML=`<div class="val" id="v_${key}"></div>`;
-      const sl=document.createElement('input');sl.type='range';sl.id='inp_'+key;sl.min=mn;sl.max=mx;sl.step=st;sl.value=V[key];
-      sl.oninput=()=>{V[key]=parseFloat(sl.value);document.getElementById('v_'+key).textContent=fmtVal(key,type);render();};
-      left.appendChild(sl); row.appendChild(left);row.appendChild(right);
-    }else{
-      const inp=document.createElement('input');inp.type='number';inp.id='inp_'+key;inp.value=V[key];inp.step='any';
-      inp.oninput=()=>{V[key]=parseFloat(inp.value)||0;render();};
-      right.appendChild(inp); row.appendChild(left);row.appendChild(right);
-    }
-    bodyEl.appendChild(row);
-    if(PHASE_ANCHOR[key]) bodyEl.appendChild(makePhaseRow(PHASE_ANCHOR[key]));
+  S.groups.forEach(G=>{
+    const g=document.createElement('div'); g.className='pgrp';
+    g.innerHTML=`<div class="pgrp-h"><span>${G.title}</span>${G.unit?'<span class="seg seg-xs" data-unit role="group" aria-label="Unidad de la producción"><button type="button" data-u="mes">por mes</button><button type="button" data-u="año">por año</button></span>':''}</div>`+
+      (G.unit?'<div class="pgrp-note" id="prodHint"></div>':'');
+    G.keys.forEach(key=>{
+      const [label,type,rng,sub,help,ramo]=PARAMS[key];
+      const row=document.createElement('div');row.className='row';row.dataset.key=key;
+      const left=document.createElement('div');
+      const ic= help? ` <span class="info" data-tip="${escAttr(help)}">i</span>`:'';
+      const pill= ramo? `<span class="rpill ${ramo}">${ramo==='auto'?'Auto':'MRE'}</span>` : '';
+      left.innerHTML=`<label>${pill}<span id="lab_${key}">${pLabel(key)}</span>${ic}</label>${sub?`<div class="sub">${sub}</div>`:''}`;
+      const right=document.createElement('div');
+      if(rng){
+        const [mn,mx,st]=rng;
+        right.innerHTML=`<div class="val" id="v_${key}"></div>`;
+        const sl=document.createElement('input');sl.type='range';sl.id='inp_'+key;sl.min=mn;sl.max=mx;sl.step=st;sl.value=V[key];
+        sl.setAttribute('aria-label',(ramo?RAMO_PRE[ramo]:'')+label);
+        sl.oninput=()=>{V[key]=parseFloat(sl.value);document.getElementById('v_'+key).textContent=fmtVal(key,type);render();};
+        left.appendChild(sl); row.appendChild(left);row.appendChild(right);
+      }else{
+        const inp=document.createElement('input');inp.type='number';inp.id='inp_'+key;inp.value=inpVal(key);inp.step='any';
+        inp.setAttribute('aria-label',(ramo?RAMO_PRE[ramo]:'')+pLabel(key));
+        inp.oninput=()=>{V[key]=(parseFloat(inp.value)||0)/uF(key);render();};
+        right.appendChild(inp); row.appendChild(left);row.appendChild(right);
+      }
+      g.appendChild(row);
+      if(PHASE_ANCHOR[key]){ const ph=makePhaseRow(PHASE_ANCHOR[key]); ph.dataset.for=key; g.appendChild(ph); }
+    });
+    bodyEl.appendChild(g);
   });
   item.appendChild(head); item.appendChild(bodyEl); form.appendChild(item);
 });
+function syncProdUnit(){
+  document.querySelectorAll('#form [data-unit] button').forEach(b=>b.classList.toggle('on',b.dataset.u===PROD_UNIT));
+  PROD_KEYS.forEach(k=>{ const l=document.getElementById('lab_'+k), i=document.getElementById('inp_'+k);
+    if(l) l.textContent=pLabel(k); if(i){ i.value=inpVal(k); i.setAttribute('aria-label',RAMO_PRE[PARAMS[k][5]]+pLabel(k)); } });
+}
+form.addEventListener('click',e=>{ const b=e.target.closest('[data-unit] button'); if(!b) return;
+  PROD_UNIT= b.dataset.u==='año'? 'año' : 'mes'; syncProdUnit(); updateProdHint(); saveState(); });
+// resumen de lo que generan los parámetros de producción (primer mes del plan)
+function updateProdHint(){
+  const el=document.getElementById('prodHint'); if(!el) return;
+  const a= ramoOn('auto')? V.opsAuto*V.captAuto/100 : 0, m= ramoOn('mre')? V.propMre : 0, k=PROD_UNIT==='año'?12:1, u=PROD_UNIT==='año'?'al año':'al mes';
+  const parts=[]; if(ramoOn('auto')) parts.push(`<b>${num0(a*k)}</b> de Auto`); if(ramoOn('mre')) parts.push(`<b>${num0(m*k)}</b> de MRE por producción propia`);
+  el.innerHTML=`Al arrancar: ${parts.join(' y ')} ${u}${ramoOn('auto')&&ramoOn('mre')&&V.crossMre?', más la venta cruzada de MRE sobre la cartera de auto':''}.`;
+}
 function fmtVal(key,type){const v=V[key];return type==='pct'?(v+'%'):(type==='eur'?eur0(v)+'€':eur0(v));}
 CFG.forEach(([,,,items])=>items.forEach(([key,,type,rng])=>{if(rng){const el=document.getElementById('v_'+key);if(el)el.textContent=fmtVal(key,type);}}));
 
-/* ---- selectores de fecha: horizonte del plan, periodo del Lab, run-rate y ventana comparada ----
-   Navegadores sin selector de mes nativo muestran un campo de texto: se acepta «AAAA-MM».      */
-document.querySelectorAll('input[type=month]').forEach(el=>{ el.placeholder='AAAA-MM'; el.pattern='\\d{4}-\\d{2}'; });
+/* ---- selectores de fecha: horizonte del plan, periodo del Lab, run-rate y ventana comparada ---- */
+const planMin=()=>idx2ym(0), planMax=()=>idx2ym(HM-1);
+const DP={};
+// inicio del plan: cualquier mes; al moverlo se conserva la duración
+DP.start=MonthPicker(document.getElementById('dpStart'),{label:'Inicio del plan',
+  get:()=>START, set:ym=>{ if(ymParts(ym)){ setStart(ym); onDatesChanged(); } },
+  min:()=>'2000-01', max:()=>'2099-12',
+  presets:()=>{ const y=new Date().getFullYear(), m=new Date().getMonth();
+    return [{label:'Mes que viene', ym:absYm(y*12+m+1)},{label:'Enero de '+(y+1), ym:(y+1)+'-01'},{label:'Enero de '+(y+2), ym:(y+2)+'-01'}]; }});
+// fin del plan: entre 1 y 20 años después del inicio, con atajos de duración
+DP.end=MonthPicker(document.getElementById('dpEnd'),{label:'Fin del plan',
+  get:()=>idx2ym(HM-1), set:ym=>{ const i=ym2idx(ym); if(i==null) return; setHM(i+1); clampToPlan(); onDatesChanged(); },
+  min:()=>idx2ym(HM_MIN-1), max:()=>idx2ym(HM_MAX-1),
+  presets:()=>[1,3,5,10,15,20].map(n=>({label:n===1?'1 año':n+' años', ym:idx2ym(n*12-1)}))});
+// periodo mostrado: rango dentro del plan
+DP.period=RangePicker(document.getElementById('dpPeriod'),{label:'Periodo mostrado', years:true,
+  get:()=>{ const {s,e}=perRange(); return {from:idx2ym(s), to:idx2ym(e-1)}; },
+  set:(f,t)=>{ const a=clampI(ym2idx(f),0,HM-1), b=clampI(ym2idx(t)+1,a+1,HM); PF=a; PT= b>=HM? 0 : b; syncDateControls(); render(); },
+  min:planMin, max:planMax,
+  presets:()=>{ const L=[{label:'Todo el plan', from:planMin(), to:planMax()}];
+    if(HM>12) L.push({label:'Primeros 12 meses', from:planMin(), to:idx2ym(11)});
+    if(HM>36) L.push({label:'Primeros 3 años', from:planMin(), to:idx2ym(35)});
+    if(HM>12) L.push({label:'Últimos 12 meses', from:idx2ym(HM-12), to:planMax()});
+    if(HM>36) L.push({label:'Últimos 3 años', from:idx2ym(HM-36), to:planMax()});
+    return L; }});
+// run-rate de unit economics y fin de la ventana comparada con la competencia
+const endPresets=()=>{ const L=[{label:'Fin del plan', ym:planMax()}];
+  for(let i=11;i<HM-1;i+=12) if(L.length<6) L.push({label:'Fin del año '+(Math.floor(i/12)+1)+' del plan', ym:idx2ym(i)});
+  return L; };
+DP.ue=MonthPicker(document.getElementById('dpUe'),{label:'Run-rate de unit economics a',
+  get:()=>idx2ym((UE_END||HM)-1), min:planMin, max:planMax, presets:endPresets,
+  set:ym=>{ const i=ym2idx(ym); UE_END= i==null? 0 : clampI(i+1,1,HM); if(UE_END>=HM) UE_END=0; syncDateControls(); render(); }});
+DP.cmp=MonthPicker(document.getElementById('dpCmp'),{label:'Último mes de la ventana comparada',
+  get:()=>idx2ym((CMP_END||HM)-1), min:planMin, max:planMax, presets:endPresets,
+  set:ym=>{ const i=ym2idx(ym); CMP_END= i==null? 0 : clampI(i+1,1,HM); if(CMP_END>=HM) CMP_END=0; syncDateControls(); renderComp(); saveState(); }});
 function syncDateControls(){
-  const lo=idx2ym(0), hi=idx2ym(HM-1), $=id=>document.getElementById(id);
-  $('dStart').value=START;
-  const dE=$('dEnd'); dE.min=idx2ym(HM_MIN-1); dE.max=idx2ym(HM_MAX-1); dE.value=hi;
-  $('hzHint').textContent= HM+' meses'+(HM%12===0? ' · '+(HM/12)+(HM===12?' año':' años') : '');
-  const {s,e}=perRange();
-  ['pFrom','pTo','ueRef','cmpRef'].forEach(id=>{ $(id).min=lo; $(id).max=hi; });
-  $('pFrom').value=idx2ym(s); $('pTo').value=idx2ym(e-1);
-  $('pAll').disabled= (s===0 && e===HM);
-  $('ueRef').value=idx2ym((UE_END||HM)-1);
+  Object.values(DP).forEach(p=>p.refresh());
+  document.getElementById('hzHint').textContent= HM+' meses'+(HM%12===0? ' · '+(HM/12)+(HM===12?' año':' años') : '');
   const ce=CMP_END||HM, cs=Math.max(0,ce-12);
-  $('cmpRef').value=idx2ym(ce-1);
-  $('cmpRefHint').textContent= ce-cs<12
+  document.getElementById('cmpRefHint').textContent= ce-cs<12
     ? `${mLabel(cs)} – ${mLabel(ce-1)} · solo ${ce-cs} ${ce-cs===1?'mes':'meses'} de plan: se anualiza`
-    : `${mLabel(cs)} – ${mLabel(ce-1)}`;
+    : `compara ${mLabel(cs)} – ${mLabel(ce-1)}`;
 }
 // mover el inicio conserva la duración del plan y las fechas ya elegidas (calendario de
 // partidas y periodo): sus índices se desplazan para que sigan cayendo en el mismo mes natural
@@ -1712,39 +2202,6 @@ function clampToPlan(){
   if(UE_END>=HM) UE_END=0; if(CMP_END>=HM) CMP_END=0;
 }
 function onDatesChanged(){ syncDateControls(); syncPhaseControls(); render(); }
-document.getElementById('dStart').addEventListener('change',e=>{
-  if(!ymParts(e.target.value)){ syncDateControls(); return; }
-  setStart(e.target.value); onDatesChanged();
-});
-document.getElementById('dEnd').addEventListener('change',e=>{
-  const i=ym2idx(e.target.value); if(i==null){ syncDateControls(); return; }
-  if(i+1<HM_MIN) flash('El plan dura como mínimo '+HM_MIN+' meses');
-  if(i+1>HM_MAX) flash('El plan dura como máximo '+(HM_MAX/12)+' años');
-  setHM(i+1); clampToPlan(); onDatesChanged();
-});
-document.getElementById('pFrom').addEventListener('change',e=>{
-  const i=ym2idx(e.target.value);
-  PF= i==null? 0 : clampI(i,0,HM-1);
-  if(PT && PT<=PF) PT=Math.min(PF+1,HM);
-  if(PT>=HM) PT=0;
-  syncDateControls(); render();
-});
-document.getElementById('pTo').addEventListener('change',e=>{
-  const i=ym2idx(e.target.value);
-  PT= i==null? 0 : clampI(i+1,1,HM);
-  if(PT && PT<=PF) PF=PT-1;
-  if(PT>=HM) PT=0;
-  syncDateControls(); render();
-});
-document.getElementById('pAll').addEventListener('click',()=>{ PF=0; PT=0; syncDateControls(); render(); });
-document.getElementById('ueRef').addEventListener('change',e=>{
-  const i=ym2idx(e.target.value); UE_END= i==null? 0 : clampI(i+1,1,HM); if(UE_END>=HM) UE_END=0;
-  syncDateControls(); render();
-});
-document.getElementById('cmpRef').addEventListener('change',e=>{
-  const i=ym2idx(e.target.value); CMP_END= i==null? 0 : clampI(i+1,1,HM); if(CMP_END>=HM) CMP_END=0;
-  syncDateControls(); renderComp(); saveState();
-});
 document.getElementById('segScope').addEventListener('click',e=>{
   if(e.target.tagName!=='BUTTON')return; SCOPE=e.target.dataset.s;
   [...e.currentTarget.children].forEach(b=>b.classList.toggle('on',b===e.target)); render();
@@ -1754,17 +2211,20 @@ function syncScopeSeg(){
 }
 // el panel de parámetros sigue al ámbito: en un ramo concreto solo se ven sus propios
 // parámetros; los costes compartidos se editan desde «Todo el negocio»
+// además, los ramos que el modelo no trabaja no se muestran (ni sus parámetros ni su botón de ámbito)
 function syncParamScope(){
-  document.querySelectorAll('#form .acc-item').forEach(it=>{
-    it.hidden = (SCOPE!=='all') && it.dataset.scope!==SCOPE;
-  });
-  const form=document.getElementById('form');
-  if(form) form.classList.toggle('one-group',SCOPE!=='all');
+  const shown=k=> paramVisible(k) && (SCOPE==='all' || !PARAMS[k][5] || PARAMS[k][5]===SCOPE);
+  document.querySelectorAll('#form .row[data-key]').forEach(r=>{ r.hidden=!shown(r.dataset.key); });
+  document.querySelectorAll('#form .phinline[data-for]').forEach(r=>{ r.hidden=!shown(r.dataset.for); });
+  document.querySelectorAll('#form .pgrp').forEach(g=>{ g.hidden=![...g.querySelectorAll('.row')].some(r=>!r.hidden); });
+  updateProdHint();
+  document.querySelectorAll('#segScope button').forEach(b=>{ b.hidden= b.dataset.s!=='all' && !ramoOn(b.dataset.s); });
   const el=document.getElementById('ctrlScope'); if(!el) return;
-  const S=SCOPES[SCOPE]||SCOPES.all;
+  const S=SCOPES[SCOPE]||SCOPES.all, both=ramoOn('auto')&&ramoOn('mre');
   el.innerHTML= SCOPE==='all'
-    ? 'Editando <b>todos los parámetros</b>: los dos ramos y los costes que comparten. Cambia el ámbito de arriba para ver solo los de un ramo.'
-    : `Editando solo los parámetros <b>${S.label}</b>, incluida su plantilla, que es propia del ramo. Los costes compartidos (alquiler, tecnología, RC, asesoría, cuotas, SS e inflación) se editan en <b>Todo el negocio</b>.`;
+    ? (both? 'Organizados en <b>Ventas</b>, <b>Recursos humanos</b> y <b>Costes generales</b>. Cada fila indica su ramo; cambia el ámbito de arriba para ver solo los de uno.'
+           : `Este modelo solo trabaja <b>${ramoOn('auto')?'Auto':'Multirriesgo Empresas'}</b>: ves sus parámetros y los costes generales. Puedes activar otros ramos en «⋯ › Editar modelo».`)
+    : `Viendo los parámetros de <b>${S.label}</b> (ventas y plantilla del ramo) y los costes comunes del negocio. Los del otro ramo se ocultan; vuelve a <b>Todo el negocio</b> para verlos.`;
 }
 document.getElementById('segGran').addEventListener('click',e=>{
   if(e.target.tagName!=='BUTTON')return; GRAN=e.target.dataset.g;
@@ -1798,22 +2258,44 @@ compEl.addEventListener('mouseout',e=>{if(e.target.closest('.info'))tip.style.di
 compEl.addEventListener('click',e=>{const t=e.target.closest('.info'); if(t){placeTip(t);
   setTimeout(()=>tip.style.display='none',4000);}});
 
-const PAGE_TITLE={home:'Inicio', lab:'Lab', ue:'Unit economics', sector:'Mercado · Sector', comp:'Mercado · Competencia'};
+const PAGE_TITLE={home:'Inicio', lab:'Lab', scen:'Escenario', sector:'Mercado · Sector', comp:'Mercado · Competencia'};
 function activateTab(id,doSave){
   id=OLD_TAB[id]||id; if(!PAGES.includes(id)) id='home';
-  document.querySelectorAll('.nav-item').forEach(x=>{ const on=x.dataset.page===id;
-    x.classList.toggle('on',on); if(on) x.setAttribute('aria-current','page'); else x.removeAttribute('aria-current'); });
-  PAGES.forEach(p=>document.getElementById('page-'+p).classList.toggle('on',p===id));
-  document.getElementById('mbTitle').textContent=PAGE_TITLE[id];
+  if(id==='scen' && !(SCEN_VIEW && SCENS[SCEN_VIEW])) id='home';
   ACTIVE_TAB=id;
-  if(id==='lab'||id==='ue') render();
+  syncNav();
+  PAGES.forEach(p=>document.getElementById('page-'+p).classList.toggle('on',p===id));
+  document.getElementById('mbTitle').textContent= id==='lab'? 'Lab · '+curModel().name : PAGE_TITLE[id];
+  if(id==='lab') render();
   if(id==='home') renderHome();
+  if(id==='scen') renderScenDetail();
   if(id==='comp') showCompSub(COMP_SUB);
   if(id==='sector') renderMarket();
   setSidebar(false);
   if(doSave!==false) saveState();
 }
-document.querySelectorAll('.nav-item').forEach(t=>t.addEventListener('click',()=>{ activateTab(t.dataset.page); window.scrollTo(0,0); }));
+// menú lateral: el Lab tiene un submenú con los modelos de negocio
+function renderNav(){
+  const box=document.getElementById('navModels');
+  box.innerHTML=MODELS.map(m=>{
+    const n=Object.values(SCENS).filter(x=>x.model===m.id).length;
+    const dots=Object.keys(RAMOS).filter(r=>ramoOn(r,m)).map(r=>`<i style="background:${RAMOS[r].color}" title="${RAMOS[r].label}"></i>`).join('');
+    return `<button class="nav-item" data-page="lab" data-model="${m.id}" title="${escAttr(m.name)}"><span class="ramo-dots">${dots}</span><span class="nav-txt">${escAttr(m.name)}</span>${n?`<span class="nav-count">${n}</span>`:''}</button>`;
+  }).join('')+'<button class="nav-item nav-add" id="navAddModel">＋ Nuevo modelo</button>';
+  syncNav();
+}
+function syncNav(){
+  document.querySelectorAll('.nav-item[data-page]').forEach(x=>{
+    const on= x.dataset.page===ACTIVE_TAB && (!x.dataset.model || x.dataset.model===ACTIVE_MODEL) || (ACTIVE_TAB==='scen' && x.dataset.page==='home');
+    x.classList.toggle('on',on); if(on) x.setAttribute('aria-current','page'); else x.removeAttribute('aria-current');
+  });
+}
+document.getElementById('sidebar').addEventListener('click',e=>{
+  const b=e.target.closest('.nav-item'); if(!b) return;
+  if(b.id==='navAddModel'){ createModelDialog(); return; }
+  if(b.dataset.model) switchModel(b.dataset.model);
+  activateTab(b.dataset.page); window.scrollTo(0,0);
+});
 // Competencia agrupa la comparativa y las fichas de las compañías
 function showCompSub(sub){
   COMP_SUB= sub==='companies'? 'companies' : 'cmp';
@@ -3228,7 +3710,7 @@ function bindTagChecklist(box,key,onChange){
   box.querySelectorAll('input[type=checkbox]').forEach(cb=>cb.onchange=()=>{ toggleTag(key,cb.dataset.tid); onChange(); });
   box.querySelectorAll('[data-tdel]').forEach(b=>b.onclick=e=>{
     e.stopPropagation();
-    if(confirm('¿Eliminar esta etiqueta de todas las empresas? No se puede deshacer.')){ deleteTagDef(b.dataset.tdel); onChange(); }
+    const id=b.dataset.tdel; uiConfirm('Eliminar etiqueta','Se quitará de todas las empresas. No se puede deshacer.',{ok:'Eliminar',danger:true}).then(ok=>{ if(ok){ deleteTagDef(id); onChange(); } });
   });
   const form=box.querySelector('form[data-tagform]');
   form.onsubmit=e=>{ e.preventDefault(); const inp=form.querySelector('.tag-pop-input'); const t=createTag(inp.value);
@@ -3436,7 +3918,7 @@ function buildReport(){
   const many=bA.length>5;
   // PÁGINA 1 (vertical): Supuestos
   let h=`<section class="pg"><div class="rhead"><h1>Modeloo — Informe Business Plan de correduría</h1>
-    <div class="rmeta">Generado el ${new Date().toLocaleDateString('es-ES')} · ${CUR_SCEN?'Escenario «'+escAttr(CUR_SCEN)+'» · ':''}Plan ${planLabel()} (${HM} meses) · Verticales: Auto + Multirriesgo Empresas</div></div>`;
+    <div class="rmeta">Generado el ${new Date().toLocaleDateString('es-ES')} · ${(modelOf(SCENS[CUR_SCEN]&&SCENS[CUR_SCEN].model)||curModel()).name} · ${CUR_SCEN&&SCENS[CUR_SCEN]?'Escenario «'+escAttr(scenName(CUR_SCEN))+'» · ':''}Plan ${planLabel()} (${HM} meses) · Verticales: Auto + Multirriesgo Empresas</div></div>`;
   h+=`<div class="rk">
     <div><span>Ingresos · plan completo</span><b>${eur(tot.itot)}</b></div>
     <div><span>EBITDA · plan completo</span><b>${eur(tot.ebi)}</b></div>
@@ -3599,15 +4081,15 @@ function buildModelSheets(){
   PHASE_KEYS.forEach(([k,label])=>{ sr++; const w=phaseWin(k); supRows.push([label,w.from,w.to]); PREF[k+'_from']="'"+SH_SUP+"'!$B$"+sr; PREF[k+'_to']="'"+SH_SUP+"'!$C$"+sr; });
   const P=PREF;
   // ---- Motor MENSUAL (meses en filas, métricas en columnas) ----
-  const ORDER=['mes','anio','inf','opsA','a_new','a_cini','a_cfin','a_cnew','a_cren','a_inew','a_iren','a_itot','a_colab',
-    'xs','m_new','m_cini','m_cfin','m_cnew','m_cren','m_inew','m_iren','m_itot','m_colab',
+  const ORDER=['mes','anio','inf','opsA','a_new','a_cini','a_cfin','a_cnew','a_cren','a_rnw','a_inew','a_iren','a_itot','a_colab',
+    'xs','m_new','m_cini','m_cfin','m_cnew','m_cren','m_rnw','m_inew','m_iren','m_itot','m_colab',
     'itot','cart','newt','prim','dNeedA','dNeedM','dNeed','dirA','dirM','dir','cdirA','cdirM','cdir','sal','ss','psub',
     'alq','pue','sw','rc','ase','cuo','colab','otr','esub','gtot','ebi','ebac','margin','beEbi','beEbac'];
   const HEAD={mes:'Mes',anio:'Año',inf:'Inflación (factor)',opsA:'Auto · operaciones/mes',a_new:'Auto · pólizas nuevas',
-    a_cini:'Auto · cartera inicio',a_cfin:'Auto · cartera fin',a_cnew:'Auto · cartera nueva',a_cren:'Auto · cartera renov.',
+    a_cini:'Auto · cartera inicio',a_cfin:'Auto · cartera fin',a_cnew:'Auto · cartera nueva',a_cren:'Auto · cartera renov.',a_rnw:'Auto · renuevan este mes',
     a_inew:'Auto · ingreso nuevo',a_iren:'Auto · ingreso renov.',a_itot:'Auto · ingreso total',a_colab:'Auto · comisión colab.',
     xs:'MRE · cross-sell',m_new:'MRE · pólizas nuevas',m_cini:'MRE · cartera inicio',m_cfin:'MRE · cartera fin',
-    m_cnew:'MRE · cartera nueva',m_cren:'MRE · cartera renov.',m_inew:'MRE · ingreso nuevo',m_iren:'MRE · ingreso renov.',
+    m_cnew:'MRE · cartera nueva',m_cren:'MRE · cartera renov.',m_rnw:'MRE · renuevan este mes',m_inew:'MRE · ingreso nuevo',m_iren:'MRE · ingreso renov.',
     m_itot:'MRE · ingreso total',m_colab:'MRE · comisión colab.',itot:'Ingresos totales',cart:'Cartera total',newt:'Pólizas nuevas',
     prim:'Primas intermediadas',dNeed:'Carga de trabajo (FTE)',
     dNeedA:'Auto · carga (FTE)',dNeedM:'MRE · carga (FTE)',dirA:'Auto · plantilla (nº)',dirM:'MRE · plantilla (nº)',
@@ -3615,7 +4097,7 @@ function buildModelSheets(){
     sal:'Salarios brutos',ss:'Seguridad Social',psub:'Subtotal personal',alq:'Alquiler y oficina',pue:'Suministros/puesto',
     sw:'Software y CRM',rc:'RC y seguros',ase:'Asesoría/gestoría',cuo:'Cuotas DGSFP',colab:'Comisión colaboradores',
     otr:'Otros e imprevistos',esub:'Subtotal estructura',gtot:'TOTAL GASTOS',ebi:'EBITDA',ebac:'EBITDA acumulado',
-    margin:'Margen EBITDA',beEbi:'(mes si EBITDA>0)',beEbac:'(mes si EBITDA ac.>0)'};
+    margin:'Margen EBITDA',beEbi:'(mes si EBITDA 12m>0)',beEbac:'(mes si EBITDA ac.>0)'};
   const C={}; ORDER.forEach((k,i)=>C[k]=_colLetter(i));  // clave -> letra de columna
   const monRows=[ORDER.map(k=>HEAD[k])];
   for(let m=1;m<=N;m++){
@@ -3627,25 +4109,27 @@ function buildModelSheets(){
     cell.opsA=F(`${P.opsAuto}*POWER(1+${P.gAuto}/100,${C.mes}${R}-1)`);
     cell.a_new=F(`${C.opsA}${R}*${P.captAuto}/100`);
     cell.a_cini=F(m===1?'0':`${C.a_cfin}${pr}`);
-    cell.a_cfin=F(`${C.a_cini}${R}*POWER(${P.retAuto}/100,1/12)+${C.a_new}${R}`);
+    cell.a_cfin=F(`${C.a_cini}${R}*POWER(1-${P.churnAuto}/100,1/12)+${C.a_new}${R}`);
     cell.a_cnew=F(m===1?`${C.a_new}${R}`
-      : m<=12?`${C.a_cnew}${pr}*POWER(${P.retAuto}/100,1/12)+${C.a_new}${R}`
-      :`${C.a_cnew}${pr}*POWER(${P.retAuto}/100,1/12)+${C.a_new}${R}-${C.a_new}${lg}*${P.retAuto}/100`);
+      : m<=12?`${C.a_cnew}${pr}*POWER(1-${P.churnAuto}/100,1/12)+${C.a_new}${R}`
+      :`${C.a_cnew}${pr}*POWER(1-${P.churnAuto}/100,1/12)+${C.a_new}${R}-${C.a_new}${lg}*(1-${P.churnAuto}/100)`);
     cell.a_cren=F(`${C.a_cfin}${R}-${C.a_cnew}${R}`);
-    cell.a_inew=F(`${C.a_cnew}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12`);
-    cell.a_iren=F(`${C.a_cren}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12`);
+    cell.a_rnw=F(m<=12?'0':`(1-${P.churnAuto}/100)*(${C.a_new}${lg}+${C.a_rnw}${lg})`);
+    cell.a_inew=F(`(1-${P.pagoAuto}/100)*${C.a_cnew}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12+${P.pagoAuto}/100*${C.a_new}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)`);
+    cell.a_iren=F(`(1-${P.pagoAuto}/100)*${C.a_cren}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12+${P.pagoAuto}/100*${C.a_rnw}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)`);
     cell.a_itot=F(`${C.a_inew}${R}+${C.a_iren}${R}`);
     cell.a_colab=F(`${P.colabAuto}/100*(${P.retroAutoNew}/100*${C.a_inew}${R}+${P.retroAutoRen}/100*${C.a_iren}${R})`);
     cell.xs=F(`${C.a_cini}${R}*${P.crossMre}/100/12`);
     cell.m_new=F(`${C.xs}${R}+${P.propMre}*POWER(1+${P.gMre}/100,${C.mes}${R}-1)`);
     cell.m_cini=F(m===1?'0':`${C.m_cfin}${pr}`);
-    cell.m_cfin=F(`${C.m_cini}${R}*POWER(${P.retMre}/100,1/12)+${C.m_new}${R}`);
+    cell.m_cfin=F(`${C.m_cini}${R}*POWER(1-${P.churnMre}/100,1/12)+${C.m_new}${R}`);
     cell.m_cnew=F(m===1?`${C.m_new}${R}`
-      : m<=12?`${C.m_cnew}${pr}*POWER(${P.retMre}/100,1/12)+${C.m_new}${R}`
-      :`${C.m_cnew}${pr}*POWER(${P.retMre}/100,1/12)+${C.m_new}${R}-${C.m_new}${lg}*${P.retMre}/100`);
+      : m<=12?`${C.m_cnew}${pr}*POWER(1-${P.churnMre}/100,1/12)+${C.m_new}${R}`
+      :`${C.m_cnew}${pr}*POWER(1-${P.churnMre}/100,1/12)+${C.m_new}${R}-${C.m_new}${lg}*(1-${P.churnMre}/100)`);
     cell.m_cren=F(`${C.m_cfin}${R}-${C.m_cnew}${R}`);
-    cell.m_inew=F(`${C.m_cnew}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12`);
-    cell.m_iren=F(`${C.m_cren}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12`);
+    cell.m_rnw=F(m<=12?'0':`(1-${P.churnMre}/100)*(${C.m_new}${lg}+${C.m_rnw}${lg})`);
+    cell.m_inew=F(`(1-${P.pagoMre}/100)*${C.m_cnew}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12+${P.pagoMre}/100*${C.m_new}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)`);
+    cell.m_iren=F(`(1-${P.pagoMre}/100)*${C.m_cren}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12+${P.pagoMre}/100*${C.m_rnw}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)`);
     cell.m_itot=F(`${C.m_inew}${R}+${C.m_iren}${R}`);
     cell.m_colab=F(`${P.colabMre}/100*(${P.retroMreNew}/100*${C.m_inew}${R}+${P.retroMreRen}/100*${C.m_iren}${R})`);
     cell.itot=F(`${C.a_itot}${R}+${C.m_itot}${R}`);
@@ -3678,7 +4162,7 @@ function buildModelSheets(){
     cell.ebi=F(`${C.itot}${R}-${C.gtot}${R}`);
     cell.ebac=F(m===1?`${C.ebi}${R}`:`${C.ebac}${pr}+${C.ebi}${R}`);
     cell.margin=F(`IF(${C.itot}${R}=0,0,${C.ebi}${R}/${C.itot}${R})`);
-    cell.beEbi=F(`IF(${C.ebi}${R}>0,${C.mes}${R},"")`);
+    cell.beEbi=F(`IF(SUM(${C.ebi}${Math.max(2,R-11)}:${C.ebi}${R})>0,${C.mes}${R},"")`);   // EBITDA de los últimos 12 meses
     cell.beEbac=F(`IF(${C.ebac}${R}>0,${C.mes}${R},"")`);
     monRows.push(ORDER.map(k=>cell[k]));
   }
@@ -3717,7 +4201,8 @@ function buildModelSheets(){
   const resumen=[
     ['Modeloo — Business Plan de correduría'],
     ['Generado',new Date().toLocaleString('es-ES')],
-    ...(CUR_SCEN?[['Escenario',CUR_SCEN]]:[]),
+    ['Modelo de negocio',(modelOf(SCENS[CUR_SCEN]&&SCENS[CUR_SCEN].model)||curModel()).name],
+    ...(CUR_SCEN&&SCENS[CUR_SCEN]?[['Escenario',scenName(CUR_SCEN)]]:[]),
     ['Inicio del plan',mLabel(0)],['Fin del plan',mLabel(N-1)],['Horizonte (meses)',N],
     ['Verticales','Auto + Multirriesgo Empresas'],
     [],
@@ -3727,39 +4212,41 @@ function buildModelSheets(){
     ['Margen EBITDA (ratio)',F(`IF(SUM(${eRange('itot',dStart,dEnd)})=0,0,SUM(${eRange('ebi',dStart,dEnd)})/SUM(${eRange('itot',dStart,dEnd)}))`)],
     ['Cartera fin (pólizas)',F(eRef('cart',dEnd))],
     ['Primas intermediadas fin (€)',F(eRef('prim',dEnd))],
-    ['Break-even mensual (mes)',F(`IF(COUNT(${eRange('beEbi',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbi',dStart,dEnd)}))`)],
+    ['Break-even (mes, EBITDA 12 meses > 0)',F(`IF(COUNT(${eRange('beEbi',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbi',dStart,dEnd)}))`)],
     ['Break-even acumulado (mes)',F(`IF(COUNT(${eRange('beEbac',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbac',dStart,dEnd)}))`)],
     ['Cartera en break-even (pólizas)',null],
   ];
   // la fila del break-even depende de cuántas filas de cabecera haya (con o sin nombre de escenario)
-  const beRow=resumen.findIndex(r=>r[0]==='Break-even mensual (mes)')+1;
+  const beRow=resumen.findIndex(r=>r[0]==='Break-even (mes, EBITDA 12 meses > 0)')+1;
   resumen[resumen.length-1][1]=F(`IFERROR(INDEX(${eRange('cart',dStart,dEnd)},$B$${beRow}),"—")`);
   // ---- Unit economics (fin de horizonte) con fórmulas ----
   const L_=dEnd;
-  const itotL=eRef('itot',L_),cartL=eRef('cart',L_),colabL=eRef('colab',L_),gtotL=eRef('gtot',L_),
-        primL=eRef('prim',L_),ebiL=eRef('ebi',L_),dirL=eRef('dir',L_),psubL=eRef('psub',L_);
+  // flujos: suma de los últimos 12 meses (la anualidad se cobra de golpe); stocks: último mes
+  const s12=k=>`SUM(${eRange(k,L_-11,L_)})`;
+  const itotL=s12('itot'),cartL=eRef('cart',L_),colabL=s12('colab'),gtotL=s12('gtot'),
+        primL=eRef('prim',L_),ebiL=s12('ebi'),dirL=eRef('dir',L_),psubL=s12('psub');
   const hc=`(${dirL})`;
   const ue=[
-    ['Unit economics (run-rate '+mLabel(N-1)+')'],[],
+    ['Unit economics (12 meses hasta '+mLabel(N-1)+')'],[],
     ['Por póliza · €/año','Valor'],
-    ['Comisión media por póliza',F(`IF(${cartL}=0,0,${itotL}*12/${cartL})`)],          // B4
-    ['− Comisión a colaborador',F(`IF(${cartL}=0,0,-${colabL}*12/${cartL})`)],          // B5
-    ['− Coste de servicio (personal+estructura)',F(`IF(${cartL}=0,0,-(${gtotL}-${colabL})*12/${cartL})`)], // B6
+    ['Comisión media por póliza',F(`IF(${cartL}=0,0,${itotL}/${cartL})`)],          // B4
+    ['− Comisión a colaborador',F(`IF(${cartL}=0,0,-${colabL}/${cartL})`)],          // B5
+    ['− Coste de servicio (personal+estructura)',F(`IF(${cartL}=0,0,-(${gtotL}-${colabL})/${cartL})`)], // B6
     ['= Margen EBITDA por póliza',F('B4+B5+B6')],                                       // B7
     ['Margen por póliza (ratio)',F('IF(B4=0,0,B7/B4)')],[],
     ['Valor del cliente (LTV)','Auto','MRE'],                                            // fila 10
     ['Comisión bruta / año',F(`${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100`),F(`${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100`)],            // 11
-    ['Vida media del cliente (años)',F(`IF(${P.retAuto}/100<1,1/(1-${P.retAuto}/100),99)`),F(`IF(${P.retMre}/100<1,1/(1-${P.retMre}/100),99)`)], // 12
+    ['Vida media del cliente (años)',F(`IF(${P.churnAuto}>0,100/${P.churnAuto},99)`),F(`IF(${P.churnMre}>0,100/${P.churnMre},99)`)], // 12
     ['Retrocesión / año',F(`${P.colabAuto}/100*B11*(${P.retroAutoNew}/100+${P.retroAutoRen}/100*(B12-1))`),F(`${P.colabMre}/100*C11*(${P.retroMreNew}/100+${P.retroMreRen}/100*(C12-1))`)], // 13
     ['LTV neto por póliza',F('B11*B12-B13'),F('C11*C12-C13')],                           // 14
     ['Comisión neta / año (tras colaborador)',F('B14/B12'),F('C14/C12')],[],            // 15
     ['Benchmark sectorial','Tu plan','Pacc (ref.)'],
-    ['Comisión media s/ prima (ratio)',F(`IF(${primL}=0,0,${itotL}*12/${primL})`),0.132],
+    ['Comisión media s/ prima (ratio)',F(`IF(${primL}=0,0,${itotL}/${primL})`),0.132],
     ['Retrocesión efectiva s/ comisión (ratio)',F(`IF(${itotL}=0,0,${colabL}/${itotL})`),0.60],
     ['Margen EBITDA s/ comisiones (ratio)',F(`IF(${itotL}=0,0,${ebiL}/${itotL})`),0.158],
     ['Primas intermediadas/empleado €',F(`IF(${hc}=0,0,${primL}/${hc})`),1263769],
-    ['Comisiones/empleado €',F(`IF(${hc}=0,0,${itotL}*12/${hc})`),135591],
-    ['Coste personal/empleado €',F(`IF(${hc}=0,0,${psubL}*12/${hc})`),52469],
+    ['Comisiones/empleado €',F(`IF(${hc}=0,0,${itotL}/${hc})`),135591],
+    ['Coste personal/empleado €',F(`IF(${hc}=0,0,${psubL}/${hc})`),52469],
   ];
   // ---- metadata visual por hoja (anchos, paneles fijos, estilos) ----
   const rowsY=plSheet(yearP), rowsT=plSheet(triP), rowsM=plSheet(monP);
@@ -3796,111 +4283,208 @@ document.getElementById('xls').onclick=exportXlsx;
 function syncControls(){
   CFG.forEach(([,,,items])=>items.forEach(([key,,type,rng])=>{
     const inp=document.getElementById('inp_'+key);
-    if(inp) inp.value=V[key];
+    if(inp) inp.value= inp.type==='number'? inpVal(key) : V[key];
     if(rng){ const el=document.getElementById('v_'+key); if(el) el.textContent=fmtVal(key,type); }
   }));
+  syncProdUnit();
   [...document.getElementById('segGran').children].forEach(b=>b.classList.toggle('on',b.dataset.g===GRAN));
   syncScopeSeg();
   syncDateControls();
   syncPhaseControls();
+  renderLabHead();
   render();
 }
+const esc=s=>escAttr(String(s==null?'':s));
+const ramoChips=rm=>Object.keys(RAMOS).filter(r=>ramoOn(r,rm)).map(r=>`<span class="chip-ramo ${r}">${RAMOS[r].label}</span>`).join('');
+function flash(msg,title){ uiAlert(title||'Hecho',msg,'success'); }
 
-/* ===== escenarios: se guardan desde el Lab y se gestionan en Inicio ===== */
-let _flashT=null;
-function flash(msg){
-  const f=document.getElementById('savedFlash'); if(!msg) return;
-  f.textContent=msg; f.classList.add('on');
-  clearTimeout(_flashT); _flashT=setTimeout(()=>f.classList.remove('on'),2400);
-}
+/* ===== escenarios: se guardan desde el Lab de cada modelo y se consultan en Inicio ===== */
 // forma canónica de lo que define una proyección (parámetros, calendario de partidas y fechas
 // del plan). Sirve para saber si el Lab tiene cambios sin guardar respecto al escenario cargado.
 function normSnap(s){
   s=s||{};
   return {V:{...DEF, ...migrateV(s.V||{})}, PHASE:migratePhase(s.PHASE||{}),
-    HM:clampI(s.HM? s.HM : (s.HY? s.HY*12 : 120),HM_MIN,HM_MAX),
-    START: ymParts(s.START)? s.START : null};   // null: escenario anterior a las fechas (usa el inicio actual)
+    HM:clampI(s.HM? s.HM : (s.HY? s.HY*12 : 120),HM_MIN,HM_MAX), START: ymParts(s.START)? s.START : defStart()};
 }
 function modelKey(s){
   const n=normSnap(s);
   const win=PHASE_KEYS.map(([k])=>{ const p=n.PHASE[k]; if(!p||!p.on) return 'all';
     return Math.max(1,p.from||1)+'-'+((p.to&&p.to>0)?Math.min(p.to,n.HM):n.HM); });
-  return JSON.stringify([Object.keys(DEF).map(k=>+n.V[k]), win, n.HM, n.START||START]);
+  return JSON.stringify([Object.keys(DEF).map(k=>+n.V[k]), win, n.HM, n.START]);
 }
 // 'new' = lo del Lab no es un escenario guardado · 'clean' = coincide con el guardado · 'dirty' = tiene cambios
 function scenState(){
-  const p= CUR_SCEN? loadPresets()[CUR_SCEN] : null;
-  if(!p) return 'new';
-  return modelKey(p)===modelKey(snapshot())? 'clean' : 'dirty';
+  const sc= CUR_SCEN? SCENS[CUR_SCEN] : null;
+  if(!sc) return 'new';
+  return modelKey(sc.snap)===modelKey(snapshot())? 'clean' : 'dirty';
 }
 function hasUnsaved(){
   const st=scenState();
   if(st==='dirty') return true;
-  return st==='new' && modelKey(snapshot())!==modelKey({V:DEF,HM:120,START:defStart()});
+  return st==='new' && modelKey(snapshot())!==modelKey({V:modelDefaults(curModel()),HM:120,START:defStart()});
 }
-function confirmDiscard(){
+async function confirmDiscard(){
   if(!hasUnsaved()) return true;
-  return confirm(CUR_SCEN? `Tienes cambios sin guardar en «${CUR_SCEN}». ¿Descartarlos?`
-                         : 'Lo que tienes en el Lab no está guardado como escenario. ¿Descartarlo?');
+  return uiConfirm('Hay cambios sin guardar', CUR_SCEN
+    ? `El escenario <b>«${esc(scenName(CUR_SCEN))}»</b> tiene cambios en el Lab que no has guardado. Si continúas, se perderán.`
+    : `Lo que tienes en el Lab de <b>${esc(curModel().name)}</b> no está guardado como escenario. Si continúas, se perderá.`,
+    {ok:'Descartar cambios', danger:true});
+}
+function renderLabHead(){
+  const m=curModel();
+  document.getElementById('labModelName').textContent=m.name;
+  document.getElementById('labModelInfo').innerHTML=ramoChips(m)+(m.desc?`<span class="model-desc" style="margin:0">${esc(m.desc)}</span>`:'');
+  if(ACTIVE_TAB==='lab') document.getElementById('mbTitle').textContent='Lab · '+m.name;
 }
 function updateScenStatus(){
-  if(CUR_SCEN && !loadPresets()[CUR_SCEN]) CUR_SCEN=null;   // borrado (p.ej. desde otra pestaña)
-  const st=scenState(), name=CUR_SCEN||'Sin guardar';
+  if(CUR_SCEN && !SCENS[CUR_SCEN]) CUR_SCEN=null;   // borrado (p.ej. desde otra pestaña)
+  const st=scenState(), name=scenName(CUR_SCEN)||'Sin guardar';
   document.getElementById('labScenName').textContent=name;
   const d=document.getElementById('labDirty');
   d.className='dirty'+(st==='clean'?' ok':'');
   d.textContent= st==='dirty'? '● Cambios sin guardar' : st==='clean'? '✓ Guardado' : '';
+  document.getElementById('labScenLink').innerHTML= CUR_SCEN? `<button class="linkbtn" data-scen-detail="${CUR_SCEN}">Ver ficha del escenario</button>` : '';
   const sv=document.getElementById('presetSave');
   sv.textContent= !CUR_SCEN? 'Guardar escenario' : st==='clean'? 'Guardado ✓' : 'Guardar cambios';
   sv.disabled= st==='clean';
-  document.getElementById('sbScen').innerHTML=`En el Lab<b>${escAttr(name)}</b>${st==='dirty'?'<span class="dirty">● Cambios sin guardar</span>':''}`;
+  document.getElementById('sbScen').innerHTML=`Lab abierto<b>${esc(curModel().name)}</b>${esc(name)}${st==='dirty'?'<br><span class="dirty">● Cambios sin guardar</span>':''}`;
   document.getElementById('mbScen').textContent=name+(st==='dirty'?' ●':'');
 }
-function storeScenario(name){
-  const p=loadPresets(), s={...snapshot(), savedAt:new Date().toISOString()};
-  delete s.ACTIVE_TAB;
-  p[name]=s; savePresets(p); CUR_SCEN=name;
-  updateScenStatus(); saveState();
+const nameTaken=(name,model,except)=>Object.values(SCENS).some(x=>x.model===model && x.name===name && x.id!==except);
+function storeScenario(id,name){
+  id=id||uid('s');
+  SCENS[id]={id, name, model:ACTIVE_MODEL, savedAt:new Date().toISOString(), snap:{...snapshot(), RAMOS:{...curModel().ramos}}};
+  saveScens(); CUR_SCEN=id; updateScenStatus(); saveState(); renderNav();
+  return id;
 }
-function askNewName(msg,def){
-  const name=(prompt(msg,def||'')||'').trim(); if(!name) return null;
-  if(loadPresets()[name] && !confirm(`Ya existe un escenario «${name}». ¿Sobrescribirlo?`)) return null;
-  return name;
+async function afterSave(id,title,msg){
+  const go=await uiModal({title, html:msg, icon:'success', cancelValue:false,
+    buttons:[{label:'Seguir en el Lab',value:false},{label:'Ver la ficha del escenario',value:true,kind:'primary'}]});
+  if(go) openScenDetail(id);
 }
-function saveScenarioAs(){
-  const name=askNewName('Nombre del escenario:', CUR_SCEN? CUR_SCEN+' (copia)' : ''); if(!name) return;
-  storeScenario(name); flash('Escenario «'+name+'» guardado ✓ · lo tienes en Inicio');
+async function saveScenarioAs(){
+  const m=curModel();
+  const name=await uiPrompt('Guardar escenario','Nombre del escenario', CUR_SCEN? scenName(CUR_SCEN)+' (copia)' : '',
+    {html:`Se guarda en el modelo <b>${esc(m.name)}</b> con sus parámetros, sus fechas y su calendario de partidas.`,
+     placeholder:'p. ej. Base conservador', check:v=>nameTaken(v,m.id)? 'Ya hay un escenario con ese nombre en este modelo.' : ''});
+  if(!name) return;
+  const id=storeScenario(null,name);
+  afterSave(id,'Escenario guardado',`<b>«${esc(name)}»</b> ya está en Inicio, dentro de <b>${esc(m.name)}</b>.`);
 }
 document.getElementById('presetSave').onclick=()=>{
   if(!CUR_SCEN){ saveScenarioAs(); return; }
-  storeScenario(CUR_SCEN); flash('Escenario «'+CUR_SCEN+'» actualizado ✓');
+  const id=storeScenario(CUR_SCEN,scenName(CUR_SCEN));
+  afterSave(id,'Escenario actualizado',`<b>«${esc(scenName(id))}»</b> se ha guardado con los valores que tienes ahora en el Lab.`);
 };
 document.getElementById('presetSaveAs').onclick=saveScenarioAs;
-function openScenario(name){
-  const p=loadPresets()[name]; if(!p) return;
-  if(name!==CUR_SCEN && !confirmDiscard()) return;
-  PHASE={}; applySnapshot(p); CUR_SCEN=name;
-  syncControls(); activateTab('lab'); window.scrollTo(0,0);
-  flash('Escenario «'+name+'» abierto en el Lab');
-}
-function newScenario(){
-  if(!confirmDiscard()) return;
-  V={...DEF}; PHASE={}; START=defStart(); setHM(120); PF=0; PT=0; UE_END=0; CMP_END=0; GRAN='año'; CUR_SCEN=null;
-  syncControls(); activateTab('lab'); window.scrollTo(0,0);
-  flash('Nuevo escenario con los valores por defecto');
-}
-document.getElementById('homeNew').onclick=newScenario;
+document.getElementById('page-lab').addEventListener('click',e=>{ const b=e.target.closest('[data-scen-detail]'); if(b) openScenDetail(b.dataset.scenDetail); });
 
-// KPIs de un escenario guardado sin tocar el Lab: se calcula con sus valores y se restaura el estado
-function evalSnapshot(s){
-  const keep={V,PHASE,HM,HY,START}, n=normSnap(s);
-  try{
-    V=n.V; PHASE=n.PHASE; setHM(n.HM); if(n.START) START=n.START;
-    const R=compute(V), tot=totalCol(R.mon,0,HM);
-    return {tot, plan:planLabel(), be:R.beM? mLabel(R.beM-1) : null, beAbs:R.beM? _abs(R.beM-1) : Infinity,
-      yrs:bucketize(R.mon,'año').map(b=>({l:b.label,v:b.vals.ebi}))};
-  }finally{ V=keep.V; PHASE=keep.PHASE; HM=keep.HM; HY=keep.HY; START=keep.START; }
+// cambia el Lab a otro modelo: el estado de trabajo de cada modelo se conserva por separado
+function switchModel(id){
+  if(id===ACTIVE_MODEL || !modelOf(id)) return;
+  saveState(); ACTIVE_MODEL=id; loadWork(curModel());
+  syncControls(); renderNav();
 }
+async function openScenario(id){
+  const sc=SCENS[id]; if(!sc) return;
+  switchModel(sc.model);
+  if(id!==CUR_SCEN && !(await confirmDiscard())) return;
+  resetWork(); V=modelDefaults(curModel()); applySnapshot(sc.snap); enforceRamos(); CUR_SCEN=id;
+  syncControls(); activateTab('lab'); window.scrollTo(0,0);
+  uiAlert('Escenario abierto en el Lab',
+    `Estás trabajando con <b>«${esc(sc.name)}»</b> del modelo <b>${esc(curModel().name)}</b>. Lo que cambies no se guarda en el escenario hasta que pulses <b>Guardar cambios</b>; con <b>Guardar como…</b> lo conviertes en uno nuevo.`,'info');
+}
+async function newScenario(){
+  if(!(await confirmDiscard())) return;
+  resetWork(); V=modelDefaults(curModel()); CUR_SCEN=null;
+  syncControls(); activateTab('lab'); window.scrollTo(0,0);
+  uiAlert('Nuevo escenario en blanco',`Partes de los valores por defecto de <b>${esc(curModel().name)}</b>. Cuando tengas una proyección que quieras conservar, pulsa <b>Guardar escenario</b>.`,'info');
+}
+
+/* ===== modelos de negocio: cada uno es un Lab con sus ramos, su estado y sus escenarios ===== */
+const ramoChecksHTML=rm=>`<div class="chk-row">${Object.keys(RAMOS).map(r=>`<label><input type="checkbox" data-ramo="${r}" ${ramoOn(r,rm)?'checked':''}> ${RAMOS[r].label}</label>`).join('')}</div>`;
+async function createModelDialog(){
+  const cm=curModel();
+  const res=await uiModal({title:'Nuevo modelo de negocio', wide:true, cancelValue:null,
+    html:`Cada modelo es un Lab independiente, con sus ramos, sus parámetros y sus escenarios guardados.
+      <label class="ui-field"><span class="ui-lab">Nombre</span><input class="ui-in" data-f="name" maxlength="60" placeholder="p. ej. Solo Auto con red de colaboradores"></label>
+      <label class="ui-field"><span class="ui-lab">Descripción <span style="font-weight:400;color:var(--muted-foreground)">(opcional)</span></span><textarea class="ui-in" data-f="desc" rows="2" maxlength="240" placeholder="Qué hipótesis de negocio quieres explorar"></textarea></label>
+      <div class="ui-field"><span class="ui-lab">Punto de partida</span><div class="tpl-list">
+        <label class="tpl"><input type="radio" name="tpl" value="both" checked><div><b>Auto + Multirriesgo Empresas</b><span>Los dos ramos, con los valores por defecto.</span></div></label>
+        <label class="tpl"><input type="radio" name="tpl" value="auto"><div><b>Solo Auto</b><span>Captación de pólizas de auto a través de la gestoría, sin multirriesgo.</span></div></label>
+        <label class="tpl"><input type="radio" name="tpl" value="mre"><div><b>Solo Multirriesgo Empresas</b><span>Producción propia de multirriesgo a empresas, sin auto.</span></div></label>
+        <label class="tpl"><input type="radio" name="tpl" value="copy"><div><b>Copia de «${esc(cm.name)}»</b><span>Mismos ramos y los mismos valores que tiene ahora su Lab.</span></div></label>
+      </div></div><div class="ui-err"></div>`,
+    buttons:[{label:'Cancelar',value:null},{label:'Crear modelo',kind:'primary',value:md=>{
+      const name=md.querySelector('[data-f=name]').value.trim(), err=md.querySelector('.ui-err');
+      if(!name){ err.textContent='Ponle un nombre al modelo.'; md.querySelector('[data-f=name]').focus(); return undefined; }
+      if(MODELS.some(x=>x.name===name)){ err.textContent='Ya hay un modelo con ese nombre.'; return undefined; }
+      return {name, desc:md.querySelector('[data-f=desc]').value.trim(), tpl:md.querySelector('input[name=tpl]:checked').value}; }}]});
+  if(!res) return;
+  const ramos= res.tpl==='copy'? {...cm.ramos} : {auto:res.tpl!=='mre', mre:res.tpl!=='auto'};
+  const m=newModel({name:res.name, desc:res.desc, ramos, state: res.tpl==='copy'? snapshot() : null});
+  switchModel(m.id); renderNav(); activateTab('lab'); window.scrollTo(0,0);
+  uiAlert('Modelo creado',`<b>${esc(m.name)}</b> ya tiene su propio Lab en el menú. Ajusta los parámetros y guarda los escenarios que quieras comparar.`);
+}
+async function editModelDialog(){
+  const m=curModel();
+  const res=await uiModal({title:'Editar modelo', wide:true, cancelValue:null,
+    html:`<label class="ui-field"><span class="ui-lab">Nombre</span><input class="ui-in" data-f="name" maxlength="60" value="${esc(m.name)}"></label>
+      <label class="ui-field"><span class="ui-lab">Descripción</span><textarea class="ui-in" data-f="desc" rows="2" maxlength="240">${esc(m.desc)}</textarea></label>
+      <div class="ui-field"><span class="ui-lab">Ramos que trabaja</span>${ramoChecksHTML(m)}
+      <div class="note" style="margin-top:6px">Un ramo desactivado deja de producir (su captación queda a cero) y sus parámetros se ocultan. Los escenarios ya guardados no cambian.</div></div><div class="ui-err"></div>`,
+    buttons:[{label:'Cancelar',value:null},{label:'Guardar cambios',kind:'primary',value:md=>{
+      const name=md.querySelector('[data-f=name]').value.trim(), err=md.querySelector('.ui-err');
+      const ramos={}; md.querySelectorAll('[data-ramo]').forEach(c=>ramos[c.dataset.ramo]=c.checked);
+      if(!name){ err.textContent='Ponle un nombre al modelo.'; return undefined; }
+      if(MODELS.some(x=>x.name===name && x.id!==m.id)){ err.textContent='Ya hay un modelo con ese nombre.'; return undefined; }
+      if(!Object.values(ramos).some(Boolean)){ err.textContent='El modelo tiene que trabajar al menos un ramo.'; return undefined; }
+      return {name, desc:md.querySelector('[data-f=desc]').value.trim(), ramos}; }}]});
+  if(!res) return;
+  // al reactivar un ramo, su captación vuelve a los valores por defecto
+  Object.keys(RAMOS).forEach(r=>{ if(res.ramos[r] && !ramoOn(r,m)) RAMO_KEYS[r].forEach(k=>{ if(!V[k]) V[k]=DEF[k]; }); });
+  if(res.ramos.auto && res.ramos.mre && !V.crossMre) V.crossMre=DEF.crossMre;
+  m.name=res.name; m.desc=res.desc; m.ramos=res.ramos;
+  enforceRamos(m); saveModels(); renderNav(); syncControls();
+}
+async function dupModel(){
+  const m=curModel();
+  const name=await uiPrompt('Duplicar modelo','Nombre de la copia',m.name+' (copia)',
+    {ok:'Duplicar', html:'Se copian los ramos y lo que tienes ahora en el Lab; los escenarios guardados se quedan en el original.',
+     check:v=>MODELS.some(x=>x.name===v)? 'Ya hay un modelo con ese nombre.' : ''});
+  if(!name) return;
+  const nm=newModel({name, desc:m.desc, ramos:{...m.ramos}, state:snapshot()});
+  switchModel(nm.id); renderNav(); activateTab('lab');
+  flash(`Ya estás en el Lab de <b>${esc(name)}</b>.`,'Modelo duplicado');
+}
+async function delModel(){
+  const m=curModel();
+  if(MODELS.length===1){ uiAlert('No se puede eliminar','Es el único modelo de negocio. Crea otro antes de eliminar este.','warn'); return; }
+  const n=Object.values(SCENS).filter(x=>x.model===m.id).length;
+  if(!(await uiConfirm('Eliminar modelo',`Se eliminará <b>${esc(m.name)}</b>${n?` junto con sus <b>${n} ${n===1?'escenario guardado':'escenarios guardados'}</b>`:''}. No se puede deshacer.`,{ok:'Eliminar',danger:true}))) return;
+  Object.keys(SCENS).forEach(id=>{ if(SCENS[id].model===m.id) delete SCENS[id]; });
+  MODELS=MODELS.filter(x=>x.id!==m.id); saveScens(); saveModels();
+  ACTIVE_MODEL=MODELS[0].id; loadWork(curModel()); syncControls(); renderNav(); activateTab('home');
+  flash(`<b>${esc(m.name)}</b> se ha eliminado.`,'Modelo eliminado');
+}
+document.getElementById('mmNewScen').onclick=newScenario;
+document.getElementById('mmEdit').onclick=editModelDialog;
+document.getElementById('mmDup').onclick=dupModel;
+document.getElementById('mmDel').onclick=delModel;
+document.getElementById('homeNewModel').onclick=createModelDialog;
+
+// evalúa un estado guardado sin tocar el Lab: se cargan sus valores, se calcula y se restaura todo
+function withSnapshot(snap,fn){
+  const keep={V,PHASE,HM,HY,START,PF,PT,UE_END,CMP_END,GRAN,SCOPE,CUR_SCEN};
+  try{ resetWork(); applySnapshot(snap||{}); return fn(); }
+  finally{ ({V,PHASE,HM,HY,START,PF,PT,UE_END,CMP_END,GRAN,SCOPE,CUR_SCEN}=keep); }
+}
+function quickEval(){
+  const R=compute(V), tot=totalCol(R.mon,0,HM);
+  return {tot, plan:planLabel(), be:R.beM? mLabel(R.beM-1) : null, beAbs:R.beM? _abs(R.beM-1) : Infinity,
+    yrs:bucketize(R.mon,'año').map(b=>({l:b.label,v:b.vals.ebi}))};
+}
+const evalSnap=snap=>withSnapshot(snap,quickEval);
 const eurC=x=>{ const a=Math.abs(x);
   return a>=1e6? (x/1e6).toLocaleString('es-ES',{maximumFractionDigits:2})+' M€'
        : a>=1e4? Math.round(x/1e3).toLocaleString('es-ES')+' k€' : eur(x); };
@@ -3913,63 +4497,65 @@ function sparkSVG(yrs){
     return `<rect x="${(i*w+g/2).toFixed(1)}" y="${(y.v>=0?zero-h:zero).toFixed(1)}" width="${(w-g).toFixed(1)}" height="${h.toFixed(1)}" rx="1.5" fill="${y.v>=0?'#16a34a':'#dc2626'}"><title>${y.l}: ${eur(y.v)}</title></rect>`; }).join('');
   return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="EBITDA por año">${bars}<line x1="0" x2="${W}" y1="${zero}" y2="${zero}" stroke="#cbd5e1" stroke-width="1"/></svg>`;
 }
+const scenSorted=list=>list.sort((a,b)=>String(b.savedAt||'').localeCompare(String(a.savedAt||'')) || a.name.localeCompare(b.name,'es'));
 function renderHome(){
-  const P=loadPresets(), st=scenState();
-  // lo que hay ahora en el Lab
-  const R=compute(V), tot=totalCol(R.mon,0,HM);
-  const badge= st==='dirty'? '<span class="dirty">● Cambios sin guardar</span>' : st==='clean'? '<span class="dirty ok">✓ Guardado</span>' : '<span class="dirty">Sin guardar</span>';
-  document.getElementById('homeCur').innerHTML=`
-    <div><div class="k">En el Lab ahora</div>
-      <div class="nm">${escAttr(CUR_SCEN||'Escenario sin nombre')} ${badge}</div>
-      <div class="mt">Plan ${planLabel()} · ${HM} meses</div></div>
-    <div class="home-cur-kpis">
-      <div><span>Ingresos del plan</span><b>${eurC(tot.itot)}</b></div>
-      <div><span>EBITDA del plan</span><b class="${tot.ebi<0?'neg':'pos'}">${eurC(tot.ebi)}</b></div>
-      <div><span>Break-even</span><b>${R.beM?mLabel(R.beM-1):'No alcanzado'}</b></div>
-      <div><span>Cartera a ${mLabel(HM-1)}</span><b>${num0(tot.cart)}</b></div>
-    </div>
-    <div class="page-actions">
-      ${st!=='clean'?'<button class="btn" id="homeSave">Guardar como escenario</button>':''}
-      <button class="btn btn-primary" id="homeGoLab">Continuar en el Lab →</button>
-    </div>`;
-  document.getElementById('homeGoLab').onclick=()=>{ activateTab('lab'); window.scrollTo(0,0); };
-  const hs=document.getElementById('homeSave');
-  if(hs) hs.onclick=()=>{ if(CUR_SCEN && st==='dirty'){ storeScenario(CUR_SCEN); flash('Escenario «'+CUR_SCEN+'» actualizado ✓'); } else saveScenarioAs(); renderHome(); };
-  // escenarios guardados, los más recientes primero
-  const names=Object.keys(P).sort((a,b)=>String(P[b].savedAt||'').localeCompare(String(P[a].savedAt||'')) || a.localeCompare(b,'es'));
-  document.getElementById('homeCount').textContent= names.length? `· ${names.length}` : '';
-  const box=document.getElementById('homeScen');
-  if(!names.length){
-    box.innerHTML=`<div class="empty">Todavía no has guardado ningún escenario.<br>Ve al <b>Lab</b>, ajusta los parámetros del negocio y pulsa <b>Guardar escenario</b>: aparecerá aquí para que puedas volver a él y compararlo con otros.</div>`;
-    document.getElementById('homeCmpPanel').style.display='none';
-    return;
-  }
-  const res={}; names.forEach(n=>res[n]=evalSnapshot(P[n]));
-  box.innerHTML='<div class="scen-grid">'+names.map(n=>{
-    const r=res[n], p=P[n], cur= n===CUR_SCEN;
-    const tag= cur? (st==='dirty'? '<span class="dirty">En el Lab · con cambios</span>' : '<span class="badge">En el Lab</span>') : '';
-    const saved= p.savedAt? ' · guardado el '+new Date(p.savedAt).toLocaleDateString('es-ES') : '';
-    return `<div class="scen-card${cur?' cur':''}" data-name="${escAttr(n)}">
-      <div class="sc-top"><div><div class="sc-name">${escAttr(n)}</div><div class="sc-meta">${r.plan}${saved}</div></div>${tag}</div>
+  // modelos de negocio, con lo que tiene ahora cada Lab
+  document.getElementById('homeModels').innerHTML=MODELS.map(m=>{
+    const cur=m.id===ACTIVE_MODEL, r= cur? quickEval() : evalSnap(m.state||{V:modelDefaults(m)});
+    const n=Object.values(SCENS).filter(x=>x.model===m.id).length;
+    const sName= cur? scenName(CUR_SCEN) : scenName(m.scen);
+    const st= cur? scenState() : null;
+    const lab= sName? `${esc(sName)}${st==='dirty'?' <span class="dirty">● con cambios</span>':''}` : '<span style="color:var(--muted-foreground)">sin guardar</span>';
+    return `<div class="model-card${cur?' cur':''}">
+      <div class="sc-top"><div><h3>${esc(m.name)}</h3><div class="sc-meta">${n} ${n===1?'escenario guardado':'escenarios guardados'} · plan ${r.plan}</div></div>${cur?'<span class="badge">Lab abierto</span>':''}</div>
+      <div class="chips">${ramoChips(m)}</div>
+      ${m.desc?`<p class="model-desc" style="margin:0">${esc(m.desc)}</p>`:''}
+      <div class="sc-meta">En su Lab: ${lab}</div>
       <div class="sc-kpis">
         <div><span>Ingresos del plan</span><b>${eurC(r.tot.itot)}</b></div>
         <div><span>EBITDA del plan</span><b class="${r.tot.ebi<0?'neg':'pos'}">${eurC(r.tot.ebi)}</b></div>
         <div><span>Break-even</span><b>${r.be||'No alcanzado'}</b></div>
         <div><span>Cartera final</span><b>${num0(r.tot.cart)} pólizas</b></div>
       </div>
-      <div>${sparkSVG(r.yrs)}<div class="spark-lab"><span>EBITDA ${r.yrs.length?r.yrs[0].l:''}</span><span>${r.yrs.length?r.yrs[r.yrs.length-1].l:''}</span></div></div>
-      <div class="sc-actions">
-        <button class="btn btn-primary btn-sm" data-act="open">${cur?'Ir al Lab':'Abrir en el Lab'}</button>
-        <button class="btn btn-sm btn-icon" data-act="dup" title="Duplicar" aria-label="Duplicar">⧉</button>
-        <button class="btn btn-sm btn-icon" data-act="ren" title="Renombrar" aria-label="Renombrar">✎</button>
-        <button class="btn btn-sm btn-icon" data-act="link" title="Copiar enlace" aria-label="Copiar enlace">🔗</button>
-        <button class="btn btn-sm btn-icon btn-danger" data-act="del" title="Borrar" aria-label="Borrar">🗑</button>
-      </div></div>`;
-  }).join('')+'</div>';
+      <div class="sc-actions"><button class="btn btn-primary btn-sm" data-mopen="${m.id}">Abrir su Lab →</button></div>
+    </div>`;
+  }).join('');
+  // escenarios guardados, agrupados por modelo y los más recientes primero
+  const all=Object.values(SCENS);
+  document.getElementById('homeCount').textContent= all.length? `· ${all.length}` : '';
+  const box=document.getElementById('homeScen');
+  if(!all.length){
+    box.innerHTML=`<div class="empty">Todavía no has guardado ningún escenario.<br>Entra en el <b>Lab</b> de un modelo, ajusta los parámetros del negocio y pulsa <b>Guardar escenario</b>: aparecerá aquí con su ficha completa.</div>`;
+    document.getElementById('homeCmpPanel').style.display='none';
+    return;
+  }
+  const res={}; all.forEach(sc=>res[sc.id]=evalSnap(sc.snap));
+  box.innerHTML=MODELS.filter(m=>all.some(x=>x.model===m.id)).map(m=>{
+    const list=scenSorted(all.filter(x=>x.model===m.id));
+    return `<div class="home-group"><div class="home-group-h">${esc(m.name)} <span>· ${list.length}</span></div><div class="scen-grid">`+list.map(sc=>{
+      const r=res[sc.id], cur= m.id===ACTIVE_MODEL && sc.id===CUR_SCEN;
+      const tag= cur? (scenState()==='dirty'? '<span class="dirty">En el Lab · con cambios</span>' : '<span class="badge">En el Lab</span>') : '';
+      const saved= sc.savedAt? ' · guardado el '+new Date(sc.savedAt).toLocaleDateString('es-ES') : '';
+      return `<div class="scen-card${cur?' cur':''}" data-scen="${sc.id}" role="link" tabindex="0" aria-label="Ver la ficha de ${esc(sc.name)}">
+        <div class="sc-top"><div><div class="sc-name">${esc(sc.name)}</div><div class="sc-meta">${r.plan}${saved}</div></div>${tag}</div>
+        <div class="sc-kpis">
+          <div><span>Ingresos del plan</span><b>${eurC(r.tot.itot)}</b></div>
+          <div><span>EBITDA del plan</span><b class="${r.tot.ebi<0?'neg':'pos'}">${eurC(r.tot.ebi)}</b></div>
+          <div><span>Break-even</span><b>${r.be||'No alcanzado'}</b></div>
+          <div><span>Cartera final</span><b>${num0(r.tot.cart)} pólizas</b></div>
+        </div>
+        <div>${sparkSVG(r.yrs)}<div class="spark-lab"><span>EBITDA ${r.yrs.length?r.yrs[0].l:''}</span><span>${r.yrs.length?r.yrs[r.yrs.length-1].l:''}</span></div></div>
+        <div class="sc-actions">
+          <button class="btn btn-primary btn-sm" data-act="detail">Ver ficha</button>
+          <button class="btn btn-sm" data-act="open">${cur?'Ir al Lab':'Abrir en el Lab'}</button>
+        </div></div>`;
+    }).join('')+'</div></div>';
+  }).join('');
   // tabla comparativa (con dos o más escenarios)
   const cmpP=document.getElementById('homeCmpPanel');
-  cmpP.style.display= names.length>1? '' : 'none';
-  if(names.length>1){
+  cmpP.style.display= all.length>1? '' : 'none';
+  if(all.length>1){
+    const list=[]; MODELS.forEach(m=>list.push(...scenSorted(all.filter(x=>x.model===m.id))));
     const cols=[
       ['Ingresos del plan', r=>r.tot.itot, eurC, 'max'],
       ['EBITDA del plan', r=>r.tot.ebi, eurC, 'max'],
@@ -3978,79 +4564,196 @@ function renderHome(){
       ['Cartera final', r=>r.tot.cart, num0, 'max'],
       ['Prima en gestión final', r=>r.tot.prim, eurC, 'max'],
     ];
-    const best=cols.map(([, f,, dir])=>{ const vs=names.map(n=>f(res[n])).filter(isFinite); return vs.length? (dir==='max'?Math.max(...vs):Math.min(...vs)) : null; });
-    let h='<table class="scmp-t"><thead><tr><th>Escenario</th><th>Plan</th>'+cols.map(c=>`<th>${c[0]}</th>`).join('')+'</tr></thead><tbody>';
-    names.forEach(n=>{ const r=res[n];
-      h+=`<tr class="${n===CUR_SCEN?'cur-row':''}"><td><button type="button" class="dos-open" data-open="${escAttr(n)}" title="Abrir en el Lab">${escAttr(n)}</button></td><td>${r.plan}</td>`+
-        cols.map(([, f, fmt],i)=>{ const v=f(r); return `<td class="${isFinite(v)&&v===best[i]?'best':''}">${fmt(v,r)}</td>`; }).join('')+'</tr>'; });
+    const best=cols.map(([,f,,dir])=>{ const vs=list.map(sc=>f(res[sc.id])).filter(isFinite); return vs.length? (dir==='max'?Math.max(...vs):Math.min(...vs)) : null; });
+    let h='<table class="scmp-t"><thead><tr><th>Escenario</th><th>Modelo</th><th>Plan</th>'+cols.map(c=>`<th>${c[0]}</th>`).join('')+'</tr></thead><tbody>';
+    list.forEach(sc=>{ const r=res[sc.id], m=modelOf(sc.model);
+      h+=`<tr><td><button type="button" class="dos-open" data-scen-detail="${sc.id}" title="Ver la ficha">${esc(sc.name)}</button></td><td>${esc(m?m.name:'')}</td><td>${r.plan}</td>`+
+        cols.map(([,f,fmt],i)=>{ const v=f(r); return `<td class="${isFinite(v)&&v===best[i]?'best':''}">${fmt(v,r)}</td>`; }).join('')+'</tr>'; });
     document.getElementById('homeCmp').innerHTML=h+'</tbody></table>';
   }
 }
-document.getElementById('homeCmp').addEventListener('click',e=>{ const b=e.target.closest('[data-open]'); if(b) openScenario(b.dataset.open); });
-document.getElementById('homeScen').addEventListener('click',async e=>{
-  const b=e.target.closest('[data-act]'); if(!b) return;
-  const name=b.closest('.scen-card').dataset.name, act=b.dataset.act, P=loadPresets();
-  if(!P[name]) return;
-  if(act==='open'){ if(name===CUR_SCEN){ activateTab('lab'); window.scrollTo(0,0); } else openScenario(name); return; }
+document.getElementById('page-home').addEventListener('click',e=>{
+  const mo=e.target.closest('[data-mopen]'); if(mo){ switchModel(mo.dataset.mopen); activateTab('lab'); window.scrollTo(0,0); return; }
+  const d=e.target.closest('[data-scen-detail]'); if(d){ openScenDetail(d.dataset.scenDetail); return; }
+  const card=e.target.closest('[data-scen]'); if(!card) return;
+  const b=e.target.closest('[data-act]'), id=card.dataset.scen;
+  if(b && b.dataset.act==='open'){ if(SCENS[id].model===ACTIVE_MODEL && id===CUR_SCEN){ activateTab('lab'); window.scrollTo(0,0); } else openScenario(id); return; }
+  openScenDetail(id);
+});
+document.getElementById('page-home').addEventListener('keydown',e=>{
+  const card=e.target.closest&&e.target.closest('.scen-card'); if(card && e.target===card && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); openScenDetail(card.dataset.scen); } });
+
+/* ===== ficha de un escenario: todo lo relevante para el negocio en una página ===== */
+function openScenDetail(id){ if(!SCENS[id]) return; SCEN_VIEW=id; activateTab('scen'); window.scrollTo(0,0); }
+function scenDetailHTML(sc,m,rm,inLab,st){
+  const R=compute(V), C=ceilingCalc(V), tot=totalCol(R.mon,0,HM), l0=Math.max(0,HM-12), last=totalCol(R.mon,l0,HM);
+  const after=x=> x<12? `${x} ${x===1?'mes':'meses'} desde el inicio` : `${num1(x/12)} años desde el inicio`;
+  let minE=0, minI=-1; R.mon.ebac.forEach((v,i)=>{ if(v<minE){ minE=v; minI=i; } });
+  const metric=(k,v,s,cls)=>`<div class="metric"><div class="k">${k}</div><div class="v ${cls||''}">${v}</div>${s?`<div class="s">${s}</div>`:''}</div>`;
+  const aC=R.monA&&R.monA.cart? R.monA.cart[HM-1]||0 : 0, mC=R.monM&&R.monM.cart? R.monM.cart[HM-1]||0 : 0;
+  const both=ramoOn('auto',rm)&&ramoOn('mre',rm);
+  const hit95=C.hit.all[0.95];
+  const saved= sc.savedAt? 'guardado el '+new Date(sc.savedAt).toLocaleDateString('es-ES') : '';
+  let h=`<div class="page-head"><div>
+      <div class="crumbs"><button data-go="home">Inicio</button><span>›</span><button data-go-model="${m?m.id:''}">${esc(m?m.name:'')}</button><span>›</span><span>Escenario</span></div>
+      <h1>${esc(sc.name)}</h1>
+      <div class="chips" style="margin-top:6px">${ramoChips(rm)}<span class="sc-meta" style="margin:0">Plan ${planLabel()} · ${HM} meses${saved?' · '+saved:''}</span></div>
+    </div>
+    <div class="page-actions">
+      <button class="btn btn-primary" data-sact="open">${inLab?'Ir al Lab':'Abrir en el Lab'}</button>
+      <button class="btn" data-sact="dup" title="Duplicar">⧉ Duplicar</button>
+      <button class="btn" data-sact="ren" title="Renombrar">✎ Renombrar</button>
+      <button class="btn" data-sact="link" title="Copiar un enlace con este escenario">🔗 Enlace</button>
+      <button class="btn" data-sact="xls" title="Exportar a Excel">⬇ Excel</button>
+      <button class="btn" data-sact="pdf" title="Descargar el informe en PDF">⬇ PDF</button>
+      <button class="btn btn-danger btn-icon" data-sact="del" title="Borrar el escenario" aria-label="Borrar el escenario">🗑</button>
+    </div></div>`;
+  if(inLab && st==='dirty') h+=`<div class="be">Este escenario está abierto en el Lab con <b>cambios sin guardar</b>. Esta ficha muestra la versión guardada.</div>`;
+  // métricas económicas
+  h+=`<div class="panel"><h2>Métricas económicas</h2><div class="metric-grid">`+
+    metric('Ingresos del plan',eurC(tot.itot),'comisiones de '+planLabel())+
+    metric('EBITDA del plan',eurC(tot.ebi),'margen '+pct(tot.margin),tot.ebi<0?'neg':'pos')+
+    metric('Facturación del último año',eurC(last.itot),`${mLabel(l0)} – ${mLabel(HM-1)}`)+
+    metric('EBITDA del último año',eurC(last.ebi),'margen '+pct(last.margin),last.ebi<0?'neg':'pos')+
+    metric('Break-even',R.beM?mLabel(R.beM-1):'No alcanzado',R.beM?'EBITDA de los últimos 12 meses positivo · '+after(R.beM):'el EBITDA de 12 meses no llega a positivo',R.beM?'pos':'neg')+
+    metric('Recuperación de la inversión',R.beAcc?mLabel(R.beAcc-1):'No alcanzada',R.beAcc?'el EBITDA acumulado pasa a positivo':'el EBITDA acumulado sigue en negativo al final',R.beAcc?'pos':'neg')+
+    metric('Necesidad máxima de financiación',minI>=0?eurC(-minE):'0 €',minI>=0?'pérdida acumulada máxima, en '+mLabel(minI):'el EBITDA acumulado nunca es negativo')+
+    metric('EBITDA acumulado al final',eurC(tot.ebac),'a '+mLabel(HM-1),tot.ebac<0?'neg':'pos')+
+    `</div></div>`;
+  // métricas de negocio
+  h+=`<div class="panel"><h2>Métricas de negocio</h2><div class="metric-grid">`+
+    metric('Cartera final',num0(tot.cart)+' pólizas',both?`${num0(aC)} Auto · ${num0(mC)} MRE`:'en vigor a '+mLabel(HM-1))+
+    metric('Primas en gestión',eurC(tot.prim),'primas anuales en vigor al final')+
+    metric('Pólizas nuevas captadas',num0(tot.newt),'en todo el plan')+
+    metric('Plantilla final',num0(tot.dir||0)+' personas',both?`${num0(tot.dirA||0)} en Auto · ${num0(tot.dirM||0)} en MRE`:'')+
+    metric('Comisión por empleado',tot.dir?eurC(last.itot/tot.dir):'—','último año del plan')+
+    metric('Comisión media sobre prima',tot.prim?pct(last.itot/tot.prim):'—','último año del plan')+
+    metric('Retrocesión a colaboradores',tot.itot?pct(tot.colab/tot.itot):'—','de la comisión, en todo el plan')+
+    metric('Techo de facturación',C.growing?'Sin techo':(isFinite(C.cap.all.fact)?eurC(C.cap.all.fact):'—'),
+      C.growing?'la captación crece cada mes: la cartera no satura':(hit95!=null?'95% del techo en '+mLabel(hit95-1):'cartera saturada'))+
+    `</div></div>`;
+  // evolución anual
+  const yrs=bucketize(R.mon,'año');
+  const rows=[['Ingresos',b=>eur(b.vals.itot)],['Gastos',b=>eur(b.vals.gtot)],['EBITDA',b=>`<span class="${b.vals.ebi<0?'neg':''}">${eur(b.vals.ebi)}</span>`],
+    ['Margen EBITDA',b=>pct(b.vals.margin)],['EBITDA acumulado',b=>`<span class="${b.vals.ebac<0?'neg':''}">${eur(b.vals.ebac)}</span>`],
+    ['Cartera (pólizas)',b=>num0(b.vals.cart)],['Plantilla (personas)',b=>num0(b.vals.dir)]];
+  h+=`<div class="panel"><h2>Evolución anual <span class="h2-sub">años naturales${yrs.some(b=>b.partial)?' · * año incompleto':''}</span></h2><div class="tblscroll"><table class="yr-t"><thead><tr><th>Concepto</th>${yrs.map(b=>`<th>${b.label}</th>`).join('')}</tr></thead><tbody>`+
+    rows.map(([l,f])=>`<tr${l==='EBITDA'?' class="st"':''}><td>${l}</td>${yrs.map(b=>`<td>${f(b)}</td>`).join('')}</tr>`).join('')+`</tbody></table></div>`;
+  const img=(t,g)=>`<div class="rimgw"><div class="rimgt">${CHARTS[t].title}</div><img src="${chartImage(t,bucketize(R.mon,g),g,560,300)}" alt="${CHARTS[t].title}"></div>`;
+  h+=`<div class="det-charts" style="margin-top:16px">${img('res','año')}${img('cartera','mes')}${img('ebac','mes')}</div></div>`;
+  // unit economics
+  h+=`<div class="panel"><h2>Unit economics <span class="h2-sub">run-rate a ${mLabel((UE_END||HM)-1)}</span></h2><div class="ue-wrap">${ueHTML(R)}</div></div>`;
+  // parámetros escogidos
+  let nChg=0;
+  const groups=SECTIONS.map(S=>{
+    const tr=S.groups.map(G=>{
+      const rows=G.keys.filter(k=>paramVisible(k,rm)).map(key=>{
+        const [label,type,,,,ramo]=PARAMS[key];
+        const chg=Math.abs((+V[key])-(+DEF[key]))>1e-9; if(chg) nChg++;
+        const d=type==='pct'?(DEF[key]+'%'):(type==='eur'?eur0(DEF[key])+'€':eur0(DEF[key]));
+        const pill= ramo? `<span class="rpill ${ramo}">${ramo==='auto'?'Auto':'MRE'}</span>` : '';
+        return `<tr class="${chg?'chg':''}"><td>${pill}${label.replace('{u}','mes')}${chg?`<span class="pd">por defecto: ${d}</span>`:''}</td><td class="pv">${fmtVal(key,type)}</td></tr>`;
+      }).join('');
+      return rows? `<tr class="sec"><td colspan="2">${G.title}</td></tr>`+rows : '';
+    }).join('');
+    return `<div class="par-box"><div class="acc-head ${S.cls}"><span>${S.title}</span></div><table class="par-t"><tbody>${tr}</tbody></table></div>`;
+  }).join('');
+  const ph=PHASE_KEYS.map(([k,l])=>{ const w=phaseWin(k); return (w.from>1||w.to<HM)? `<tr class="chg"><td>${l}</td><td class="pv">${w.to<w.from?'sin coste':mLabel(w.from-1)+' – '+mLabel(w.to-1)}</td></tr>` : ''; }).join('');
+  h+=`<div class="panel"><h2>Parámetros escogidos <span class="h2-sub">${nChg?`${nChg} distintos de los valores por defecto, resaltados`:'todos con los valores por defecto'}</span></h2>
+    <div class="par-grid">
+      <div class="par-box"><div class="acc-head grp-gen"><span>PLAN Y CALENDARIO</span></div><table class="par-t"><tbody>
+        <tr><td>Inicio del plan</td><td class="pv">${mLabel(0)}</td></tr><tr><td>Fin del plan</td><td class="pv">${mLabel(HM-1)}</td></tr>
+        <tr><td>Duración</td><td class="pv">${HM} meses</td></tr>
+        ${ph||'<tr><td>Calendario de partidas</td><td class="pv">todas con coste todo el plan</td></tr>'}
+      </tbody></table></div>${groups}</div></div>`;
+  return h;
+}
+function renderScenDetail(){
+  const sc=SCENS[SCEN_VIEW], box=document.getElementById('page-scen'); if(!sc) return;
+  const m=modelOf(sc.model), rm={ramos: sc.snap.RAMOS || (m&&m.ramos) || {auto:true,mre:true}};
+  const inLab= sc.model===ACTIVE_MODEL && CUR_SCEN===sc.id, st= inLab? scenState() : null;
+  box.innerHTML=withSnapshot(sc.snap,()=>scenDetailHTML(sc,m,rm,inLab,st));
+  document.getElementById('mbTitle').textContent=sc.name;
+}
+document.getElementById('page-scen').addEventListener('click',async e=>{
+  const go=e.target.closest('[data-go]'); if(go){ activateTab(go.dataset.go); return; }
+  const gm=e.target.closest('[data-go-model]'); if(gm && gm.dataset.goModel){ switchModel(gm.dataset.goModel); activateTab('lab'); window.scrollTo(0,0); return; }
+  const b=e.target.closest('[data-sact]'); if(!b) return;
+  const sc=SCENS[SCEN_VIEW]; if(!sc) return;
+  const act=b.dataset.sact, m=modelOf(sc.model);
+  if(act==='open'){ if(sc.model===ACTIVE_MODEL && sc.id===CUR_SCEN){ activateTab('lab'); window.scrollTo(0,0); } else openScenario(sc.id); return; }
   if(act==='dup'){
-    const nn=askNewName('Nombre de la copia:', name+' (copia)'); if(!nn) return;
-    P[nn]={...JSON.parse(JSON.stringify(P[name])), savedAt:new Date().toISOString()}; savePresets(P);
-    flash('Escenario duplicado ✓');
+    const name=await uiPrompt('Duplicar escenario','Nombre de la copia',sc.name+' (copia)',{ok:'Duplicar',check:v=>nameTaken(v,sc.model)?'Ya hay un escenario con ese nombre en este modelo.':''});
+    if(!name) return;
+    const id=uid('s'); SCENS[id]={...JSON.parse(JSON.stringify(sc)), id, name, savedAt:new Date().toISOString()};
+    saveScens(); renderNav(); openScenDetail(id);
+    flash(`Estás viendo la ficha de <b>«${esc(name)}»</b>.`,'Escenario duplicado'); return;
   }
   if(act==='ren'){
-    const nn=(prompt('Nuevo nombre:',name)||'').trim(); if(!nn||nn===name) return;
-    if(P[nn] && !confirm(`Ya existe un escenario «${nn}». ¿Sobrescribirlo?`)) return;
-    P[nn]=P[name]; delete P[name]; savePresets(P);
-    if(CUR_SCEN===name) CUR_SCEN=nn;
-    flash('Escenario renombrado ✓');
+    const name=await uiPrompt('Renombrar escenario','Nuevo nombre',sc.name,{ok:'Renombrar',check:v=>nameTaken(v,sc.model,sc.id)?'Ya hay un escenario con ese nombre en este modelo.':''});
+    if(!name||name===sc.name) return;
+    sc.name=name; saveScens(); updateScenStatus(); renderScenDetail(); return;
   }
   if(act==='link'){
-    const url=buildShareURL(P[name]);
-    try{ await navigator.clipboard.writeText(url); flash('Enlace a «'+name+'» copiado ✓'); }
-    catch(err){ prompt('Copia este enlace para compartir el escenario:', url); }
+    const url=buildShareURL({...sc.snap, RAMOS:sc.snap.RAMOS||(m&&m.ramos), MODEL_NAME:m&&m.name});
+    try{ await navigator.clipboard.writeText(url); flash(`Quien abra el enlace verá <b>«${esc(sc.name)}»</b> cargado en su Lab.`,'Enlace copiado'); }
+    catch(err){ uiModal({title:'Enlace al escenario',html:'Copia este enlace para compartirlo:',input:{label:'',value:url},buttons:[{label:'Cerrar',value:true,kind:'primary'}],cancelValue:true}); }
     return;
   }
+  if(act==='xls'){ withSnapshot(sc.snap,()=>{ CUR_SCEN=sc.id; exportXlsx(); }); return; }
+  if(act==='pdf'){ withSnapshot(sc.snap,()=>{ CUR_SCEN=sc.id; buildReport(); }); setTimeout(()=>window.print(),80); return; }
   if(act==='del'){
-    if(!confirm(`¿Borrar el escenario «${name}»? No se puede deshacer.`)) return;
-    delete P[name]; savePresets(P);
-    if(CUR_SCEN===name) CUR_SCEN=null;   // el Lab conserva los valores, ahora sin guardar
-    flash('Escenario borrado');
+    if(!(await uiConfirm('Borrar escenario',`Se borrará <b>«${esc(sc.name)}»</b>. No se puede deshacer.`,{ok:'Borrar',danger:true}))) return;
+    delete SCENS[sc.id]; saveScens();
+    MODELS.forEach(x=>{ if(x.scen===sc.id) x.scen=null; });
+    if(CUR_SCEN===sc.id) CUR_SCEN=null;   // el Lab conserva los valores, ahora sin guardar
+    saveState(); updateScenStatus(); renderNav(); activateTab('home');
+    flash(`<b>«${esc(sc.name)}»</b> se ha borrado.`,'Escenario borrado');
   }
-  updateScenStatus(); saveState(); renderHome();
 });
 
 // ---- compartir: enlace con el escenario en la URL + exportar/importar a archivo ----
 function buildShareURL(snap){
-  const json=JSON.stringify(snap||snapshot());
+  const json=JSON.stringify(snap||{...snapshot(), RAMOS:{...curModel().ramos}, MODEL_NAME:curModel().name});
   const b64=encodeURIComponent(btoa(unescape(encodeURIComponent(json))));
   return location.href.split('#')[0]+'#s='+b64;
 }
 document.getElementById('btnShare').onclick=async()=>{
   const url=buildShareURL();
-  try{ await navigator.clipboard.writeText(url); flash('Enlace copiado al portapapeles ✓'); }
-  catch(e){ prompt('Copia este enlace para compartir el escenario:', url); }
+  try{ await navigator.clipboard.writeText(url); flash('Quien abra el enlace verá estos mismos valores cargados en su Lab.','Enlace copiado'); }
+  catch(e){ uiModal({title:'Enlace al escenario',html:'Copia este enlace para compartirlo:',input:{label:'',value:url},buttons:[{label:'Cerrar',value:true,kind:'primary'}],cancelValue:true}); }
 };
 function downloadScenarioJSON(){
-  const data={tipo:'simulador-correduria',state:snapshot(),presets:loadPresets()};
+  saveState();
+  const data={tipo:'simulador-correduria', version:2, models:MODELS, scens:SCENS};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download='escenarios_correduria.json'; document.body.appendChild(a); a.click();
+  a.download='modeloo_modelos_y_escenarios.json'; document.body.appendChild(a); a.click();
   setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(a.href);},200);
 }
-document.getElementById('btnExport').onclick=()=>{ downloadScenarioJSON(); flash('Escenarios exportados ✓'); };
+document.getElementById('btnExport').onclick=()=>{ downloadScenarioJSON();
+  flash(`Se ha descargado un archivo con tus ${MODELS.length} ${MODELS.length===1?'modelo':'modelos'} y ${Object.keys(SCENS).length} escenarios. Puedes cargarlo en otro navegador con «Importar».`,'Exportación lista'); };
 document.getElementById('btnImport').onclick=()=>document.getElementById('fileImport').click();
-// importar suma los escenarios del archivo a los guardados; si el archivo no trae escenarios
-// pero sí un estado, ese estado se carga en el Lab
+/* importar suma lo del archivo a lo que ya hay (no sobrescribe nada):
+   · archivo actual (version 2): modelos y escenarios nuevos
+   · archivo antiguo: sus escenarios entran en el modelo activo; si solo trae un estado, se carga en el Lab */
 document.getElementById('fileImport').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
   const rd=new FileReader();
-  rd.onload=()=>{ try{ const d=JSON.parse(rd.result);
-      const n= d.presets? Object.keys(d.presets).length : 0;
-      if(n){ const p=loadPresets(); Object.assign(p,d.presets); savePresets(p); }
-      else if(d.state && confirmDiscard()){ PHASE={}; applySnapshot(d.state); CUR_SCEN=null; syncControls(); }
-      updateScenStatus(); saveState(); renderHome();
-      flash(n? `${n} ${n===1?'escenario importado':'escenarios importados'} ✓` : 'Escenario cargado en el Lab ✓');
-    }catch(err){ flash('Archivo no válido'); }
+  rd.onload=async()=>{ try{ const d=JSON.parse(rd.result); let nm=0, ns=0;
+      if(d.version===2 && Array.isArray(d.models)){
+        d.models.forEach(m=>{ if(m && m.id && !modelOf(m.id)){ MODELS.push(m); nm++; } });
+        Object.values(d.scens||{}).forEach(sc=>{ if(sc && sc.id && !SCENS[sc.id] && modelOf(sc.model)){ SCENS[sc.id]=sc; ns++; } });
+      } else if(d.presets && Object.keys(d.presets).length){
+        Object.keys(d.presets).forEach(name=>{ const id=uid('s'); let n=name; while(nameTaken(n,ACTIVE_MODEL)) n+=' (importado)';
+          SCENS[id]={id, name:n, model:ACTIVE_MODEL, savedAt:d.presets[name].savedAt||null, snap:d.presets[name]}; ns++; });
+      } else if(d.state){
+        if(await confirmDiscard()){ resetWork(); V=modelDefaults(curModel()); applySnapshot(d.state); enforceRamos(); CUR_SCEN=null; syncControls(); }
+        flash('Los valores del archivo se han cargado en el Lab.','Escenario cargado'); e.target.value=''; return;
+      } else throw new Error('vacío');
+      saveModels(); saveScens(); renderNav(); updateScenStatus(); renderHome();
+      flash(`Se han añadido ${nm} ${nm===1?'modelo':'modelos'} y ${ns} ${ns===1?'escenario':'escenarios'}. Lo que ya tenías no se ha modificado.`,'Importación completada');
+    }catch(err){ uiAlert('Archivo no válido','No es un archivo de modelos y escenarios exportado desde esta herramienta.','danger'); }
     e.target.value=''; };
   rd.readAsText(f);
 };
@@ -4072,20 +4775,20 @@ document.getElementById('mailGo').onclick=()=>{
     (nota?nota+'\n\n':'')+
     'Te comparto el simulador de business plan de la correduría.\n\n'+
     '▶ Enlace (abre la herramienta con estos mismos datos ya cargados):\n'+url+'\n\n'+
-    'Para descargar el informe en PDF o Excel, abre la herramienta y usa «☰ Escenarios y exportar».';
+    'Para descargar el informe en PDF o Excel, abre la herramienta y usa el menú «Exportar» del Lab.';
   const gmail='https://mail.google.com/mail/?view=cm&fs=1&tf=1'+
     '&to='+encodeURIComponent(to)+'&su='+encodeURIComponent(su)+'&body='+encodeURIComponent(body);
   window.open(gmail,'_blank');
   closeMail();
-  flash('Borrador de correo abierto en Gmail ✓');
+  flash('Se ha abierto un borrador en Gmail con el enlace al escenario. Revisa el destinatario y pulsa Enviar.','Correo preparado');
 };
 
 // «Restablecer valores» devuelve los parámetros y el calendario de partidas a los de por
 // defecto; las fechas del plan y el escenario cargado se mantienen (quedará como modificado)
-document.getElementById('reset').onclick=()=>{
-  if(!confirm('¿Volver a los valores por defecto de todos los parámetros del negocio?')) return;
-  V={...DEF}; PHASE={};
-  syncControls(); flash('Parámetros restablecidos');
+document.getElementById('reset').onclick=async()=>{
+  if(!(await uiConfirm('Restablecer valores',`Todos los parámetros del negocio y el calendario de partidas volverán a los valores por defecto de <b>${esc(curModel().name)}</b>. Las fechas del plan se mantienen.`,{ok:'Restablecer'}))) return;
+  V=modelDefaults(curModel()); PHASE={};
+  syncControls(); flash('Los parámetros vuelven a tener los valores por defecto.','Valores restablecidos');
 };
 window.addEventListener('resize',()=>{ if(ACTIVE_TAB==='lab') render(); });
 
@@ -4105,21 +4808,19 @@ window.addEventListener('resize',()=>{ if(ACTIVE_TAB==='lab') render(); });
   btn.onclick=()=>{ set(grid.classList.contains('params-off')); render(); };  // los gráficos cambian de ancho
 })();
 
-// menú «Exportar» del Lab
-(function(){
-  const btn=document.getElementById('btnExportMenu'), menu=document.getElementById('exportMenu');
+// menús desplegables del Lab: «Exportar» y «⋯» (opciones del modelo)
+[['btnExportMenu','exportMenu'],['btnModelMenu','modelMenu']].forEach(([b,m])=>{
+  const btn=document.getElementById(b), menu=document.getElementById(m);
   const set=on=>{ menu.classList.toggle('on',on); btn.setAttribute('aria-expanded',on?'true':'false'); };
-  btn.onclick=e=>{ e.stopPropagation(); set(!menu.classList.contains('on')); };
+  btn.onclick=e=>{ e.stopPropagation(); document.querySelectorAll('.menu.on').forEach(x=>{ if(x!==menu) x.classList.remove('on'); }); set(!menu.classList.contains('on')); };
   menu.addEventListener('click',()=>set(false));
   document.addEventListener('click',()=>set(false));
   document.addEventListener('keydown',e=>{ if(e.key==='Escape') set(false); });
-})();
+});
 
-// sincroniza los controles con el estado restaurado al iniciar
-[...document.getElementById('segGran').children].forEach(b=>b.classList.toggle('on',b.dataset.g===GRAN));
-syncScopeSeg();
-syncDateControls();
-render();
+// arranque: pinta el menú y sincroniza los controles con el estado restaurado
+renderNav();
+syncControls();
 activateTab(ACTIVE_TAB,false);
 </script>
 </body>
