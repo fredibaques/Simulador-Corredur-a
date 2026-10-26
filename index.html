@@ -5932,22 +5932,22 @@ const MKT_FAM={salud:'Salud / enfermedad', accidentes:'Accidentes y protección 
   transporte:'Transporte', decesos:'Decesos', otros:'Otros'};
 const MKT_EU={
   'España':{sup:'DGSFP', supName:'Dirección General de Seguros y Fondos de Pensiones',
-    doc:'«Seguros y Fondos de Pensiones. Informe 2024», capítulo II.6 Seguros generales; avance de 2025 del Boletín de información trimestral del 4.º trimestre de 2025',
-    url:'https://dgsfp.mineco.gob.es/es/Publicaciones/DocumentosPublicaciones/Memoria%20informe%20del%20sector%202024.pdf',
-    measure:'primas imputadas brutas de seguros generales (no vida)', unit:'M€', y0:2023, y1:2024, cagr:[2021,2024],
-    tot:[42043.0,44808.2], totCagr:5.7,
-    rows:[['Salud','salud',11100.0,11903.0,7.0],['Automóvil · RC','auto',5922,6436,3.7],['Automóvil · otras garantías','auto',5892,6242,3.6],
-      ['Multirriesgo hogar','bienes',5133.7,5568.7,null],['Decesos','decesos',2757.7,2881.0,3.8],['Crédito','credito',2341.1,2344.8,9.2],
-      ['Multirriesgo industriales','bienes',1594.8,1704.9,7.5],['Otros daños a los bienes','bienes',1337.9,1495.5,null],['Responsabilidad civil','rc',1271.4,1356.1,7.1],
-      ['Multirriesgo comunidades','bienes',1018.2,1096.9,5.9],['Accidentes','accidentes',1011.1,986.0,null],['Multirriesgo comercio','bienes',605.2,632.3,null],
-      ['Asistencia','asistencia',622.2,629.9,null],['Caución','credito',366.3,431.4,24.9],['Pérdidas pecuniarias','perdidas',288.6,305.4,null],
-      ['Transportes · cascos','transporte',294.6,299.0,null],['Transportes · mercancías','transporte',243.1,246.1,null],['Defensa jurídica','juridica',106.5,101.7,null],
-      ['Otros multirriesgos','bienes',75.3,82.9,null],['Incendios','bienes',42.3,46.3,null],['Dependencia','salud',18.7,19.2,null]],
-    extra:[['Avance 2025 (no vida)','+7,5%','primas devengadas, boletín 4T 2025: 49.686 M€ · salud +11,2% · autos +7,9%'],
+    doc:'Boletín de información trimestral de seguros y fondos de pensiones, 4.º trimestre de 2025 (tablas estadísticas: cuenta técnica de cada ramo, ejercicio completo)',
+    url:'https://dgsfp.mineco.gob.es/es/Publicaciones/DocumentosPublicaciones/Nuevo%20Bolet%C3%ADn%20Trimestral/Boleti%CC%81n%20de%20informacio%CC%81n%20trimestral%20cuarto%20trimestre%202025.pdf',
+    measure:'primas devengadas de seguro directo de los ramos no vida', unit:'M€', y0:2024, y1:2025, cagr:[2023,2025],
+    tot:[44709.0,48094.2], totCagr:7.2,
+    rows:[['Asistencia sanitaria (salud)','salud',11174.4,12463.0,9.7],['Automóvil · RC','auto',6714.5,7274.8,8.7],['Automóvil · otras garantías','auto',6558.2,7049.7,6.9],
+      ['Multirriesgo hogar','bienes',5837.7,6269.1,8.3],['Decesos','decesos',2858.3,2986.5,5.0],['Crédito','credito',1903.0,1893.1,-1.5],
+      ['Multirriesgo industriales','bienes',1660.0,1731.7,5.9],['Otros daños a los bienes','bienes',1480.1,1467.4,3.4],['Responsabilidad civil','rc',1352.3,1430.0,5.8],
+      ['Multirriesgo comunidades','bienes',1140.8,1230.0,8.1],['Accidentes','accidentes',1003.5,1002.8,0.0],['Enfermedad (subsidios)','salud',686.8,722.4,4.6],
+      ['Multirriesgo comercio','bienes',659.0,689.4,5.2],['Transportes · cascos','transporte',270.2,411.9,17.4],['Asistencia','asistencia',370.6,383.8,5.0],
+      ['Pérdidas pecuniarias','perdidas',300.6,325.2,11.7],['Caución','credito',273.2,289.5,6.2],['Transportes · mercancías','transporte',244.7,246.3,0.3],
+      ['Otros multirriesgos','bienes',85.5,91.9,8.6],['Defensa jurídica','juridica',66.8,72.0,0.5],['Incendios','bienes',49.5,45.7,3.7],['Dependencia','salud',19.3,18.0,-2.1]],
+    extra:[['Salud (asistencia sanitaria)','12.463 M€','+11,5% en 2025 · ya es el 26% del no vida'],
       ['Corredores inscritos','3.445','21/11/2025 · intermedian el 62,6% del no vida intermediado (2024)']],
     inter:null,
-    note:'Primas imputadas brutas por ramo (cuadro de resultados por ramo del informe). El último informe anual completo publicado es el de 2024. Para 2025 la DGSFP solo adelanta los grandes ramos en su boletín trimestral: no vida +7,5%, salud +11,2%, autos +7,9%, hogar cerca del +8%, decesos cerca del +4% y crédito −1%. CAGR = crecimiento anual compuesto 2021–2024, solo para los ramos con serie en el informe.',
-    insight:`En 2024 el no vida crece un 6,6%. Por encima del mercado: <b>caución (+17,8%)</b>, <b>otros daños a los bienes (+11,8%)</b>, <b>automóvil · RC (+8,7%)</b>, <b>multirriesgo hogar (+8,5%)</b>, <b>comunidades (+7,7%)</b> y <b>salud (+7,2%</b>, un 7% anual desde 2021, que en 2025 acelera al +11,2%). <b>Crédito</b> se frena (+0,2%) tras dos años de doble dígito. <b>Accidentes</b> y <b>defensa jurídica</b> caen.`},
+    note:'Primas devengadas de seguro directo de la cuenta técnica de cada ramo (boletín del 4.º trimestre, que recoge el año completo). Salud aparece dividida en asistencia sanitaria y enfermedad (subsidios). CAGR = crecimiento anual compuesto 2023–2025: la serie del boletín empieza en 2023. El informe anual 2025 de la DGSFP aún no está publicado.',
+    insight:`En 2025 el no vida crece un 7,6% (48.094 M€). El gran motor es la <b>salud</b>: la asistencia sanitaria sube un 11,5% (+1.289 M€, más que ningún otro ramo) y un 9,7% anual desde 2023. Crecen también por encima del mercado: <b>RC de automóvil (+8,3%)</b>, <b>pérdidas pecuniarias (+8,2%</b>, 11,7% anual desde 2023), <b>multirriesgo comunidades (+7,8%)</b> y <b>defensa jurídica (+7,8%)</b>. Justo por debajo quedan <b>hogar (+7,4%)</b> y auto otras garantías (+7,5%). Los <b>cascos de transporte</b> saltan un 52%, pero sobre una base pequeña. <b>Crédito</b> (−0,5%), <b>otros daños a los bienes</b> (−0,9%) y <b>accidentes</b> (plano) se estancan.`},
   'Francia':{sup:'ACPR', supName:'Autorité de contrôle prudentiel et de résolution (Banque de France)',
     doc:'«La situation des assureurs en France fin 2025» (Analyses et synthèses n.º 181, junio 2026), tabla 3',
     url:'https://acpr.banque-france.fr/system/files/2026-06/20260630_AS181_assureurs_S2_2025.pdf',
@@ -5957,8 +5957,8 @@ const MKT_EU={
       ['Protección de ingresos','accidentes',14436,15104],['RC general','rc',10371,10339],['Pérdidas pecuniarias','perdidas',4047,4207],
       ['Asistencia','asistencia',3892,4186],['Protección jurídica','juridica',2392,2506],['Crédito y caución','credito',2153,2201],
       ['Marítimo, aviación y transporte','transporte',1241,1327],['Accidentes de trabajo','accidentes',342,359]],
-    extra:[['Ratio combinado no vida','95,3%','96,6% en 2024'],['Siniestralidad de auto','+10%','coste de reparación +5,9% (SRA)']],
-    inter:{v:null, txt:'El registro de intermediarios (ORIAS) no publica el desglose de corredores en un formato que hayamos podido descargar. Queda pendiente.'},
+    extra:[['Corredores (COA, registro ORIAS)','27.500','31/12/2025 · +2,0% frente a 2024 · 12.035 agentes generales'],['Ratio combinado no vida','95,3%','96,6% en 2024']],
+    inter:{v:'27.500', txt:'Inscripciones como corredor de seguros o reaseguros (COA) en el registro ORIAS a 31/12/2025: 27.500, un 2,0% más que un año antes (26.953). A su lado hay 12.035 agentes generales (+1,3%), 3.593 mandatarios de seguros (+11,1%) y 30.949 mandatarios de intermediarios (+4,2%), que trabajan sobre todo para corredores. En total, el registro suma 72.666 intermediarios (+3,9%). Fuente: <a href="https://www.orias.fr/api/document/content?id=2c9419ee9fae96b701a0804a07356aa8" target="_blank" rel="noopener">ORIAS, Rapport annuel 2025</a>.'},
     note:'Perímetro: aseguradoras con reporte trimestral Solvencia II. El total no vida suma salud no vida (gastos médicos, protección de ingresos y accidentes de trabajo) y el resto de ramos; no incluye la salud asimilada a vida.',
     insight:`El crecimiento de 2025 lo tiran <b>incendio y daños a los bienes (+8,2%)</b>, <b>asistencia (+7,6%)</b>, <b>automóvil (+7,1%)</b> y <b>transporte (+6,9%)</b>. En auto es sobre todo precio: los siniestros suben un 10% por el coste de reparación. <b>Gastos médicos</b> es el mayor ramo no vida (46.729 M€) y crece un 5,2%. La <b>RC general</b> se estanca (−0,3%).`},
   'Italia':{sup:'IVASS', supName:'Istituto per la Vigilanza sulle Assicurazioni',
@@ -6015,8 +6015,8 @@ const MKT_EU={
       ['Pérdidas pecuniarias · particulares','perdidas',3964,4501,14.1],['Auto RC · flotas','auto',4285,4260,2.9],['Crédito · particulares','credito',2376,2936,8.3],
       ['Auto daños · flotas','auto',1962,1958,10.0],['RC patronal','rc',1752,1888,null],['Protección de ingresos','accidentes',1485,1565,1.8],
       ['Asistencia','asistencia',1307,1298,-4.7],['Defensa jurídica','juridica',695,717,2.3]],
-    extra:[['Particulares','44.096 M£','+3,4% en 2025'],['Empresas','72.353 M£','+1,0% en 2025']],
-    inter:{v:null, txt:'El registro de la FCA no publica una cifra agregada de corredores de seguros comparable. Queda pendiente.'},
+    extra:[['Particulares','44.096 M£','+3,4% en 2025'],['Empresas','72.353 M£','+1,0% en 2025'],['Corredurías autorizadas (FCA)','4.280','31/12/2024 · −20% desde 2020']],
+    inter:{v:'4.280', txt:'Empresas directamente autorizadas por la FCA en sus carteras de intermediarios de seguros a 31/12/2024: 3.921 intermediarios de particulares y empresas, más 359 intermediarios de Lloyd’s y del mercado de Londres (MGA incluidas). Total: 4.280. En 2020 eran 4.918 + 446 = 5.364, así que el número cae un 20% en cuatro años por la concentración del sector. No incluye los representantes designados (appointed representatives), que operan bajo la licencia de otra empresa. Fuente: <a href="https://www.fca.org.uk/freedom-information/information-authorised-firms-enforcement-outcomes-february-2025" target="_blank" rel="noopener">FCA, respuesta de transparencia (FOI) de febrero de 2025</a>.'},
     note:'En 2024 la PRA reclasificó parte de la RC profesional y la RC general a «Otros»: para esas líneas no damos CAGR. CAGR = crecimiento anual compuesto 2019–2025.',
     insight:`Mercado maduro y en fase blanda: +1,9% en 2025. Lo que crece está en particulares: <b>crédito (+23,6%)</b>, <b>pérdidas pecuniarias (+13,5%</b>, con un 14,1% anual compuesto desde 2019: garantías, GAP, mascotas, gadgets…) y <b>gastos médicos (+7,4%)</b>. El <b>auto</b> retrocede (−3% a −5%) tras las subidas de 2023–24, y los ramos de empresas se estancan.`},
 };
@@ -6089,12 +6089,12 @@ function marketCmpHTML(){
   return `
     <div class="panel">
       <h2>Ramos que crecen en Europa <span class="h2-sub">último año publicado por cada supervisor</span></h2>
-      <p class="note" style="margin-top:0">Cada supervisor agrupa los ramos a su manera; aquí se reúnen en familias comparables. La celda es el crecimiento de primas del último año con detalle por ramo (España y Alemania: 2024 frente a 2023; resto: 2025 frente a 2024). Más azul = crece más; rojo = cae. Debajo de cada país, el crecimiento de su mercado no vida. En Alemania la salud privada va en una estadística aparte, así que esa celda queda vacía. En España, el avance de 2025 de la DGSFP (solo grandes ramos) apunta en la misma dirección: salud +11,2%, autos +7,9%, hogar cerca del +8%.</p>
+      <p class="note" style="margin-top:0">Cada supervisor agrupa los ramos a su manera; aquí se reúnen en familias comparables. La celda es el crecimiento de primas del último año con detalle por ramo (Alemania: 2024 frente a 2023; resto: 2025 frente a 2024). Más azul = crece más; rojo = cae. Debajo de cada país, el crecimiento de su mercado no vida. En Alemania la salud privada va en una estadística aparte, así que esa celda queda vacía.</p>
       <div class="tblscroll"><table class="ue-t hm-t"><thead><tr><th style="text-align:left">Familia de ramos</th>${C.map(c=>`<th>${c}<span class="hm-sub">${MKT_EU[c].y1} · mercado ${fmtG(tot(c))}</span></th>`).join('')}<th>Media</th><th title="Países en que la familia crece más que su mercado" style="white-space:normal;min-width:90px">Supera a su mercado</th></tr></thead><tbody>`+
       rows.map(r=>`<tr><td style="text-align:left">${MKT_FAM[r.f]}</td>${r.gs.map(cell).join('')}<td><b>${fmtG(r.avg)}</b></td><td>${r.up} de ${r.gs.filter(g=>g!=null).length}</td></tr>`).join('')+
       `</tbody></table></div>
       <div class="mkt-insight" style="margin-top:16px"><b>Lectura:</b> las familias que más crecen de media son ${top.map(r=>`<b>${MKT_FAM[r.f].toLowerCase()}</b> (${fmtG(r.avg)})`).join(', ')}.
-        Las señales más sólidas son las que crecen por encima de su mercado en varios países a la vez: <b>salud privada</b> (doble dígito en Italia y Portugal, y en España en 2025; crecimiento sostenido en Francia y Reino Unido), <b>asistencia</b> (Portugal, Alemania, Italia y Francia) y <b>hogar y daños a bienes</b>, empujado por las catástrofes naturales y por el seguro catastrófico obligatorio en Italia.
+        Las señales más sólidas son las que crecen por encima de su mercado en varios países a la vez: <b>salud privada</b> (doble dígito en España, Italia y Portugal; crecimiento sostenido en Francia y Reino Unido), <b>asistencia</b> (Portugal, Alemania, Italia y Francia) y <b>hogar y daños a bienes</b>, empujado por las catástrofes naturales y por el seguro catastrófico obligatorio en Italia.
         En <b>automóvil</b> el crecimiento es casi todo precio: sube donde los siniestros encarecen las primas y ya cae en Reino Unido. <b>Crédito y caución</b> crece con fuerza en Italia, Alemania y en el crédito a particulares británico, pero sobre bases pequeñas.</div>
     </div>`;
 }
