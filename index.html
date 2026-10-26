@@ -68,73 +68,162 @@
   :where(button,input,select,textarea){font-family:inherit}
   ::selection{background:#c7d7f0;color:var(--foreground)}
 
-  /* ===== topbar ===== */
-  .topbar{position:sticky;top:0;z-index:20;background:hsl(0 0% 100% / .85);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:10px 20px}
-  .brand{font-weight:600;color:var(--foreground);font-size:14px;letter-spacing:-.01em}
-  /* la navegación principal vive en la topbar; las acciones globales, a la derecha */
-  .topbar-actions{display:flex;align-items:center;gap:12px;margin-left:auto}
-  .topbar .tabs{align-self:center}
-  .topbar .tab{font-size:12.5px;padding:6px 12px}
+  /* ===== layout: menú lateral fijo a la izquierda + contenido ===== */
+  .app{display:flex;min-height:100vh}
+  .sidebar{position:sticky;top:0;height:100vh;flex:0 0 236px;width:236px;display:flex;flex-direction:column;
+    background:var(--card);border-right:1px solid var(--border);padding:16px 12px;z-index:30;overflow-y:auto}
+  .sb-brand{display:flex;align-items:center;gap:10px;padding:4px 8px 20px;font-weight:600;font-size:15px;
+    letter-spacing:-.01em;color:var(--foreground)}
+  .sb-logo{width:28px;height:28px;border-radius:8px;background:var(--primary);color:var(--primary-foreground);
+    display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+  .sb-nav{display:flex;flex-direction:column;gap:2px}
+  .nav-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font-size:13px;font-weight:500;
+    padding:8px 10px;border:0;border-radius:var(--radius);background:transparent;color:var(--muted-foreground);
+    cursor:pointer;transition:background .15s,color .15s}
+  .nav-item:hover{background:var(--accent);color:var(--foreground)}
+  .nav-item.on{background:var(--accent);color:var(--foreground);font-weight:600}
+  .nav-item.on .nav-ico{color:var(--primary)}
+  .nav-ico{width:16px;height:16px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .nav-group{margin-top:16px}
+  .nav-group-h{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:600;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--muted-foreground);padding:6px 10px}
+  .nav-children{margin-left:17px;border-left:1px solid var(--border);padding-left:8px;display:flex;flex-direction:column;gap:2px}
+  .sb-foot{margin-top:auto;padding:12px 10px 2px;border-top:1px solid var(--border);font-size:11.5px;color:var(--muted-foreground)}
+  .sb-foot b{display:block;color:var(--foreground);font-size:12.5px;font-weight:600;margin-top:2px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sb-foot .dirty{margin-top:6px}
+  .sb-backdrop{display:none}
+  .main{flex:1 1 auto;min-width:0;padding:24px 28px 40px}
+  .mobilebar{display:none}
+  .page{display:none;flex-direction:column;gap:16px;max-width:1720px;margin:0 auto}
+  .page.on{display:flex}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 20px;flex-wrap:wrap}
+  .page-head h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-.02em;color:var(--foreground)}
+  .page-sub{margin:4px 0 0;font-size:13px;color:var(--muted-foreground);max-width:760px}
+  .page-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .sec-h{margin:8px 0 -4px;font-size:15px;font-weight:600;letter-spacing:-.01em;color:var(--foreground)}
+  /* botones genéricos (primario / outline / destructivo / icono) */
+  .btn{font-size:12.5px;font-weight:500;padding:8px 14px;border-radius:var(--radius);cursor:pointer;
+    border:1px solid var(--input);background:var(--background);color:var(--foreground);
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;line-height:1.2;
+    transition:background .15s,border-color .15s,color .15s}
+  .btn:hover{background:var(--accent)}
+  .btn:active{transform:translateY(.5px)}
+  .btn-primary{background:var(--primary);border-color:transparent;color:var(--primary-foreground)}
+  .btn-primary:hover{background:var(--primary-hover)}
+  .btn-danger{color:var(--destructive);border-color:var(--destructive-border)}
+  .btn-danger:hover{background:var(--destructive-bg)}
+  .btn-sm{font-size:12px;padding:6px 10px}
+  .btn-icon{padding:6px 9px}
+  .btn.on{background:var(--accent);border-color:#cbd5e1}
+  .btn:disabled{opacity:.55;cursor:default;transform:none}
   .grp2{display:flex;align-items:center;gap:8px}
   .grp2 .lab{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;color:var(--muted-foreground)}
-  /* ===== barra de filtros (dentro del contenido, justo encima de los paneles) ===== */
-  .filterbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 18px;padding:7px 12px;align-self:flex-start;max-width:100%;
+  /* ===== barra de filtros: fechas del plan, periodo, agrupación y ámbito ===== */
+  .filterbar{display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px 24px;padding:12px 16px;max-width:100%;
     background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
-  .filterbar .grp2{gap:6px}
-  .filterbar .lab{font-size:10.5px;letter-spacing:.04em}
-  .filterbar .seg{padding:2px;border-radius:var(--radius-sm)}
-  .filterbar .seg button{padding:3px 9px;font-size:11.5px}
+  .fgrp{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fgrp>.lab{font-size:11px;font-weight:500;color:var(--muted-foreground)}
+  .frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .drange{display:inline-flex;align-items:center;gap:6px}
+  .drange .arrow{color:var(--muted-foreground);font-size:12px}
+  .fhint{font-size:11.5px;color:var(--muted-foreground);white-space:nowrap}
+  /* selector de mes (fecha) con el aspecto de un input de shadcn */
+  input[type=month]{font:inherit;font-size:12.5px;padding:0 8px;height:32px;border:1px solid var(--input);
+    border-radius:var(--radius);background:var(--background);color:var(--foreground);min-width:0;
+    font-variant-numeric:tabular-nums;transition:border-color .15s}
+  input[type=month]:hover{border-color:#cbd5e1}
+  input[type=month]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.6}
+  .filterbar .seg{padding:2px;border-radius:var(--radius)}
+  .filterbar .seg button{padding:5px 11px;font-size:12px}
   /* segmented control (estilo tabs de shadcn) */
   .seg{display:inline-flex;background:var(--muted-bg);border:1px solid var(--border);border-radius:var(--radius);padding:3px;gap:2px}
   .seg button{font-size:12px;font-weight:500;padding:4px 11px;border:0;background:transparent;cursor:pointer;
     color:var(--muted-foreground);border-radius:var(--radius-sm);transition:background .15s,color .15s}
   .seg button:hover{color:var(--foreground)}
   .seg button.on{background:var(--background);color:var(--foreground);box-shadow:var(--shadow-sm);font-weight:600}
-  /* select (input de shadcn) */
-  .topbar select,.filterbar select,.presetbar select{font-size:12.5px;padding:6px 30px 6px 10px;border:1px solid var(--input);
-    border-radius:var(--radius);background:var(--background) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>") no-repeat right 8px center;
-    color:var(--foreground);cursor:pointer;appearance:none;-webkit-appearance:none;transition:border-color .15s,box-shadow .15s}
-  .topbar select:hover,.filterbar select:hover,.presetbar select:hover{border-color:#cbd5e1}
-  .filterbar select{font-size:12px;padding:5px 27px 5px 9px}
 
-  /* ===== layout ===== */
-  .wrap{display:block;padding:20px;width:100%;background:var(--bg)}
-  .content{min-width:0;display:flex;flex-direction:column;gap:16px;background:transparent}
   /* card */
   .panel{background:var(--card);color:var(--card-foreground);border:1px solid var(--border);
     border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:20px;min-width:0}
   .panel h2{margin:0 0 14px;font-size:15px;font-weight:600;letter-spacing:-.01em;text-transform:none;color:var(--foreground)}
-  /* ===== panel de parámetros (se despliega bajo la topbar) ===== */
-  .ctrlbtn{display:inline-flex;font-size:12.5px;font-weight:500;padding:8px 14px;gap:8px}
-  .ctrlbtn.on{background:var(--accent);border-color:#cbd5e1}
-  .ctrl-chev{font-size:10px;color:var(--muted-foreground);transition:transform .25s ease}
-  .ctrlbtn.on .ctrl-chev{transform:rotate(180deg)}
-  /* truco de grid 0fr → 1fr: anima sin necesidad de saber la altura */
-  /* vive dentro del dashboard, justo bajo el selector de ramo */
-  #ctrlWrap{display:grid;grid-template-rows:0fr;background:transparent;
-    transition:grid-template-rows .28s ease}
-  #ctrlWrap.on{grid-template-rows:1fr}
-  .ctrl-inner{overflow:hidden;min-height:0}
-  .controls{margin:0;padding:20px;max-height:min(72vh,780px);overflow:auto}
+  .panel h2 .h2-sub{font-size:12px;font-weight:400;color:var(--muted-foreground);margin-left:6px}
+
+  /* ===== Lab: parámetros a la izquierda, resultados (dashboard + P&L) a la derecha ===== */
+  .scen-status{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:5px;font-size:13px;color:var(--muted-foreground)}
+  .scen-status b{color:var(--foreground);font-weight:600}
+  .dirty{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;
+    background:var(--warning-bg);color:#92400e;border:1px solid var(--warning-border);white-space:nowrap}
+  .dirty.ok{background:var(--success-bg);color:#15803d;border-color:var(--success-border)}
+  .dirty:empty{display:none}
+  .lab-grid{display:grid;grid-template-columns:minmax(0,370px) minmax(0,1fr);gap:16px;align-items:start}
+  .lab-grid.params-off{grid-template-columns:minmax(0,1fr)}
+  .lab-grid.params-off .controls{display:none}
+  .lab-results{min-width:0;display:flex;flex-direction:column;gap:16px}
+  .controls{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;padding:16px}
+  .ctrl-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+  .ctrl-h h2{margin:0}
   /* con el ámbito en un ramo concreto solo se ven sus parámetros y los comunes se ocultan */
   #form .acc-item[hidden]{display:none}
-  /* al quedar un único grupo, sus parámetros se reparten en dos columnas en vez de una tira larga */
-  @media(min-width:900px){
-    #form.one-group .acc-body{columns:2;column-gap:26px}
-    #form.one-group .acc-body>*{break-inside:avoid;-webkit-column-break-inside:avoid}
-  }
   .ctrl-scope{font-size:12px;color:var(--muted-foreground);margin:0 0 14px;padding:9px 12px;
     border:1px solid var(--border);border-radius:var(--radius);background:var(--muted-bg)}
   .controls::-webkit-scrollbar{width:9px}
   .controls::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:99px}
   .controls::-webkit-scrollbar-track{background:transparent}
-  #ctrlWrap:not(.on) .controls{box-shadow:none}
-  /* a lo ancho, los grupos de parámetros se reparten en columnas */
-  #form{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;align-items:start}
+  /* en el panel lateral los grupos van en una columna; apilado (pantallas medias) se reparten */
+  #form{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;align-items:start}
   #form .acc-item{margin-bottom:0}
-  .controls .reset{width:auto;min-width:220px;margin-top:14px}
-  @media(prefers-reduced-motion:reduce){#ctrlWrap{transition:none}}
+  .controls .reset{margin-top:14px}
+  @media(max-width:1180px){
+    .lab-grid{grid-template-columns:minmax(0,1fr)}
+    .controls{position:static;max-height:none}
+  }
+
+  /* ===== Inicio: escenarios guardados ===== */
+  .home-cur{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap}
+  .home-cur .k{font-size:12px;font-weight:500;color:var(--muted-foreground)}
+  .home-cur .nm{font-size:17px;font-weight:600;letter-spacing:-.01em;margin-top:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .home-cur .mt{font-size:12px;color:var(--muted-foreground);margin-top:3px}
+  .home-cur-kpis{display:flex;gap:10px 28px;flex-wrap:wrap}
+  .home-cur-kpis div{display:flex;flex-direction:column;gap:1px}
+  .home-cur-kpis span{font-size:11px;color:var(--muted-foreground)}
+  .home-cur-kpis b{font-size:16px;font-variant-numeric:tabular-nums}
+  .scen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+  .scen-card{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--card);padding:16px;
+    display:flex;flex-direction:column;gap:12px;min-width:0;transition:box-shadow .15s,border-color .15s}
+  .scen-card:hover{box-shadow:var(--shadow-md);border-color:#cbd5e1}
+  .scen-card.cur{border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)}
+  .sc-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+  .sc-name{font-size:14.5px;font-weight:600;color:var(--foreground);overflow-wrap:anywhere}
+  .sc-meta{font-size:11.5px;color:var(--muted-foreground);margin-top:2px}
+  .badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;background:var(--accent);
+    color:var(--primary);border:1px solid var(--border)}
+  .sc-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+  .sc-kpis div{display:flex;flex-direction:column;gap:1px;min-width:0}
+  .sc-kpis span{font-size:10.5px;color:var(--muted-foreground)}
+  .sc-kpis b{font-size:13.5px;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .spark{width:100%;height:44px;display:block}
+  .spark-lab{display:flex;justify-content:space-between;font-size:10px;color:var(--muted-foreground);margin-top:3px}
+  .sc-actions{display:flex;gap:6px;align-items:center;margin-top:auto}
+  .sc-actions .btn-primary{flex:1}
+  .empty{border:1px dashed var(--border);border-radius:var(--radius-lg);padding:30px 20px;text-align:center;
+    color:var(--muted-foreground);font-size:13px;line-height:1.6;background:var(--muted-bg)}
+  .scmp-t td.best{color:var(--success);font-weight:700}
+  .scmp-t td.cur-row,.scmp-t tr.cur-row td{font-weight:600}
+  /* menú desplegable (exportar) */
+  .menu-wrap{position:relative}
+  .menu{display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:250px;background:var(--popover);
+    border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-xl);padding:6px;z-index:200}
+  .menu.on{display:block;animation:pop .14s ease-out}
+  .menu button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:transparent;
+    padding:8px 10px;border-radius:var(--radius-sm);font-size:12.5px;cursor:pointer;color:var(--foreground)}
+  .menu button:hover{background:var(--accent)}
+  .menu .msep{height:1px;background:var(--border);margin:5px 4px}
+  /* aviso flotante */
+  .toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,8px);background:var(--foreground);
+    color:var(--primary-foreground);font-size:12.5px;padding:9px 16px;border-radius:var(--radius);box-shadow:var(--shadow-lg);
+    opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:1500;max-width:calc(100vw - 32px)}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
 
   /* ===== accordion ===== */
   .acc-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden;background:var(--card)}
@@ -179,9 +268,7 @@
   .scopehint{font-size:12px;color:var(--muted-foreground);flex:1 1 220px;min-width:0}
 
   /* ===== techo de facturación: una tarjeta por idea ===== */
-  #ceil{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-  @media(max-width:1100px){#ceil{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(max-width:560px){#ceil{grid-template-columns:1fr}}
+  #ceil{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
   .cl-card{padding:18px 20px;display:flex;flex-direction:column;min-width:0}
   .cl-card.cl-wide{grid-column:1/-1}
   .cl-card.cl-soft{background:var(--muted-bg)}
@@ -230,45 +317,33 @@
   #chartTip .ct-r b{font-variant-numeric:tabular-nums}
 
   /* ===== tabs ===== */
-  .tabs{display:inline-flex;gap:3px;background:var(--muted-bg);border:1px solid var(--border);
-    border-radius:var(--radius);padding:4px;align-self:flex-start;max-width:100%}
-  .tab{font-size:13px;font-weight:500;padding:7px 14px;border:0;background:transparent;color:var(--muted-foreground);
-    cursor:pointer;border-radius:var(--radius-sm);margin-bottom:0;transition:background .15s,color .15s,box-shadow .15s}
-  .tab:hover{color:var(--foreground)}
-  .tab.on{color:var(--foreground);background:var(--background);box-shadow:var(--shadow-sm);font-weight:600}
+  /* contenedor de cada sub-vista (Comparativa / Compañías / Sector) */
   .tabpane{display:flex;flex-direction:column;gap:16px;background:transparent}
 
   /* ===== botones ===== */
-  .dlbtn,.xlsbtn,.scenbtn,.pmail,.mail-go,.presetbtns .psave{
+  .mail-go{
     font-size:12.5px;font-weight:500;padding:8px 16px;border-radius:var(--radius);cursor:pointer;
     border:1px solid transparent;background:var(--primary);color:var(--primary-foreground);
     display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;
     transition:background .15s,box-shadow .15s,opacity .15s}
-  .dlbtn:hover,.scenbtn:hover,.pmail:hover,.mail-go:hover,.presetbtns .psave:hover{background:var(--primary-hover)}
-  .xlsbtn{background:var(--success);border-color:transparent}
-  .xlsbtn:hover{background:#15803d}
-  .dlbtn:active,.xlsbtn:active,.scenbtn:active,.pmail:active{transform:translateY(.5px)}
+  .mail-go:hover{background:var(--primary-hover)}
   /* variante outline */
-  .reset,.mail-cancel,.ctrlbtn,.presetbtns .pshare,.dos-x{
+  .reset,.mail-cancel,.dos-x{
     font-size:12.5px;font-weight:500;padding:8px 14px;border-radius:var(--radius);cursor:pointer;
     border:1px solid var(--input);background:var(--background);color:var(--foreground);
     display:inline-flex;align-items:center;justify-content:center;gap:6px;
     transition:background .15s,border-color .15s,color .15s}
-  .reset:hover,.mail-cancel:hover,.ctrlbtn:hover,.presetbtns .pshare:hover,.dos-x:hover{background:var(--accent)}
+  .reset:hover,.mail-cancel:hover,.dos-x:hover{background:var(--accent)}
   .reset{width:100%;margin-top:8px;color:var(--muted-foreground)}
-  /* variante destructiva */
-  .presetbtns .pdel{border-color:var(--destructive-border);color:var(--destructive);background:var(--background)}
-  .presetbtns .pdel:hover{background:var(--destructive-bg)}
 
   /* ===== gráfico ===== */
   .chartbox{cursor:crosshair;position:relative;height:340px;width:100%}
   .chartbox canvas{display:block;width:100%;height:100%}
   .chart-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
   /* ===== rejilla de gráficos del dashboard: todos a la vez, sin selector ===== */
-  .charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .charts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(340px,100%),1fr));gap:16px}
   .charts-grid>.chart-card:last-child:nth-child(odd){grid-column:1/-1}
   .chart-card .chartbox{height:250px}
-  @media(max-width:900px){.charts-grid{grid-template-columns:1fr}}
   .legend{display:flex;gap:18px;font-size:12px;margin-top:10px;color:var(--muted-foreground);flex-wrap:wrap}
   .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 
@@ -307,7 +382,7 @@
   .cmp-chip .cmp-logo-dark{padding:2px 5px}
   .cmp-t th .cmp-logo{max-width:100%}
   .cc-lab img.cmp-logo{max-width:100%}
-  .cmp-bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(920px,1fr));gap:16px}
+  .cmp-bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(920px,100%),1fr));gap:16px}
   @media(max-width:680px){.cmp-bars{grid-template-columns:1fr}}
   /* min-width:0 evita que, como ítem de la rejilla, la tarjeta crezca al ancho mínimo del contenido de
      .cmp-cols (13 competidoras × ancho mínimo) e infle todo el documento en pantallas estrechas */
@@ -425,7 +500,7 @@
   #tbl tr.pl-row.collapsed>td{padding-top:0;padding-bottom:0;border-bottom-color:transparent}
   #tbl tr.pl-row.collapsed>td>.cw{max-height:0;opacity:0}
   @media (prefers-reduced-motion:reduce){
-    #tbl tr.pl-row>td,#tbl tr.pl-row>td>.cw,.tri,.seg button,.tab,.kpi{transition:none}
+    #tbl tr.pl-row>td,#tbl tr.pl-row>td>.cw,.tri,.seg button,.nav-item,.kpi{transition:none}
   }
   .note{font-size:12px;color:var(--muted-foreground);margin-top:12px;line-height:1.6}
 
@@ -440,33 +515,12 @@
   .phhint.on{color:var(--warning);font-weight:500}
   .phinline{margin:0 0 10px;padding:8px 10px;background:var(--muted-bg);border:1px solid var(--border);
     border-radius:var(--radius-sm);font-size:11.5px;color:var(--muted-foreground)}
-  .phinline input{width:52px;padding:4px 6px;font-size:11.5px}
+  .phinline .phline{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .phinline input[type=month]{width:132px;height:28px;padding:0 6px;font-size:11.5px;text-align:left}
   .phinline .phscope{font-size:10.5px;color:#94a3b8;margin-top:3px}
   .phinline .phhint{margin-top:4px}
 
-  /* ===== escenarios (popover) ===== */
-  .scen-wrap{position:relative}
-  .scen-panel{display:none;position:absolute;top:calc(100% + 10px);right:0;width:320px;max-width:92vw;
-    background:var(--popover);color:var(--popover-foreground);border:1px solid var(--border);
-    border-radius:var(--radius-lg);box-shadow:var(--shadow-xl);padding:16px;z-index:200}
-  .scen-panel.on{display:block;animation:pop .14s ease-out}
   @keyframes pop{from{opacity:0;transform:translateY(-4px) scale(.98)}to{opacity:1;transform:none}}
-  .scen-exports{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;padding-bottom:14px;
-    border-bottom:1px solid var(--border)}
-  .scen-exports .xlsbtn,.scen-exports .dlbtn{width:100%;font-size:12px;padding:8px 6px;text-align:center;white-space:nowrap}
-  .scen-panel .presetbar{margin-bottom:0;border:0;background:transparent;padding:0}
-  .presetbar{background:var(--muted-bg);border:1px solid var(--border);border-radius:var(--radius);padding:10px;margin-bottom:10px}
-  .presetbar .pl{font-size:11.5px;text-transform:none;letter-spacing:0;color:var(--muted-foreground);
-    font-weight:500;margin-bottom:6px}
-  .presetbar select{width:100%}
-  .presetbtns{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px}
-  .presetbtns button{font-size:12.5px;padding:7px 10px;border-radius:var(--radius);cursor:pointer;
-    display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:500;transition:background .15s}
-  .presetbtns .psave{border:1px solid transparent}
-  .presetbtns.share3{grid-template-columns:1fr 1fr 1fr}
-  .presetbtns .pshare{font-size:11.5px;padding:7px 4px}
-  .pmail{width:100%;margin-top:10px;font-weight:500}
-  .saved-flash{font-size:11.5px;color:var(--success);margin-top:6px;height:14px;transition:opacity .3s}
 
   /* ===== dialog (correo) ===== */
   .mail-backdrop{display:none;position:fixed;inset:0;background:rgb(15 23 42 / .6);backdrop-filter:blur(2px);
@@ -554,7 +608,7 @@
   #report td:first-child,#report th:first-child{position:static}
   .rfoot{font-size:10px;color:#888;margin-top:10px}
   @media print{
-    .topbar,.wrap,#tooltip{display:none !important}
+    .app,#tooltip,#chartTip,.toast{display:none !important}
     #report{display:block !important;padding:0}
     body{background:#fff}
     @page portrait{ size:A4 portrait; margin:14mm }
@@ -572,26 +626,27 @@
     .rsup{break-inside:avoid}
   }
 
-  /* ===== cajón de controles en móvil ===== */
+  /* ===== móvil: el menú lateral pasa a ser un cajón que se abre desde la barra superior ===== */
+  @media(max-width:900px){
+    .sidebar{position:fixed;left:0;top:0;bottom:0;height:auto;transform:translateX(-100%);
+      transition:transform .22s ease;box-shadow:var(--shadow-xl);z-index:60}
+    body.sb-open .sidebar{transform:none}
+    body.sb-open .sb-backdrop{display:block;position:fixed;inset:0;background:rgb(15 23 42 / .45);z-index:55}
+    .main{padding:0 14px 32px}
+    .mobilebar{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:40;margin:0 -14px 14px;
+      padding:10px 14px;background:hsl(0 0% 100% / .9);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+    .mobilebar .mb-title{font-weight:600;font-size:14px}
+    .mobilebar .mb-scen{margin-left:auto;font-size:11.5px;color:var(--muted-foreground);max-width:45%;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .page-head h1{font-size:19px}
+  }
+  @media(prefers-reduced-motion:reduce){.sidebar{transition:none}}
   @media(max-width:760px){
     body{font-size:13px}
-    .topbar{position:static;gap:8px 10px;padding:10px 12px}
-    .brand{flex:1 0 100%;margin-right:0;font-size:13px}
-    .topbar-actions{margin-left:0;flex:1 1 100%;gap:8px}
-    .topbar .tabs{flex:1 1 100%}
-    .grp2{gap:5px}
-    .grp2 .lab{font-size:10px}
-    .topbar select,.filterbar select{font-size:12px;padding:5px 26px 5px 8px}
-    .filterbar{padding:8px 10px;gap:8px 12px}
+    .filterbar{padding:10px 12px;gap:10px 14px}
     .seg button{padding:4px 9px;font-size:11.5px}
-    .xlsbtn,.dlbtn{font-size:11.5px;padding:8px 10px;flex:1 1 auto;text-align:center}
-    .wrap{padding:12px;gap:12px}
-    .ctrlbtn{font-size:12px;padding:7px 10px}
-    .controls{margin:12px 12px 0;padding:14px}
+    .controls{padding:14px}
     #form{grid-template-columns:1fr}
-    .controls .reset{width:100%;min-width:0}
-    .tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%}
-    .tab{flex:0 0 auto;white-space:nowrap;padding:7px 12px;font-size:12.5px}
     .kpis{gap:10px}
     .kpi{padding:14px}
     .kpi .v{font-size:19px}
@@ -604,168 +659,245 @@
     .dos-body{padding:14px 14px 22px}
     .dos-head{padding:14px 16px}
     .dos-t{min-width:420px}
+    .page-actions{width:100%}
   }
   @media(max-width:430px){
     .kpis{grid-template-columns:1fr 1fr}
-    .presetbtns.share3{grid-template-columns:1fr}
     .cmp-bars{grid-template-columns:1fr}
+    .drange{flex-wrap:wrap}
   }
 </style>
 </head>
 <body>
-<div class="topbar">
-  <div class="brand">Modeloo</div>
-  <div class="tabs">
-    <button class="tab on" data-tab="dash">Dashboard</button>
-    <button class="tab" data-tab="pl">Cuenta de resultados (P&amp;L)</button>
-    <button class="tab" data-tab="ue">Unit economics</button>
-    <button class="tab" data-tab="comp">Comparativa</button>
-    <button class="tab" data-tab="companies">Compañías</button>
-    <button class="tab" data-tab="market">Mercado</button>
-  </div>
-</div>
-<div class="wrap">
-  <div class="content">
-    <div class="filterbar" id="filterbar">
-      <div class="grp2"><span class="lab">Horizonte</span>
-        <select id="selHorizon">
-          <option value="3">3 años</option>
-          <option value="5">5 años</option>
-          <option value="10" selected>10 años</option>
-        </select>
-      </div>
-      <div class="grp2"><span class="lab">Periodo</span>
-        <select id="selYear"></select>
-      </div>
-      <div class="grp2"><span class="lab">Agrupar por</span>
-        <span class="seg" id="segGran">
-          <button data-g="mes">Mes</button>
-          <button data-g="tri">Trimestre</button>
-          <button data-g="año" class="on">Año</button>
-        </span>
-      </div>
-      <div class="topbar-actions">
-        <button class="ctrlbtn" id="ctrlToggle" aria-expanded="false" aria-controls="ctrlWrap"
-          title="Mostrar u ocultar los parámetros del modelo">⚙ Parámetros del modelo <span class="ctrl-chev">▾</span></button>
-        <div class="scen-wrap">
-          <button class="scenbtn" id="btnScenarios" aria-expanded="false" title="Escenarios, compartir y exportar">☰ Escenarios y exportar</button>
-          <div id="scenPanel" class="scen-panel">
-            <div class="scen-exports">
-              <button class="xlsbtn" id="xls">⬇ Exportar a Sheets</button>
-              <button class="dlbtn" id="dl">⬇ Descargar PDF</button>
-            </div>
-          </div>
+<div class="app">
+  <aside class="sidebar" id="sidebar" aria-label="Menú principal">
+    <div class="sb-brand"><span class="sb-logo">M</span><span>Modeloo</span></div>
+    <nav class="sb-nav">
+      <button class="nav-item" data-page="home"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg>Inicio</button>
+      <button class="nav-item" data-page="lab"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6.5L4.6 18.6A1.6 1.6 0 0 0 6 21h12a1.6 1.6 0 0 0 1.4-2.4L14 9.5V3"/><path d="M7.5 15h9"/></svg>Lab</button>
+      <button class="nav-item" data-page="ue"><svg class="nav-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>Unit economics</button>
+      <div class="nav-group">
+        <div class="nav-group-h"><svg class="nav-ico" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Mercado</div>
+        <div class="nav-children">
+          <button class="nav-item" data-page="sector">Sector</button>
+          <button class="nav-item" data-page="comp">Competencia</button>
         </div>
       </div>
+    </nav>
+    <div class="sb-foot" id="sbScen"></div>
+  </aside>
+  <div class="sb-backdrop" id="sbBackdrop"></div>
+
+  <main class="main">
+    <div class="mobilebar">
+      <button class="btn btn-icon" id="sbToggle" aria-label="Abrir el menú" aria-controls="sidebar" aria-expanded="false">☰</button>
+      <span class="mb-title" id="mbTitle">Modeloo</span>
+      <span class="mb-scen" id="mbScen"></span>
     </div>
-    <div id="tab-dash" class="tabpane">
-      <div class="scopebar">
-        <span class="lab">Ámbito</span>
-        <span class="seg" id="segScope">
-          <button data-s="all" class="on">Todo el negocio</button>
-          <button data-s="auto">Auto</button>
-          <button data-s="mre">Multirriesgo Empresas</button>
-        </span>
-        <span class="scopehint" id="scopeHint"></span>
+
+    <!-- ================= INICIO ================= -->
+    <section id="page-home" class="page">
+      <div class="page-head">
+        <div>
+          <h1>Inicio</h1>
+          <p class="page-sub">Los escenarios que has guardado desde el Lab. Ábrelos para seguir jugando con los parámetros o compáralos entre sí.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn" id="btnImport" title="Cargar escenarios desde un archivo">⤒ Importar</button>
+          <button class="btn" id="btnExport" title="Descargar todos los escenarios a un archivo">⤓ Exportar todos</button>
+          <button class="btn btn-primary" id="homeNew">＋ Nuevo escenario</button>
+        </div>
       </div>
-  <div id="ctrlWrap" aria-hidden="true">
-    <div class="ctrl-inner">
-    <div class="panel controls">
-      <div class="presetbar">
-        <div class="pl">Escenarios guardados</div>
-        <select id="presetSel"><option value="">— Sin escenario —</option></select>
-        <div class="presetbtns">
-          <button class="psave" id="presetSave">＋ Guardar escenario</button>
-          <button class="pdel" id="presetDel" title="Borrar escenario seleccionado">🗑</button>
-        </div>
-        <div class="presetbtns share3">
-          <button class="pshare" id="btnShare" title="Copiar un enlace con el escenario actual">🔗 Enlace</button>
-          <button class="pshare" id="btnExport" title="Descargar todos los escenarios a un archivo">⤓ Exportar</button>
-          <button class="pshare" id="btnImport" title="Cargar escenarios desde un archivo">⤒ Importar</button>
-        </div>
-        <button class="pmail" id="btnMail" title="Preparar un correo con el enlace, el JSON, el Excel y el PDF">✉ Compartir por correo</button>
-        <input type="file" id="fileImport" accept="application/json,.json" style="display:none">
-        <div id="mailBackdrop" class="mail-backdrop">
-          <div class="mail-modal">
-            <div class="mail-h">✉ Compartir por correo</div>
-            <p class="mail-p">Se abrirá un borrador en tu Gmail (<b>fredi.baques@gmail.com</b>) con un <b>enlace que ya incluye todos los datos del escenario actual</b>. El destinatario solo tiene que abrirlo y la herramienta se carga con estos mismos valores; si quiere, podrá descargar el PDF o el Excel desde la propia plataforma.</p>
-            <label class="mail-lab">Destinatario (opcional)</label>
-            <input id="mailTo" class="mail-in" type="email" placeholder="nombre@empresa.com">
-            <label class="mail-lab">Mensaje (opcional)</label>
-            <textarea id="mailMsg" class="mail-in" rows="2" placeholder="Añade una nota personal…"></textarea>
-            <ol class="mail-steps">
-              <li>Se abre Gmail con el asunto, el texto y el enlace ya puestos.</li>
-              <li>Pon el destinatario (si no lo has hecho aquí) y pulsa Enviar.</li>
-            </ol>
-            <div class="mail-btns">
-              <button id="mailCancel" class="mail-cancel">Cancelar</button>
-              <button id="mailGo" class="mail-go">Preparar y abrir Gmail</button>
-            </div>
-          </div>
-        </div>
-        <div class="saved-flash" id="savedFlash"></div>
-      </div>
-      <p class="ctrl-scope" id="ctrlScope"></p>
-      <div id="form"></div>
-      <button class="reset" id="reset">Restablecer valores</button>
-    </div>
-    </div>
-  </div>
-      <div class="kpis" id="kpis"></div>
-      <div class="be" id="be"></div>
-      <div id="ceil"></div>
-      <p class="note" id="chartsNote" style="margin:0"></p>
-      <div class="charts-grid" id="dashCharts"></div>
-    </div>
-    <div id="tab-pl" class="tabpane" style="display:none">
+      <div class="panel home-cur" id="homeCur"></div>
       <div class="panel">
-        <h2>Detalle P&amp;L</h2>
-        <div class="tblscroll"><table id="tbl"></table></div>
-        <div class="note" id="note"></div>
+        <h2>Escenarios guardados <span class="h2-sub" id="homeCount"></span></h2>
+        <div id="homeScen"></div>
       </div>
-    </div>
-    <div id="tab-ue" class="tabpane" style="display:none">
+      <div class="panel" id="homeCmpPanel">
+        <h2>Comparar escenarios <span class="h2-sub">cada uno con su propio horizonte · en verde, el mejor de cada columna</span></h2>
+        <div class="tblscroll" id="homeCmp"></div>
+      </div>
+    </section>
+
+    <!-- ================= LAB ================= -->
+    <section id="page-lab" class="page">
+      <div class="page-head">
+        <div>
+          <h1>Lab</h1>
+          <div class="scen-status"><span>Escenario:</span><b id="labScenName"></b><span class="dirty" id="labDirty"></span></div>
+        </div>
+        <div class="page-actions">
+          <button class="btn" id="ctrlToggle" aria-controls="ctrlPanel" aria-expanded="true" title="Mostrar u ocultar los parámetros del negocio">⚙ Parámetros</button>
+          <button class="btn" id="presetSaveAs" title="Guardar los parámetros actuales como un escenario nuevo">Guardar como…</button>
+          <button class="btn btn-primary" id="presetSave">Guardar escenario</button>
+          <div class="menu-wrap">
+            <button class="btn" id="btnExportMenu" aria-expanded="false" aria-controls="exportMenu">⬇ Exportar ▾</button>
+            <div class="menu" id="exportMenu">
+              <button id="xls">📊 Exportar a Excel / Sheets</button>
+              <button id="dl">📄 Descargar informe PDF</button>
+              <div class="msep"></div>
+              <button id="btnShare">🔗 Copiar enlace al escenario</button>
+              <button id="btnMail">✉ Compartir por correo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="filterbar" id="filterbar">
+        <div class="fgrp"><span class="lab">Horizonte del plan</span>
+          <div class="frow">
+            <span class="drange"><input type="month" id="dStart" aria-label="Inicio del plan"><span class="arrow">→</span><input type="month" id="dEnd" aria-label="Fin del plan"></span>
+            <span class="fhint" id="hzHint"></span>
+          </div>
+        </div>
+        <div class="fgrp"><span class="lab">Periodo mostrado</span>
+          <div class="frow">
+            <span class="drange"><input type="month" id="pFrom" aria-label="Periodo desde"><span class="arrow">→</span><input type="month" id="pTo" aria-label="Periodo hasta"></span>
+            <button class="btn btn-sm" id="pAll" title="Mostrar todo el horizonte del plan">Todo el plan</button>
+          </div>
+        </div>
+        <div class="fgrp"><span class="lab">Agrupar por</span>
+          <span class="seg" id="segGran">
+            <button data-g="mes">Mes</button>
+            <button data-g="tri">Trimestre</button>
+            <button data-g="año" class="on">Año</button>
+          </span>
+        </div>
+        <div class="fgrp"><span class="lab">Ámbito</span>
+          <span class="seg" id="segScope">
+            <button data-s="all" class="on">Todo el negocio</button>
+            <button data-s="auto">Auto</button>
+            <button data-s="mre">Multirriesgo Empresas</button>
+          </span>
+        </div>
+      </div>
+
+      <div class="lab-grid" id="labGrid">
+        <aside class="panel controls" id="ctrlPanel">
+          <div class="ctrl-h"><h2>Parámetros del negocio</h2></div>
+          <p class="ctrl-scope" id="ctrlScope"></p>
+          <div id="form"></div>
+          <button class="reset" id="reset">Restablecer valores</button>
+        </aside>
+        <div class="lab-results">
+          <p class="note" id="scopeHint" style="margin:0"></p>
+          <div class="kpis" id="kpis"></div>
+          <div class="be" id="be"></div>
+          <p class="note" id="chartsNote" style="margin:0"></p>
+          <div class="charts-grid" id="dashCharts"></div>
+          <div class="panel">
+            <h2>Cuenta de resultados <span class="h2-sub">todo el negocio</span></h2>
+            <div class="tblscroll"><table id="tbl"></table></div>
+            <div class="note" id="note"></div>
+          </div>
+          <h3 class="sec-h">Techo de facturación</h3>
+          <div id="ceil"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= UNIT ECONOMICS ================= -->
+    <section id="page-ue" class="page">
+      <div class="page-head">
+        <div>
+          <h1>Unit economics</h1>
+          <p class="page-sub">Rentabilidad por póliza y valor del cliente del escenario que tienes en el Lab, al ritmo (run-rate) del mes que elijas.</p>
+        </div>
+        <div class="page-actions">
+          <div class="fgrp"><span class="lab" style="font-size:11px;color:var(--muted-foreground);font-weight:500">Run-rate a fecha de</span>
+            <input type="month" id="ueRef" aria-label="Mes de referencia del run-rate"></div>
+        </div>
+      </div>
       <div class="panel"><h2 id="ueTitle">Unit economics</h2><div id="ue"></div></div>
-    </div>
-    <div id="tab-comp" class="tabpane" style="display:none">
-      <div class="panel">
-        <h2 id="compTitle">Comparativa con la competencia</h2>
-        <p class="note" id="compNote" style="margin-top:0"></p>
-        <div id="compSel" class="cmp-sel"></div>
-        <div id="compBars" class="cmp-bars"></div>
-      </div>
-      <div class="panel"><h2>Comparativa detallada</h2><div id="compTable"></div></div>
-      <div class="panel" id="tagAnalysisPanel">
-        <h2>Análisis por etiquetas</h2>
-        <p class="note" id="tagAnalysisNote" style="margin-top:0"></p>
-        <div id="tagAnalysisBody"></div>
-      </div>
-    </div>
-    <div id="tab-companies" class="tabpane" style="display:none">
-      <div class="panel" id="compListPanel">
-        <h2>Compañías de la comparativa</h2>
-        <p class="note" style="margin-top:0">Listado de todas las corredurías con las que te comparas. Pulsa una compañía para abrir su ficha, ver su informe completo y editar sus etiquetas.</p>
-        <div class="comp-mgmt-grid" id="compMgmtList"></div>
-      </div>
-      <div id="compDetailPanel" style="display:none">
-        <button type="button" class="reset" id="compDetailBack" style="width:auto;margin:0 0 14px;padding:8px 16px">← Volver al listado</button>
-        <div class="panel">
-          <div class="dos-head" style="position:static;padding:0 0 16px;margin:0 0 16px;border-radius:0">
-            <div id="compDetLogo"></div>
-            <div><div class="dos-name" id="compDetName"></div><div class="dos-razon" id="compDetRazon"></div></div>
-          </div>
-          <div class="dos-h" style="margin-top:0">Etiquetas</div>
-          <p class="note" style="margin:0 0 10px">Márcalas o crea una nueva. Se aplican al momento y se reflejan en la comparativa y en el análisis por etiquetas.</p>
-          <div id="compDetTags" class="tag-editor-inline"></div>
-          <div id="compDetBody"></div>
+    </section>
+
+    <!-- ================= MERCADO · SECTOR ================= -->
+    <section id="page-sector" class="page">
+      <div class="page-head">
+        <div>
+          <h1>Sector</h1>
+          <p class="page-sub">Mercado · el sector de la mediación de seguros en España.</p>
         </div>
       </div>
-    </div>
-    <div id="tab-market" class="tabpane" style="display:none">
-      <div id="marketBody"></div>
+      <div id="marketBody" class="tabpane"></div>
+    </section>
+
+    <!-- ================= MERCADO · COMPETENCIA ================= -->
+    <section id="page-comp" class="page">
+      <div class="page-head">
+        <div>
+          <h1>Competencia</h1>
+          <p class="page-sub">Mercado · tu escenario frente a las corredurías con cuentas públicas, y la ficha de cada una.</p>
+        </div>
+        <div class="page-actions">
+          <span class="seg" id="segCompSub">
+            <button data-c="cmp" class="on">Comparativa</button>
+            <button data-c="companies">Compañías</button>
+          </span>
+        </div>
+      </div>
+      <div id="tab-comp" class="tabpane">
+        <div class="filterbar">
+          <div class="fgrp"><span class="lab">Tu modelo: 12 meses hasta</span>
+            <div class="frow"><input type="month" id="cmpRef" aria-label="Último mes de la ventana comparada"><span class="fhint" id="cmpRefHint"></span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2 id="compTitle">Comparativa con la competencia</h2>
+          <p class="note" id="compNote" style="margin-top:0"></p>
+          <div id="compSel" class="cmp-sel"></div>
+          <div id="compBars" class="cmp-bars"></div>
+        </div>
+        <div class="panel"><h2>Comparativa detallada</h2><div id="compTable"></div></div>
+        <div class="panel" id="tagAnalysisPanel">
+          <h2>Análisis por etiquetas</h2>
+          <p class="note" id="tagAnalysisNote" style="margin-top:0"></p>
+          <div id="tagAnalysisBody"></div>
+        </div>
+      </div>
+      <div id="tab-companies" class="tabpane" style="display:none">
+        <div class="panel" id="compListPanel">
+          <h2>Compañías de la comparativa</h2>
+          <p class="note" style="margin-top:0">Listado de todas las corredurías con las que te comparas. Pulsa una compañía para abrir su ficha, ver su informe completo y editar sus etiquetas.</p>
+          <div class="comp-mgmt-grid" id="compMgmtList"></div>
+        </div>
+        <div id="compDetailPanel" style="display:none">
+          <button type="button" class="reset" id="compDetailBack" style="width:auto;margin:0 0 14px;padding:8px 16px">← Volver al listado</button>
+          <div class="panel">
+            <div class="dos-head" style="position:static;padding:0 0 16px;margin:0 0 16px;border-radius:0">
+              <div id="compDetLogo"></div>
+              <div><div class="dos-name" id="compDetName"></div><div class="dos-razon" id="compDetRazon"></div></div>
+            </div>
+            <div class="dos-h" style="margin-top:0">Etiquetas</div>
+            <p class="note" style="margin:0 0 10px">Márcalas o crea una nueva. Se aplican al momento y se reflejan en la comparativa y en el análisis por etiquetas.</p>
+            <div id="compDetTags" class="tag-editor-inline"></div>
+            <div id="compDetBody"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+<div id="mailBackdrop" class="mail-backdrop">
+  <div class="mail-modal">
+    <div class="mail-h">✉ Compartir por correo</div>
+    <p class="mail-p">Se abrirá un borrador en tu Gmail (<b>fredi.baques@gmail.com</b>) con un <b>enlace que ya incluye todos los datos del escenario actual</b>. El destinatario solo tiene que abrirlo y la herramienta se carga con estos mismos valores; si quiere, podrá descargar el PDF o el Excel desde la propia plataforma.</p>
+    <label class="mail-lab">Destinatario (opcional)</label>
+    <input id="mailTo" class="mail-in" type="email" placeholder="nombre@empresa.com">
+    <label class="mail-lab">Mensaje (opcional)</label>
+    <textarea id="mailMsg" class="mail-in" rows="2" placeholder="Añade una nota personal…"></textarea>
+    <ol class="mail-steps">
+      <li>Se abre Gmail con el asunto, el texto y el enlace ya puestos.</li>
+      <li>Pon el destinatario (si no lo has hecho aquí) y pulsa Enviar.</li>
+    </ol>
+    <div class="mail-btns">
+      <button id="mailCancel" class="mail-cancel">Cancelar</button>
+      <button id="mailGo" class="mail-go">Preparar y abrir Gmail</button>
     </div>
   </div>
 </div>
+<input type="file" id="fileImport" accept="application/json,.json" style="display:none">
+<div class="toast" id="savedFlash" role="status" aria-live="polite"></div>
 <div id="dosBackdrop" class="dos-backdrop">
   <div class="dos-modal">
     <div class="dos-head">
@@ -832,12 +964,56 @@ const CFG = [
  ]],
 ];
 let V = {...DEF};
-let GRAN='año', YF=0;
-let HY=10, HM=120;   // horizonte: años y meses
+let GRAN='año';
+/* ---- calendario del plan: fechas reales en vez de «Año N» ----
+   START = mes de inicio ('AAAA-MM'); HM = nº de meses del plan (el fin es START + HM − 1).
+   Todo el motor sigue trabajando con índices de mes (0 = START); estas utilidades traducen.  */
+const MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const HM_MIN=12, HM_MAX=240;   // de 1 a 20 años
+function defStart(){ return (new Date().getFullYear()+1)+'-01'; }   // por defecto, el 1 de enero que viene
+function ymParts(ym){ const m=/^(\d{4})-(\d{2})$/.exec(ym||''); return m? {y:+m[1], m:+m[2]-1} : null; }
+let START=defStart();
+let HM=120, HY=10;   // horizonte: meses y años (redondeado hacia arriba, solo para textos)
+// periodo mostrado en el Lab, como índices de mes: [PF, PT) · PT=0 => hasta el fin del plan
+let PF=0, PT=0;
+let UE_END=0, CMP_END=0;   // mes (1-based) del run-rate de unit economics y fin de la ventana comparada · 0 => fin del plan
+const _abs=i=>{ const p=ymParts(START); return p.y*12+p.m+i; };
+function idx2ym(i){ const t=_abs(i); return Math.floor(t/12)+'-'+String(((t%12)+12)%12+1).padStart(2,'0'); }
+function ym2idx(ym){ const q=ymParts(ym); if(!q) return null; const p=ymParts(START); return (q.y*12+q.m)-(p.y*12+p.m); }
+function mLabel(i){ const t=_abs(i); return MESES[((t%12)+12)%12]+' '+Math.floor(t/12); }            // «mar 2028»
+function mShort(i){ const t=_abs(i); return MESES[((t%12)+12)%12]+' '+String(Math.floor(t/12)).slice(2); } // «mar 28»
+function clampI(x,a,b){ return Math.max(a,Math.min(b,x)); }
+function setHM(n){ HM=clampI(Math.round(n)||120,HM_MIN,HM_MAX); HY=Math.ceil(HM/12); }
+// periodo efectivo del Lab, siempre dentro del plan
+function perRange(){ const s=clampI(PF|0,0,HM-1); const e= PT>0? clampI(PT,s+1,HM) : HM; return {s,e}; }
+// etiqueta corta de un rango de meses: «2027», «mar 2028», «ene 27 – dic 36»
+function rangeLabel(s,e){
+  if(e-s===1) return mLabel(s);
+  if(_abs(s)%12===0 && e-s===12) return String(Math.floor(_abs(s)/12));
+  return mShort(s)+' – '+mShort(e-1);
+}
+const planLabel=()=>mLabel(0)+' – '+mLabel(HM-1);
+/* cortes del calendario natural: meses, trimestres (T1 = ene–mar) o años naturales. Si el plan
+   o el periodo no empiezan en el corte, el primer y el último tramo quedan incompletos (marcados con *). */
+function periodSlices(gran,s,e){
+  if(s==null) s=0; if(e==null) e=HM;
+  const full= gran==='mes'?1: gran==='tri'?3:12, out=[];
+  for(let i=s;i<e;){
+    const t=_abs(i), cm=((t%12)+12)%12, cy=Math.floor(t/12);
+    const left= gran==='mes'?1: gran==='tri'? 3-(cm%3) : 12-cm;
+    const j=Math.min(i+left,e), partial=(j-i)<full;
+    const label= gran==='mes'? MESES[cm]+' '+String(cy).slice(2) : gran==='tri'? 'T'+(Math.floor(cm/3)+1)+' '+cy : String(cy);
+    out.push({s:i,e:j,label:label+(partial?'*':''),partial});
+    i=j;
+  }
+  return out;
+}
 // calendario de partidas: activar un gasto solo entre ciertos meses (por defecto, todos)
 let PHASE={};  // { clave: {on:bool, from:int, to:int} }   to=0 => hasta el final
 let CMP_SEL=null;  // Set de claves de competidores seleccionados; se inicializa tras definir BENCH
-let ACTIVE_TAB='dash';  // pestaña activa; se restaura al refrescar
+let ACTIVE_TAB='home';  // página activa del menú lateral; se restaura al refrescar
+let COMP_SUB='cmp';     // dentro de Competencia: 'cmp' (comparativa) | 'companies' (fichas)
+let CUR_SCEN=null;      // nombre del escenario guardado que hay cargado en el Lab (null = sin guardar)
 let SCOPE='all';        // ámbito del dashboard: 'all' | 'auto' | 'mre'
 const PHASE_KEYS=[['salDirAuto','Sueldo plantilla Auto'],['salDirMre','Sueldo plantilla MRE'],['alq','Alquiler y oficina'],['pue','Suministros / puesto'],['sw','Software y CRM'],['rc','RC y seguros'],['ase','Asesoría / gestoría'],['cuo','Cuotas DGSFP']];
 // N = horizonte sobre el que se resuelve la ventana (por defecto el del plan; la proyección
@@ -850,32 +1026,40 @@ const PHASE_APPLY={};
 function makePhaseRow(pk){
   const wrap=document.createElement('div'); wrap.className='phinline';
   const p=PHASE[pk]||{}, scope=PHASE_SCOPE[pk]?`<div class="phscope">${PHASE_SCOPE[pk]}</div>`:'';
-  wrap.innerHTML=`<div>📅 con coste del mes <input type="number" id="ph_from_${pk}" min="1" value="${p.from||1}"> al <input type="number" id="ph_to_${pk}" min="1" placeholder="fin" value="${p.to?p.to:''}"></div>${scope}<div class="phhint" id="ph_hint_${pk}"></div>`;
+  // ventana de coste con dos selectores de mes; internamente se guarda como meses del plan (1-based)
+  wrap.innerHTML=`<div class="phline">📅 con coste de <input type="month" id="ph_from_${pk}" aria-label="Con coste desde"> a <input type="month" id="ph_to_${pk}" aria-label="Con coste hasta (vacío = hasta el final)"></div>${scope}<div class="phhint" id="ph_hint_${pk}"></div>`;
   const fr=wrap.querySelector('#ph_from_'+pk), to=wrap.querySelector('#ph_to_'+pk), hint=wrap.querySelector('#ph_hint_'+pk);
   const apply=(doRender)=>{
-    const from=Math.max(1,parseInt(fr.value)||1), tov=parseInt(to.value)||0;
+    const fi=ym2idx(fr.value), ti=ym2idx(to.value);
+    const from= fi==null? 1 : Math.max(1,fi+1), tov= ti==null? 0 : Math.max(1,ti+1);
     const restrict=(from>1)||(tov>0&&tov<HM), end= tov>0?Math.min(tov,HM):HM;
     PHASE[pk]={on:restrict, from, to:tov};
-    if(hint){ hint.textContent= !restrict?'✓ con coste todos los meses' : (end<from?'✕ sin coste ningún mes (desactivada)':`con coste meses ${from}–${end}; el resto, 0`);
+    if(hint){ hint.textContent= !restrict?'✓ con coste todos los meses del plan' : (end<from?'✕ sin coste ningún mes (desactivada)':`con coste de ${mLabel(from-1)} a ${mLabel(end-1)}; el resto, 0`);
       hint.classList.toggle('on',restrict); }
     if(doRender) render();
   };
-  fr.addEventListener('input',()=>apply(true)); to.addEventListener('input',()=>apply(true));
-  PHASE_APPLY[pk]=apply; apply(false);
+  fr.addEventListener('change',()=>apply(true)); to.addEventListener('change',()=>apply(true));
+  PHASE_APPLY[pk]=apply; setPhaseInputs(pk,fr,to); apply(false);
   return wrap;
+}
+// vuelca PHASE en los selectores de mes (y acota su rango al horizonte del plan)
+function setPhaseInputs(pk,fr,to){
+  fr=fr||document.getElementById('ph_from_'+pk); to=to||document.getElementById('ph_to_'+pk);
+  if(!fr||!to) return; const p=PHASE[pk]||{};
+  [fr,to].forEach(el=>{ el.min=idx2ym(0); el.max=idx2ym(HM-1); });
+  fr.value=idx2ym(Math.max(1,p.from||1)-1); to.value=p.to? idx2ym(p.to-1) : '';
 }
 function syncPhaseControls(){
   Object.values(PHASE_ANCHOR).forEach(pk=>{
-    const fr=document.getElementById('ph_from_'+pk), to=document.getElementById('ph_to_'+pk);
-    if(!fr) return; const p=PHASE[pk]||{};
-    fr.value=p.from||1; to.value=p.to?p.to:'';
+    if(!document.getElementById('ph_from_'+pk)) return;
+    setPhaseInputs(pk);
     if(PHASE_APPLY[pk]) PHASE_APPLY[pk](false);
   });
 }
 
 /* ---- persistencia y escenarios (localStorage) ---- */
 const LS_STATE='cbp_state_v1', LS_PRESETS='cbp_presets_v1';
-function snapshot(){ return {V:{...V}, GRAN, YF, HY, PHASE:JSON.parse(JSON.stringify(PHASE)), CMP_SEL: CMP_SEL?[...CMP_SEL]:null, ACTIVE_TAB, SCOPE}; }
+function snapshot(){ return {V:{...V}, GRAN, START, HM, PF, PT, UE_END, CMP_END, PHASE:JSON.parse(JSON.stringify(PHASE)), CMP_SEL: CMP_SEL?[...CMP_SEL]:null, ACTIVE_TAB, COMP_SUB, SCOPE}; }
 /* Migración de escenarios guardados. Dos saltos acumulados:
    1) capGest/capCom/maxCarga → polEmp, y salG/salC → salDir (plantilla polivalente única)
    2) polEmp/salDir → un juego por ramo (polEmpAuto/Mre, salDirAuto/Mre), y desaparece la
@@ -899,26 +1083,40 @@ function migratePhase(p){
   ['salG','salC','salDir','salE'].forEach(k=>delete q[k]);
   return q;
 }
+// páginas de la versión con pestañas → página del menú lateral
+const OLD_TAB={dash:'lab', pl:'lab', notes:'lab', market:'sector', companies:'comp'};
+const PAGES=['home','lab','ue','sector','comp'];
+/* Escenarios anteriores a las fechas: tenían HY (años) e YF (año filtrado, 0 = todos).
+   Se convierten a meses y a un periodo [PF,PT); el plan empieza en la fecha por defecto. */
 function applySnapshot(s){
   if(!s) return;
   if(s.V) V={...DEF, ...migrateV(s.V)};
-  if(s.GRAN) GRAN=s.GRAN;
-  if(typeof s.YF==='number') YF=s.YF;
-  if(s.HY){ HY=s.HY; HM=HY*12; if(YF>HY) YF=0; }
+  if(['mes','tri','año'].includes(s.GRAN)) GRAN=s.GRAN;
+  if(ymParts(s.START)) START=s.START;
+  if(s.HM) setHM(s.HM); else if(s.HY) setHM(s.HY*12);
+  if(typeof s.PF==='number'||typeof s.PT==='number'){ PF=s.PF|0; PT=s.PT|0; }
+  else if(typeof s.YF==='number'){ PF= s.YF>0? (s.YF-1)*12 : 0; PT= s.YF>0? s.YF*12 : 0; }
+  if(PF>=HM){ PF=0; PT=0; } if(PT>=HM) PT=0;
+  UE_END= (s.UE_END>0&&s.UE_END<HM)? s.UE_END : 0;
+  CMP_END= (s.CMP_END>0&&s.CMP_END<HM)? s.CMP_END : 0;
   if(s.PHASE && typeof s.PHASE==='object') PHASE=migratePhase(s.PHASE);
   if(Array.isArray(s.CMP_SEL)) CMP_SEL=new Set(s.CMP_SEL);
-  if(s.ACTIVE_TAB) ACTIVE_TAB=(s.ACTIVE_TAB==='notes')?'dash':s.ACTIVE_TAB;
+  if(s.ACTIVE_TAB){ const t=OLD_TAB[s.ACTIVE_TAB]||s.ACTIVE_TAB; if(PAGES.includes(t)) ACTIVE_TAB=t;
+    if(s.ACTIVE_TAB==='companies') COMP_SUB='companies'; }
+  if(s.COMP_SUB==='cmp'||s.COMP_SUB==='companies') COMP_SUB=s.COMP_SUB;
   if(s.SCOPE && ['all','auto','mre'].includes(s.SCOPE)) SCOPE=s.SCOPE;
 }
-function saveState(){ try{ localStorage.setItem(LS_STATE, JSON.stringify(snapshot())); }catch(e){} }
+function saveState(){ try{ localStorage.setItem(LS_STATE, JSON.stringify({...snapshot(), CUR_SCEN})); }catch(e){} }
 function loadState(){ try{ return JSON.parse(localStorage.getItem(LS_STATE)); }catch(e){ return null; } }
 function loadPresets(){ try{ return JSON.parse(localStorage.getItem(LS_PRESETS))||{}; }catch(e){ return {}; } }
 function savePresets(p){ try{ localStorage.setItem(LS_PRESETS, JSON.stringify(p)); }catch(e){} }
 // restaura los últimos valores antes de construir el formulario
-applySnapshot(loadState());
-// si se abre con un enlace compartido (#s=...), ese escenario tiene prioridad
+(function(){ const st=loadState(); applySnapshot(st);
+  if(st && typeof st.CUR_SCEN==='string') CUR_SCEN=st.CUR_SCEN; })();
+// si se abre con un enlace compartido (#s=...), ese escenario tiene prioridad y se abre en el Lab
 (function(){ try{ const h=(location.hash||'').match(/[#&]s=([^&]+)/);
-  if(h){ const json=decodeURIComponent(escape(atob(decodeURIComponent(h[1])))); applySnapshot(JSON.parse(json)); }
+  if(h){ const json=decodeURIComponent(escape(atob(decodeURIComponent(h[1])))); applySnapshot(JSON.parse(json));
+    CUR_SCEN=null; ACTIVE_TAB='lab'; }
 }catch(e){} })();
 
 // NM = nº de meses a simular; por defecto el horizonte del plan. El cálculo del techo de
@@ -1029,25 +1227,21 @@ function compute(v,NM){
 const FLOW=['a_inew','a_iren','ingA','m_inew','m_iren','ingM','itot',
   'cdir','sal','ss','psub','alq','pue','sw','rc','ase','cuo','colab','otr','esub','gtot','ebi','newt'];
 const STOCK=['ebac','cart','dir','dirA','dirM','dNeed','prim'];
-function bucketize(mon,gran,yf){
-  const step= gran==='mes'?1: gran==='tri'?3:12;
-  const start= yf>0?(yf-1)*12:0, end= yf>0?yf*12:HM;
+// [s,e) = meses del plan a mostrar (por defecto, todo); los cortes siguen el calendario natural
+function bucketize(mon,gran,s0,e0){
   const out=[];
-  for(let s=start;s<end;s+=step){
-    const e=Math.min(s+step,end), b={s,e,vals:{}};
-    if(gran==='mes') b.label='M'+(s+1);
-    else if(gran==='tri') b.label='A'+(Math.floor(s/12)+1)+'·T'+(Math.floor((s%12)/3)+1);
-    else b.label='Año '+(Math.floor(s/12)+1);
+  periodSlices(gran,s0,e0).forEach(({s,e,label,partial})=>{
+    const b={s,e,label,partial,vals:{}};
     FLOW.forEach(k=>{let x=0;for(let i=s;i<e;i++)x+=mon[k][i];b.vals[k]=x;});
     STOCK.forEach(k=>b.vals[k]=mon[k][e-1]);
     b.vals.margin= b.vals.itot? b.vals.ebi/b.vals.itot : 0;
     b.ing=b.vals.itot; b.gas=b.vals.gtot; b.ebi=b.vals.ebi;
     out.push(b);
-  }
+  });
   return out;
 }
-function totalCol(mon,yf){
-  const start= yf>0?(yf-1)*12:0, end= yf>0?yf*12:HM, vals={};
+function totalCol(mon,s0,e0){
+  const start= s0||0, end= e0||HM, vals={};
   FLOW.forEach(k=>{let x=0;for(let i=start;i<end;i++)x+=mon[k][i];vals[k]=x;});
   STOCK.forEach(k=>vals[k]=mon[k][end-1]);
   vals.margin= vals.itot? vals.ebi/vals.itot:0;
@@ -1198,8 +1392,8 @@ function plTable(buckets,tot,opts){
 }
 
 function ueHTML(R,opt){
-  opt=opt||{}; const end= opt.end || (YF>0?YF*12:HM), li=end-1;
-  const lbl= opt.label || (YF?('fin Año '+YF):('fin Año '+HY));
+  opt=opt||{}; const end= opt.end || UE_END || HM, li=end-1;
+  const lbl= opt.label || mLabel(li);
   const c=R.mon.cart[li];
   const ingPP= c? R.mon.itot[li]*12/c : 0;
   const colabPP= c? R.mon.colab[li]*12/c : 0;
@@ -1272,27 +1466,26 @@ function ceilPanelHTML(scope,C,monS){
   const card=(k,v,sub,cls)=>`<div class="panel cl-card${cls?' '+cls:''}"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`;
   if(C.growing) return `<div class="panel cl-card cl-wide"><div class="k">Techo de facturación · ${S.label}</div>
       <div class="v" style="font-size:20px">Este escenario no tiene techo</div>
-      <div class="s">Al crecer la captación mes a mes de forma compuesta (${num1(V.gAuto)}% en Auto, ${num1(V.gMre)}% en la producción propia de MRE), la cartera nunca satura y la facturación sigue subiendo indefinidamente. Lo máximo dentro del plan son <b>${eur(nowRR)}</b> al año, al ritmo del mes ${HM}. Pon los dos crecimientos a 0 para ver dónde estaría el techo.</div></div>`;
+      <div class="s">Al crecer la captación mes a mes de forma compuesta (${num1(V.gAuto)}% en Auto, ${num1(V.gMre)}% en la producción propia de MRE), la cartera nunca satura y la facturación sigue subiendo indefinidamente. Lo máximo dentro del plan son <b>${eur(nowRR)}</b> al año, al ritmo del último mes del plan (${mLabel(HM-1)}). Pon los dos crecimientos a 0 para ver dónde estaría el techo.</div></div>`;
   if(!isFinite(cap.fact)||cap.fact<=0) return `<div class="panel cl-card cl-wide"><div class="k">Techo de facturación · ${S.label}</div>
       <div class="v" style="font-size:20px">Sin captación</div><div class="s">No hay facturación que proyectar en este ramo.</div></div>`;
   const pctNow=Math.max(0,Math.min(1,nowRR/cap.fact)), t95=hit[0.95];
-  const yOf=m=>Math.floor((m-1)/12)+1;
   // los hitos que caen fuera del plan se atenúan, en vez de repetir el aviso en cada uno
   const fmtHit=k=>{const m=hit[k], p=Math.round(k*100);
     if(m==null) return `<div class="cl-row out"><span>${p}% del techo</span><b>+100 años</b></div>`;
-    return `<div class="cl-row${m>HM?' out':''}"><span>${p}% del techo</span><b>mes ${m} · Año ${yOf(m)}</b></div>`;};
+    return `<div class="cl-row${m>HM?' out':''}"><span>${p}% del techo</span><b>${mLabel(m-1)}</b></div>`;};
   const ret= scope==='mre'? ('del '+num1(V.retMre)+'%') : scope==='auto'? ('del '+num1(V.retAuto)+'%')
            : ('del '+num1(V.retAuto)+'% en Auto y del '+num1(V.retMre)+'% en MRE');
   return card('Facturación máxima', eur(cap.fact), `comisión al año con la cartera ${S.of} saturada`)
     + card('Tiempo hasta el techo',
-        t95!=null? ('Año '+yOf(t95)) : '+100 años',
-        t95!=null? `mes ${t95}, para llegar al 95%${t95>HM?` — fuera de los ${HY} años del plan`:''}` : 'no se alcanza el 95% en un siglo')
-    + `<div class="panel cl-card"><div class="k">Recorrido al final del plan</div>
+        t95!=null? mLabel(t95-1) : '+100 años',
+        t95!=null? `95% del techo, ${t95<12?t95+' meses':num1(t95/12)+' años'} después del inicio${t95>HM?` — fuera del plan, que acaba en ${mLabel(HM-1)}`:''}` : 'no se alcanza el 95% en un siglo')
+    + `<div class="panel cl-card"><div class="k">Recorrido al final del plan · ${mLabel(HM-1)}</div>
         <div class="v">${pct(pctNow)}</div>
         <div class="cl-bar"><span style="width:${(pctNow*100).toFixed(1)}%"></span></div>
         <div class="s">facturas ${eur(nowRR)} al año de los ${eur(cap.fact)} del techo</div></div>`
     + `<div class="panel cl-card"><div class="k">Hitos hasta el techo</div><div class="cl-rows">${CEIL_MARKS.map(fmtHit).join('')}</div>
-        <div class="s">atenuados, los que caen fuera del plan de ${HY} años</div></div>`
+        <div class="s">atenuados, los que caen después del fin del plan (${mLabel(HM-1)})</div></div>`
     + `<div class="panel cl-card cl-wide cl-soft"><div class="k">Por qué hay un techo</div>
         <div class="s">La cartera satura cuando las altas de cada mes igualan a las bajas. Con una retención anual ${ret}, ese equilibrio está en <b>${eur0(cap.cart)} pólizas</b> y <b>${eur(cap.prim)}</b> de primas en gestión. El acercamiento es asintótico: el último tramo es el más lento, por eso pasar del 95% al 99% cuesta casi tanto como llegar al 95%.</div></div>`;
 }
@@ -1303,9 +1496,11 @@ function render(){
   const S=SCOPES[SCOPE]||SCOPES.all;
   const monS=S.mon(R), beS=S.be(R);
   const cartBE= beS? monS.cart[beS-1] : null;
-  const tot=totalCol(monS,YF);
-  const perLabel= YF? ('Año '+YF) : (HY+' años');
+  const {s:p0,e:p1}=perRange();
+  const tot=totalCol(monS,p0,p1);
+  const perLabel=rangeLabel(p0,p1);
   const e=tot.ebi;
+  const after=m=> m<12? `${m} ${m===1?'mes':'meses'} desde el inicio` : `${num1(m/12)} años desde el inicio`;
   document.getElementById('scopeHint').textContent=S.hint;
   syncParamScope();
   const empSuffix= SCOPE==='all'
@@ -1314,26 +1509,29 @@ function render(){
   document.getElementById('kpis').innerHTML=`
    <div class="kpi"><div class="k">Ingresos · ${perLabel}</div><div class="v">${eur0(tot.itot)}€</div><div class="s">comisión del periodo</div></div>
    <div class="kpi"><div class="k">EBITDA · ${perLabel}</div><div class="v ${e>=0?'pos':'neg'}">${eur0(e)}€</div><div class="s">Margen ${pct(tot.margin)}</div></div>
-   <div class="kpi"><div class="k">Cartera fin · ${perLabel}</div><div class="v">${eur0(tot.cart)}</div><div class="s">pólizas en vigor</div></div>
-   <div class="kpi"><div class="k">Prima en gestión · ${perLabel}</div><div class="v">${eur0(tot.prim)}€</div><div class="s">primas en vigor a fin de periodo</div></div>
-   <div class="kpi"><div class="k">Empleados · ${perLabel}</div><div class="v">${num0(tot.dir||0)}</div><div class="s">${empSuffix}</div></div>
-   <div class="kpi"><div class="k">Break-even · ${S.label}</div><div class="v ${beS?'pos':'neg'}">${beS?('Mes '+beS):('>'+HM+'m')}</div><div class="s">${beS?('cartera ≈ '+eur0(cartBE)+' pólizas'):('no en '+HY+' años')}</div></div>`;
+   <div class="kpi"><div class="k">Cartera a ${mLabel(p1-1)}</div><div class="v">${eur0(tot.cart)}</div><div class="s">pólizas en vigor</div></div>
+   <div class="kpi"><div class="k">Prima en gestión a ${mLabel(p1-1)}</div><div class="v">${eur0(tot.prim)}€</div><div class="s">primas en vigor a fin de periodo</div></div>
+   <div class="kpi"><div class="k">Empleados a ${mLabel(p1-1)}</div><div class="v">${num0(tot.dir||0)}</div><div class="s">${empSuffix}</div></div>
+   <div class="kpi"><div class="k">Break-even · ${S.label}</div><div class="v ${beS?'pos':'neg'}">${beS?mLabel(beS-1):'No alcanzado'}</div><div class="s">${beS?(after(beS)+' · cartera ≈ '+eur0(cartBE)+' pólizas'):('no antes de '+mLabel(HM-1))}</div></div>`;
   document.getElementById('be').innerHTML = beS
-    ? `<b>Punto de equilibrio ${S.of}:</b> el EBITDA mensual se vuelve positivo en el <b>mes ${beS}</b> (cartera ≈ ${eur0(cartBE)} pólizas).${SCOPE==='all'?` El EBITDA acumulado pasa a positivo ${R.beAcc?('en el mes '+R.beAcc):('fuera de los '+HM+' meses')}.`:''}`
-    : `<b>Punto de equilibrio ${S.of}:</b> con estos supuestos <b>no se alcanza break-even mensual en ${HM} meses</b>. Sube captación/comisión, reduce retrocesión o sube las pólizas por empleado.`;
+    ? `<b>Punto de equilibrio ${S.of}:</b> el EBITDA mensual se vuelve positivo en <b>${mLabel(beS-1)}</b> (${after(beS)}; cartera ≈ ${eur0(cartBE)} pólizas).${SCOPE==='all'?` El EBITDA acumulado pasa a positivo ${R.beAcc?('en '+mLabel(R.beAcc-1)):('después del fin del plan ('+mLabel(HM-1)+')')}.`:''}`
+    : `<b>Punto de equilibrio ${S.of}:</b> con estos supuestos <b>no se alcanza break-even mensual antes de ${mLabel(HM-1)}</b>. Sube captación/comisión, reduce retrocesión o sube las pólizas por empleado.`;
   document.getElementById('ceil').innerHTML=ceilPanelHTML(SCOPE,C,monS);
 
-  document.getElementById('ueTitle').textContent=`Unit economics · ${perLabel}`;
+  const ueEnd=UE_END||HM;
+  document.getElementById('ueTitle').textContent=`Run-rate a ${mLabel(ueEnd-1)}`;
   document.getElementById('ue').innerHTML=ueHTML(R);
-  const buckets=bucketize(monS,GRAN,YF);
-  const gl={mes:'mes',tri:'trimestre','año':'año'}[GRAN];
-  document.getElementById('chartsNote').textContent=`Mostrando ${perLabel} por ${gl} · ${S.label}.`;
+  const buckets=bucketize(monS,GRAN,p0,p1);
+  const gl={mes:'mes',tri:'trimestre natural','año':'año natural'}[GRAN];
+  const partial= buckets.some(b=>b.partial)? ' * = tramo incompleto (el periodo no cubre el tramo natural entero).' : '';
+  document.getElementById('chartsNote').textContent=`Mostrando ${mLabel(p0)} – ${mLabel(p1-1)} por ${gl} · ${S.label}.${partial}`;
   // la cuenta de resultados detallada es siempre la del negocio completo
-  const totG=totalCol(R.mon,YF);
-  document.getElementById('tbl').innerHTML=plTable(bucketize(R.mon,GRAN,YF),totG,{icons:true});
-  document.getElementById('note').textContent=`Mostrando ${perLabel} agrupado por ${gl}. Flujo (ingresos, gastos, EBITDA, pólizas nuevas) sumado en el periodo; stock (cartera, EBITDA acumulado, nº gestores) a fin de periodo. El break-even se calcula siempre sobre los ${HM} meses.`;
+  const totG=totalCol(R.mon,p0,p1);
+  document.getElementById('tbl').innerHTML=plTable(bucketize(R.mon,GRAN,p0,p1),totG,{icons:true});
+  document.getElementById('note').textContent=`Mostrando ${mLabel(p0)} – ${mLabel(p1-1)} agrupado por ${gl}. Flujo (ingresos, gastos, EBITDA, pólizas nuevas) sumado en el periodo; stock (cartera, EBITDA acumulado, nº gestores) a fin de periodo. El break-even se calcula siempre sobre todo el plan (${planLabel()}).${partial}`;
   renderChartsGrid(buckets,chartKeysFor(SCOPE));
-  if(document.getElementById('tab-comp').style.display!=='none') renderComp();
+  if(ACTIVE_TAB==='comp' && COMP_SUB==='cmp') renderComp();
+  updateScenStatus();
   saveState();
 }
 
@@ -1477,15 +1675,75 @@ CFG.forEach(([title,cls,scope,items],gi)=>{
 function fmtVal(key,type){const v=V[key];return type==='pct'?(v+'%'):(type==='eur'?eur0(v)+'€':eur0(v));}
 CFG.forEach(([,,,items])=>items.forEach(([key,,type,rng])=>{if(rng){const el=document.getElementById('v_'+key);if(el)el.textContent=fmtVal(key,type);}}));
 
-function buildYearOptions(){
-  let o='<option value="0">Todos</option>';
-  for(let y=1;y<=HY;y++) o+=`<option value="${y}">Año ${y}</option>`;
-  const sel=document.getElementById('selYear'); sel.innerHTML=o; sel.value=String(YF);
+/* ---- selectores de fecha: horizonte del plan, periodo del Lab, run-rate y ventana comparada ----
+   Navegadores sin selector de mes nativo muestran un campo de texto: se acepta «AAAA-MM».      */
+document.querySelectorAll('input[type=month]').forEach(el=>{ el.placeholder='AAAA-MM'; el.pattern='\\d{4}-\\d{2}'; });
+function syncDateControls(){
+  const lo=idx2ym(0), hi=idx2ym(HM-1), $=id=>document.getElementById(id);
+  $('dStart').value=START;
+  const dE=$('dEnd'); dE.min=idx2ym(HM_MIN-1); dE.max=idx2ym(HM_MAX-1); dE.value=hi;
+  $('hzHint').textContent= HM+' meses'+(HM%12===0? ' · '+(HM/12)+(HM===12?' año':' años') : '');
+  const {s,e}=perRange();
+  ['pFrom','pTo','ueRef','cmpRef'].forEach(id=>{ $(id).min=lo; $(id).max=hi; });
+  $('pFrom').value=idx2ym(s); $('pTo').value=idx2ym(e-1);
+  $('pAll').disabled= (s===0 && e===HM);
+  $('ueRef').value=idx2ym((UE_END||HM)-1);
+  const ce=CMP_END||HM, cs=Math.max(0,ce-12);
+  $('cmpRef').value=idx2ym(ce-1);
+  $('cmpRefHint').textContent= ce-cs<12
+    ? `${mLabel(cs)} – ${mLabel(ce-1)} · solo ${ce-cs} ${ce-cs===1?'mes':'meses'} de plan: se anualiza`
+    : `${mLabel(cs)} – ${mLabel(ce-1)}`;
 }
-buildYearOptions();
-document.getElementById('selYear').addEventListener('change',e=>{ YF=parseInt(e.target.value); render(); });
-document.getElementById('selHorizon').addEventListener('change',e=>{
-  HY=parseInt(e.target.value); HM=HY*12; if(YF>HY) YF=0; buildYearOptions(); render();
+// mover el inicio conserva la duración del plan y las fechas ya elegidas (calendario de
+// partidas y periodo): sus índices se desplazan para que sigan cayendo en el mismo mes natural
+function setStart(ym){
+  const d=ym2idx(ym); if(d==null||d===0) return;
+  START=ym;
+  Object.keys(PHASE).forEach(k=>{ const p=PHASE[k]; if(!p||!p.on) return;
+    p.from=Math.max(1,(p.from||1)-d); if(p.to>0) p.to=Math.max(1,p.to-d); });
+  if(PF||PT){ const s=PF-d, e= PT? PT-d : HM;
+    if(e<=0||s>=HM){ PF=0; PT=0; } else { PF=Math.max(0,s); PT= (!PT||e>=HM)? 0 : Math.max(PF+1,e); } }
+  const shiftEnd=x=>{ if(!x) return 0; const y=x-d; return (y>=1&&y<HM)? y : 0; };
+  UE_END=shiftEnd(UE_END); CMP_END=shiftEnd(CMP_END);
+}
+// al cambiar el fin del plan, todo lo que apuntaba más allá vuelve a «hasta el final»
+function clampToPlan(){
+  if(PF>=HM){ PF=0; PT=0; } if(PT>=HM) PT=0;
+  if(UE_END>=HM) UE_END=0; if(CMP_END>=HM) CMP_END=0;
+}
+function onDatesChanged(){ syncDateControls(); syncPhaseControls(); render(); }
+document.getElementById('dStart').addEventListener('change',e=>{
+  if(!ymParts(e.target.value)){ syncDateControls(); return; }
+  setStart(e.target.value); onDatesChanged();
+});
+document.getElementById('dEnd').addEventListener('change',e=>{
+  const i=ym2idx(e.target.value); if(i==null){ syncDateControls(); return; }
+  if(i+1<HM_MIN) flash('El plan dura como mínimo '+HM_MIN+' meses');
+  if(i+1>HM_MAX) flash('El plan dura como máximo '+(HM_MAX/12)+' años');
+  setHM(i+1); clampToPlan(); onDatesChanged();
+});
+document.getElementById('pFrom').addEventListener('change',e=>{
+  const i=ym2idx(e.target.value);
+  PF= i==null? 0 : clampI(i,0,HM-1);
+  if(PT && PT<=PF) PT=Math.min(PF+1,HM);
+  if(PT>=HM) PT=0;
+  syncDateControls(); render();
+});
+document.getElementById('pTo').addEventListener('change',e=>{
+  const i=ym2idx(e.target.value);
+  PT= i==null? 0 : clampI(i+1,1,HM);
+  if(PT && PT<=PF) PF=PT-1;
+  if(PT>=HM) PT=0;
+  syncDateControls(); render();
+});
+document.getElementById('pAll').addEventListener('click',()=>{ PF=0; PT=0; syncDateControls(); render(); });
+document.getElementById('ueRef').addEventListener('change',e=>{
+  const i=ym2idx(e.target.value); UE_END= i==null? 0 : clampI(i+1,1,HM); if(UE_END>=HM) UE_END=0;
+  syncDateControls(); render();
+});
+document.getElementById('cmpRef').addEventListener('change',e=>{
+  const i=ym2idx(e.target.value); CMP_END= i==null? 0 : clampI(i+1,1,HM); if(CMP_END>=HM) CMP_END=0;
+  syncDateControls(); renderComp(); saveState();
 });
 document.getElementById('segScope').addEventListener('click',e=>{
   if(e.target.tagName!=='BUTTON')return; SCOPE=e.target.dataset.s;
@@ -1540,23 +1798,41 @@ compEl.addEventListener('mouseout',e=>{if(e.target.closest('.info'))tip.style.di
 compEl.addEventListener('click',e=>{const t=e.target.closest('.info'); if(t){placeTip(t);
   setTimeout(()=>tip.style.display='none',4000);}});
 
+const PAGE_TITLE={home:'Inicio', lab:'Lab', ue:'Unit economics', sector:'Mercado · Sector', comp:'Mercado · Competencia'};
 function activateTab(id,doSave){
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===id));
-  document.getElementById('tab-dash').style.display=(id==='dash')?'flex':'none';
-  document.getElementById('tab-pl').style.display=(id==='pl')?'flex':'none';
-  document.getElementById('tab-ue').style.display=(id==='ue')?'flex':'none';
-  document.getElementById('tab-comp').style.display=(id==='comp')?'flex':'none';
-  document.getElementById('tab-companies').style.display=(id==='companies')?'flex':'none';
-  document.getElementById('tab-market').style.display=(id==='market')?'flex':'none';
-  // la gestión de compañías y el mercado no dependen de los filtros: allí la barra sobra
-  document.getElementById('filterbar').style.display=(id==='companies'||id==='market')?'none':'flex';
-  if(id==='pl'||id==='dash') render();
-  if(id==='comp') renderComp();
-  if(id==='companies') renderCompanyList();
-  if(id==='market') renderMarket();
-  ACTIVE_TAB=id; if(doSave!==false) saveState();
+  id=OLD_TAB[id]||id; if(!PAGES.includes(id)) id='home';
+  document.querySelectorAll('.nav-item').forEach(x=>{ const on=x.dataset.page===id;
+    x.classList.toggle('on',on); if(on) x.setAttribute('aria-current','page'); else x.removeAttribute('aria-current'); });
+  PAGES.forEach(p=>document.getElementById('page-'+p).classList.toggle('on',p===id));
+  document.getElementById('mbTitle').textContent=PAGE_TITLE[id];
+  ACTIVE_TAB=id;
+  if(id==='lab'||id==='ue') render();
+  if(id==='home') renderHome();
+  if(id==='comp') showCompSub(COMP_SUB);
+  if(id==='sector') renderMarket();
+  setSidebar(false);
+  if(doSave!==false) saveState();
 }
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>activateTab(t.dataset.tab)));
+document.querySelectorAll('.nav-item').forEach(t=>t.addEventListener('click',()=>{ activateTab(t.dataset.page); window.scrollTo(0,0); }));
+// Competencia agrupa la comparativa y las fichas de las compañías
+function showCompSub(sub){
+  COMP_SUB= sub==='companies'? 'companies' : 'cmp';
+  document.querySelectorAll('#segCompSub button').forEach(b=>b.classList.toggle('on',b.dataset.c===COMP_SUB));
+  document.getElementById('tab-comp').style.display= COMP_SUB==='cmp'? 'flex':'none';
+  document.getElementById('tab-companies').style.display= COMP_SUB==='companies'? 'flex':'none';
+  if(COMP_SUB==='cmp') renderComp(); else renderCompanyList();
+}
+document.getElementById('segCompSub').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return; showCompSub(b.dataset.c); saveState();
+});
+// en móvil el menú lateral es un cajón
+function setSidebar(on){
+  document.body.classList.toggle('sb-open',on);
+  document.getElementById('sbToggle').setAttribute('aria-expanded',on?'true':'false');
+}
+document.getElementById('sbToggle').addEventListener('click',()=>setSidebar(!document.body.classList.contains('sb-open')));
+document.getElementById('sbBackdrop').addEventListener('click',()=>setSidebar(false));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') setSidebar(false); });
 
 // ---- comparativa con la competencia (Pacc, Quadis, AMV) ----
 const LOGOS={
@@ -1663,6 +1939,15 @@ const BENCH=[
    otrosIngresosPct:180767.38/11676156.39, retroPct:0, aprovPct:0, personalPct:2202797.77/11676156.39, otrosPct:7935224.96/11676156.39,
    ebitdaPct:0.1472, ebitPct:0.1365, netoPct:0.1081,
    comisEmp:189794.48, costePersEmp:35806.21, primasEmp:null, comPrima:null, retroEff:0, color:'#831843'},
+ // Insurnet SL (NIF B…, Palma de Mallorca) — Registro Mercantil / eInforma 2024. Correduría muy pequeña (13 empleados)
+ // en fase de inversión: «trabajos realizados para su activo» capitaliza desarrollo propio y va a otros ingresos, junto
+ // a un deterioro de inmovilizado de 10.882 € (no recurrente) que se deja en «otros» para cuadrar el EBITDA.
+ // Aprovisionamientos y retrocesión ≈ 0 en 2024. Primer año en pérdidas del periodo analizado.
+ {key:'insurnet', name:'Insurnet', empleados:13, ingresos:981355.64, primas:null,
+   otrosIngresos:215436.19, retro:0, aprov:0, personal:372225.79, otros:732407.08, ebitda:92158.96, ebit:13923.51, neto:-5647.47,
+   otrosIngresosPct:215436.19/981355.64, retroPct:0, aprovPct:0, personalPct:372225.79/981355.64, otrosPct:732407.08/981355.64,
+   ebitdaPct:0.0939, ebitPct:0.0142, netoPct:-0.0058,
+   comisEmp:981355.64/13, costePersEmp:372225.79/13, primasEmp:null, comPrima:null, retroEff:0, color:'#0369a1'},
 ];
 
 // ---- informe completo por competidora (eInforma / Registro Mercantil) ----
@@ -2510,7 +2795,104 @@ const DOSSIER={
    'Por eso el EBIT cae un 16,8% en 2024 pese al salto de ventas del 66,5%: bajó el exceso de provisiones, no el negocio.',
    'Estructura atípica para una correduría: «otros gastos de explotación» pesa un 62,6% sobre ventas frente a un 16,4% de personal. Sus cuentas no desglosan retrocesión a colaboradores, pero esa proporción sugiere distribución externalizada.',
    'El activo no corriente (64,2% del balance, 30 puntos por encima del sector) son casi en su totalidad inversiones financieras a largo plazo: 13,07 M€. El fondo de maniobra es negativo los tres años (−2,75 M€ en 2024).',
-   'Los 3.377.842,36 € de resultado de 2024 se destinaron íntegramente a reserva voluntaria; no hubo reparto de dividendo.']}
+   'Los 3.377.842,36 € de resultado de 2024 se destinaron íntegramente a reserva voluntaria; no hubo reparto de dividendo.']},
+ insurnet:{
+  razon:'INSURNET SL',
+  fuente:'eInforma — INFORMA D&B S.A.U. · Balance y Cuenta de Resultados emitido el 08/09/2026 (último dato incorporado el 02/09/2026; información contrastada el 22/09/2026). Cuentas anuales individuales depositadas en el Registro Mercantil (depósito 2024).',
+  ficha:[['NIF','B… (no legible en el informe recibido)'],['Número D-U-N-S','465111909'],['Situación','Activa'],['Constitución','13/02 (año no legible en el informe)'],['Inicio de actividad','02/11 (año no legible en el informe)'],['Domicilio','C/ Sindicat 69, 7º 1ª — 07002 Palma (Balears, Illes)'],['Teléfono','697430730 / 971728374'],['Web','www.insurceo.com'],['E-mail','info@insurceo.com'],['CNAE 2025','6622 — Agentes y corredores de seguros'],['Tamaño (UE)','Microempresa'],['Empleados','13 en 2024 · 15 en 2023 · 10 en 2022 (16 en 2025)'],['Capital social','5.063 € (actual; 3.038 € en el balance de 2024)'],['Entidades bancarias','1']],
+  balance:[
+   ['s','ACTIVO'],
+   ['t','A) ACTIVO NO CORRIENTE',[481606.89,369832.12,275817.47]],
+   ['','I. Inmovilizado intangible',[391340.02,255867.74,127362.04]],
+   ['','II. Inmovilizado material',[55679.40,79376.91,77653.58]],
+   ['','V. Inversiones financieras a largo plazo',[34587.47,34587.47,70801.85]],
+   ['t','B) ACTIVO CORRIENTE',[207212.94,255034.02,254423.23]],
+   ['','II. Deudores comerciales y otras cuentas a cobrar',[151459.10,143783.71,83403.90]],
+   ['i','1. Clientes por ventas y prestaciones de servicios',[146176.10,143783.71,83403.90]],
+   ['i','3. Otros deudores',[5283.00,null,null]],
+   ['','IV. Inversiones financieras a corto plazo',[14296.09,12950.00,6261.69]],
+   ['','V. Periodificaciones a corto plazo',[9317.00,9317.00,9317.00]],
+   ['','VI. Efectivo y otros activos líquidos equivalentes',[32140.75,88983.31,155440.64]],
+   ['T','TOTAL ACTIVO',[688819.83,624866.14,530240.70]],
+   ['s','PATRIMONIO NETO Y PASIVO'],
+   ['t','A) PATRIMONIO NETO',[87702.89,155730.24,133725.18]],
+   ['','A-1) Fondos propios',[81702.89,149730.24,133725.18]],
+   ['i','I. Capital escriturado',[3038.00,3100.00,3100.00]],
+   ['i','III. Reservas',[84312.36,131739.96,106893.32]],
+   ['i','VII. Resultado del ejercicio',[-5647.47,14890.28,23731.86]],
+   ['','A-3) Subvenciones, donaciones y legados recibidos',[6000.00,6000.00,null]],
+   ['t','B) PASIVO NO CORRIENTE',[267181.78,287933.47,332635.83]],
+   ['','II. Deudas a largo plazo',[267181.78,287933.47,332635.83]],
+   ['i','1. Deudas con entidades de crédito',[267181.78,287933.47,332635.83]],
+   ['t','C) PASIVO CORRIENTE',[333935.16,181202.43,63879.69]],
+   ['','II. Deudas a corto plazo',[257854.67,86418.28,null]],
+   ['i','1. Deudas con entidades de crédito',[196053.68,82782.96,null]],
+   ['i','3. Otras deudas a corto plazo',[61800.99,3635.32,null]],
+   ['','IV. Acreedores comerciales y otras cuentas a pagar',[76080.49,94784.15,63879.69]],
+   ['i','1. Proveedores',[6207.81,10039.76,63879.69]],
+   ['i','2. Otros acreedores',[69872.68,84744.39,null]],
+   ['T','TOTAL PATRIMONIO NETO Y PASIVO',[688819.83,624866.14,530240.70]]],
+  pyg:[
+   ['','1. Importe neto de la cifra de negocios',[981355.64,878801.34,759691.60]],
+   ['','3. Trabajos realizados por la empresa para su activo',[212693.68,176313.02,127362.04]],
+   ['','4. Aprovisionamientos',[null,-1819.62,-3.75]],
+   ['','5. Otros ingresos de explotación',[2742.51,34081.76,2640.57]],
+   ['','6. Gastos de personal',[-372225.79,-384618.34,-245228.58]],
+   ['','7. Otros gastos de explotación',[-715578.60,-612904.33,-526206.19]],
+   ['','8. Amortización del inmovilizado',[-78235.45,-48693.95,-9929.08]],
+   ['','11. Deterioro y resultado por enajenaciones del inmovilizado',[-10882.46,null,null]],
+   ['','12. Otros resultados',[-5946.02,-2393.57,-78849.93]],
+   ['t','A) RESULTADO DE EXPLOTACIÓN',[13923.51,38766.31,29476.68]],
+   ['','14. Gastos financieros',[-19528.54,-15287.40,-5744.82]],
+   ['','16. Diferencias de cambio',[-42.44,null,null]],
+   ['','17. Deterioro y resultado por enajenaciones de instrumentos financieros',[null,-4140.88,null]],
+   ['t','B) RESULTADO FINANCIERO',[-19570.98,-19428.28,-5744.82]],
+   ['t','C) RESULTADO ANTES DE IMPUESTOS',[-5647.47,19338.03,23731.86]],
+   ['','19. Impuestos sobre beneficios',[null,-4447.75,null]],
+   ['T','D) RESULTADO DEL EJERCICIO',[-5647.47,14890.28,23731.86]],
+   ['s','MAGNITUDES DERIVADAS'],
+   ['','Margen bruto',[1196791.83,1087376.50,889690.46]],
+   ['t','EBITDA',[92158.96,87460.26,39405.76]],
+   ['t','EBIT',[13923.51,38766.31,29476.68]]],
+  ratios:[
+   ['s','EQUILIBRIO'],
+   ['','Fondo de maniobra',[-126722.22,73831.59,null],'€'],
+   ['','Ratio fondo de maniobra',[-0.18,0.12,null],''],
+   ['','Ratio de solidez',[0.17,0.41,null],''],
+   ['','Periodo medio de cobro',[54,59,40],'días'],
+   ['','Periodo medio de pago',[3,6,44],'días'],
+   ['s','LIQUIDEZ'],
+   ['','Ratio de liquidez',[62.05,140.75,null],'%'],
+   ['','Ratio de liquidez inmediata',[13.91,56.25,null],'%'],
+   ['s','ENDEUDAMIENTO'],
+   ['','Porcentaje de endeudamiento',[76.22,59.91,null],'%'],
+   ['','Coste medio de financiación externa',[0.04,0.04,null],''],
+   ['','Cobertura del servicio de la deuda',[7.23,5.89,null],''],
+   ['','Cobertura de intereses',[0.71,2.54,null],''],
+   ['s','ACTIVIDAD'],
+   ['','Autofinanciación generada por las ventas',[7.4,7.24,null],'%'],
+   ['','Autofinanciación generada por los activos',[10.54,10.18,null],'%'],
+   ['','Punto muerto',[1.01,1.05,null],''],
+   ['','Facturación media por empleado',[75488.90,58586.76,null],'€'],
+   ['','Coste medio por empleado',[28632.75,25641.22,null],'€'],
+   ['','Rotación de activos',[1.43,1.41,1.43],''],
+   ['s','RESULTADOS'],
+   ['','Rentabilidad económica (ROA)',[2.02,6.2,5.56],'%'],
+   ['','Rentabilidad de explotación',[13.38,14,null],'%'],
+   ['','Rentabilidad financiera (ROE)',[-6.91,12.91,null],'%']],
+  ratiosNota:'La columna de 2022 (y varias celdas de 2023) llegaron truncadas en el documento recibido — la conversión del PDF se comió los decimales de casi todos los ratios —, por eso se deja en blanco salvo los valores enteros (periodo de cobro/pago) y los que constan escritos en los comentarios del propio informe (ROA y rotación de activos de 2022). El balance y la cuenta de resultados de los tres ejercicios sí están completos y cuadran exactamente con el EBIT y el EBITDA publicados.',
+  sector:{cnae:'6622 — Actividades de agentes y corredores de seguros',empresas:3102,tamano:'0 – 2.000.000 €',
+   balance:[['Activo no corriente',69.92,38.64],['Activo corriente',30.08,61.36],['Patrimonio neto',12.73,68.68],['Pasivo no corriente',38.79,10.72],['Pasivo corriente',48.48,20.59]],
+   pyg:[['Ventas',82.00,97.49],['Margen bruto',100.00,92.63],['EBITDA',7.70,16.1],['EBIT',1.16,13.74],['Resultado neto',-0.47,10.43]]},
+  notas:[
+   'La correduría más pequeña de la comparativa por plantilla (13 empleados en 2024, con oscilaciones: 10 en 2022, 15 en 2023) y una de las de menor facturación (981.356 € en comisiones), aunque crece con fuerza: +15,68% en 2023 y +11,67% en 2024.',
+   'El EBIT se desploma un 64,08% en 2024 (de 38.766 € a 13.924 €) por un deterioro de inmovilizado de 10.882 € que no existía en ejercicios anteriores; sin ese cargo puntual habría rondado los 24.806 €, una caída más moderada (-36%).',
+   'El resultado neto encadena tres años a la baja — 23.732 € (2022), 14.890 € (2023) y -5.647 € (2024) — y entra en pérdidas por primera vez en el periodo, arrastrando la rentabilidad financiera a -6,91% desde el 12,91% de 2023.',
+   'Muy descapitalizada frente a su sector: el patrimonio neto es solo el 12,73% del activo, 55,95 puntos por debajo de la media sectorial (68,68%), y el endeudamiento sube del 59,91% al 76,22% en un año.',
+   'El fondo de maniobra se vuelve negativo en 2024 (-126.722 €) tras ser positivo en 2023 (73.832 €) y 2022 (190.544 €): el pasivo corriente (333.935 €) ya supera al activo corriente (207.213 €), señal de tensión de liquidez a corto plazo.',
+   'El activo se concentra en el no corriente (69,92% frente al 38,64% del sector), sobre todo inmovilizado intangible, que casi se duplica en el año (de 255.868 € a 391.340 €) financiado en parte con deuda bancaria a corto plazo, que pasa de 82.783 € a 196.054 €.',
+   'Su capacidad de generar beneficio de explotación es muy inferior a la del sector: el EBIT es solo el 1,16% de los ingresos totales de explotación frente al 13,74% sectorial (ratio EBIT/Ventas de 0,01 frente a 0,14).',
+   'La cifra de negocios pesa solo el 82% de los ingresos totales de explotación (frente al 97,49% del sector) porque una parte relevante procede de trabajos realizados para su propio activo (212.694 €, el 17,77% de las comisiones): la empresa capitaliza desarrollo propio en vez de facturarlo.']}
 };
 // ---- render del informe completo ----
 const dosFmt=(v,u)=>{
@@ -2767,9 +3149,11 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&document.getElemen
 document.addEventListener('click',e=>{ const b=e.target.closest&&e.target.closest('[data-dos]'); if(b){ e.preventDefault(); openDossier(b.dataset.dos); } });
 
 function ourMetrics(){
-  const R=compute(V), Y= YF>0?YF:HY, t=totalCol(R.mon,Y), emp=t.dir||0;
+  // ventana de 12 meses que acaba en el mes elegido; si el plan aún no lleva 12 meses, se anualiza
+  const R=compute(V), e=CMP_END||HM, s=Math.max(0,e-12), k=12/(e-s), t=totalCol(R.mon,s,e), emp=t.dir||0;
+  ['itot','colab','psub','esub','ebi'].forEach(f=>t[f]=(t[f]||0)*k);
   const otrosSinRetro=(t.esub||0)-(t.colab||0);
-  return {key:'you', name:'Tu modelo', color:'#1f3864', year:Y,
+  return {key:'you', name:'Tu modelo', color:'#1f3864', period:mLabel(s)+' – '+mLabel(e-1), annualized:k!==1,
     empleados:emp, ingresos:t.itot, primas:t.prim,
     otrosIngresos:0, retro:t.colab, aprov:0, personal:t.psub, otros:otrosSinRetro, ebitda:t.ebi,
     otrosIngresosPct:0, retroPct: t.itot? t.colab/t.itot:0, aprovPct:0, personalPct: t.itot? t.psub/t.itot:0,
@@ -2792,7 +3176,7 @@ const EXPL={
   primasEmp:'Volumen de primas intermediadas por empleado al año.',
   comPrima:'Comisión media obtenida sobre las primas intermediadas (comisiones ÷ primas).',
   retroEff:'Retrocesión efectiva: comisión cedida a colaboradores ÷ comisión total.',
-  empleados:'Número de empleados (en tu modelo, plantilla del año comparado).',
+  empleados:'Número de empleados (en tu modelo, plantilla al final de los 12 meses comparados).',
 };
 const ic=prop=> EXPL[prop]? ` <span class="info" data-tip="${escAttr(EXPL[prop])}">i</span>`:'';
 // selección de competidores con los que compararse (por defecto, todos); puede venir de un escenario guardado
@@ -2913,7 +3297,7 @@ function renderComp(){
       return `<td style="${mix(43,150,75,Math.abs(v-avg)/d,true)}">${fmt(v)}</td>`; }
     return `<td class="cmp-you" style="background:transparent">${fmt(v)}</td>`; // positivo pero peor → sin fondo
   };
-  document.getElementById('compNote').innerHTML=`Tu modelo se compara en el <b>Año ${you.year}</b> (run-rate; cambia el «Periodo» arriba para ver otro año). Las competidoras proceden de cuentas públicas (2024); elige arriba con cuáles compararte. En una correduría «ingresos» = comisiones. El modelo llega a nivel EBITDA (sin amortización ni impuestos), por eso EBIT/neto solo constan para las competidoras. Pasa el cursor por la <span class="info">i</span> de cada fila para ver qué mide, y <b>pulsa el nombre o el logo de cualquier competidora</b> (en la tabla o bajo los gráficos) para abrir su informe completo: balance, cuenta de resultados de tres ejercicios, ratios y comparativa sectorial.`;
+  document.getElementById('compNote').innerHTML=`Tu modelo se compara con sus <b>12 meses de ${you.period}</b>${you.annualized?' (anualizados, porque el plan aún no lleva un año)':''}; cambia la fecha de arriba para ver otro momento del plan. Las competidoras proceden de cuentas públicas (2024); elige arriba con cuáles compararte. En una correduría «ingresos» = comisiones. El modelo llega a nivel EBITDA (sin amortización ni impuestos), por eso EBIT/neto solo constan para las competidoras. Pasa el cursor por la <span class="info">i</span> de cada fila para ver qué mide, y <b>pulsa el nombre o el logo de cualquier competidora</b> (en la tabla o bajo los gráficos) para abrir su informe completo: balance, cuenta de resultados de tres ejercicios, ratios y comparativa sectorial.`;
   // gráfico de columnas verticales
   const bar=(title,fmt,prop)=>{
     const vals=all.map(c=>({name:c.name,v:c[prop],color:c.color,logo:c.logo,logoDark:c.logoDark,key:c.key})), max=Math.max(...vals.map(x=>x.v||0))||1;
@@ -3047,17 +3431,18 @@ document.getElementById('tbl').addEventListener('click',e=>{
 
 function buildReport(){
   const R=compute(V);
-  const tot=totalCol(R.mon,0);
-  const bA=bucketize(R.mon,'año',0), bT=bucketize(R.mon,'tri',0), bM=bucketize(R.mon,'mes',0);
+  const tot=totalCol(R.mon);
+  const bA=bucketize(R.mon,'año'), bT=bucketize(R.mon,'tri'), bM=bucketize(R.mon,'mes');
+  const many=bA.length>5;
   // PÁGINA 1 (vertical): Supuestos
   let h=`<section class="pg"><div class="rhead"><h1>Modeloo — Informe Business Plan de correduría</h1>
-    <div class="rmeta">Generado el ${new Date().toLocaleDateString('es-ES')} · Horizonte ${HM} meses (${HY} años) · Verticales: Auto + Multirriesgo Empresas</div></div>`;
+    <div class="rmeta">Generado el ${new Date().toLocaleDateString('es-ES')} · ${CUR_SCEN?'Escenario «'+escAttr(CUR_SCEN)+'» · ':''}Plan ${planLabel()} (${HM} meses) · Verticales: Auto + Multirriesgo Empresas</div></div>`;
   h+=`<div class="rk">
-    <div><span>Ingresos · ${HY} años</span><b>${eur(tot.itot)}</b></div>
-    <div><span>EBITDA · ${HY} años</span><b>${eur(tot.ebi)}</b></div>
+    <div><span>Ingresos · plan completo</span><b>${eur(tot.itot)}</b></div>
+    <div><span>EBITDA · plan completo</span><b>${eur(tot.ebi)}</b></div>
     <div><span>Margen EBITDA</span><b>${pct(tot.margin)}</b></div>
-    <div><span>Cartera fin Año ${HY}</span><b>${eur0(tot.cart)} pólizas</b></div>
-    <div><span>Break-even</span><b>${R.beM?('Mes '+R.beM):('>'+HM+' meses')}</b></div></div>`;
+    <div><span>Cartera a ${mLabel(HM-1)}</span><b>${eur0(tot.cart)} pólizas</b></div>
+    <div><span>Break-even</span><b>${R.beM?mLabel(R.beM-1):('después de '+mLabel(HM-1))}</b></div></div>`;
   h+=`<h2>Supuestos del modelo</h2><div class="rsup">`;
   CFG.forEach(([title,,,items])=>{
     h+=`<table class="rt"><thead><tr><th colspan="2">${title}</th></tr></thead><tbody>`;
@@ -3066,17 +3451,18 @@ function buildReport(){
   });
   h+=`</div></section>`;
   // PÁGINA 2 (vertical): Unit economics
-  h+=`<section class="pg"><h2>Unit economics (condiciones seleccionadas)</h2>`+ueHTML(R,{end:HM,label:'fin Año '+HY})+
-     `<div class="rfoot">LTV = comisión neta anual × vida media del cliente. Margen por póliza al run-rate de fin de Año ${HY}.</div></section>`;
+  h+=`<section class="pg"><h2>Unit economics (condiciones seleccionadas)</h2>`+ueHTML(R,{end:HM,label:mLabel(HM-1)})+
+     `<div class="rfoot">LTV = comisión neta anual × vida media del cliente. Margen por póliza al run-rate de ${mLabel(HM-1)}, último mes del plan.</div></section>`;
   // PÁGINAS 3-5 (horizontal): las 3 P&L
   const bMcap= bM.slice(0,36);   // mensual: primeros 36 meses por legibilidad
-  h+=`<section class="pgL"><h2>Cuenta de resultados — anual (${HY} años)</h2><table class="rpl">${plTable(bA,tot,{icons:false,expandAll:true,compact:(HY>5)})}</table>${HY>5?'<div class="rfoot">Cifras en €.</div>':''}</section>`;
-  h+=`<section class="pgL"><h2>Cuenta de resultados — trimestral</h2><table class="rpl${HY>5?' mly':''}">${plTable(bT,tot,{icons:false,expandAll:true,compact:true,noTotal:(HY>5)})}</table><div class="rfoot">Cifras en €.</div></section>`;
+  const partialNote= bA.some(b=>b.partial)? ' * = año natural incompleto (el plan no empieza o no acaba en enero).' : '';
+  h+=`<section class="pgL"><h2>Cuenta de resultados — anual (${planLabel()})</h2><table class="rpl">${plTable(bA,tot,{icons:false,expandAll:true,compact:many})}</table>${(many||partialNote)?'<div class="rfoot">Cifras en €.'+partialNote+'</div>':''}</section>`;
+  h+=`<section class="pgL"><h2>Cuenta de resultados — trimestral</h2><table class="rpl${many?' mly':''}">${plTable(bT,tot,{icons:false,expandAll:true,compact:true,noTotal:many})}</table><div class="rfoot">Cifras en €.</div></section>`;
   h+=`<section class="pgL"><h2>Cuenta de resultados — mensual (primeros 36 meses)</h2><table class="rpl mly">${plTable(bMcap,tot,{icons:false,expandAll:true,compact:true,noTotal:true})}</table><div class="rfoot">Cifras en €. Detalle mensual limitado a 36 meses; ver anual/trimestral para el horizonte completo.</div></section>`;
   // PÁGINA 6 (horizontal): Gráficos
   const gpx=[['res','mes'],['vert','tri'],['recur','tri'],['gastos','tri'],['cartera','mes'],['ebac','mes'],['margen','mes']];
-  const imgs=gpx.map(([t,g])=>`<div class="rimgw"><div class="rimgt">${CHARTS[t].title}</div><img class="rimg" src="${chartImage(t,bucketize(R.mon,g,0),g,560,300)}"/></div>`).join('');
-  h+=`<section class="pgL"><h2>Gráficos (${HY} años)</h2><div class="rgrid">${imgs}</div></section>`;
+  const imgs=gpx.map(([t,g])=>`<div class="rimgw"><div class="rimgt">${CHARTS[t].title}</div><img class="rimg" src="${chartImage(t,bucketize(R.mon,g),g,560,300)}"/></div>`).join('');
+  h+=`<section class="pgL"><h2>Gráficos (${planLabel()})</h2><div class="rgrid">${imgs}</div></section>`;
   document.getElementById('report').innerHTML=h;
 }
 document.getElementById('dl').onclick=()=>{ buildReport(); setTimeout(()=>window.print(),80); };
@@ -3324,15 +3710,15 @@ function buildModelSheets(){
     });
     return rows;
   }
-  const yearP=[], triP=[], monP=[];
-  for(let y=1;y<=HY;y++) yearP.push({label:'Año '+y,r1:(y-1)*12+2,r2:y*12+1});
-  for(let q=1;q<=HY*4;q++){ const yy=Math.floor((q-1)/4)+1, t=((q-1)%4)+1; triP.push({label:'A'+yy+'·T'+t,r1:(q-1)*3+2,r2:q*3+1}); }
-  for(let mm=1;mm<=N;mm++) monP.push({label:'M'+mm,r1:mm+1,r2:mm+1});
+  // mismos cortes de calendario natural que en la app (fila del motor = mes + 1)
+  const toP=sl=>sl.map(x=>({label:x.label,r1:x.s+2,r2:x.e+1}));
+  const yearP=toP(periodSlices('año')), triP=toP(periodSlices('tri')), monP=toP(periodSlices('mes'));
   // ---- Resumen (KPIs con fórmulas) ----
   const resumen=[
     ['Modeloo — Business Plan de correduría'],
     ['Generado',new Date().toLocaleString('es-ES')],
-    ['Horizonte (años)',HY],['Horizonte (meses)',N],
+    ...(CUR_SCEN?[['Escenario',CUR_SCEN]]:[]),
+    ['Inicio del plan',mLabel(0)],['Fin del plan',mLabel(N-1)],['Horizonte (meses)',N],
     ['Verticales','Auto + Multirriesgo Empresas'],
     [],
     ['KPI','Valor'],
@@ -3343,15 +3729,18 @@ function buildModelSheets(){
     ['Primas intermediadas fin (€)',F(eRef('prim',dEnd))],
     ['Break-even mensual (mes)',F(`IF(COUNT(${eRange('beEbi',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbi',dStart,dEnd)}))`)],
     ['Break-even acumulado (mes)',F(`IF(COUNT(${eRange('beEbac',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbac',dStart,dEnd)}))`)],
-    ['Cartera en break-even (pólizas)',F(`IFERROR(INDEX(${eRange('cart',dStart,dEnd)},$B$13),"—")`)],
+    ['Cartera en break-even (pólizas)',null],
   ];
+  // la fila del break-even depende de cuántas filas de cabecera haya (con o sin nombre de escenario)
+  const beRow=resumen.findIndex(r=>r[0]==='Break-even mensual (mes)')+1;
+  resumen[resumen.length-1][1]=F(`IFERROR(INDEX(${eRange('cart',dStart,dEnd)},$B$${beRow}),"—")`);
   // ---- Unit economics (fin de horizonte) con fórmulas ----
   const L_=dEnd;
   const itotL=eRef('itot',L_),cartL=eRef('cart',L_),colabL=eRef('colab',L_),gtotL=eRef('gtot',L_),
         primL=eRef('prim',L_),ebiL=eRef('ebi',L_),dirL=eRef('dir',L_),psubL=eRef('psub',L_);
   const hc=`(${dirL})`;
   const ue=[
-    ['Unit economics (run-rate fin Año '+HY+')'],[],
+    ['Unit economics (run-rate '+mLabel(N-1)+')'],[],
     ['Por póliza · €/año','Valor'],
     ['Comisión media por póliza',F(`IF(${cartL}=0,0,${itotL}*12/${cartL})`)],          // B4
     ['− Comisión a colaborador',F(`IF(${cartL}=0,0,-${colabL}*12/${cartL})`)],          // B5
@@ -3390,8 +3779,8 @@ function buildModelSheets(){
     {name:'Resumen',rows:resumen,meta:metaRes},
     {name:SH_SUP,rows:supRows,meta:metaSup},
     {name:SH_MON,rows:monRows,meta:metaMon},
-    {name:'P&L Anual',rows:rowsY,meta:metaPL(rowsY,HY,14)},
-    {name:'P&L Trimestral',rows:rowsT,meta:metaPL(rowsT,HY*4,12)},
+    {name:'P&L Anual',rows:rowsY,meta:metaPL(rowsY,yearP.length,14)},
+    {name:'P&L Trimestral',rows:rowsT,meta:metaPL(rowsT,triP.length,12)},
     {name:'P&L Mensual',rows:rowsM,meta:metaPL(rowsM,N,12)},
     {name:'Unit Economics',rows:ue,meta:metaUE},
   ];
@@ -3403,55 +3792,236 @@ function exportXlsx(){
 }
 document.getElementById('xls').onclick=exportXlsx;
 
-// --- sincroniza todos los controles de la UI con el estado actual de V ---
+// --- sincroniza todos los controles de la UI con el estado actual ---
 function syncControls(){
   CFG.forEach(([,,,items])=>items.forEach(([key,,type,rng])=>{
     const inp=document.getElementById('inp_'+key);
     if(inp) inp.value=V[key];
     if(rng){ const el=document.getElementById('v_'+key); if(el) el.textContent=fmtVal(key,type); }
   }));
-  document.getElementById('selHorizon').value=String(HY);
-  buildYearOptions();
-  document.getElementById('selYear').value=String(YF);
   [...document.getElementById('segGran').children].forEach(b=>b.classList.toggle('on',b.dataset.g===GRAN));
   syncScopeSeg();
+  syncDateControls();
   syncPhaseControls();
   render();
 }
 
-// --- escenarios / presets ---
-function flash(msg){ const f=document.getElementById('savedFlash'); f.textContent=msg||''; f.style.opacity=1;
-  if(msg) setTimeout(()=>{f.style.opacity=0;},1800); }
-function refreshPresetSel(selName){
-  const p=loadPresets(), sel=document.getElementById('presetSel');
-  let o='<option value="">— Sin escenario —</option>';
-  Object.keys(p).sort((a,b)=>a.localeCompare(b,'es')).forEach(n=>o+=`<option value="${escAttr(n)}">${n}</option>`);
-  sel.innerHTML=o; sel.value=selName||'';
+/* ===== escenarios: se guardan desde el Lab y se gestionan en Inicio ===== */
+let _flashT=null;
+function flash(msg){
+  const f=document.getElementById('savedFlash'); if(!msg) return;
+  f.textContent=msg; f.classList.add('on');
+  clearTimeout(_flashT); _flashT=setTimeout(()=>f.classList.remove('on'),2400);
+}
+// forma canónica de lo que define una proyección (parámetros, calendario de partidas y fechas
+// del plan). Sirve para saber si el Lab tiene cambios sin guardar respecto al escenario cargado.
+function normSnap(s){
+  s=s||{};
+  return {V:{...DEF, ...migrateV(s.V||{})}, PHASE:migratePhase(s.PHASE||{}),
+    HM:clampI(s.HM? s.HM : (s.HY? s.HY*12 : 120),HM_MIN,HM_MAX),
+    START: ymParts(s.START)? s.START : null};   // null: escenario anterior a las fechas (usa el inicio actual)
+}
+function modelKey(s){
+  const n=normSnap(s);
+  const win=PHASE_KEYS.map(([k])=>{ const p=n.PHASE[k]; if(!p||!p.on) return 'all';
+    return Math.max(1,p.from||1)+'-'+((p.to&&p.to>0)?Math.min(p.to,n.HM):n.HM); });
+  return JSON.stringify([Object.keys(DEF).map(k=>+n.V[k]), win, n.HM, n.START||START]);
+}
+// 'new' = lo del Lab no es un escenario guardado · 'clean' = coincide con el guardado · 'dirty' = tiene cambios
+function scenState(){
+  const p= CUR_SCEN? loadPresets()[CUR_SCEN] : null;
+  if(!p) return 'new';
+  return modelKey(p)===modelKey(snapshot())? 'clean' : 'dirty';
+}
+function hasUnsaved(){
+  const st=scenState();
+  if(st==='dirty') return true;
+  return st==='new' && modelKey(snapshot())!==modelKey({V:DEF,HM:120,START:defStart()});
+}
+function confirmDiscard(){
+  if(!hasUnsaved()) return true;
+  return confirm(CUR_SCEN? `Tienes cambios sin guardar en «${CUR_SCEN}». ¿Descartarlos?`
+                         : 'Lo que tienes en el Lab no está guardado como escenario. ¿Descartarlo?');
+}
+function updateScenStatus(){
+  if(CUR_SCEN && !loadPresets()[CUR_SCEN]) CUR_SCEN=null;   // borrado (p.ej. desde otra pestaña)
+  const st=scenState(), name=CUR_SCEN||'Sin guardar';
+  document.getElementById('labScenName').textContent=name;
+  const d=document.getElementById('labDirty');
+  d.className='dirty'+(st==='clean'?' ok':'');
+  d.textContent= st==='dirty'? '● Cambios sin guardar' : st==='clean'? '✓ Guardado' : '';
+  const sv=document.getElementById('presetSave');
+  sv.textContent= !CUR_SCEN? 'Guardar escenario' : st==='clean'? 'Guardado ✓' : 'Guardar cambios';
+  sv.disabled= st==='clean';
+  document.getElementById('sbScen').innerHTML=`En el Lab<b>${escAttr(name)}</b>${st==='dirty'?'<span class="dirty">● Cambios sin guardar</span>':''}`;
+  document.getElementById('mbScen').textContent=name+(st==='dirty'?' ●':'');
+}
+function storeScenario(name){
+  const p=loadPresets(), s={...snapshot(), savedAt:new Date().toISOString()};
+  delete s.ACTIVE_TAB;
+  p[name]=s; savePresets(p); CUR_SCEN=name;
+  updateScenStatus(); saveState();
+}
+function askNewName(msg,def){
+  const name=(prompt(msg,def||'')||'').trim(); if(!name) return null;
+  if(loadPresets()[name] && !confirm(`Ya existe un escenario «${name}». ¿Sobrescribirlo?`)) return null;
+  return name;
+}
+function saveScenarioAs(){
+  const name=askNewName('Nombre del escenario:', CUR_SCEN? CUR_SCEN+' (copia)' : ''); if(!name) return;
+  storeScenario(name); flash('Escenario «'+name+'» guardado ✓ · lo tienes en Inicio');
 }
 document.getElementById('presetSave').onclick=()=>{
-  const name=(prompt('Nombre del escenario:')||'').trim();
-  if(!name) return;
-  const p=loadPresets(); const existe=!!p[name];
-  if(existe && !confirm(`Ya existe "${name}". ¿Sobrescribir?`)) return;
-  p[name]=snapshot(); savePresets(p); refreshPresetSel(name);
-  flash(existe?'Escenario actualizado ✓':'Escenario guardado ✓');
+  if(!CUR_SCEN){ saveScenarioAs(); return; }
+  storeScenario(CUR_SCEN); flash('Escenario «'+CUR_SCEN+'» actualizado ✓');
 };
-document.getElementById('presetSel').addEventListener('change',e=>{
-  const name=e.target.value; if(!name) return;
-  const p=loadPresets();
-  if(p[name]){ applySnapshot(p[name]); syncControls(); flash('Escenario «'+name+'» cargado'); }
+document.getElementById('presetSaveAs').onclick=saveScenarioAs;
+function openScenario(name){
+  const p=loadPresets()[name]; if(!p) return;
+  if(name!==CUR_SCEN && !confirmDiscard()) return;
+  PHASE={}; applySnapshot(p); CUR_SCEN=name;
+  syncControls(); activateTab('lab'); window.scrollTo(0,0);
+  flash('Escenario «'+name+'» abierto en el Lab');
+}
+function newScenario(){
+  if(!confirmDiscard()) return;
+  V={...DEF}; PHASE={}; START=defStart(); setHM(120); PF=0; PT=0; UE_END=0; CMP_END=0; GRAN='año'; CUR_SCEN=null;
+  syncControls(); activateTab('lab'); window.scrollTo(0,0);
+  flash('Nuevo escenario con los valores por defecto');
+}
+document.getElementById('homeNew').onclick=newScenario;
+
+// KPIs de un escenario guardado sin tocar el Lab: se calcula con sus valores y se restaura el estado
+function evalSnapshot(s){
+  const keep={V,PHASE,HM,HY,START}, n=normSnap(s);
+  try{
+    V=n.V; PHASE=n.PHASE; setHM(n.HM); if(n.START) START=n.START;
+    const R=compute(V), tot=totalCol(R.mon,0,HM);
+    return {tot, plan:planLabel(), be:R.beM? mLabel(R.beM-1) : null, beAbs:R.beM? _abs(R.beM-1) : Infinity,
+      yrs:bucketize(R.mon,'año').map(b=>({l:b.label,v:b.vals.ebi}))};
+  }finally{ V=keep.V; PHASE=keep.PHASE; HM=keep.HM; HY=keep.HY; START=keep.START; }
+}
+const eurC=x=>{ const a=Math.abs(x);
+  return a>=1e6? (x/1e6).toLocaleString('es-ES',{maximumFractionDigits:2})+' M€'
+       : a>=1e4? Math.round(x/1e3).toLocaleString('es-ES')+' k€' : eur(x); };
+// minigráfico de EBITDA por año natural (verde positivo, rojo negativo)
+function sparkSVG(yrs){
+  const n=yrs.length||1, W=240, H=44, max=Math.max(1,...yrs.map(y=>Math.abs(y.v)));
+  const neg=yrs.some(y=>y.v<0), pos=yrs.some(y=>y.v>0);
+  const zero= neg&&pos? H/2 : neg? 2 : H-2, sc=(neg&&pos? H/2-2 : H-4)/max, w=W/n, g=Math.min(6,w*.25);
+  const bars=yrs.map((y,i)=>{ const h=Math.max(1,Math.abs(y.v)*sc);
+    return `<rect x="${(i*w+g/2).toFixed(1)}" y="${(y.v>=0?zero-h:zero).toFixed(1)}" width="${(w-g).toFixed(1)}" height="${h.toFixed(1)}" rx="1.5" fill="${y.v>=0?'#16a34a':'#dc2626'}"><title>${y.l}: ${eur(y.v)}</title></rect>`; }).join('');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="EBITDA por año">${bars}<line x1="0" x2="${W}" y1="${zero}" y2="${zero}" stroke="#cbd5e1" stroke-width="1"/></svg>`;
+}
+function renderHome(){
+  const P=loadPresets(), st=scenState();
+  // lo que hay ahora en el Lab
+  const R=compute(V), tot=totalCol(R.mon,0,HM);
+  const badge= st==='dirty'? '<span class="dirty">● Cambios sin guardar</span>' : st==='clean'? '<span class="dirty ok">✓ Guardado</span>' : '<span class="dirty">Sin guardar</span>';
+  document.getElementById('homeCur').innerHTML=`
+    <div><div class="k">En el Lab ahora</div>
+      <div class="nm">${escAttr(CUR_SCEN||'Escenario sin nombre')} ${badge}</div>
+      <div class="mt">Plan ${planLabel()} · ${HM} meses</div></div>
+    <div class="home-cur-kpis">
+      <div><span>Ingresos del plan</span><b>${eurC(tot.itot)}</b></div>
+      <div><span>EBITDA del plan</span><b class="${tot.ebi<0?'neg':'pos'}">${eurC(tot.ebi)}</b></div>
+      <div><span>Break-even</span><b>${R.beM?mLabel(R.beM-1):'No alcanzado'}</b></div>
+      <div><span>Cartera a ${mLabel(HM-1)}</span><b>${num0(tot.cart)}</b></div>
+    </div>
+    <div class="page-actions">
+      ${st!=='clean'?'<button class="btn" id="homeSave">Guardar como escenario</button>':''}
+      <button class="btn btn-primary" id="homeGoLab">Continuar en el Lab →</button>
+    </div>`;
+  document.getElementById('homeGoLab').onclick=()=>{ activateTab('lab'); window.scrollTo(0,0); };
+  const hs=document.getElementById('homeSave');
+  if(hs) hs.onclick=()=>{ if(CUR_SCEN && st==='dirty'){ storeScenario(CUR_SCEN); flash('Escenario «'+CUR_SCEN+'» actualizado ✓'); } else saveScenarioAs(); renderHome(); };
+  // escenarios guardados, los más recientes primero
+  const names=Object.keys(P).sort((a,b)=>String(P[b].savedAt||'').localeCompare(String(P[a].savedAt||'')) || a.localeCompare(b,'es'));
+  document.getElementById('homeCount').textContent= names.length? `· ${names.length}` : '';
+  const box=document.getElementById('homeScen');
+  if(!names.length){
+    box.innerHTML=`<div class="empty">Todavía no has guardado ningún escenario.<br>Ve al <b>Lab</b>, ajusta los parámetros del negocio y pulsa <b>Guardar escenario</b>: aparecerá aquí para que puedas volver a él y compararlo con otros.</div>`;
+    document.getElementById('homeCmpPanel').style.display='none';
+    return;
+  }
+  const res={}; names.forEach(n=>res[n]=evalSnapshot(P[n]));
+  box.innerHTML='<div class="scen-grid">'+names.map(n=>{
+    const r=res[n], p=P[n], cur= n===CUR_SCEN;
+    const tag= cur? (st==='dirty'? '<span class="dirty">En el Lab · con cambios</span>' : '<span class="badge">En el Lab</span>') : '';
+    const saved= p.savedAt? ' · guardado el '+new Date(p.savedAt).toLocaleDateString('es-ES') : '';
+    return `<div class="scen-card${cur?' cur':''}" data-name="${escAttr(n)}">
+      <div class="sc-top"><div><div class="sc-name">${escAttr(n)}</div><div class="sc-meta">${r.plan}${saved}</div></div>${tag}</div>
+      <div class="sc-kpis">
+        <div><span>Ingresos del plan</span><b>${eurC(r.tot.itot)}</b></div>
+        <div><span>EBITDA del plan</span><b class="${r.tot.ebi<0?'neg':'pos'}">${eurC(r.tot.ebi)}</b></div>
+        <div><span>Break-even</span><b>${r.be||'No alcanzado'}</b></div>
+        <div><span>Cartera final</span><b>${num0(r.tot.cart)} pólizas</b></div>
+      </div>
+      <div>${sparkSVG(r.yrs)}<div class="spark-lab"><span>EBITDA ${r.yrs.length?r.yrs[0].l:''}</span><span>${r.yrs.length?r.yrs[r.yrs.length-1].l:''}</span></div></div>
+      <div class="sc-actions">
+        <button class="btn btn-primary btn-sm" data-act="open">${cur?'Ir al Lab':'Abrir en el Lab'}</button>
+        <button class="btn btn-sm btn-icon" data-act="dup" title="Duplicar" aria-label="Duplicar">⧉</button>
+        <button class="btn btn-sm btn-icon" data-act="ren" title="Renombrar" aria-label="Renombrar">✎</button>
+        <button class="btn btn-sm btn-icon" data-act="link" title="Copiar enlace" aria-label="Copiar enlace">🔗</button>
+        <button class="btn btn-sm btn-icon btn-danger" data-act="del" title="Borrar" aria-label="Borrar">🗑</button>
+      </div></div>`;
+  }).join('')+'</div>';
+  // tabla comparativa (con dos o más escenarios)
+  const cmpP=document.getElementById('homeCmpPanel');
+  cmpP.style.display= names.length>1? '' : 'none';
+  if(names.length>1){
+    const cols=[
+      ['Ingresos del plan', r=>r.tot.itot, eurC, 'max'],
+      ['EBITDA del plan', r=>r.tot.ebi, eurC, 'max'],
+      ['Margen EBITDA', r=>r.tot.margin, pct, 'max'],
+      ['Break-even', r=>r.beAbs, (v,r)=>r.be||'No alcanzado', 'min'],
+      ['Cartera final', r=>r.tot.cart, num0, 'max'],
+      ['Prima en gestión final', r=>r.tot.prim, eurC, 'max'],
+    ];
+    const best=cols.map(([, f,, dir])=>{ const vs=names.map(n=>f(res[n])).filter(isFinite); return vs.length? (dir==='max'?Math.max(...vs):Math.min(...vs)) : null; });
+    let h='<table class="scmp-t"><thead><tr><th>Escenario</th><th>Plan</th>'+cols.map(c=>`<th>${c[0]}</th>`).join('')+'</tr></thead><tbody>';
+    names.forEach(n=>{ const r=res[n];
+      h+=`<tr class="${n===CUR_SCEN?'cur-row':''}"><td><button type="button" class="dos-open" data-open="${escAttr(n)}" title="Abrir en el Lab">${escAttr(n)}</button></td><td>${r.plan}</td>`+
+        cols.map(([, f, fmt],i)=>{ const v=f(r); return `<td class="${isFinite(v)&&v===best[i]?'best':''}">${fmt(v,r)}</td>`; }).join('')+'</tr>'; });
+    document.getElementById('homeCmp').innerHTML=h+'</tbody></table>';
+  }
+}
+document.getElementById('homeCmp').addEventListener('click',e=>{ const b=e.target.closest('[data-open]'); if(b) openScenario(b.dataset.open); });
+document.getElementById('homeScen').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-act]'); if(!b) return;
+  const name=b.closest('.scen-card').dataset.name, act=b.dataset.act, P=loadPresets();
+  if(!P[name]) return;
+  if(act==='open'){ if(name===CUR_SCEN){ activateTab('lab'); window.scrollTo(0,0); } else openScenario(name); return; }
+  if(act==='dup'){
+    const nn=askNewName('Nombre de la copia:', name+' (copia)'); if(!nn) return;
+    P[nn]={...JSON.parse(JSON.stringify(P[name])), savedAt:new Date().toISOString()}; savePresets(P);
+    flash('Escenario duplicado ✓');
+  }
+  if(act==='ren'){
+    const nn=(prompt('Nuevo nombre:',name)||'').trim(); if(!nn||nn===name) return;
+    if(P[nn] && !confirm(`Ya existe un escenario «${nn}». ¿Sobrescribirlo?`)) return;
+    P[nn]=P[name]; delete P[name]; savePresets(P);
+    if(CUR_SCEN===name) CUR_SCEN=nn;
+    flash('Escenario renombrado ✓');
+  }
+  if(act==='link'){
+    const url=buildShareURL(P[name]);
+    try{ await navigator.clipboard.writeText(url); flash('Enlace a «'+name+'» copiado ✓'); }
+    catch(err){ prompt('Copia este enlace para compartir el escenario:', url); }
+    return;
+  }
+  if(act==='del'){
+    if(!confirm(`¿Borrar el escenario «${name}»? No se puede deshacer.`)) return;
+    delete P[name]; savePresets(P);
+    if(CUR_SCEN===name) CUR_SCEN=null;   // el Lab conserva los valores, ahora sin guardar
+    flash('Escenario borrado');
+  }
+  updateScenStatus(); saveState(); renderHome();
 });
-document.getElementById('presetDel').onclick=()=>{
-  const sel=document.getElementById('presetSel'), name=sel.value;
-  if(!name){ flash('Selecciona un escenario primero'); return; }
-  if(!confirm(`¿Borrar el escenario "${name}"?`)) return;
-  const p=loadPresets(); delete p[name]; savePresets(p); refreshPresetSel('');
-  flash('Escenario borrado');
-};
 
 // ---- compartir: enlace con el escenario en la URL + exportar/importar a archivo ----
-function buildShareURL(){
-  const json=JSON.stringify(snapshot());
+function buildShareURL(snap){
+  const json=JSON.stringify(snap||snapshot());
   const b64=encodeURIComponent(btoa(unescape(encodeURIComponent(json))));
   return location.href.split('#')[0]+'#s='+b64;
 }
@@ -3469,13 +4039,17 @@ function downloadScenarioJSON(){
 }
 document.getElementById('btnExport').onclick=()=>{ downloadScenarioJSON(); flash('Escenarios exportados ✓'); };
 document.getElementById('btnImport').onclick=()=>document.getElementById('fileImport').click();
+// importar suma los escenarios del archivo a los guardados; si el archivo no trae escenarios
+// pero sí un estado, ese estado se carga en el Lab
 document.getElementById('fileImport').onchange=e=>{
   const f=e.target.files[0]; if(!f) return;
   const rd=new FileReader();
   rd.onload=()=>{ try{ const d=JSON.parse(rd.result);
-      if(d.presets){ const p=loadPresets(); Object.assign(p,d.presets); savePresets(p); refreshPresetSel(''); }
-      if(d.state){ applySnapshot(d.state); syncControls(); }
-      flash('Escenarios importados ✓');
+      const n= d.presets? Object.keys(d.presets).length : 0;
+      if(n){ const p=loadPresets(); Object.assign(p,d.presets); savePresets(p); }
+      else if(d.state && confirmDiscard()){ PHASE={}; applySnapshot(d.state); CUR_SCEN=null; syncControls(); }
+      updateScenStatus(); saveState(); renderHome();
+      flash(n? `${n} ${n===1?'escenario importado':'escenarios importados'} ✓` : 'Escenario cargado en el Lab ✓');
     }catch(err){ flash('Archivo no válido'); }
     e.target.value=''; };
   rd.readAsText(f);
@@ -3506,55 +4080,45 @@ document.getElementById('mailGo').onclick=()=>{
   flash('Borrador de correo abierto en Gmail ✓');
 };
 
+// «Restablecer valores» devuelve los parámetros y el calendario de partidas a los de por
+// defecto; las fechas del plan y el escenario cargado se mantienen (quedará como modificado)
 document.getElementById('reset').onclick=()=>{
-  V={...DEF}; GRAN='año'; YF=0; HY=10; HM=120;
-  saveState(); location.reload();
+  if(!confirm('¿Volver a los valores por defecto de todos los parámetros del negocio?')) return;
+  V={...DEF}; PHASE={};
+  syncControls(); flash('Parámetros restablecidos');
 };
-window.addEventListener('resize',()=>render());
+window.addEventListener('resize',()=>{ if(ACTIVE_TAB==='lab') render(); });
 
-// panel de parámetros: vive en el dashboard, bajo el selector de ramo, y se despliega
-// desde el botón de la barra de filtros (que desde otra pestaña lleva primero al dashboard)
+// panel de parámetros del Lab: visible por defecto; se puede ocultar para dar más ancho a los resultados
 (function(){
-  const wrap=document.getElementById('ctrlWrap'), btn=document.getElementById('ctrlToggle');
-  const KEY='cbp_ctrl_open';
+  const grid=document.getElementById('labGrid'), btn=document.getElementById('ctrlToggle');
+  const KEY='cbp_lab_params';
   const set=on=>{
-    wrap.classList.toggle('on',on);
-    wrap.setAttribute('aria-hidden',on?'false':'true');
-    btn.setAttribute('aria-expanded',on?'true':'false');
+    grid.classList.toggle('params-off',!on);
     btn.classList.toggle('on',on);
+    btn.setAttribute('aria-expanded',on?'true':'false');
     try{ localStorage.setItem(KEY,on?'1':'0'); }catch(e){}
   };
-  let ini=false;
-  try{ ini=localStorage.getItem(KEY)==='1'; }catch(e){}
-  set(ini);
-  btn.onclick=()=>{
-    const open=!wrap.classList.contains('on');
-    // el panel solo existe dentro del dashboard: si estamos en otra pestaña, vamos allí
-    if(open && ACTIVE_TAB!=='dash'){ activateTab('dash'); set(true); wrap.scrollIntoView({block:'nearest',behavior:'smooth'}); return; }
-    set(open);
-  };
-  document.addEventListener('keydown',e=>{
-    if(e.key==='Escape'&&wrap.classList.contains('on')&&!document.querySelector('.dos-backdrop.on,.mail-backdrop.on')) set(false);
-  });
+  let ini=null;
+  try{ ini=localStorage.getItem(KEY); }catch(e){}
+  set(ini!=='0');
+  btn.onclick=()=>{ set(grid.classList.contains('params-off')); render(); };  // los gráficos cambian de ancho
 })();
 
-// panel desplegable de escenarios + exportar (arriba a la derecha)
+// menú «Exportar» del Lab
 (function(){
-  const wrap=document.querySelector('.scen-wrap'), panel=document.getElementById('scenPanel');
-  const btn=document.getElementById('btnScenarios'), bar=document.querySelector('.presetbar');
-  if(bar && panel) panel.appendChild(bar);  // mueve el panel de escenarios al desplegable
-  const setOpen=on=>{ panel.classList.toggle('on',on); btn.setAttribute('aria-expanded',on?'true':'false'); };
-  btn.onclick=e=>{ e.stopPropagation(); setOpen(!panel.classList.contains('on')); };
-  panel.addEventListener('click',e=>e.stopPropagation());
-  document.addEventListener('click',()=>setOpen(false));
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') setOpen(false); });
+  const btn=document.getElementById('btnExportMenu'), menu=document.getElementById('exportMenu');
+  const set=on=>{ menu.classList.toggle('on',on); btn.setAttribute('aria-expanded',on?'true':'false'); };
+  btn.onclick=e=>{ e.stopPropagation(); set(!menu.classList.contains('on')); };
+  menu.addEventListener('click',()=>set(false));
+  document.addEventListener('click',()=>set(false));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') set(false); });
 })();
 
-// sincroniza topbar con el estado restaurado al iniciar
-document.getElementById('selHorizon').value=String(HY);
+// sincroniza los controles con el estado restaurado al iniciar
 [...document.getElementById('segGran').children].forEach(b=>b.classList.toggle('on',b.dataset.g===GRAN));
 syncScopeSeg();
-refreshPresetSel('');
+syncDateControls();
 render();
 activateTab(ACTIVE_TAB,false);
 </script>
