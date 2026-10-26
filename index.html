@@ -390,6 +390,12 @@
   .ref-m th,.ref-m td{text-align:left}
   .ref-m td:first-child{min-width:200px}
   .ref-m td:nth-child(4){min-width:170px} .ref-m td:nth-child(5){min-width:200px} .ref-m td:nth-child(7){min-width:180px}
+  .web-link{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;color:var(--primary);text-decoration:none;cursor:pointer;white-space:nowrap}
+  .web-link:hover{text-decoration:underline}
+  .comp-card .web-link{align-self:flex-start;font-size:11.5px}
+  .th-web{margin-top:4px;text-align:right}
+  .th-web .web-link{font-size:10.5px;font-weight:400}
+  .ref-m .web-link{margin-top:3px;margin-right:6px}
   .ref-sub{font-size:11px;color:var(--muted-foreground);margin-top:2px;line-height:1.4}
   .rchips{display:flex;flex-wrap:wrap;gap:4px}
   .rchip.tec{background:#f0fdf4;color:#15803d;border-color:var(--success-border)}
@@ -2392,7 +2398,7 @@ const LOGOS={
 };
 const BENCH=[
  // Grupo Pacc — Registro Mercantil 2024 (modelo franquicia: aprovisionamientos = retrocesión a la red)
- {key:'pacc', name:'Pacc', empleados:127, ingresos:17220034, primas:145300000,
+ {key:'pacc', name:'Pacc', web:'https://www.grupopacc.es', empleados:127, ingresos:17220034, primas:145300000,
    otrosIngresos:4768635, retro:10362150, aprov:0, personal:6663519, otros:2284878, ebitda:2718982, ebit:2310524, neto:1820859,
    otrosIngresosPct:4768635/17220034, retroPct:10362150/17220034, aprovPct:0, personalPct:6663519/17220034, otrosPct:2284878/17220034,
    ebitdaPct:0.1579, ebitPct:0.1342, netoPct:0.1057,
@@ -2400,44 +2406,44 @@ const BENCH=[
    color:'#2e5496', logo:LOGOS.pacc},
  // Quadis — CORREDURÍA DE SEGUROS SEGUROSOL S.A. — Registro Mercantil / eInforma 2024 (correduría estándar, sin
  // retrocesión; «otros» incluye el deterioro del inmovilizado (78,92) y otros resultados (654,02) para cuadrar el EBITDA)
- {key:'quadis', name:'Quadis', empleados:24, ingresos:2819126.28, primas:null,
+ {key:'quadis', name:'Quadis', web:'https://www.quadisseguros.es', empleados:24, ingresos:2819126.28, primas:null,
    otrosIngresos:10230.86, retro:0, aprov:0, personal:1253837.90, otros:827314.39, ebitda:748204.85, ebit:723438.89, neto:549514.08,
    otrosIngresosPct:10230.86/2819126.28, retroPct:0, aprovPct:0, personalPct:1253837.90/2819126.28, otrosPct:827314.39/2819126.28,
    ebitdaPct:0.2654, ebitPct:0.2566, netoPct:0.1949,
    comisEmp:116782.37, costePersEmp:51940.26, primasEmp:null, comPrima:null, retroEff:0, color:'#c55a11', logo:LOGOS.quadis},
  // AMV Hispania Correduría de Seguros SL (NIF B…, Alcobendas) — Registro Mercantil / eInforma 2024 (correduría estándar,
  // sin retrocesión ni aprovisionamientos; único caso de la comparativa con cuentas auditadas)
- {key:'amv', name:'AMV', empleados:106, ingresos:11190062.15, primas:null,
+ {key:'amv', name:'AMV', web:'https://www.amv.es', empleados:106, ingresos:11190062.15, primas:null,
    otrosIngresos:1571.74, retro:0, aprov:0, personal:4508191.90, otros:4997119.81, ebitda:1686322.18, ebit:1527830.39, neto:506362.14,
    otrosIngresosPct:1571.74/11190062.15, retroPct:0, aprovPct:0, personalPct:4508191.90/11190062.15, otrosPct:4997119.81/11190062.15,
    ebitdaPct:0.1507, ebitPct:0.1365, netoPct:0.0453,
    comisEmp:105766.18, costePersEmp:42610.51, primasEmp:null, comPrima:null, retroEff:0, color:'#548235', logo:LOGOS.amv},
  // Correduría C. Lorente — Registro Mercantil 2024 (correduría estándar, sin retrocesión relevante; fuente eInforma)
- {key:'lorente', name:'C. Lorente', empleados:7, ingresos:980648, primas:null,
+ {key:'lorente', name:'C. Lorente', web:'https://www.ferrerojeda.com/lorente/', empleados:7, ingresos:980648, primas:null,
    otrosIngresos:69, retro:0, aprov:0, personal:478749, otros:188212, ebitda:313336, ebit:300855, neto:233477,
    otrosIngresosPct:69/980648, retroPct:0, aprovPct:0, personalPct:478749/980648, otrosPct:188212/980648,
    ebitdaPct:0.3195, ebitPct:0.3068, netoPct:0.2381,
    comisEmp:138902, costePersEmp:67811, primasEmp:null, comPrima:null, retroEff:0, color:'#7030a0'},
  // ERSM Insurance Brokers (antes RSM Correduría de Seguros) — Registro Mercantil 2024 / eInforma (correduría con fuerte subcontratación: «trabajos realizados por otras empresas» = retrocesión)
- {key:'ersm', name:'ERSM', empleados:143, ingresos:26830744.26, primas:null,
+ {key:'ersm', name:'ERSM', web:'https://www.ersmgrupo.com', empleados:143, ingresos:26830744.26, primas:null,
    otrosIngresos:0, retro:15365702.77, aprov:0, personal:7975208.25, otros:3003449.38, ebitda:1073183.89, ebit:288187.34, neto:1459430.29,
    otrosIngresosPct:0, retroPct:15365702.77/26830744.26, aprovPct:0, personalPct:7975208.25/26830744.26, otrosPct:3003449.38/26830744.26,
    ebitdaPct:0.0400, ebitPct:0.0107, netoPct:0.0544,
    comisEmp:26830744.26/143, costePersEmp:7975208.25/143, primasEmp:null, comPrima:null, retroEff:15365702.77/26830744.26, color:'#bf8f00', logo:LOGOS.ersm},
  // Gran Nogal Correduría de Seguros SL (NIF B86540945, Pozuelo de Alarcón) — Registro Mercantil / eInforma 2024 (correduría estándar; EBITDA y neto negativos; «otros» incluye deterioro de inmovilizado para cuadrar EBITDA)
- {key:'grannogal', name:'Gran Nogal', empleados:151, ingresos:8490762.17, primas:null,
+ {key:'grannogal', name:'Gran Nogal', web:'https://www.segurosnogal.es', empleados:151, ingresos:8490762.17, primas:null,
    otrosIngresos:118255.94, retro:0, aprov:0, personal:5575824.60, otros:3038685.33, ebitda:-5491.82, ebit:-57751.67, neto:-202623.49,
    otrosIngresosPct:118255.94/8490762.17, retroPct:0, aprovPct:0, personalPct:5575824.60/8490762.17, otrosPct:3038685.33/8490762.17,
    ebitdaPct:-0.0006, ebitPct:-0.0068, netoPct:-0.0239,
    comisEmp:56230.21, costePersEmp:36925.99, primasEmp:null, comPrima:null, retroEff:0, color:'#c00000'},
  // Weecover (INSURTECH SOLUTIONS CORREDURÍA DE SEGUROS SL, NIF B67414250, Barcelona) — Registro Mercantil / eInforma 2024 (insurtech en fase de inversión: capitaliza desarrollo como «trabajos realizados por la empresa para su activo», que aquí va en otros ingresos; EBITDA, EBIT y neto negativos)
- {key:'weecover', name:'Weecover', empleados:13, ingresos:1637773.22, primas:null,
+ {key:'weecover', name:'Weecover', web:'https://www.weecover.com', empleados:13, ingresos:1637773.22, primas:null,
    otrosIngresos:484333.90, retro:0, aprov:0, personal:858754.03, otros:1662876.02, ebitda:-399522.93, ebit:-638938.57, neto:-515069.35,
    otrosIngresosPct:484333.90/1637773.22, retroPct:0, aprovPct:0, personalPct:858754.03/1637773.22, otrosPct:1662876.02/1637773.22,
    ebitdaPct:-0.2439, ebitPct:-0.3901, netoPct:-0.3145,
    comisEmp:1637773.22/13, costePersEmp:858754.03/13, primasEmp:null, comPrima:null, retroEff:0, color:'#00a0a8', logo:LOGOS.weecover},
  // Terránea 2000 Correduría de Seguros SL (NIF B82014242, antes Manuel López Hidalgo Correduría) — Registro Mercantil / eInforma 2024 (correduría estándar sin retrocesión; OJO: «otros ingresos» son 2.408.025 € de excesos de provisiones, partida no recurrente que infla el EBITDA: sin ella el margen sería 20,8% en vez de 46,5%)
- {key:'terranea', name:'Terránea', empleados:28, ingresos:9381333.34, primas:null,
+ {key:'terranea', name:'Terránea', web:'https://www.terranea.es', empleados:28, ingresos:9381333.34, primas:null,
    otrosIngresos:2408706.03, retro:0, aprov:16039.41, personal:1537845.33, otros:5875775.13, ebitda:4360379.50, ebit:4359239.96, neto:3377842.36,
    otrosIngresosPct:2408706.03/9381333.34, retroPct:0, aprovPct:16039.41/9381333.34, personalPct:1537845.33/9381333.34, otrosPct:5875775.13/9381333.34,
    ebitdaPct:0.4648, ebitPct:0.4647, netoPct:0.3601,
@@ -2446,7 +2452,7 @@ const BENCH=[
  // fase de inversión: capitaliza desarrollo, patrimonio neto rescatado por aportación de socios, EBITDA/EBIT/neto negativos).
  // Los aprovisionamientos (979.932 €) van en su propia fila: el informe no detalla su naturaleza y no hay base para darlos
  // por retrocesión a colaboradores. Amortización 2024 = 0, por eso EBIT coincide con EBITDA.
- {key:'life5', name:'Life5', empleados:40, ingresos:1813760.80, primas:null,
+ {key:'life5', name:'Life5', web:'https://www.life5.es', empleados:40, ingresos:1813760.80, primas:null,
    otrosIngresos:1089546.58, retro:0, aprov:979931.96, personal:2280467.24, otros:1898953.05, ebitda:-2256044.87, ebit:-2256044.87, neto:-1676480.45,
    otrosIngresosPct:1089546.58/1813760.80, retroPct:0, aprovPct:979931.96/1813760.80, personalPct:2280467.24/1813760.80, otrosPct:1898953.05/1813760.80,
    ebitdaPct:-1.2438, ebitPct:-1.2438, netoPct:-0.9243,
@@ -2454,7 +2460,7 @@ const BENCH=[
  // Previsión Personal Correduría de Seguros SA (antes Daybel, NIF A…, Barcelona) — Registro Mercantil / eInforma 2024
  // (correduría estándar sin retrocesión ni aprovisionamientos; «otros ingresos» incluye la imputación de subvenciones
  // y «otros» absorbe los otros resultados, para que el EBITDA cuadre con la suma de partidas)
- {key:'prevision', name:'Previsión Personal', empleados:23, ingresos:2104446.27, primas:null,
+ {key:'prevision', name:'Previsión Personal', web:'https://www.previsionpersonal.com', empleados:23, ingresos:2104446.27, primas:null,
    otrosIngresos:3835.74, retro:0, aprov:0, personal:1042269.91, otros:500710.64, ebitda:565301.46, ebit:561478.76, neto:413962.55,
    otrosIngresosPct:3835.74/2104446.27, retroPct:0, aprovPct:0, personalPct:1042269.91/2104446.27, otrosPct:500710.64/2104446.27,
    ebitdaPct:0.2686, ebitPct:0.2668, netoPct:0.1967,
@@ -2462,7 +2468,7 @@ const BENCH=[
  // Albrok Mediación SA (NIF A…, Sevilla) — Registro Mercantil / eInforma. OJO: su informe llega hasta 2025, pero la fila
  // usa 2024 para que la comparativa siga siendo una foto homogénea del mismo ejercicio; los tres años están en su ficha.
  // Intermediación pura: los aprovisionamientos son el 65,8% de las comisiones y van en su propia fila, no en retrocesión.
- {key:'albrok', name:'Albrok', empleados:17, ingresos:6360919.63, primas:null,
+ {key:'albrok', name:'Albrok', web:'https://www.albroksa.com', empleados:17, ingresos:6360919.63, primas:null,
    otrosIngresos:21000.00, retro:0, aprov:4185479.56, personal:760917.77, otros:411022.60, ebitda:1024499.70, ebit:1010262.01, neto:759765.37,
    otrosIngresosPct:21000.00/6360919.63, retroPct:0, aprovPct:4185479.56/6360919.63, personalPct:760917.77/6360919.63, otrosPct:411022.60/6360919.63,
    ebitdaPct:0.1611, ebitPct:0.1588, netoPct:0.1194,
@@ -2470,7 +2476,7 @@ const BENCH=[
  // Brokalia Diversos Correduría de Seguros SL (antes R M Diversos, NIF B…, El Puerto de Santa María) — Registro
  // Mercantil / eInforma 2024. Sus cuentas no desglosan retrocesión, así que el 60,3% que pesa «otros gastos de
  // explotación» se deja donde figura; «otros» absorbe además el deterioro del inmovilizado para cuadrar el EBITDA.
- {key:'brokalia', name:'Brokalia', empleados:36, ingresos:3299267.36, primas:null,
+ {key:'brokalia', name:'Brokalia', web:'https://www.brokalia.com', empleados:36, ingresos:3299267.36, primas:null,
    otrosIngresos:0, retro:0, aprov:7998.53, personal:904172.53, otros:1989017.44, ebitda:398078.86, ebit:368660.96, neto:273751.72,
    otrosIngresosPct:0, retroPct:0, aprovPct:7998.53/3299267.36, personalPct:904172.53/3299267.36, otrosPct:1989017.44/3299267.36,
    ebitdaPct:0.1207, ebitPct:0.1117, netoPct:0.0830,
@@ -2478,7 +2484,7 @@ const BENCH=[
  // Ruiz Re Correduría de Seguros SL (NIF B…, Lorca) — Registro Mercantil / eInforma 2024. Sin retrocesión ni
  // aprovisionamientos: el 67,6% que pesa «otros gastos de explotación» son casi todo servicios exteriores y se deja
  // donde figura. «Otros ingresos» agrupa ingresos accesorios, subvenciones y excesos de provisiones (77.003 €).
- {key:'ruizre', name:'Ruiz Re', empleados:61, ingresos:11676156.39, primas:null,
+ {key:'ruizre', name:'Ruiz Re', web:'https://www.ruizre.es', empleados:61, ingresos:11676156.39, primas:null,
    otrosIngresos:180767.38, retro:0, aprov:0, personal:2202797.77, otros:7935224.96, ebitda:1718901.04, ebit:1593625.63, neto:1262684.37,
    otrosIngresosPct:180767.38/11676156.39, retroPct:0, aprovPct:0, personalPct:2202797.77/11676156.39, otrosPct:7935224.96/11676156.39,
    ebitdaPct:0.1472, ebitPct:0.1365, netoPct:0.1081,
@@ -2487,7 +2493,7 @@ const BENCH=[
  // en fase de inversión: «trabajos realizados para su activo» capitaliza desarrollo propio y va a otros ingresos, junto
  // a un deterioro de inmovilizado de 10.882 € (no recurrente) que se deja en «otros» para cuadrar el EBITDA.
  // Aprovisionamientos y retrocesión ≈ 0 en 2024. Primer año en pérdidas del periodo analizado.
- {key:'insurnet', name:'Insurnet', empleados:13, ingresos:981355.64, primas:null,
+ {key:'insurnet', name:'Insurnet', web:'https://www.insurceo.com', empleados:13, ingresos:981355.64, primas:null,
    otrosIngresos:215436.19, retro:0, aprov:0, personal:372225.79, otros:732407.08, ebitda:92158.96, ebit:13923.51, neto:-5647.47,
    otrosIngresosPct:215436.19/981355.64, retroPct:0, aprovPct:0, personalPct:372225.79/981355.64, otrosPct:732407.08/981355.64,
    ebitdaPct:0.0939, ebitPct:0.0142, netoPct:-0.0058,
@@ -3497,12 +3503,16 @@ function dossierBodyHTML(key){
   }
   return h;
 }
+// enlace a la web de una empresa: muestra el dominio y abre en otra pestaña
+const webHost=u=>String(u||'').replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'');
+const webLink=(u,cls)=> u? `<a class="web-link${cls?' '+cls:''}" href="${escAttr(u)}" target="_blank" rel="noopener noreferrer" title="Abrir la web en otra pestaña">🌐 ${escAttr(webHost(u))}</a>` : '';
+function openWeb(u){ const a=document.createElement('a'); a.href=u; a.target='_blank'; a.rel='noopener noreferrer'; document.body.appendChild(a); a.click(); a.remove(); }
 function openDossier(key){
   const c=BENCH.find(x=>x.key===key); if(!c) return;
   const d=DOSSIER[key];
   document.getElementById('dosLogo').innerHTML= c.logo? `<img class="${c.logoDark?'cmp-logo-dark':''}" src="${c.logo}" alt="${escAttr(c.name)}">` : '';
   document.getElementById('dosName').innerHTML=escAttr(c.name)+(tagsOf(c.key).length? ` <span class="tag-row" style="display:inline-flex;margin-top:0;vertical-align:middle">${tagsOf(c.key).map(tagChip).join('')}</span>`:'');
-  document.getElementById('dosRazon').textContent= d? d.razon : 'Cuentas del ejercicio 2024 · Registro Mercantil';
+  document.getElementById('dosRazon').innerHTML= escAttr(d? d.razon : 'Cuentas del ejercicio 2024 · Registro Mercantil')+(c.web?' · '+webLink(c.web):'');
   document.getElementById('dosBody').innerHTML=dossierBodyHTML(key);
   const bd=document.getElementById('dosBackdrop');
   bd.classList.add('on'); bd.scrollTop=0; document.body.style.overflow='hidden';
@@ -3527,9 +3537,13 @@ function renderCompanyList(){
         <div><span>Coste/empleado</span><b>${c.costePersEmp?eur(c.costePersEmp):'–'}</b></div>
       </div>
       <div class="tag-row">${tags||'<span class="cnd" style="font-size:11px">Sin etiquetar</span>'}</div>
+      ${c.web?`<span class="web-link" role="link" tabindex="0" data-web="${escAttr(c.web)}" title="Abrir la web en otra pestaña">🌐 ${escAttr(webHost(c.web))}</span>`:''}
     </button>`;
   }).join('');
-  box.querySelectorAll('[data-openco]').forEach(btn=>btn.onclick=()=>openCompanyDetail(btn.dataset.openco));
+  box.querySelectorAll('[data-openco]').forEach(btn=>btn.onclick=e=>{
+    const w=e.target.closest('[data-web]'); if(w){ e.stopPropagation(); openWeb(w.dataset.web); return; }
+    openCompanyDetail(btn.dataset.openco); });
+  box.querySelectorAll('[data-web]').forEach(w=>w.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); openWeb(w.dataset.web); } }));
 }
 function renderCompanyDetailTags(){
   const key=COMP_DETAIL_KEY, box=document.getElementById('compDetTags'); if(!key||!box) return;
@@ -3542,7 +3556,7 @@ function openCompanyDetail(key){
   const d=DOSSIER[key];
   document.getElementById('compDetLogo').innerHTML= c.logo? `<img class="${c.logoDark?'cmp-logo-dark':''}" src="${c.logo}" alt="${escAttr(c.name)}">` : '';
   document.getElementById('compDetName').textContent=c.name;
-  document.getElementById('compDetRazon').textContent= d? d.razon : 'Cuentas del ejercicio 2024 · Registro Mercantil';
+  document.getElementById('compDetRazon').innerHTML= escAttr(d? d.razon : 'Cuentas del ejercicio 2024 · Registro Mercantil')+(c.web?' · '+webLink(c.web):'');
   renderCompanyDetailTags();
   document.getElementById('compDetBody').innerHTML=dossierBodyHTML(key);
   document.getElementById('compListPanel').style.display='none';
@@ -3631,7 +3645,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.simplybusiness.co.uk"
 },
 {
 "key": "superscript",
@@ -3687,7 +3702,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://gosuperscript.com"
 },
 {
 "key": "covergenius",
@@ -3746,7 +3762,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://covergenius.com"
 },
 {
 "key": "policybazaar",
@@ -3802,7 +3819,8 @@ const REFS=[
 ],
 "estudio": "crecer",
 "tecUso": [],
-"short": "Policybazaar"
+"short": "Policybazaar",
+"web": "https://www.policybazaar.com"
 },
 {
 "key": "alan",
@@ -3855,7 +3873,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://alan.com"
 },
 {
 "key": "coalition",
@@ -3906,7 +3925,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.coalitioninc.com"
 },
 {
 "key": "cleverea",
@@ -3955,7 +3975,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.cleverea.com"
 },
 {
 "key": "wefox",
@@ -4009,7 +4030,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.wefox.com"
 },
 {
 "key": "tuio",
@@ -4078,7 +4100,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://tuio.com"
 },
 {
 "key": "marshmallow",
@@ -4145,7 +4168,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.marshmallow.com"
 },
 {
 "key": "next",
@@ -4218,7 +4242,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.nextinsurance.com"
 },
 {
 "key": "zego",
@@ -4281,7 +4306,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.zego.com"
 },
 {
 "key": "qover",
@@ -4349,7 +4375,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.qover.com"
 },
 {
 "key": "manypets",
@@ -4422,7 +4449,8 @@ const REFS=[
 ],
 "estudio": "crecer",
 "tecUso": [],
-"short": "ManyPets"
+"short": "ManyPets",
+"web": "https://manypets.com"
 },
 {
 "key": "lemonade",
@@ -4485,7 +4513,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.lemonade.com"
 },
 {
 "key": "ethos",
@@ -4553,7 +4582,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.ethos.com"
 },
 {
 "key": "luko",
@@ -4620,7 +4650,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.luko.eu"
 },
 {
 "key": "root",
@@ -4697,7 +4728,8 @@ const REFS=[
 ]
 ],
 "estudio": "crecer",
-"tecUso": []
+"tecUso": [],
+"web": "https://www.joinroot.com"
 },
 {
 "key": "konsileo",
@@ -4756,7 +4788,8 @@ const REFS=[
 ],
 "estudio": "tech",
 "facts": [],
-"fund": null
+"fund": null,
+"web": "https://konsileo.com"
 },
 {
 "key": "newfront",
@@ -4813,7 +4846,8 @@ const REFS=[
 ],
 "estudio": "tech",
 "facts": [],
-"fund": null
+"fund": null,
+"web": "https://www.newfront.com"
 },
 {
 "key": "clark",
@@ -4870,7 +4904,8 @@ const REFS=[
 ],
 "estudio": "tech",
 "facts": [],
-"fund": null
+"fund": null,
+"web": "https://www.clark.de"
 },
 {
 "key": "turtlemint",
@@ -4930,7 +4965,8 @@ const REFS=[
 "estudio": "tech",
 "facts": [],
 "fund": null,
-"short": "Turtlemint"
+"short": "Turtlemint",
+"web": "https://www.turtlemint.com"
 },
 {
 "key": "insurancedekho",
@@ -4990,7 +5026,9 @@ const REFS=[
 "estudio": "tech",
 "facts": [],
 "fund": null,
-"short": "InsuranceDekho/RenewBuy"
+"short": "InsuranceDekho/RenewBuy",
+"web": "https://www.insurancedekho.com",
+"web2": "https://www.renewbuy.com"
 },
 {
 "key": "plum",
@@ -5050,7 +5088,8 @@ const REFS=[
 "estudio": "tech",
 "facts": [],
 "fund": null,
-"short": "Plum"
+"short": "Plum",
+"web": "https://www.plumhq.com"
 },
 {
 "key": "insureon",
@@ -5104,7 +5143,8 @@ const REFS=[
 ],
 "estudio": "tech",
 "facts": [],
-"fund": null
+"fund": null,
+"web": "https://www.insureon.com"
 },
 {
 "key": "nsure",
@@ -5158,7 +5198,8 @@ const REFS=[
 ],
 "estudio": "tech",
 "facts": [],
-"fund": null
+"fund": null,
+"web": "https://nsure.com"
 },
 {
 "key": "roams",
@@ -5205,7 +5246,8 @@ const REFS=[
 "estudio": "tech",
 "facts": [],
 "fund": null,
-"short": "Roams"
+"short": "Roams",
+"web": "https://roams.es"
 }
 ];
 const REF_FIRST=[['manypets','demanda desatendida y negociación con aseguradoras'],['superscript','autoservicio frente a asesoría'],['tuio','publicidad conectada con compra'],
@@ -5327,21 +5369,21 @@ function paintRefs(){
   // matriz comparativa
   document.getElementById('refMatrix').innerHTML= !L.length? '<div class="empty" style="margin:12px">Ninguna empresa cumple los filtros.</div>' :
     `<table class="ref-m"><thead><tr><th>Empresa</th><th>Tipo</th><th>País · fundación</th><th>Cliente y ramo</th><th>Canales de captación</th><th>Tecnología al servicio de</th><th>Venta humana</th><th>Escala declarada</th><th>Rentabilidad</th><th>Evidencia</th><th>Situación</th></tr></thead><tbody>`+
-    L.map(r=>`<tr><td><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button><div class="ref-sub">${esc(r.sub)}</div>${r.papel&&r.papel!=='principal'?`<span class="rbadge neutral" style="margin-top:4px">${refLab('papel',r.papel)}</span>`:''}</td>
+    L.map(r=>`<tr><td><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button><div class="ref-sub">${esc(r.sub)}</div><div>${webLink(r.web)}${r.web2?' '+webLink(r.web2):''}</div>${r.papel&&r.papel!=='principal'?`<span class="rbadge neutral" style="margin-top:4px">${refLab('papel',r.papel)}</span>`:''}</td>
       <td>${refLab('tipo',r.tipo)}</td><td>${esc(r.pais)}${r.fund?' · '+r.fund:''}</td>
       <td>${refLab('seg',r.seg)}<div class="ref-sub">${esc(r.ramo)}</div></td><td><div class="rchips">${refChips(r)}</div></td>
       <td>${(r.tecUso||[]).length? `<div class="rchips">${refTec(r)}</div>` : '<span class="cnd">—</span>'}</td>
       <td>${refLab('humano',r.humano)}</td><td>${esc(r.escalaCorta)}</td><td>${refBadge('rent',r.rent)}</td><td>${refBadge('evid',r.evid)}</td><td>${refBadge('desen',r.desen)}</td></tr>`).join('')+'</tbody></table>';
   // hipótesis
   document.getElementById('refHyp').innerHTML=L.map(r=>`<div class="ref-hyp-c"><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button>
-    <p>${esc(r.hipotesis)}</p><div class="rchips">${refChips(r)}${refTec(r)}</div></div>`).join('');
+    ${webLink(r.web)}<p>${esc(r.hipotesis)}</p><div class="rchips">${refChips(r)}${refTec(r)}</div></div>`).join('');
 }
 // ficha completa de un referente (reutiliza el diálogo de informes de la competencia)
 function openRef(key){
   const r=REFS.find(x=>x.key===key); if(!r) return;
   document.getElementById('dosLogo').innerHTML=`<span class="ref-ini">${esc(r.name.replace(/[^A-Za-zÁÉÍÓÚÑ ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join(''))}</span>`;
   document.getElementById('dosName').innerHTML=esc(r.name)+' '+refBadge('tipo',r.tipo);
-  document.getElementById('dosRazon').textContent=r.sub;
+  document.getElementById('dosRazon').innerHTML=esc(r.sub)+(r.web?' · '+webLink(r.web):'')+(r.web2?' · '+webLink(r.web2):'');
   const hasFund=(r.facts||[]).some(f=>f[0]==='Fundación');
   const ficha=[['País',r.pais+(r.fund&&!hasFund?' · fundada en '+r.fund:'')],['Cliente',refLab('seg',r.seg)],['Ramo',r.ramo],['Canal',r.canal],
     ['Venta humana',refLab('humano',r.humano)],['Rentabilidad',refLab('rent',r.rent)],['Evidencia',refLab('evid',r.evid)],['Situación',refLab('desen',r.desen)],
@@ -5664,7 +5706,7 @@ function renderComp(){
   const cell=(v,fmt)=> v==null? '<td class="cnd">n/d</td>' : `<td>${fmt(v)}</td>`;
   const eurpct=(c,v)=> v==null? '<td class="cnd">n/d</td>' : `<td>${eur(v)} <span class="cpct">(${pct(c.ingresos? v/c.ingresos:0)})</span></td>`;
   const tagRow=c=>`<div class="tag-row">${tagsOf(c.key).map(tagChip).join('')}<button type="button" class="tag-add" data-tagbtn="${c.key}" title="Etiquetar ${escAttr(c.name)}">🏷 etiqueta</button></div>`;
-  const head=`<tr><th></th><th>Tu modelo</th>${SEL.map(c=>`<th>${clab(c,24)}${tagRow(c)}</th>`).join('')}</tr>`;
+  const head=`<tr><th></th><th>Tu modelo</th>${SEL.map(c=>`<th>${clab(c,24)}${c.web?`<div class="th-web">${webLink(c.web)}</div>`:''}${tagRow(c)}</th>`).join('')}</tr>`;
   const ncol=SEL.length+2;
   const secRow=t=>`<tr class="cmp-sec"><td colspan="${ncol}">${t}</td></tr>`;
   const rowPct=(label,prop,better)=>{
