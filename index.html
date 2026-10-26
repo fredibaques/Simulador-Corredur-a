@@ -158,7 +158,17 @@
   .ctrl-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
   .ctrl-h h2{margin:0}
   /* con el ámbito en un ramo concreto solo se ven sus parámetros y los comunes se ocultan */
-  #form .acc-item[hidden],#form .row[hidden],.seg button[hidden]{display:none}
+  #form .acc-item[hidden],#form .row[hidden],#form .pgrp[hidden],#form .phinline[hidden],.seg button[hidden]{display:none}
+  .acc-head.grp-ven{background:var(--primary)} .acc-head.grp-rrhh{background:#475569}
+  .pgrp+.pgrp{border-top:1px solid var(--border);margin-top:4px;padding-top:6px}
+  .pgrp-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:8px 0 2px;
+    font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-foreground)}
+  .pgrp-note{font-size:11.5px;color:var(--muted-foreground);background:var(--muted-bg);border-radius:var(--radius-sm);padding:6px 9px;margin:6px 0 2px;line-height:1.5}
+  .pgrp-note b{color:var(--foreground)}
+  .seg.seg-xs{padding:2px}
+  .seg.seg-xs button{padding:2px 8px;font-size:11px;text-transform:none;letter-spacing:0}
+  .rpill{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.02em;color:#fff;border-radius:4px;padding:1px 5px;margin-right:6px;vertical-align:1px}
+  .rpill.auto{background:var(--auto)} .rpill.mre{background:var(--mre)}
   .ctrl-scope{font-size:12px;color:var(--muted-foreground);margin:0 0 14px;padding:9px 12px;
     border:1px solid var(--border);border-radius:var(--radius);background:var(--muted-bg)}
   .controls::-webkit-scrollbar{width:9px}
@@ -1058,58 +1068,78 @@
 <div id="report"></div>
 <script>
 const DEF = {
-  opsAuto:2800, gAuto:0, captAuto:5, primaAuto:450, ipsAuto:8, comAuto:11, retAuto:88, colabAuto:100, retroAutoNew:30, retroAutoRen:30,
-  crossMre:2, propMre:8, gMre:0, primaMre:700, ipsMre:8, comMre:20, retMre:87, colabMre:0, retroMreNew:0, retroMreRen:0,
+  opsAuto:2800, gAuto:0, captAuto:5, primaAuto:450, ipsAuto:8, comAuto:11, pagoAuto:90, churnAuto:12, colabAuto:100, retroAutoNew:30, retroAutoRen:30,
+  crossMre:2, propMre:8, gMre:0, primaMre:700, ipsMre:8, comMre:20, pagoMre:90, churnMre:13, colabMre:0, retroMreNew:0, retroMreRen:0,
   polEmpAuto:1200, salDirAuto:2100, polEmpMre:1200, salDirMre:2100, ss:31.5,
   alq:1200, puesto:150, swbase:300, swemp:80, rcbase:3000, rcpct:0.10, ases:350, cuotas:100, otros:5, infl:3
 };
-// Cada grupo declara su ámbito: el panel de parámetros muestra solo los del ramo que se
-// está viendo en el dashboard ('common' = costes compartidos, visibles en Todo el negocio).
-const CFG = [
- ['AUTO','grp-auto','auto',[
-   ['opsAuto','Transferencias de vehículos / mes','num',null,'expedientes de la gestoría → leads de auto','Operaciones de transferencia de vehículos que tramita la gestoría cada mes. Son la fuente de clientes potenciales: una parte (la tasa de captación) se convierte en póliza de auto.'],
-   ['gAuto','Crecimiento mensual del flujo','pct',[0,3,0.25],'compuesto mes a mes','Ritmo al que crece cada mes el número de transferencias. Se aplica de forma compuesta (cada mes sobre el anterior).'],
-   ['captAuto','Tasa de captación sobre el flujo','pct',[0,30,0.5],'% de transferencias que acaban en póliza','De cada 100 transferencias tramitadas, cuántas terminan contratando una póliza de auto.'],
-   ['primaAuto','Prima media anual (€)','eur',null,'importe total que paga el cliente al año (con impuestos)','Prima media anual por cliente de auto, impuestos incluidos. Las comisiones se calculan sobre la prima neta (sin impuestos).'],
-   ['ipsAuto','Impuestos sobre prima — IPS (%)','pct',[0,15,0.5],'se restan antes de calcular comisiones','Impuestos sobre la prima (IPS y recargos). Se descuentan de la prima para obtener la prima neta; la comisión de la correduría y la retrocesión al colaborador se calculan sobre esa prima neta.'],
-   ['comAuto','Comisión sobre prima neta','pct',[0,30,0.5],'% de la prima neta (sin impuestos) que cobra la correduría','Porcentaje de la prima NETA (ya descontados los impuestos) que la compañía paga a la correduría como comisión.'],
-   ['retAuto','Retención anual','pct',[50,99,1],'% de pólizas que renueva cada año','Porcentaje de clientes que renuevan al cumplir el año. Una retención del 88% implica perder un 12% de la cartera al año.'],
-   ['colabAuto','% pólizas vía colaborador','pct',[0,100,5],'aportadas por un agente externo','Porcentaje de pólizas aportadas por un colaborador (agente o introductor externo) a cambio de cederle parte de la comisión, lo que se llama retrocesión.'],
-   ['retroAutoNew','% retrocesión · nueva producción','pct',[0,60,1],'sobre la comisión de pólizas nuevas','Retrocesión = parte de la comisión que se cede al colaborador. Aquí, sobre las pólizas nuevas que aporta.'],
-   ['retroAutoRen','% retrocesión · renovaciones','pct',[0,60,1],'sobre la comisión de renovaciones','Parte de la comisión de las renovaciones que se cede al colaborador año tras año.'],
-   ['polEmpAuto','Pólizas por empleado · Auto','num',[200,12000,100],'capacidad de un empleado dedicado a Auto','Cuántas pólizas de Auto puede llevar un empleado a tiempo completo: venderlas, administrarlas, atenderlas y renovarlas. La plantilla de Auto = cartera de Auto ÷ este número, redondeando al alza. Auto suele admitir muchas más pólizas por persona que Multirriesgo: son operaciones más estandarizadas.'],
-   ['salDirAuto','Salario bruto por empleado · Auto (€/mes)','eur',null,'plantilla especializada en Auto','Salario bruto mensual de una persona dedicada a Auto.'],
- ]],
- ['MULTIRRIESGO EMPRESAS','grp-mre','mre',[
-   ['crossMre','Venta cruzada anual sobre cartera auto','pct',[0,20,0.5],'% de clientes auto que cada año contratan un MRE','Venta cruzada (cross-sell): porcentaje de la cartera de auto que cada año contrata además un seguro multirriesgo de empresa.'],
-   ['propMre','Producción propia (pólizas/mes)','num',null,'venta directa, no procede de la cartera auto','Pólizas de multirriesgo captadas directamente por la correduría cada mes, al margen de la venta cruzada sobre la cartera de auto.'],
-   ['gMre','Crecimiento mensual prod. propia','pct',[0,3,0.25],'compuesto mes a mes','Ritmo de crecimiento mensual (compuesto) de la producción propia de multirriesgo.'],
-   ['primaMre','Prima media anual (€)','eur',null,'importe total que paga el cliente al año (con impuestos)','Prima media anual por cliente de multirriesgo de empresa, impuestos incluidos. Las comisiones se calculan sobre la prima neta.'],
-   ['ipsMre','Impuestos sobre prima — IPS (%)','pct',[0,15,0.5],'se restan antes de calcular comisiones','Impuestos sobre la prima de multirriesgo. Se descuentan para obtener la prima neta, base sobre la que se calculan la comisión y la retrocesión.'],
-   ['comMre','Comisión sobre prima neta','pct',[0,35,0.5],'% de la prima neta (sin impuestos) que cobra la correduría','Porcentaje de la prima NETA (sin impuestos) que la compañía paga como comisión en multirriesgo.'],
-   ['retMre','Retención anual','pct',[50,99,1],'% de pólizas que renueva cada año','Porcentaje de clientes de multirriesgo que renuevan cada año.'],
-   ['colabMre','% pólizas vía colaborador','pct',[0,100,5],'aportadas por un agente externo','Porcentaje de pólizas de multirriesgo aportadas por un colaborador externo a cambio de retrocesión.'],
-   ['retroMreNew','% retrocesión · nueva producción','pct',[0,60,1],'sobre la comisión de pólizas nuevas','Parte de la comisión de las pólizas nuevas de multirriesgo que se cede al colaborador.'],
-   ['retroMreRen','% retrocesión · renovaciones','pct',[0,60,1],'sobre la comisión de renovaciones','Parte de la comisión de las renovaciones de multirriesgo que se cede al colaborador.'],
-   ['polEmpMre','Pólizas por empleado · MRE','num',[200,12000,100],'capacidad de un empleado dedicado a Multirriesgo','Cuántas pólizas de Multirriesgo Empresas puede llevar un empleado a tiempo completo. La plantilla de MRE = cartera de MRE ÷ este número, redondeando al alza. Suele ser bastante menor que en Auto: son riesgos a medida, con más análisis y más trato con el cliente.'],
-   ['salDirMre','Salario bruto por empleado · MRE (€/mes)','eur',null,'plantilla especializada en Multirriesgo','Salario bruto mensual de una persona dedicada a Multirriesgo Empresas. Suele estar por encima del de Auto por el perfil técnico que exige.'],
- ]],
- ['PERSONAL Y COSTES COMUNES','grp-per','common',[
-   ['ss','Seguridad Social sobre bruto','pct',[0,40,0.5],'cotización a cargo de la empresa','Cotización a la Seguridad Social que paga la empresa, como porcentaje del salario bruto. Se aplica a los sueldos de los dos ramos.'],
-   ['infl','Inflación anual de salarios','pct',[0,10,0.25],'solo afecta a los sueldos','Subida anual aplicada únicamente a los salarios de ambos ramos; el resto de gastos no se inflaciona en el modelo.'],
- ]],
- ['GASTOS GENERALES Y SEGUROS','grp-gen','common',[
-   ['alq','Alquiler y oficina base (€/mes)','eur',null,'coste fijo, no escala con la plantilla','Alquiler y gastos de oficina base. Coste fijo que no depende del número de empleados.'],
-   ['puesto','Coste puesto por empleado (€/mes)','eur',null,'puesto físico y equipamiento, no software','Coste del puesto físico por empleado: mobiliario, suministros, equipamiento. No incluye software (eso va en Tecnología).'],
-   ['swbase','Tecnología (coste fijo) (€/mes)','eur',null,'plataforma/core fijo, independiente de la plantilla','Software base del negocio (plataforma de correduría, web, integraciones con compañías…). Coste fijo, igual con 1 o con 20 empleados.'],
-   ['swemp','Tecnología (coste variable) (€/mes)','eur',null,'licencias por usuario × nº de empleados','Licencias de software por usuario (CRM, ofimática…). Se multiplica por el número total de empleados.'],
-   ['rcbase','RC Profesional — prima base (€/año)','eur',null,'seguro de responsabilidad civil del mediador','Prima fija anual del seguro de Responsabilidad Civil (RC) profesional obligatorio del mediador.'],
-   ['rcpct','RC — % adicional sobre facturación','pct',[0,1,0.01],'100 €/año por cada 100.000 € de facturación (0,1%)','Parte variable del seguro de RC, calculada sobre la facturación (comisiones) de la correduría, no sobre las primas intermediadas. Por defecto 0,1%, equivalente a 100 € al año por cada 100.000 € de facturación.'],
-   ['ases','Asesoría/auditoría/gestoría (€/mes)','eur',null,'coste mensual de servicios externos','Coste mensual de asesoría contable y fiscal, auditoría y gestoría.'],
-   ['cuotas','Cuotas DGSFP (regulador) y colegio (€/mes)','eur',null,'tasas del regulador de seguros y del colegio','Cuotas a la DGSFP (Dirección General de Seguros y Fondos de Pensiones, el regulador de seguros) y al colegio de mediadores.'],
-   ['otros','Otros e imprevistos (% sobre gastos)','pct',[0,15,0.5],'colchón sobre el resto de gastos','Margen para gastos no previstos, como porcentaje del resto de gastos (personal y estructura, sin contar la comisión a colaboradores).'],
- ]],
+/* ---- parámetros del negocio ----
+   PARAMS: clave → [etiqueta, tipo, [mín,máx,paso] o null (campo numérico), subtítulo, ayuda, ramo]
+   ramo = 'auto' | 'mre' | null (común). En las etiquetas, {u} es la unidad de producción (mes/año).
+   SECTIONS ordena el panel en Ventas / Recursos humanos / Costes generales, cada una con sus apartados. */
+const PARAMS={
+ opsAuto:["Transferencias de vehículos / {u}","num",null,"expedientes de la gestoría: son los leads de auto","Operaciones de transferencia de vehículos que tramita la gestoría cada mes. Son la fuente de clientes potenciales: una parte (la tasa de captación) se convierte en póliza de auto.","auto"],
+ captAuto:["Tasa de captación sobre el flujo","pct",[0, 30, 0.5],"% de transferencias que acaban en póliza","De cada 100 transferencias tramitadas, cuántas terminan contratando una póliza de auto.","auto"],
+ gAuto:["Crecimiento mensual de las transferencias","pct",[0, 3, 0.25],"compuesto mes a mes","Ritmo al que crece cada mes el número de transferencias. Se aplica de forma compuesta (cada mes sobre el anterior).","auto"],
+ propMre:["Producción propia (pólizas / {u})","num",null,"venta directa, no procede de la cartera de auto","Pólizas de multirriesgo captadas directamente por la correduría cada mes, al margen de la venta cruzada sobre la cartera de auto.","mre"],
+ gMre:["Crecimiento mensual de la producción propia","pct",[0, 3, 0.25],"compuesto mes a mes","Ritmo de crecimiento mensual (compuesto) de la producción propia de multirriesgo.","mre"],
+ crossMre:["Venta cruzada anual sobre cartera auto","pct",[0, 20, 0.5],"% de clientes auto que cada año contratan un MRE","Venta cruzada (cross-sell): porcentaje de la cartera de auto que cada año contrata además un seguro multirriesgo de empresa.","mre"],
+ primaAuto:["Prima media anual (€)","eur",null,"importe total que paga el cliente al año (con impuestos)","Prima media anual por cliente de auto, impuestos incluidos. Las comisiones se calculan sobre la prima neta (sin impuestos).","auto"],
+ ipsAuto:["Impuestos sobre prima — IPS (%)","pct",[0, 15, 0.5],"se restan antes de calcular comisiones","Impuestos sobre la prima (IPS y recargos). Se descuentan de la prima para obtener la prima neta; la comisión de la correduría y la retrocesión al colaborador se calculan sobre esa prima neta.","auto"],
+ comAuto:["Comisión sobre prima neta","pct",[0, 30, 0.5],"% de la prima neta (sin impuestos) que cobra la correduría","Porcentaje de la prima NETA (ya descontados los impuestos) que la compañía paga a la correduría como comisión.","auto"],
+ pagoAuto:["Clientes que pagan la prima anual","pct",[0, 100, 5],"la comisión del año se cobra de golpe","Porcentaje de pólizas cuyo cliente paga la prima del año de una vez, que es lo habitual. Entonces la aseguradora abona a la correduría toda la comisión anual de golpe: el mes de la emisión y, después, en cada renovación. El resto (pago fraccionado) se cobra mes a mes.","auto"],
+ primaMre:["Prima media anual (€)","eur",null,"importe total que paga el cliente al año (con impuestos)","Prima media anual por cliente de multirriesgo de empresa, impuestos incluidos. Las comisiones se calculan sobre la prima neta.","mre"],
+ ipsMre:["Impuestos sobre prima — IPS (%)","pct",[0, 15, 0.5],"se restan antes de calcular comisiones","Impuestos sobre la prima de multirriesgo. Se descuentan para obtener la prima neta, base sobre la que se calculan la comisión y la retrocesión.","mre"],
+ comMre:["Comisión sobre prima neta","pct",[0, 35, 0.5],"% de la prima neta (sin impuestos) que cobra la correduría","Porcentaje de la prima NETA (sin impuestos) que la compañía paga como comisión en multirriesgo.","mre"],
+ pagoMre:["Clientes que pagan la prima anual","pct",[0, 100, 5],"la comisión del año se cobra de golpe","Porcentaje de pólizas cuyo cliente paga la prima del año de una vez, que es lo habitual. Entonces la aseguradora abona a la correduría toda la comisión anual de golpe: el mes de la emisión y, después, en cada renovación. El resto (pago fraccionado) se cobra mes a mes.","mre"],
+ churnAuto:["Churn anual","pct",[1, 50, 1],"% de pólizas que no renuevan cada año","Porcentaje de clientes de auto que se dan de baja al llegar el vencimiento anual. Un churn del 12% equivale a una retención del 88%; la vida media del cliente es 1 ÷ churn.","auto"],
+ churnMre:["Churn anual","pct",[1, 50, 1],"% de pólizas que no renuevan cada año","Porcentaje de clientes de multirriesgo que se dan de baja cada año al vencimiento. La vida media del cliente es 1 ÷ churn.","mre"],
+ colabAuto:["% pólizas vía colaborador","pct",[0, 100, 5],"aportadas por un agente externo","Porcentaje de pólizas aportadas por un colaborador (agente o introductor externo) a cambio de cederle parte de la comisión, lo que se llama retrocesión.","auto"],
+ retroAutoNew:["% retrocesión · nueva producción","pct",[0, 60, 1],"sobre la comisión de pólizas nuevas","Retrocesión = parte de la comisión que se cede al colaborador. Aquí, sobre las pólizas nuevas que aporta.","auto"],
+ retroAutoRen:["% retrocesión · renovaciones","pct",[0, 60, 1],"sobre la comisión de renovaciones","Parte de la comisión de las renovaciones que se cede al colaborador año tras año.","auto"],
+ colabMre:["% pólizas vía colaborador","pct",[0, 100, 5],"aportadas por un agente externo","Porcentaje de pólizas de multirriesgo aportadas por un colaborador externo a cambio de retrocesión.","mre"],
+ retroMreNew:["% retrocesión · nueva producción","pct",[0, 60, 1],"sobre la comisión de pólizas nuevas","Parte de la comisión de las pólizas nuevas de multirriesgo que se cede al colaborador.","mre"],
+ retroMreRen:["% retrocesión · renovaciones","pct",[0, 60, 1],"sobre la comisión de renovaciones","Parte de la comisión de las renovaciones de multirriesgo que se cede al colaborador.","mre"],
+ salDirAuto:["Salario bruto por empleado (€/mes)","eur",null,"plantilla especializada en Auto","Salario bruto mensual de una persona dedicada a Auto.","auto"],
+ polEmpAuto:["Pólizas por empleado","num",[200, 12000, 100],"capacidad de un empleado dedicado a Auto","Cuántas pólizas de Auto puede llevar un empleado a tiempo completo: venderlas, administrarlas, atenderlas y renovarlas. La plantilla de Auto = cartera de Auto ÷ este número, redondeando al alza. Auto suele admitir muchas más pólizas por persona que Multirriesgo: son operaciones más estandarizadas.","auto"],
+ salDirMre:["Salario bruto por empleado (€/mes)","eur",null,"plantilla especializada en Multirriesgo","Salario bruto mensual de una persona dedicada a Multirriesgo Empresas. Suele estar por encima del de Auto por el perfil técnico que exige.","mre"],
+ polEmpMre:["Pólizas por empleado","num",[200, 12000, 100],"capacidad de un empleado dedicado a Multirriesgo","Cuántas pólizas de Multirriesgo Empresas puede llevar un empleado a tiempo completo. La plantilla de MRE = cartera de MRE ÷ este número, redondeando al alza. Suele ser bastante menor que en Auto: son riesgos a medida, con más análisis y más trato con el cliente.","mre"],
+ infl:["Subida salarial anual","pct",[0, 10, 0.25],"solo afecta a los sueldos","Subida anual aplicada únicamente a los salarios de ambos ramos; el resto de gastos no se inflaciona en el modelo.",null],
+ ss:["Seguridad Social sobre bruto","pct",[0, 40, 0.5],"cotización a cargo de la empresa","Cotización a la Seguridad Social que paga la empresa, como porcentaje del salario bruto. Se aplica a los sueldos de los dos ramos.",null],
+ puesto:["Puesto y ordenador por empleado (€/mes)","eur",null,"equipo, mobiliario y suministros de cada persona","Coste del puesto físico por empleado: mobiliario, suministros, equipamiento. No incluye software (eso va en Tecnología).",null],
+ swemp:["Licencias de software por empleado (€/mes)","eur",null,"CRM, ofimática… × nº de empleados","Licencias de software por usuario (CRM, ofimática…). Se multiplica por el número total de empleados.",null],
+ alq:["Alquiler y gastos de oficina (€/mes)","eur",null,"coste fijo, no escala con la plantilla","Alquiler y gastos de oficina base. Coste fijo que no depende del número de empleados.",null],
+ swbase:["Plataforma tecnológica común (€/mes)","eur",null,"plataforma/core fijo, independiente de la plantilla","Software base del negocio (plataforma de correduría, web, integraciones con compañías…). Coste fijo, igual con 1 o con 20 empleados.",null],
+ rcbase:["RC Profesional — prima base (€/año)","eur",null,"seguro de responsabilidad civil del mediador","Prima fija anual del seguro de Responsabilidad Civil (RC) profesional obligatorio del mediador.",null],
+ rcpct:["RC — % adicional sobre facturación","pct",[0, 1, 0.01],"100 €/año por cada 100.000 € de facturación (0,1%)","Parte variable del seguro de RC, calculada sobre la facturación (comisiones) de la correduría, no sobre las primas intermediadas. Por defecto 0,1%, equivalente a 100 € al año por cada 100.000 € de facturación.",null],
+ ases:["Asesoría/auditoría/gestoría (€/mes)","eur",null,"coste mensual de servicios externos","Coste mensual de asesoría contable y fiscal, auditoría y gestoría.",null],
+ cuotas:["Cuotas DGSFP (regulador) y colegio (€/mes)","eur",null,"tasas del regulador de seguros y del colegio","Cuotas a la DGSFP (Dirección General de Seguros y Fondos de Pensiones, el regulador de seguros) y al colegio de mediadores.",null],
+ otros:["Otros e imprevistos (% sobre gastos)","pct",[0, 15, 0.5],"colchón sobre el resto de gastos","Margen para gastos no previstos, como porcentaje del resto de gastos (personal y estructura, sin contar la comisión a colaboradores).",null],
+};
+const SECTIONS=[
+ {title:"VENTAS", cls:"grp-ven", groups:[
+   {title:"Pólizas generadas", unit:true, keys:["opsAuto", "captAuto", "gAuto", "propMre", "gMre", "crossMre"]},
+   {title:"Precio y comisión de la aseguradora", keys:["primaAuto", "ipsAuto", "comAuto", "pagoAuto", "primaMre", "ipsMre", "comMre", "pagoMre"]},
+   {title:"Churn", keys:["churnAuto", "churnMre"]},
+   {title:"Comisiones a colaboradores", keys:["colabAuto", "retroAutoNew", "retroAutoRen", "colabMre", "retroMreNew", "retroMreRen"]},
+ ]},
+ {title:"RECURSOS HUMANOS", cls:"grp-rrhh", groups:[
+   {title:"Sueldos y capacidad", keys:["salDirAuto", "polEmpAuto", "salDirMre", "polEmpMre", "infl"]},
+   {title:"Seguridad Social", keys:["ss"]},
+   {title:"Licencias y ordenadores", keys:["puesto", "swemp"]},
+ ]},
+ {title:"COSTES GENERALES", cls:"grp-gen", groups:[
+   {title:"Oficina", keys:["alq"]},
+   {title:"Tecnología común", keys:["swbase"]},
+   {title:"Seguros", keys:["rcbase", "rcpct"]},
+   {title:"Asesoría y cuotas", keys:["ases", "cuotas"]},
+   {title:"Imprevistos", keys:["otros"]},
+ ]},
 ];
+const RAMO_PRE={auto:'Auto · ', mre:'MRE · '};
+// vista plana por sección para informes, Excel y fichas: [título, clase, ámbito, [[clave, etiqueta, tipo, rango, sub, ayuda]]]
+const CFG=SECTIONS.map(S=>[S.title,S.cls,'common',S.groups.flatMap(g=>g.keys.map(k=>{
+  const [l,t,r,sub,h,ramo]=PARAMS[k]; return [k,(ramo?RAMO_PRE[ramo]:'')+l.replace('{u}','mes'),t,r,sub,h]; }))]);
 let V = {...DEF};
 let GRAN='año';
 /* ---- calendario del plan: fechas reales en vez de «Año N» ----
@@ -1204,7 +1234,7 @@ const LS_STATE='cbp_state_v1', LS_PRESETS='cbp_presets_v1', LS_MODELS='cbp_model
 const RAMOS={auto:{label:'Auto', color:'#2e5496'}, mre:{label:'Multirriesgo Empresas', short:'MRE', color:'#c55a11'}};
 // parámetros que generan producción en cada ramo: un ramo desactivado en el modelo los tiene a cero
 const RAMO_KEYS={auto:['opsAuto'], mre:['propMre','crossMre']};
-let MODELS=[], SCENS={}, ACTIVE_MODEL=null, SCEN_VIEW=null;
+let MODELS=[], SCENS={}, ACTIVE_MODEL=null, SCEN_VIEW=null, PROD_UNIT_INIT='mes';
 let _uidN=0;
 const uid=p=>p+Date.now().toString(36)+(_uidN++).toString(36)+Math.random().toString(36).slice(2,5);
 function lsGet(k,d){ try{ const v=JSON.parse(localStorage.getItem(k)); return v==null? d : v; }catch(e){ return d; } }
@@ -1220,7 +1250,8 @@ function snapshot(){ return {V:{...V}, GRAN, START, HM, PF, PT, UE_END, CMP_END,
 /* Migración de escenarios guardados. Dos saltos acumulados:
    1) capGest/capCom/maxCarga → polEmp, y salG/salC → salDir (plantilla polivalente única)
    2) polEmp/salDir → un juego por ramo (polEmpAuto/Mre, salDirAuto/Mre), y desaparece la
-      capa de estructura (estThreshold/estRatio/salE), que ya no se tiene en cuenta.       */
+      capa de estructura (estThreshold/estRatio/salE), que ya no se tiene en cuenta.
+   3) retAuto/retMre (retención) → churnAuto/churnMre (churn = 100 − retención).          */
 function migrateV(o){
   const v={...o};
   if(v.polEmp==null && v.capGest!=null) v.polEmp=v.capGest;
@@ -1229,7 +1260,10 @@ function migrateV(o){
   if(v.polEmpMre ==null && v.polEmp!=null) v.polEmpMre =v.polEmp;
   if(v.salDirAuto==null && v.salDir!=null) v.salDirAuto=v.salDir;
   if(v.salDirMre ==null && v.salDir!=null) v.salDirMre =v.salDir;
-  ['capGest','capCom','maxCarga','salG','salC','polEmp','salDir','estThreshold','estRatio','salE'].forEach(k=>delete v[k]);
+  // 3) la retención anual pasa a expresarse como churn (bajas anuales): churn = 100 − retención
+  if(v.churnAuto==null && v.retAuto!=null) v.churnAuto=Math.round((100-v.retAuto)*100)/100;
+  if(v.churnMre ==null && v.retMre !=null) v.churnMre =Math.round((100-v.retMre )*100)/100;
+  ['capGest','capCom','maxCarga','salG','salC','polEmp','salDir','estThreshold','estRatio','salE','retAuto','retMre'].forEach(k=>delete v[k]);
   return v;
 }
 function migratePhase(p){
@@ -1275,7 +1309,7 @@ function loadWork(m){
   resetWork(); V=modelDefaults(m); applySnapshot(m.state); enforceRamos(m);
   CUR_SCEN= m.scen && SCENS[m.scen]? m.scen : null;
 }
-function uiState(){ return {ACTIVE_TAB, ACTIVE_MODEL, SCEN_VIEW, COMP_SUB, CMP_SEL: CMP_SEL?[...CMP_SEL]:null}; }
+function uiState(){ return {ACTIVE_TAB, ACTIVE_MODEL, SCEN_VIEW, COMP_SUB, PROD_UNIT, CMP_SEL: CMP_SEL?[...CMP_SEL]:null}; }
 function saveState(){
   const m=curModel(); if(m){ m.state=snapshot(); m.scen=CUR_SCEN; saveModels(); }
   lsSet(LS_STATE,uiState());
@@ -1308,6 +1342,7 @@ function newModel(o){
     if(st.COMP_SUB==='cmp'||st.COMP_SUB==='companies') COMP_SUB=st.COMP_SUB;
     if(Array.isArray(st.CMP_SEL)) CMP_SEL=new Set(st.CMP_SEL);
     if(st.SCEN_VIEW && SCENS[st.SCEN_VIEW]) SCEN_VIEW=st.SCEN_VIEW;
+    if(st.PROD_UNIT==='año') PROD_UNIT_INIT='año';
   }
   if(ACTIVE_TAB==='scen' && !SCEN_VIEW) ACTIVE_TAB='home';
   loadWork(curModel());
@@ -1332,11 +1367,18 @@ function compute(v,NM){
   const N=NM||HM;
   const f=k=>v[k]/100;
   const WIN={}; PHASE_KEYS.forEach(([k])=>WIN[k]=phaseWin(k,N));  // ventanas de activación de partidas
-  const rmA=Math.pow(f('retAuto'),1/12), rmM=Math.pow(f('retMre'),1/12);
+  const retA=1-f('churnAuto'), retM=1-f('churnMre');             // retención anual = 1 − churn
+  const rmA=Math.pow(retA,1/12), rmM=Math.pow(retM,1/12);
+  /* Cobro de la comisión: la aseguradora paga la anualidad de golpe cuando el cliente paga la
+     prima anual (lo habitual): toda la comisión del año entra el mes de la emisión y, después,
+     en cada aniversario de las pólizas que renuevan. Las de pago fraccionado se cobran mes a mes.
+     rnw[i] = pólizas que cumplen aniversario y renuevan en el mes i:
+              rnw[i] = retención × (altas[i−12] + rnw[i−12])                                    */
+  const pA=f('pagoAuto'), pM=f('pagoMre');
   const primaNetaA=v.primaAuto*(1-f('ipsAuto')), primaNetaM=v.primaMre*(1-f('ipsMre'));
   const CpolA=primaNetaA*f('comAuto'), CpolM=primaNetaM*f('comMre');
-  const A={new:[],cini:[],cfin:[],cnew:[],cren:[],inew:[],iren:[],itot:[],colab:[]};
-  const M={new:[],cini:[],cfin:[],cnew:[],cren:[],inew:[],iren:[],itot:[],colab:[]};
+  const A={new:[],cini:[],cfin:[],cnew:[],cren:[],rnw:[],inew:[],iren:[],itot:[],colab:[]};
+  const M={new:[],cini:[],cfin:[],cnew:[],cren:[],rnw:[],inew:[],iren:[],itot:[],colab:[]};
   const MKMON=()=>({a_inew:[],a_iren:[],ingA:[],m_inew:[],m_iren:[],ingM:[],itot:[],
     dir:[],dirA:[],dirM:[],dNeed:[],cdir:[],sal:[],ss:[],psub:[],
     alq:[],pue:[],sw:[],rc:[],ase:[],cuo:[],colab:[],otr:[],esub:[],gtot:[],
@@ -1349,17 +1391,23 @@ function compute(v,NM){
     A.new[i]=opsA*f('captAuto');
     A.cini[i]= i===0?0:A.cfin[i-1];
     A.cfin[i]=A.cini[i]*rmA+A.new[i];
-    A.cnew[i]= i===0? A.new[i] : (i<12? A.cnew[i-1]*rmA+A.new[i] : A.cnew[i-1]*rmA+A.new[i]-A.new[i-12]*f('retAuto'));
+    A.cnew[i]= i===0? A.new[i] : (i<12? A.cnew[i-1]*rmA+A.new[i] : A.cnew[i-1]*rmA+A.new[i]-A.new[i-12]*retA);
     A.cren[i]=A.cfin[i]-A.cnew[i];
-    A.inew[i]=A.cnew[i]*CpolA/12; A.iren[i]=A.cren[i]*CpolA/12; A.itot[i]=A.inew[i]+A.iren[i];
+    A.rnw[i]= i<12? 0 : retA*(A.new[i-12]+A.rnw[i-12]);
+    A.inew[i]=(1-pA)*A.cnew[i]*CpolA/12 + pA*A.new[i]*CpolA;      // fraccionado mes a mes + anual de golpe
+    A.iren[i]=(1-pA)*A.cren[i]*CpolA/12 + pA*A.rnw[i]*CpolA;
+    A.itot[i]=A.inew[i]+A.iren[i];
     A.colab[i]=f('colabAuto')*(f('retroAutoNew')*A.inew[i]+f('retroAutoRen')*A.iren[i]);
     const xs=A.cini[i]*f('crossMre')/12, prop=v.propMre*Math.pow(1+f('gMre'),i);
     M.new[i]=xs+prop;
     M.cini[i]= i===0?0:M.cfin[i-1];
     M.cfin[i]=M.cini[i]*rmM+M.new[i];
-    M.cnew[i]= i===0? M.new[i] : (i<12? M.cnew[i-1]*rmM+M.new[i] : M.cnew[i-1]*rmM+M.new[i]-M.new[i-12]*f('retMre'));
+    M.cnew[i]= i===0? M.new[i] : (i<12? M.cnew[i-1]*rmM+M.new[i] : M.cnew[i-1]*rmM+M.new[i]-M.new[i-12]*retM);
     M.cren[i]=M.cfin[i]-M.cnew[i];
-    M.inew[i]=M.cnew[i]*CpolM/12; M.iren[i]=M.cren[i]*CpolM/12; M.itot[i]=M.inew[i]+M.iren[i];
+    M.rnw[i]= i<12? 0 : retM*(M.new[i-12]+M.rnw[i-12]);
+    M.inew[i]=(1-pM)*M.cnew[i]*CpolM/12 + pM*M.new[i]*CpolM;
+    M.iren[i]=(1-pM)*M.cren[i]*CpolM/12 + pM*M.rnw[i]*CpolM;
+    M.itot[i]=M.inew[i]+M.iren[i];
     M.colab[i]=f('colabMre')*(f('retroMreNew')*M.inew[i]+f('retroMreRen')*M.iren[i]);
     const itot=A.itot[i]+M.itot[i], cart=A.cfin[i]+M.cfin[i], newt=A.new[i]+M.new[i];
     const prim=A.cfin[i]*v.primaAuto+M.cfin[i]*v.primaMre;
@@ -1425,7 +1473,9 @@ function compute(v,NM){
     ebacA+=split(monA,A,dirA,cdirA,kiA,v.primaAuto,true);      monA.ebac[i]=ebacA;
     ebacM+=split(monM,M,dirM,cdirM,1-kiA,v.primaMre,false);    monM.ebac[i]=ebacM;
   }
-  const be=m=>{ const i=m.ebi.findIndex(x=>x>0); return i<0?null:i+1; };
+  /* break-even = primer mes en que el EBITDA de los últimos 12 meses es positivo. El EBITDA de un
+     mes suelto no sirve: la comisión anual entra de golpe y cada contratación lo hace oscilar. */
+  const be=m=>{ let s12=0; for(let i=0;i<m.ebi.length;i++){ s12+=m.ebi[i]-(i>=12?m.ebi[i-12]:0); if(s12>0) return i+1; } return null; };
   const beM=be(mon), beAcc=mon.ebac.findIndex(x=>x>0);
   return {mon,monA,monM,beM,beAcc:beAcc<0?null:beAcc+1,cartBE:beM?mon.cart[beM-1]:null,
     beA:be(monA),beMre:be(monM)};
@@ -1466,7 +1516,7 @@ const CEIL_CAP_M=12*100;   // tope de búsqueda del tiempo hasta el techo: 100 a
 const CEIL_MARKS=[0.90,0.95,0.99];
 function ceilingCalc(v){
   const f=k=>v[k]/100;
-  const rmA=Math.pow(f('retAuto'),1/12), rmM=Math.pow(f('retMre'),1/12);
+  const rmA=Math.pow(1-f('churnAuto'),1/12), rmM=Math.pow(1-f('churnMre'),1/12);
   const CpolA=v.primaAuto*(1-f('ipsAuto'))*f('comAuto');
   const CpolM=v.primaMre*(1-f('ipsMre'))*f('comMre');
   const growing= v.gAuto>0 || v.gMre>0;
@@ -1507,14 +1557,14 @@ const pct=x=>(x*100).toFixed(1).replace('.',',')+'%';
 const LINES=[
  {sec:'INGRESOS'},
  {key:'newt',label:'Pólizas nuevas (uds)',fmt:num0,help:'Auto (operaciones × tasa de captación) + MRE (cross-sell sobre la cartera de auto + producción propia). Sumado en el periodo.'},
- {key:'cart',label:'Cartera total en vigor (uds)',fmt:num0,help:'Cartera Auto + MRE a fin de periodo. Cada mes: cartera inicio × retención mensual + pólizas nuevas.'},
+ {key:'cart',label:'Cartera total en vigor (uds)',fmt:num0,help:'Cartera Auto + MRE a fin de periodo. Cada mes: cartera inicio × (1 − churn) mensual + pólizas nuevas.'},
  {key:'prim',label:'Primas intermediadas (€/año)',fmt:eur,help:'Cartera Auto × prima auto + cartera MRE × prima MRE. Volumen anual de primas intermediadas a fin de periodo.'},
  {key:'ingA',label:'Total Auto',fmt:eur,cls:'st',help:'Comisión Auto de nueva producción + renovaciones. Pulsa para plegar/desplegar el detalle.'},
- {key:'a_inew',label:'Auto · nueva producción',fmt:eur,sub:1,help:'Pólizas de Auto con menos de 12 meses × (prima media × % comisión) ÷ 12. Es la comisión devengada cada mes por la cartera de auto en su primer año.'},
- {key:'a_iren',label:'Auto · renovaciones',fmt:eur,sub:1,help:'Pólizas de Auto con 12 meses o más (renovadas) × (prima media × % comisión) ÷ 12. Comisión recurrente de la cartera que ya cumplió aniversario.'},
+ {key:'a_inew',label:'Auto · nueva producción',fmt:eur,sub:1,help:'Comisión de las pólizas nuevas de Auto. Con pago anual (lo habitual) la aseguradora paga la anualidad entera de golpe el mes de la emisión; las de pago fraccionado se cobran mes a mes durante su primer año.'},
+ {key:'a_iren',label:'Auto · renovaciones',fmt:eur,sub:1,help:'Comisión de las renovaciones de Auto. Las de pago anual cobran la anualidad entera en el mes del aniversario de cada póliza que renueva; las fraccionadas, mes a mes.'},
  {key:'ingM',label:'Total Multirriesgo Empresas',fmt:eur,cls:'st',help:'Comisión MRE de nueva producción + renovaciones. Pulsa para plegar/desplegar el detalle.'},
- {key:'m_inew',label:'MRE · nueva producción',fmt:eur,sub:1,help:'Pólizas de Multirriesgo Empresas con menos de 12 meses × (prima × % comisión) ÷ 12.'},
- {key:'m_iren',label:'MRE · renovaciones',fmt:eur,sub:1,help:'Pólizas de MRE renovadas (≥12 meses) × (prima × % comisión) ÷ 12.'},
+ {key:'m_inew',label:'MRE · nueva producción',fmt:eur,sub:1,help:'Comisión de las pólizas nuevas de MRE: la anualidad entera el mes de la emisión si el cliente paga anual; mes a mes si paga fraccionado.'},
+ {key:'m_iren',label:'MRE · renovaciones',fmt:eur,sub:1,help:'Comisión de las renovaciones de MRE: la anualidad entera en cada aniversario (pago anual) o mes a mes (pago fraccionado).'},
  {key:'itot',label:'TOTAL INGRESOS',fmt:eur,cls:'tot',help:'Total Auto + Total Multirriesgo Empresas.'},
  {sec:'GASTOS — PERSONAL (plantilla)'},
  {key:'sal',label:'Salarios brutos (total plantilla)',fmt:eur,cls:'st',help:'Coste bruto de las dos plantillas: la de Auto y la de Multirriesgo. Pulsa para plegar/desplegar el detalle.'},
@@ -1598,28 +1648,31 @@ function plTable(buckets,tot,opts){
   return head+body+'</tbody>';
 }
 
+// suma de los 12 meses que acaban en el mes «end» (1-based); si aún no hay 12, se anualiza
+function ttm(a,end){ const e=Math.max(1,Math.min(end,a.length)), s=Math.max(0,e-12); let x=0; for(let i=s;i<e;i++) x+=a[i]||0; return x*12/(e-s); }
 function ueHTML(R,opt){
   opt=opt||{}; const end= opt.end || UE_END || HM, li=end-1;
   const lbl= opt.label || mLabel(li);
-  const c=R.mon.cart[li];
-  const ingPP= c? R.mon.itot[li]*12/c : 0;
-  const colabPP= c? R.mon.colab[li]*12/c : 0;
-  const servPP= c? (R.mon.gtot[li]-R.mon.colab[li])*12/c : 0;
+  // flujos de los 12 meses que acaban en «end» (con la anualidad cobrada de golpe, un mes × 12 no es representativo)
+  const t=k=>ttm(R.mon[k],end), c=R.mon.cart[li];
+  const ingPP= c? t('itot')/c : 0;
+  const colabPP= c? t('colab')/c : 0;
+  const servPP= c? (t('gtot')-t('colab'))/c : 0;
   const ebPP= ingPP-colabPP-servPP, mPP= ingPP? ebPP/ingPP : 0;
   const ve=(pr,co,re,cl,rtN,rtR)=>{const cy=pr*co, life= re<1? 1/(1-re):99, ry=cl*cy*(rtN+rtR*(life-1)), ln=cy*life-ry; return {cy,life,ry,cn:ln/life,ln};};
-  const a=ve(V.primaAuto*(1-V.ipsAuto/100),V.comAuto/100,V.retAuto/100,V.colabAuto/100,V.retroAutoNew/100,V.retroAutoRen/100);
-  const m=ve(V.primaMre*(1-V.ipsMre/100),V.comMre/100,V.retMre/100,V.colabMre/100,V.retroMreNew/100,V.retroMreRen/100);
+  const a=ve(V.primaAuto*(1-V.ipsAuto/100),V.comAuto/100,1-V.churnAuto/100,V.colabAuto/100,V.retroAutoNew/100,V.retroAutoRen/100);
+  const m=ve(V.primaMre*(1-V.ipsMre/100),V.comMre/100,1-V.churnMre/100,V.colabMre/100,V.retroMreNew/100,V.retroMreRen/100);
   const neg=x=>`<span class="neg">${eur2(-x)}</span>`;
   // métricas comparables con benchmark Pacc (run-rate fin de periodo)
   const hc=R.mon.dir[li]||0;
-  const annComm=R.mon.itot[li]*12;
+  const annComm=t('itot');
   const comPrima= R.mon.prim[li]? annComm/R.mon.prim[li]:0;
-  const retroEff= R.mon.itot[li]? R.mon.colab[li]/R.mon.itot[li]:0;
-  const ebitMargin= R.mon.itot[li]? R.mon.ebi[li]/R.mon.itot[li]:0;
-  const primEmp= hc? R.mon.prim[li]/hc:0, commEmp= hc? annComm/hc:0, persEmp= hc? R.mon.psub[li]*12/hc:0;
+  const retroEff= annComm? t('colab')/annComm:0;
+  const ebitMargin= annComm? t('ebi')/annComm:0;
+  const primEmp= hc? R.mon.prim[li]/hc:0, commEmp= hc? annComm/hc:0, persEmp= hc? t('psub')/hc:0;
   return `<div class="ue-grid">
     <div class="ue-col">
-      <div class="ue-h">Por póliza · €/año (run-rate ${lbl})</div>
+      <div class="ue-h">Por póliza · €/año (12 meses hasta ${lbl})</div>
       <table class="ue-t">
         <tr><td>Comisión media por póliza</td><td>${eur2(ingPP)}</td></tr>
         <tr><td>− Comisión a colaborador</td><td>${neg(colabPP)}</td></tr>
@@ -1670,7 +1723,7 @@ const chartKeysFor=s=> Object.keys(CHARTS).filter(k=> k!=='vert' || (s==='all' &
 
 function ceilPanelHTML(scope,C,monS){
   const S=SCOPES[scope], cap=S.cap(C), hit=S.hit(C);
-  const nowRR=(monS.itot[HM-1]||0)*12;   // facturación anual al ritmo del último mes del plan
+  const nowRR=ttm(monS.itot,HM);         // facturación de los últimos 12 meses del plan
   const card=(k,v,sub,cls)=>`<div class="panel cl-card${cls?' '+cls:''}"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`;
   if(C.growing) return `<div class="panel cl-card cl-wide"><div class="k">Techo de facturación · ${S.label}</div>
       <div class="v" style="font-size:20px">Este escenario no tiene techo</div>
@@ -1682,8 +1735,8 @@ function ceilPanelHTML(scope,C,monS){
   const fmtHit=k=>{const m=hit[k], p=Math.round(k*100);
     if(m==null) return `<div class="cl-row out"><span>${p}% del techo</span><b>+100 años</b></div>`;
     return `<div class="cl-row${m>HM?' out':''}"><span>${p}% del techo</span><b>${mLabel(m-1)}</b></div>`;};
-  const ret= scope==='mre'? ('del '+num1(V.retMre)+'%') : scope==='auto'? ('del '+num1(V.retAuto)+'%')
-           : ('del '+num1(V.retAuto)+'% en Auto y del '+num1(V.retMre)+'% en MRE');
+  const ret= scope==='mre'? ('del '+num1(100-V.churnMre)+'%') : scope==='auto'? ('del '+num1(100-V.churnAuto)+'%')
+           : ('del '+num1(100-V.churnAuto)+'% en Auto y del '+num1(100-V.churnMre)+'% en MRE');
   return card('Facturación máxima', eur(cap.fact), `comisión al año con la cartera ${S.of} saturada`)
     + card('Tiempo hasta el techo',
         t95!=null? mLabel(t95-1) : '+100 años',
@@ -1722,8 +1775,8 @@ function render(){
    <div class="kpi"><div class="k">Empleados a ${mLabel(p1-1)}</div><div class="v">${num0(tot.dir||0)}</div><div class="s">${empSuffix}</div></div>
    <div class="kpi"><div class="k">Break-even · ${S.label}</div><div class="v ${beS?'pos':'neg'}">${beS?mLabel(beS-1):'No alcanzado'}</div><div class="s">${beS?(after(beS)+' · cartera ≈ '+eur0(cartBE)+' pólizas'):('no antes de '+mLabel(HM-1))}</div></div>`;
   document.getElementById('be').innerHTML = beS
-    ? `<b>Punto de equilibrio ${S.of}:</b> el EBITDA mensual se vuelve positivo en <b>${mLabel(beS-1)}</b> (${after(beS)}; cartera ≈ ${eur0(cartBE)} pólizas).${SCOPE==='all'?` El EBITDA acumulado pasa a positivo ${R.beAcc?('en '+mLabel(R.beAcc-1)):('después del fin del plan ('+mLabel(HM-1)+')')}.`:''}`
-    : `<b>Punto de equilibrio ${S.of}:</b> con estos supuestos <b>no se alcanza break-even mensual antes de ${mLabel(HM-1)}</b>. Sube captación/comisión, reduce retrocesión o sube las pólizas por empleado.`;
+    ? `<b>Punto de equilibrio ${S.of}:</b> el EBITDA de los últimos 12 meses pasa a positivo en <b>${mLabel(beS-1)}</b> (${after(beS)}; cartera ≈ ${eur0(cartBE)} pólizas).${SCOPE==='all'?` El EBITDA acumulado pasa a positivo ${R.beAcc?('en '+mLabel(R.beAcc-1)):('después del fin del plan ('+mLabel(HM-1)+')')}.`:''}`
+    : `<b>Punto de equilibrio ${S.of}:</b> con estos supuestos el EBITDA de 12 meses <b>no llega a ser positivo antes de ${mLabel(HM-1)}</b>. Sube captación/comisión, reduce retrocesión o sube las pólizas por empleado.`;
   document.getElementById('ceil').innerHTML=ceilPanelHTML(SCOPE,C,monS);
 
   document.getElementById('ue').innerHTML=ueHTML(R);
@@ -2022,36 +2075,69 @@ function RangePicker(host,o){
     }});
 }
 
-// build accordion form
+// ---- panel de parámetros: secciones (acordeón) → apartados → filas ----
+// la producción (transferencias de auto y producción propia de MRE) se puede introducir por mes o por año;
+// internamente el modelo siempre trabaja con valores mensuales
+const PROD_KEYS=['opsAuto','propMre'];
+let PROD_UNIT=PROD_UNIT_INIT;
+const uF=k=> PROD_KEYS.includes(k)&&PROD_UNIT==='año'? 12 : 1;
+const inpVal=k=>Math.round(V[k]*uF(k)*1e4)/1e4;
+const pLabel=k=>PARAMS[k][0].replace('{u}',PROD_UNIT);
+// un parámetro se ve si su ramo está en el modelo (la venta cruzada de MRE necesita cartera de auto)
+function paramVisible(k,m){ const r=PARAMS[k][5]; if(r && !ramoOn(r,m)) return false; if(k==='crossMre' && !ramoOn('auto',m)) return false; return true; }
 const form=document.getElementById('form');
-CFG.forEach(([title,cls,scope,items],gi)=>{
-  const item=document.createElement('div'); item.className='acc-item'; item.dataset.scope=scope;
-  const head=document.createElement('div'); head.className='acc-head '+cls;
-  head.innerHTML=`<span>${title}</span><span class="chev">▾</span>`;
+SECTIONS.forEach(S=>{
+  const item=document.createElement('div'); item.className='acc-item'; item.dataset.scope='common';
+  const head=document.createElement('div'); head.className='acc-head '+S.cls;
+  head.innerHTML=`<span>${S.title}</span><span class="chev">▾</span>`;
   head.onclick=()=>item.classList.toggle('collapsed');
   const bodyEl=document.createElement('div'); bodyEl.className='acc-body';
-  items.forEach(([key,label,type,rng,sub,help])=>{
-    const row=document.createElement('div');row.className='row';row.dataset.key=key;
-    const left=document.createElement('div');
-    const ic= help? ` <span class="info" data-tip="${escAttr(help)}">i</span>`:'';
-    left.innerHTML=`<label>${label}${ic}</label>${sub?`<div class="sub">${sub}</div>`:''}`;
-    const right=document.createElement('div');
-    if(rng){
-      const [mn,mx,st]=rng;
-      right.innerHTML=`<div class="val" id="v_${key}"></div>`;
-      const sl=document.createElement('input');sl.type='range';sl.id='inp_'+key;sl.min=mn;sl.max=mx;sl.step=st;sl.value=V[key];
-      sl.oninput=()=>{V[key]=parseFloat(sl.value);document.getElementById('v_'+key).textContent=fmtVal(key,type);render();};
-      left.appendChild(sl); row.appendChild(left);row.appendChild(right);
-    }else{
-      const inp=document.createElement('input');inp.type='number';inp.id='inp_'+key;inp.value=V[key];inp.step='any';
-      inp.oninput=()=>{V[key]=parseFloat(inp.value)||0;render();};
-      right.appendChild(inp); row.appendChild(left);row.appendChild(right);
-    }
-    bodyEl.appendChild(row);
-    if(PHASE_ANCHOR[key]) bodyEl.appendChild(makePhaseRow(PHASE_ANCHOR[key]));
+  S.groups.forEach(G=>{
+    const g=document.createElement('div'); g.className='pgrp';
+    g.innerHTML=`<div class="pgrp-h"><span>${G.title}</span>${G.unit?'<span class="seg seg-xs" data-unit role="group" aria-label="Unidad de la producción"><button type="button" data-u="mes">por mes</button><button type="button" data-u="año">por año</button></span>':''}</div>`+
+      (G.unit?'<div class="pgrp-note" id="prodHint"></div>':'');
+    G.keys.forEach(key=>{
+      const [label,type,rng,sub,help,ramo]=PARAMS[key];
+      const row=document.createElement('div');row.className='row';row.dataset.key=key;
+      const left=document.createElement('div');
+      const ic= help? ` <span class="info" data-tip="${escAttr(help)}">i</span>`:'';
+      const pill= ramo? `<span class="rpill ${ramo}">${ramo==='auto'?'Auto':'MRE'}</span>` : '';
+      left.innerHTML=`<label>${pill}<span id="lab_${key}">${pLabel(key)}</span>${ic}</label>${sub?`<div class="sub">${sub}</div>`:''}`;
+      const right=document.createElement('div');
+      if(rng){
+        const [mn,mx,st]=rng;
+        right.innerHTML=`<div class="val" id="v_${key}"></div>`;
+        const sl=document.createElement('input');sl.type='range';sl.id='inp_'+key;sl.min=mn;sl.max=mx;sl.step=st;sl.value=V[key];
+        sl.setAttribute('aria-label',(ramo?RAMO_PRE[ramo]:'')+label);
+        sl.oninput=()=>{V[key]=parseFloat(sl.value);document.getElementById('v_'+key).textContent=fmtVal(key,type);render();};
+        left.appendChild(sl); row.appendChild(left);row.appendChild(right);
+      }else{
+        const inp=document.createElement('input');inp.type='number';inp.id='inp_'+key;inp.value=inpVal(key);inp.step='any';
+        inp.setAttribute('aria-label',(ramo?RAMO_PRE[ramo]:'')+pLabel(key));
+        inp.oninput=()=>{V[key]=(parseFloat(inp.value)||0)/uF(key);render();};
+        right.appendChild(inp); row.appendChild(left);row.appendChild(right);
+      }
+      g.appendChild(row);
+      if(PHASE_ANCHOR[key]){ const ph=makePhaseRow(PHASE_ANCHOR[key]); ph.dataset.for=key; g.appendChild(ph); }
+    });
+    bodyEl.appendChild(g);
   });
   item.appendChild(head); item.appendChild(bodyEl); form.appendChild(item);
 });
+function syncProdUnit(){
+  document.querySelectorAll('#form [data-unit] button').forEach(b=>b.classList.toggle('on',b.dataset.u===PROD_UNIT));
+  PROD_KEYS.forEach(k=>{ const l=document.getElementById('lab_'+k), i=document.getElementById('inp_'+k);
+    if(l) l.textContent=pLabel(k); if(i){ i.value=inpVal(k); i.setAttribute('aria-label',RAMO_PRE[PARAMS[k][5]]+pLabel(k)); } });
+}
+form.addEventListener('click',e=>{ const b=e.target.closest('[data-unit] button'); if(!b) return;
+  PROD_UNIT= b.dataset.u==='año'? 'año' : 'mes'; syncProdUnit(); updateProdHint(); saveState(); });
+// resumen de lo que generan los parámetros de producción (primer mes del plan)
+function updateProdHint(){
+  const el=document.getElementById('prodHint'); if(!el) return;
+  const a= ramoOn('auto')? V.opsAuto*V.captAuto/100 : 0, m= ramoOn('mre')? V.propMre : 0, k=PROD_UNIT==='año'?12:1, u=PROD_UNIT==='año'?'al año':'al mes';
+  const parts=[]; if(ramoOn('auto')) parts.push(`<b>${num0(a*k)}</b> de Auto`); if(ramoOn('mre')) parts.push(`<b>${num0(m*k)}</b> de MRE por producción propia`);
+  el.innerHTML=`Al arrancar: ${parts.join(' y ')} ${u}${ramoOn('auto')&&ramoOn('mre')&&V.crossMre?', más la venta cruzada de MRE sobre la cartera de auto':''}.`;
+}
 function fmtVal(key,type){const v=V[key];return type==='pct'?(v+'%'):(type==='eur'?eur0(v)+'€':eur0(v));}
 CFG.forEach(([,,,items])=>items.forEach(([key,,type,rng])=>{if(rng){const el=document.getElementById('v_'+key);if(el)el.textContent=fmtVal(key,type);}}));
 
@@ -2127,18 +2213,18 @@ function syncScopeSeg(){
 // parámetros; los costes compartidos se editan desde «Todo el negocio»
 // además, los ramos que el modelo no trabaja no se muestran (ni sus parámetros ni su botón de ámbito)
 function syncParamScope(){
-  document.querySelectorAll('#form .acc-item').forEach(it=>{
-    const sc=it.dataset.scope;
-    it.hidden = (sc!=='common' && !ramoOn(sc)) || ((SCOPE!=='all') && sc!==SCOPE);
-  });
-  const xs=document.querySelector('#form .row[data-key="crossMre"]'); if(xs) xs.hidden=!ramoOn('auto');
+  const shown=k=> paramVisible(k) && (SCOPE==='all' || !PARAMS[k][5] || PARAMS[k][5]===SCOPE);
+  document.querySelectorAll('#form .row[data-key]').forEach(r=>{ r.hidden=!shown(r.dataset.key); });
+  document.querySelectorAll('#form .phinline[data-for]').forEach(r=>{ r.hidden=!shown(r.dataset.for); });
+  document.querySelectorAll('#form .pgrp').forEach(g=>{ g.hidden=![...g.querySelectorAll('.row')].some(r=>!r.hidden); });
+  updateProdHint();
   document.querySelectorAll('#segScope button').forEach(b=>{ b.hidden= b.dataset.s!=='all' && !ramoOn(b.dataset.s); });
   const el=document.getElementById('ctrlScope'); if(!el) return;
   const S=SCOPES[SCOPE]||SCOPES.all, both=ramoOn('auto')&&ramoOn('mre');
   el.innerHTML= SCOPE==='all'
-    ? (both? 'Editando <b>todos los parámetros</b>: los dos ramos y los costes que comparten. Cambia el ámbito de arriba para ver solo los de un ramo.'
+    ? (both? 'Organizados en <b>Ventas</b>, <b>Recursos humanos</b> y <b>Costes generales</b>. Cada fila indica su ramo; cambia el ámbito de arriba para ver solo los de uno.'
            : `Este modelo solo trabaja <b>${ramoOn('auto')?'Auto':'Multirriesgo Empresas'}</b>: ves sus parámetros y los costes generales. Puedes activar otros ramos en «⋯ › Editar modelo».`)
-    : `Editando solo los parámetros <b>${S.label}</b>, incluida su plantilla, que es propia del ramo. Los costes compartidos (alquiler, tecnología, RC, asesoría, cuotas, SS e inflación) se editan en <b>Todo el negocio</b>.`;
+    : `Viendo los parámetros de <b>${S.label}</b> (ventas y plantilla del ramo) y los costes comunes del negocio. Los del otro ramo se ocultan; vuelve a <b>Todo el negocio</b> para verlos.`;
 }
 document.getElementById('segGran').addEventListener('click',e=>{
   if(e.target.tagName!=='BUTTON')return; GRAN=e.target.dataset.g;
@@ -3995,15 +4081,15 @@ function buildModelSheets(){
   PHASE_KEYS.forEach(([k,label])=>{ sr++; const w=phaseWin(k); supRows.push([label,w.from,w.to]); PREF[k+'_from']="'"+SH_SUP+"'!$B$"+sr; PREF[k+'_to']="'"+SH_SUP+"'!$C$"+sr; });
   const P=PREF;
   // ---- Motor MENSUAL (meses en filas, métricas en columnas) ----
-  const ORDER=['mes','anio','inf','opsA','a_new','a_cini','a_cfin','a_cnew','a_cren','a_inew','a_iren','a_itot','a_colab',
-    'xs','m_new','m_cini','m_cfin','m_cnew','m_cren','m_inew','m_iren','m_itot','m_colab',
+  const ORDER=['mes','anio','inf','opsA','a_new','a_cini','a_cfin','a_cnew','a_cren','a_rnw','a_inew','a_iren','a_itot','a_colab',
+    'xs','m_new','m_cini','m_cfin','m_cnew','m_cren','m_rnw','m_inew','m_iren','m_itot','m_colab',
     'itot','cart','newt','prim','dNeedA','dNeedM','dNeed','dirA','dirM','dir','cdirA','cdirM','cdir','sal','ss','psub',
     'alq','pue','sw','rc','ase','cuo','colab','otr','esub','gtot','ebi','ebac','margin','beEbi','beEbac'];
   const HEAD={mes:'Mes',anio:'Año',inf:'Inflación (factor)',opsA:'Auto · operaciones/mes',a_new:'Auto · pólizas nuevas',
-    a_cini:'Auto · cartera inicio',a_cfin:'Auto · cartera fin',a_cnew:'Auto · cartera nueva',a_cren:'Auto · cartera renov.',
+    a_cini:'Auto · cartera inicio',a_cfin:'Auto · cartera fin',a_cnew:'Auto · cartera nueva',a_cren:'Auto · cartera renov.',a_rnw:'Auto · renuevan este mes',
     a_inew:'Auto · ingreso nuevo',a_iren:'Auto · ingreso renov.',a_itot:'Auto · ingreso total',a_colab:'Auto · comisión colab.',
     xs:'MRE · cross-sell',m_new:'MRE · pólizas nuevas',m_cini:'MRE · cartera inicio',m_cfin:'MRE · cartera fin',
-    m_cnew:'MRE · cartera nueva',m_cren:'MRE · cartera renov.',m_inew:'MRE · ingreso nuevo',m_iren:'MRE · ingreso renov.',
+    m_cnew:'MRE · cartera nueva',m_cren:'MRE · cartera renov.',m_rnw:'MRE · renuevan este mes',m_inew:'MRE · ingreso nuevo',m_iren:'MRE · ingreso renov.',
     m_itot:'MRE · ingreso total',m_colab:'MRE · comisión colab.',itot:'Ingresos totales',cart:'Cartera total',newt:'Pólizas nuevas',
     prim:'Primas intermediadas',dNeed:'Carga de trabajo (FTE)',
     dNeedA:'Auto · carga (FTE)',dNeedM:'MRE · carga (FTE)',dirA:'Auto · plantilla (nº)',dirM:'MRE · plantilla (nº)',
@@ -4011,7 +4097,7 @@ function buildModelSheets(){
     sal:'Salarios brutos',ss:'Seguridad Social',psub:'Subtotal personal',alq:'Alquiler y oficina',pue:'Suministros/puesto',
     sw:'Software y CRM',rc:'RC y seguros',ase:'Asesoría/gestoría',cuo:'Cuotas DGSFP',colab:'Comisión colaboradores',
     otr:'Otros e imprevistos',esub:'Subtotal estructura',gtot:'TOTAL GASTOS',ebi:'EBITDA',ebac:'EBITDA acumulado',
-    margin:'Margen EBITDA',beEbi:'(mes si EBITDA>0)',beEbac:'(mes si EBITDA ac.>0)'};
+    margin:'Margen EBITDA',beEbi:'(mes si EBITDA 12m>0)',beEbac:'(mes si EBITDA ac.>0)'};
   const C={}; ORDER.forEach((k,i)=>C[k]=_colLetter(i));  // clave -> letra de columna
   const monRows=[ORDER.map(k=>HEAD[k])];
   for(let m=1;m<=N;m++){
@@ -4023,25 +4109,27 @@ function buildModelSheets(){
     cell.opsA=F(`${P.opsAuto}*POWER(1+${P.gAuto}/100,${C.mes}${R}-1)`);
     cell.a_new=F(`${C.opsA}${R}*${P.captAuto}/100`);
     cell.a_cini=F(m===1?'0':`${C.a_cfin}${pr}`);
-    cell.a_cfin=F(`${C.a_cini}${R}*POWER(${P.retAuto}/100,1/12)+${C.a_new}${R}`);
+    cell.a_cfin=F(`${C.a_cini}${R}*POWER(1-${P.churnAuto}/100,1/12)+${C.a_new}${R}`);
     cell.a_cnew=F(m===1?`${C.a_new}${R}`
-      : m<=12?`${C.a_cnew}${pr}*POWER(${P.retAuto}/100,1/12)+${C.a_new}${R}`
-      :`${C.a_cnew}${pr}*POWER(${P.retAuto}/100,1/12)+${C.a_new}${R}-${C.a_new}${lg}*${P.retAuto}/100`);
+      : m<=12?`${C.a_cnew}${pr}*POWER(1-${P.churnAuto}/100,1/12)+${C.a_new}${R}`
+      :`${C.a_cnew}${pr}*POWER(1-${P.churnAuto}/100,1/12)+${C.a_new}${R}-${C.a_new}${lg}*(1-${P.churnAuto}/100)`);
     cell.a_cren=F(`${C.a_cfin}${R}-${C.a_cnew}${R}`);
-    cell.a_inew=F(`${C.a_cnew}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12`);
-    cell.a_iren=F(`${C.a_cren}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12`);
+    cell.a_rnw=F(m<=12?'0':`(1-${P.churnAuto}/100)*(${C.a_new}${lg}+${C.a_rnw}${lg})`);
+    cell.a_inew=F(`(1-${P.pagoAuto}/100)*${C.a_cnew}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12+${P.pagoAuto}/100*${C.a_new}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)`);
+    cell.a_iren=F(`(1-${P.pagoAuto}/100)*${C.a_cren}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)/12+${P.pagoAuto}/100*${C.a_rnw}${R}*(${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100)`);
     cell.a_itot=F(`${C.a_inew}${R}+${C.a_iren}${R}`);
     cell.a_colab=F(`${P.colabAuto}/100*(${P.retroAutoNew}/100*${C.a_inew}${R}+${P.retroAutoRen}/100*${C.a_iren}${R})`);
     cell.xs=F(`${C.a_cini}${R}*${P.crossMre}/100/12`);
     cell.m_new=F(`${C.xs}${R}+${P.propMre}*POWER(1+${P.gMre}/100,${C.mes}${R}-1)`);
     cell.m_cini=F(m===1?'0':`${C.m_cfin}${pr}`);
-    cell.m_cfin=F(`${C.m_cini}${R}*POWER(${P.retMre}/100,1/12)+${C.m_new}${R}`);
+    cell.m_cfin=F(`${C.m_cini}${R}*POWER(1-${P.churnMre}/100,1/12)+${C.m_new}${R}`);
     cell.m_cnew=F(m===1?`${C.m_new}${R}`
-      : m<=12?`${C.m_cnew}${pr}*POWER(${P.retMre}/100,1/12)+${C.m_new}${R}`
-      :`${C.m_cnew}${pr}*POWER(${P.retMre}/100,1/12)+${C.m_new}${R}-${C.m_new}${lg}*${P.retMre}/100`);
+      : m<=12?`${C.m_cnew}${pr}*POWER(1-${P.churnMre}/100,1/12)+${C.m_new}${R}`
+      :`${C.m_cnew}${pr}*POWER(1-${P.churnMre}/100,1/12)+${C.m_new}${R}-${C.m_new}${lg}*(1-${P.churnMre}/100)`);
     cell.m_cren=F(`${C.m_cfin}${R}-${C.m_cnew}${R}`);
-    cell.m_inew=F(`${C.m_cnew}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12`);
-    cell.m_iren=F(`${C.m_cren}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12`);
+    cell.m_rnw=F(m<=12?'0':`(1-${P.churnMre}/100)*(${C.m_new}${lg}+${C.m_rnw}${lg})`);
+    cell.m_inew=F(`(1-${P.pagoMre}/100)*${C.m_cnew}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12+${P.pagoMre}/100*${C.m_new}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)`);
+    cell.m_iren=F(`(1-${P.pagoMre}/100)*${C.m_cren}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)/12+${P.pagoMre}/100*${C.m_rnw}${R}*(${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100)`);
     cell.m_itot=F(`${C.m_inew}${R}+${C.m_iren}${R}`);
     cell.m_colab=F(`${P.colabMre}/100*(${P.retroMreNew}/100*${C.m_inew}${R}+${P.retroMreRen}/100*${C.m_iren}${R})`);
     cell.itot=F(`${C.a_itot}${R}+${C.m_itot}${R}`);
@@ -4074,7 +4162,7 @@ function buildModelSheets(){
     cell.ebi=F(`${C.itot}${R}-${C.gtot}${R}`);
     cell.ebac=F(m===1?`${C.ebi}${R}`:`${C.ebac}${pr}+${C.ebi}${R}`);
     cell.margin=F(`IF(${C.itot}${R}=0,0,${C.ebi}${R}/${C.itot}${R})`);
-    cell.beEbi=F(`IF(${C.ebi}${R}>0,${C.mes}${R},"")`);
+    cell.beEbi=F(`IF(SUM(${C.ebi}${Math.max(2,R-11)}:${C.ebi}${R})>0,${C.mes}${R},"")`);   // EBITDA de los últimos 12 meses
     cell.beEbac=F(`IF(${C.ebac}${R}>0,${C.mes}${R},"")`);
     monRows.push(ORDER.map(k=>cell[k]));
   }
@@ -4124,39 +4212,41 @@ function buildModelSheets(){
     ['Margen EBITDA (ratio)',F(`IF(SUM(${eRange('itot',dStart,dEnd)})=0,0,SUM(${eRange('ebi',dStart,dEnd)})/SUM(${eRange('itot',dStart,dEnd)}))`)],
     ['Cartera fin (pólizas)',F(eRef('cart',dEnd))],
     ['Primas intermediadas fin (€)',F(eRef('prim',dEnd))],
-    ['Break-even mensual (mes)',F(`IF(COUNT(${eRange('beEbi',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbi',dStart,dEnd)}))`)],
+    ['Break-even (mes, EBITDA 12 meses > 0)',F(`IF(COUNT(${eRange('beEbi',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbi',dStart,dEnd)}))`)],
     ['Break-even acumulado (mes)',F(`IF(COUNT(${eRange('beEbac',dStart,dEnd)})=0,"No alcanzado",MIN(${eRange('beEbac',dStart,dEnd)}))`)],
     ['Cartera en break-even (pólizas)',null],
   ];
   // la fila del break-even depende de cuántas filas de cabecera haya (con o sin nombre de escenario)
-  const beRow=resumen.findIndex(r=>r[0]==='Break-even mensual (mes)')+1;
+  const beRow=resumen.findIndex(r=>r[0]==='Break-even (mes, EBITDA 12 meses > 0)')+1;
   resumen[resumen.length-1][1]=F(`IFERROR(INDEX(${eRange('cart',dStart,dEnd)},$B$${beRow}),"—")`);
   // ---- Unit economics (fin de horizonte) con fórmulas ----
   const L_=dEnd;
-  const itotL=eRef('itot',L_),cartL=eRef('cart',L_),colabL=eRef('colab',L_),gtotL=eRef('gtot',L_),
-        primL=eRef('prim',L_),ebiL=eRef('ebi',L_),dirL=eRef('dir',L_),psubL=eRef('psub',L_);
+  // flujos: suma de los últimos 12 meses (la anualidad se cobra de golpe); stocks: último mes
+  const s12=k=>`SUM(${eRange(k,L_-11,L_)})`;
+  const itotL=s12('itot'),cartL=eRef('cart',L_),colabL=s12('colab'),gtotL=s12('gtot'),
+        primL=eRef('prim',L_),ebiL=s12('ebi'),dirL=eRef('dir',L_),psubL=s12('psub');
   const hc=`(${dirL})`;
   const ue=[
-    ['Unit economics (run-rate '+mLabel(N-1)+')'],[],
+    ['Unit economics (12 meses hasta '+mLabel(N-1)+')'],[],
     ['Por póliza · €/año','Valor'],
-    ['Comisión media por póliza',F(`IF(${cartL}=0,0,${itotL}*12/${cartL})`)],          // B4
-    ['− Comisión a colaborador',F(`IF(${cartL}=0,0,-${colabL}*12/${cartL})`)],          // B5
-    ['− Coste de servicio (personal+estructura)',F(`IF(${cartL}=0,0,-(${gtotL}-${colabL})*12/${cartL})`)], // B6
+    ['Comisión media por póliza',F(`IF(${cartL}=0,0,${itotL}/${cartL})`)],          // B4
+    ['− Comisión a colaborador',F(`IF(${cartL}=0,0,-${colabL}/${cartL})`)],          // B5
+    ['− Coste de servicio (personal+estructura)',F(`IF(${cartL}=0,0,-(${gtotL}-${colabL})/${cartL})`)], // B6
     ['= Margen EBITDA por póliza',F('B4+B5+B6')],                                       // B7
     ['Margen por póliza (ratio)',F('IF(B4=0,0,B7/B4)')],[],
     ['Valor del cliente (LTV)','Auto','MRE'],                                            // fila 10
     ['Comisión bruta / año',F(`${P.primaAuto}*(1-${P.ipsAuto}/100)*${P.comAuto}/100`),F(`${P.primaMre}*(1-${P.ipsMre}/100)*${P.comMre}/100`)],            // 11
-    ['Vida media del cliente (años)',F(`IF(${P.retAuto}/100<1,1/(1-${P.retAuto}/100),99)`),F(`IF(${P.retMre}/100<1,1/(1-${P.retMre}/100),99)`)], // 12
+    ['Vida media del cliente (años)',F(`IF(${P.churnAuto}>0,100/${P.churnAuto},99)`),F(`IF(${P.churnMre}>0,100/${P.churnMre},99)`)], // 12
     ['Retrocesión / año',F(`${P.colabAuto}/100*B11*(${P.retroAutoNew}/100+${P.retroAutoRen}/100*(B12-1))`),F(`${P.colabMre}/100*C11*(${P.retroMreNew}/100+${P.retroMreRen}/100*(C12-1))`)], // 13
     ['LTV neto por póliza',F('B11*B12-B13'),F('C11*C12-C13')],                           // 14
     ['Comisión neta / año (tras colaborador)',F('B14/B12'),F('C14/C12')],[],            // 15
     ['Benchmark sectorial','Tu plan','Pacc (ref.)'],
-    ['Comisión media s/ prima (ratio)',F(`IF(${primL}=0,0,${itotL}*12/${primL})`),0.132],
+    ['Comisión media s/ prima (ratio)',F(`IF(${primL}=0,0,${itotL}/${primL})`),0.132],
     ['Retrocesión efectiva s/ comisión (ratio)',F(`IF(${itotL}=0,0,${colabL}/${itotL})`),0.60],
     ['Margen EBITDA s/ comisiones (ratio)',F(`IF(${itotL}=0,0,${ebiL}/${itotL})`),0.158],
     ['Primas intermediadas/empleado €',F(`IF(${hc}=0,0,${primL}/${hc})`),1263769],
-    ['Comisiones/empleado €',F(`IF(${hc}=0,0,${itotL}*12/${hc})`),135591],
-    ['Coste personal/empleado €',F(`IF(${hc}=0,0,${psubL}*12/${hc})`),52469],
+    ['Comisiones/empleado €',F(`IF(${hc}=0,0,${itotL}/${hc})`),135591],
+    ['Coste personal/empleado €',F(`IF(${hc}=0,0,${psubL}/${hc})`),52469],
   ];
   // ---- metadata visual por hoja (anchos, paneles fijos, estilos) ----
   const rowsY=plSheet(yearP), rowsT=plSheet(triP), rowsM=plSheet(monP);
@@ -4193,9 +4283,10 @@ document.getElementById('xls').onclick=exportXlsx;
 function syncControls(){
   CFG.forEach(([,,,items])=>items.forEach(([key,,type,rng])=>{
     const inp=document.getElementById('inp_'+key);
-    if(inp) inp.value=V[key];
+    if(inp) inp.value= inp.type==='number'? inpVal(key) : V[key];
     if(rng){ const el=document.getElementById('v_'+key); if(el) el.textContent=fmtVal(key,type); }
   }));
+  syncProdUnit();
   [...document.getElementById('segGran').children].forEach(b=>b.classList.toggle('on',b.dataset.g===GRAN));
   syncScopeSeg();
   syncDateControls();
@@ -4524,7 +4615,7 @@ function scenDetailHTML(sc,m,rm,inLab,st){
     metric('EBITDA del plan',eurC(tot.ebi),'margen '+pct(tot.margin),tot.ebi<0?'neg':'pos')+
     metric('Facturación del último año',eurC(last.itot),`${mLabel(l0)} – ${mLabel(HM-1)}`)+
     metric('EBITDA del último año',eurC(last.ebi),'margen '+pct(last.margin),last.ebi<0?'neg':'pos')+
-    metric('Break-even mensual',R.beM?mLabel(R.beM-1):'No alcanzado',R.beM?'primer mes con EBITDA positivo · '+after(R.beM):'no antes del fin del plan',R.beM?'pos':'neg')+
+    metric('Break-even',R.beM?mLabel(R.beM-1):'No alcanzado',R.beM?'EBITDA de los últimos 12 meses positivo · '+after(R.beM):'el EBITDA de 12 meses no llega a positivo',R.beM?'pos':'neg')+
     metric('Recuperación de la inversión',R.beAcc?mLabel(R.beAcc-1):'No alcanzada',R.beAcc?'el EBITDA acumulado pasa a positivo':'el EBITDA acumulado sigue en negativo al final',R.beAcc?'pos':'neg')+
     metric('Necesidad máxima de financiación',minI>=0?eurC(-minE):'0 €',minI>=0?'pérdida acumulada máxima, en '+mLabel(minI):'el EBITDA acumulado nunca es negativo')+
     metric('EBITDA acumulado al final',eurC(tot.ebac),'a '+mLabel(HM-1),tot.ebac<0?'neg':'pos')+
@@ -4554,13 +4645,18 @@ function scenDetailHTML(sc,m,rm,inLab,st){
   h+=`<div class="panel"><h2>Unit economics <span class="h2-sub">run-rate a ${mLabel((UE_END||HM)-1)}</span></h2><div class="ue-wrap">${ueHTML(R)}</div></div>`;
   // parámetros escogidos
   let nChg=0;
-  const groups=CFG.filter(([,,scope])=>scope==='common'||ramoOn(scope,rm)).map(([title,cls,,items])=>{
-    const tr=items.filter(([key])=>!(key==='crossMre'&&!ramoOn('auto',rm))).map(([key,label,type])=>{
-      const chg=Math.abs((+V[key])-(+DEF[key]))>1e-9; if(chg) nChg++;
-      const d=type==='pct'?(DEF[key]+'%'):(type==='eur'?eur0(DEF[key])+'€':eur0(DEF[key]));
-      return `<tr class="${chg?'chg':''}"><td>${label}${chg?`<span class="pd">por defecto: ${d}</span>`:''}</td><td class="pv">${fmtVal(key,type)}</td></tr>`;
+  const groups=SECTIONS.map(S=>{
+    const tr=S.groups.map(G=>{
+      const rows=G.keys.filter(k=>paramVisible(k,rm)).map(key=>{
+        const [label,type,,,,ramo]=PARAMS[key];
+        const chg=Math.abs((+V[key])-(+DEF[key]))>1e-9; if(chg) nChg++;
+        const d=type==='pct'?(DEF[key]+'%'):(type==='eur'?eur0(DEF[key])+'€':eur0(DEF[key]));
+        const pill= ramo? `<span class="rpill ${ramo}">${ramo==='auto'?'Auto':'MRE'}</span>` : '';
+        return `<tr class="${chg?'chg':''}"><td>${pill}${label.replace('{u}','mes')}${chg?`<span class="pd">por defecto: ${d}</span>`:''}</td><td class="pv">${fmtVal(key,type)}</td></tr>`;
+      }).join('');
+      return rows? `<tr class="sec"><td colspan="2">${G.title}</td></tr>`+rows : '';
     }).join('');
-    return `<div class="par-box"><div class="acc-head ${cls}"><span>${title}</span></div><table class="par-t"><tbody>${tr}</tbody></table></div>`;
+    return `<div class="par-box"><div class="acc-head ${S.cls}"><span>${S.title}</span></div><table class="par-t"><tbody>${tr}</tbody></table></div>`;
   }).join('');
   const ph=PHASE_KEYS.map(([k,l])=>{ const w=phaseWin(k); return (w.from>1||w.to<HM)? `<tr class="chg"><td>${l}</td><td class="pv">${w.to<w.from?'sin coste':mLabel(w.from-1)+' – '+mLabel(w.to-1)}</td></tr>` : ''; }).join('');
   h+=`<div class="panel"><h2>Parámetros escogidos <span class="h2-sub">${nChg?`${nChg} distintos de los valores por defecto, resaltados`:'todos con los valores por defecto'}</span></h2>
