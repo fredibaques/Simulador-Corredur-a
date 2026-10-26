@@ -358,6 +358,56 @@
   .par-t tr.chg td{background:var(--warning-bg)}
   .par-t .pd{display:block;font-size:10.5px;font-weight:400;color:var(--muted-foreground)}
   .det-sec{margin:6px 0 -4px;font-size:16px;font-weight:600;letter-spacing:-.01em}
+  /* ===== Competencia › Referentes ===== */
+  .ref-first{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+  .ref-first-l{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted-foreground);margin-right:4px}
+  .ref-first-b{font:inherit;font-size:12px;text-align:left;border:1px solid var(--border);background:var(--background);border-radius:var(--radius);
+    padding:6px 10px;cursor:pointer;color:var(--muted-foreground);transition:background .15s,border-color .15s}
+  .ref-first-b:hover{background:var(--accent);border-color:#cbd5e1}
+  .ref-first-b b{color:var(--foreground)}
+  .ref-fix{font-size:12.5px;margin:4px 0 10px}
+  .ref-fix summary{cursor:pointer;color:var(--primary);font-weight:500}
+  .ref-fix ul{margin:8px 0 0;padding-left:18px;line-height:1.6;color:var(--muted-foreground)}
+  .ref-fix b{color:var(--foreground)}
+  .ref-warn{font-size:12px;line-height:1.6;background:var(--warning-bg);border:1px solid var(--warning-border);color:#92400e;border-radius:var(--radius);padding:10px 12px;margin:10px 0 0}
+  .ref-filters{display:flex;flex-direction:column;gap:10px}
+  .ref-frow{display:grid;grid-template-columns:170px minmax(0,1fr);gap:10px;align-items:start}
+  .ref-flab{font-size:12px;font-weight:600;color:var(--foreground);padding-top:6px}
+  .ref-fopts{display:flex;flex-wrap:wrap;gap:6px}
+  .ref-fopts .cmp-chip{opacity:.85}
+  .ref-fopts .cmp-chip.on{border-color:var(--primary);box-shadow:inset 0 -2px 0 var(--primary);opacity:1;color:var(--foreground)}
+  @media(max-width:700px){.ref-frow{grid-template-columns:1fr;gap:4px}.ref-flab{padding-top:0}}
+  .ref-sel{width:auto;padding:5px 8px;font-size:12.5px}
+  .ref-x td,.ref-m td{white-space:normal;vertical-align:top}
+  .ref-x td:not(:first-child){text-align:left;min-width:120px}
+  .ref-x th:not(:first-child){text-align:left}
+  .ref-x td.tcol,.ref-x th.tcol{text-align:right;min-width:60px}
+  .ref-name{font:inherit;font-size:12px;border:0;background:var(--muted-bg);color:var(--foreground);border-radius:4px;padding:2px 7px;margin:0 4px 4px 0;cursor:pointer;display:inline-block}
+  .ref-name:hover{background:var(--accent);color:var(--primary)}
+  .ref-name.strong{background:transparent;padding:0;font-weight:600;font-size:13px;text-align:left}
+  .ref-name.strong:hover{text-decoration:underline}
+  .ref-m{font-size:12px}
+  .ref-m th,.ref-m td{text-align:left}
+  .ref-m td:first-child{min-width:200px}
+  .ref-m td:nth-child(4){min-width:170px} .ref-m td:nth-child(5){min-width:200px} .ref-m td:nth-child(7){min-width:180px}
+  .ref-sub{font-size:11px;color:var(--muted-foreground);margin-top:2px;line-height:1.4}
+  .rchips{display:flex;flex-wrap:wrap;gap:4px}
+  .rchip{font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:999px;background:var(--accent);color:var(--primary);border:1px solid var(--border);white-space:nowrap}
+  .rbadge{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+  .rbadge.good{background:var(--success-bg);color:#15803d;border-color:var(--success-border)}
+  .rbadge.ok{background:#ecfdf5;color:#047857}
+  .rbadge.warn{background:var(--warning-bg);color:#92400e;border-color:var(--warning-border)}
+  .rbadge.bad{background:var(--destructive-bg);color:#b91c1c;border-color:var(--destructive-border)}
+  .rbadge.neutral{background:var(--muted-bg);color:var(--muted-foreground);border-color:var(--border)}
+  .ref-hyp{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:12px}
+  .ref-hyp-c{border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+  .ref-hyp-c p{margin:0;font-size:12.5px;line-height:1.55;color:var(--foreground)}
+  .ref-hyp-box{font-size:13px;line-height:1.6;background:var(--accent);border-left:3px solid var(--primary);padding:10px 14px;border-radius:var(--radius-sm)}
+  .ref-p{font-size:12.5px;line-height:1.65;margin:0;color:var(--foreground)}
+  .ref-src{font-size:12px;line-height:1.7;padding-left:18px;margin:0}
+  .ref-src a{color:var(--primary)}
+  .ref-ini{width:40px;height:40px;border-radius:10px;background:var(--primary);color:var(--primary-foreground);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px}
+  #dosName .rbadge{vertical-align:middle;margin-left:4px}
   /* menú desplegable (exportar) */
   .menu-wrap{position:relative}
   .menu{display:none;position:absolute;right:0;top:calc(100% + 6px);min-width:250px;background:var(--popover);
@@ -985,12 +1035,13 @@
       <div class="page-head">
         <div>
           <h1>Competencia</h1>
-          <p class="page-sub">Mercado · tu escenario frente a las corredurías con cuentas públicas, y la ficha de cada una.</p>
+          <p class="page-sub">Mercado · tu escenario frente a las corredurías con cuentas públicas, sus fichas, y los referentes que muestran cómo venden y crecen otros modelos de seguros.</p>
         </div>
         <div class="page-actions">
           <span class="seg" id="segCompSub">
             <button data-c="cmp" class="on">Comparativa</button>
             <button data-c="companies">Compañías</button>
+            <button data-c="refs">Referentes</button>
           </span>
         </div>
       </div>
@@ -1033,6 +1084,7 @@
           </div>
         </div>
       </div>
+      <div id="tab-refs" class="tabpane" style="display:none"><div id="refsBody" class="tabpane"></div></div>
     </section>
   </main>
 </div>
@@ -1189,7 +1241,7 @@ function periodSlices(gran,s,e){
 let PHASE={};  // { clave: {on:bool, from:int, to:int} }   to=0 => hasta el final
 let CMP_SEL=null;  // Set de claves de competidores seleccionados; se inicializa tras definir BENCH
 let ACTIVE_TAB='home';  // página activa del menú lateral; se restaura al refrescar
-let COMP_SUB='cmp';     // dentro de Competencia: 'cmp' (comparativa) | 'companies' (fichas)
+let COMP_SUB='cmp';     // dentro de Competencia: 'cmp' (comparativa) | 'companies' (fichas) | 'refs' (referentes)
 let CUR_SCEN=null;      // id del escenario guardado que hay cargado en el Lab (null = sin guardar)
 let SCOPE='all';        // ámbito del dashboard: 'all' | 'auto' | 'mre'
 const PHASE_KEYS=[['salDirAuto','Sueldo plantilla Auto'],['salDirMre','Sueldo plantilla MRE'],['alq','Alquiler y oficina'],['pue','Suministros / puesto'],['sw','Software y CRM'],['rc','RC y seguros'],['ase','Asesoría / gestoría'],['cuo','Cuotas DGSFP']];
@@ -1339,7 +1391,7 @@ function newModel(o){
   if(st){
     if(st.ACTIVE_TAB){ const t=OLD_TAB[st.ACTIVE_TAB]||st.ACTIVE_TAB; if(PAGES.includes(t)) ACTIVE_TAB=t;
       if(st.ACTIVE_TAB==='companies') COMP_SUB='companies'; }
-    if(st.COMP_SUB==='cmp'||st.COMP_SUB==='companies') COMP_SUB=st.COMP_SUB;
+    if(['cmp','companies','refs'].includes(st.COMP_SUB)) COMP_SUB=st.COMP_SUB;
     if(Array.isArray(st.CMP_SEL)) CMP_SEL=new Set(st.CMP_SEL);
     if(st.SCEN_VIEW && SCENS[st.SCEN_VIEW]) SCEN_VIEW=st.SCEN_VIEW;
     if(st.PROD_UNIT==='año') PROD_UNIT_INIT='año';
@@ -2221,9 +2273,9 @@ function syncParamScope(){
   document.querySelectorAll('#segScope button').forEach(b=>{ b.hidden= b.dataset.s!=='all' && !ramoOn(b.dataset.s); });
   const el=document.getElementById('ctrlScope'); if(!el) return;
   const S=SCOPES[SCOPE]||SCOPES.all, both=ramoOn('auto')&&ramoOn('mre');
+  el.hidden= SCOPE==='all' && !both;   // con un solo ramo no hace falta explicar nada
   el.innerHTML= SCOPE==='all'
-    ? (both? 'Organizados en <b>Ventas</b>, <b>Recursos humanos</b> y <b>Costes generales</b>. Cada fila indica su ramo; cambia el ámbito de arriba para ver solo los de uno.'
-           : `Este modelo solo trabaja <b>${ramoOn('auto')?'Auto':'Multirriesgo Empresas'}</b>: ves sus parámetros y los costes generales. Puedes activar otros ramos en «⋯ › Editar modelo».`)
+    ? (both? 'Organizados en <b>Ventas</b>, <b>Recursos humanos</b> y <b>Costes generales</b>. Cada fila indica su ramo; cambia el ámbito de arriba para ver solo los de uno.' : '')
     : `Viendo los parámetros de <b>${S.label}</b> (ventas y plantilla del ramo) y los costes comunes del negocio. Los del otro ramo se ocultan; vuelve a <b>Todo el negocio</b> para verlos.`;
 }
 document.getElementById('segGran').addEventListener('click',e=>{
@@ -2298,11 +2350,12 @@ document.getElementById('sidebar').addEventListener('click',e=>{
 });
 // Competencia agrupa la comparativa y las fichas de las compañías
 function showCompSub(sub){
-  COMP_SUB= sub==='companies'? 'companies' : 'cmp';
+  COMP_SUB= ['companies','refs'].includes(sub)? sub : 'cmp';
   document.querySelectorAll('#segCompSub button').forEach(b=>b.classList.toggle('on',b.dataset.c===COMP_SUB));
   document.getElementById('tab-comp').style.display= COMP_SUB==='cmp'? 'flex':'none';
   document.getElementById('tab-companies').style.display= COMP_SUB==='companies'? 'flex':'none';
-  if(COMP_SUB==='cmp') renderComp(); else renderCompanyList();
+  document.getElementById('tab-refs').style.display= COMP_SUB==='refs'? 'flex':'none';
+  if(COMP_SUB==='cmp') renderComp(); else if(COMP_SUB==='companies') renderCompanyList(); else renderRefs();
 }
 document.getElementById('segCompSub').addEventListener('click',e=>{
   const b=e.target.closest('button'); if(!b) return; showCompSub(b.dataset.c); saveState();
@@ -3494,6 +3547,1220 @@ function closeCompanyDetail(){
   renderCompanyList();
 }
 document.getElementById('compDetailBack').addEventListener('click',closeCompanyDetail);
+// ---- Competencia › Referentes: cómo venden y crecen 18 empresas de seguros (dossier de negocio, no financiero) ----
+// Cada empresa se clasifica con variables de negocio (REF_VARS) para poder filtrarlas, cruzarlas y compararlas.
+const REF_VARS={
+  tipo:{label:'Tipo de empresa', vals:{correduria:'Correduría / distribución', aseguradora:'Aseguradora', mga:'MGA / distribución con producto', embedded:'Plataforma de seguro integrado', mixto:'Grupo mixto'}},
+  seg:{label:'Cliente', vals:{pymes:'Pymes y autónomos', particulares:'Particulares', empresas:'Empresas (colectivos)', socios:'Clientes de socios (B2B2C)', movilidad:'Trabajadores de movilidad'}},
+  canales:{label:'Canal de captación', multi:true, vals:{seo:'Contenido / SEO', paid:'Publicidad digital', directo:'Venta directa online', comparador:'Comparadores', socios:'Socios e integración', agentes:'Agentes, corredores o red', b2b:'Venta a cuentas / empresas', asistida:'Cierre asistido / teléfono', recomendacion:'Comunidad y recomendación', ia:'Asistentes IA'}},
+  humano:{label:'Peso de la venta humana', vals:{autoservicio:'Autoservicio', mixto:'Mixto', asistido:'Asistido o por red'}},
+  rent:{label:'Rentabilidad', vals:{probada:'Beneficio publicado', declarada:'Rentable según la empresa', no_probada:'No demostrada', perdidas:'Pérdidas o insolvencia'}},
+  evid:{label:'Solidez de la evidencia', vals:{alta:'Resultados publicados', media:'Cifras declaradas', baja:'Caso cualitativo'}},
+  desen:{label:'Situación', vals:{independiente:'Independiente', cotiza:'Cotiza en bolsa', adquirida:'Adquirida', participada:'Participación anunciada', reestructurada:'Reestructurada', insolvencia:'Insolvencia y venta'}},
+};
+const REF_TONE={rent:{probada:'good',declarada:'ok',no_probada:'neutral',perdidas:'bad'}, evid:{alta:'good',media:'ok',baja:'neutral'},
+  desen:{adquirida:'good',cotiza:'good',participada:'ok',independiente:'neutral',reestructurada:'warn',insolvencia:'bad'}};
+const REFS=[
+{
+"key": "simplybusiness",
+"name": "Simply Business",
+"sub": "Correduría digital de microempresas y autónomos",
+"tipo": "correduria",
+"pais": "Reino Unido",
+"fund": null,
+"seg": "pymes",
+"ramo": "Multirramo para pymes y autónomos",
+"canales": [
+"seo",
+"paid",
+"asistida"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "media",
+"desen": "adquirida",
+"escalaCorta": "1 M clientes globales (ago 2024)",
+"evidencia": "Éxito comercial y salida acreditados; beneficio actual no comprobado.",
+"canal": "Contenido útil + búsqueda + publicidad por profesión",
+"facts": [],
+"que": "Comparación y contratación de seguros por actividad para pequeños negocios y propietarios. La nota de 2024 cita más de 35 aseguradoras en el panel global; el número depende de mercado y producto.",
+"escala": "Un millón de clientes globales, según comunicado del 30 de agosto de 2024 (Reino Unido y EE. UU.). La fuente recuperada no respalda la atribución anterior a un millón solo en Reino Unido en junio de 2026. Travelers anunció su compra por unos 490 M$ en 2017.",
+"evolucion": "La especialización por profesión permite ordenar preguntas, coberturas y elección de aseguradoras. Mi lectura: se puede reutilizar el mismo proceso entre negocios parecidos sin tratar todos los riesgos como iguales. La entrevista de Jason Stockwood añade una cultura de prueba y decisiones cerca del cliente; no demuestra que esa cultura explique por sí sola el crecimiento.",
+"captacion": "Blue Array describe en 2017 captar propietarios con una plantilla de contrato de alquiler: descargaban un recurso útil, dejaban email y entraban en una relación comercial. Brainlabs documenta después vídeo, display, audiencias por profesión y remarketing interno.",
+"conversion": "Stockwood explica en 2016 que los datos de quienes cotizaban sin comprar ayudaban a detectar huecos de producto y seguir cotizando. Declaró una compra media de seis minutos, no un plazo actual garantizado. La nota de 2024 añade centros de contacto y un equipo de 400 personas en Northampton: online y teléfono coexistían; no todo era autoservicio.",
+"despues": "No hay tasa por cohorte publicada en estas entrevistas.",
+"hipotesis": "Una herramienta útil para un colectivo y una ruta desde ella al diagnóstico de seguros. Medir descargas, cotizaciones y pólizas.",
+"riesgo": "No hay CAC, retención por cohorte ni beneficio consolidado reciente verificados en estas fuentes. Tener muchas aseguradoras no asegura asesoramiento bueno ni un coste bajo. Una plataforma generalista madura no es el punto de partida de una correduría nueva.",
+"limites": "Los casos de agencias son evidencia interesada; no conocemos el peso actual de cada canal ni su CAC.",
+"fuentes": [
+[
+"Simply Business · 30 agosto 2024 · comunicado global",
+"https://www.simplybusiness.co.uk/about-us/press-releases/one-million-customer-milestone/"
+],
+[
+"Travelers · 13 marzo 2017 · Relaciones con inversores",
+"https://investor.travelers.com/newsroom/press-releases/news-details/2017/Travelers-to-Acquire-UK-Based-Simply-Business/default.aspx"
+],
+[
+"Adrian Swinscoe · 22 septiembre 2018 · Entrevista al entonces CEO",
+"https://www.adrianswinscoe.com/2018/09/a-new-model-of-business-and-leadership-is-needed-lessons-from-one-of-the-uks-best-companies-to-work-for-interview-with-jason-stockwood/"
+],
+[
+"City A.M. · Entrevista a Jason Stockwood",
+"https://www.cityam.com/simply-business-jason-stockwood-tells-city-am-the-future-of-insurance-is-in-technology/"
+],
+[
+"Caso SEO · Blue Array · EN · 2017",
+"https://www.bluearray.co.uk/news/seo/driving-seo-traffic-insurance-industry-using-serendipitous-search/"
+],
+[
+"Campañas · Brainlabs · EN · 2021",
+"https://gmp.brainlabsdigital.com/case-studies/simply-business/"
+]
+]
+},
+{
+"key": "superscript",
+"name": "Superscript",
+"sub": "Correduría: autoservicio + asesoramiento especializado",
+"tipo": "correduria",
+"pais": "Reino Unido",
+"fund": null,
+"seg": "pymes",
+"ramo": "Pymes y riesgos profesionales (p. ej. RC tecnológica)",
+"canales": [
+"directo",
+"asistida",
+"socios"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "media",
+"desen": "independiente",
+"escalaCorta": "Ingresos +doble dígito y alianzas +25% (mar 2026)",
+"evidencia": "Crecimiento declarado; rentabilidad no demostrada.",
+"canal": "Autoservicio + asesoramiento + alianzas",
+"facts": [],
+"que": "Separa dos necesidades: seguros sencillos para pequeños negocios que pueden contratar solos y asesoramiento para empresas con riesgos complejos, como responsabilidad profesional tecnológica. El cliente compra que entiendan su actividad y no quede un hueco entre pólizas.",
+"escala": "En marzo de 2026 comunicó crecimiento de ingresos de doble dígito durante los doce meses previos y más de un 25% de crecimiento en alianzas. No publica en ese texto el ingreso absoluto ni el beneficio.",
+"evolucion": "Shearer explica en entrevistas que desarrollaron tecnología propia para combinar coberturas de varias compañías y orientar cada riesgo al asegurador adecuado. La experiencia técnica aseguradora del otro cofundador ayudaba a conseguir capacidad y acuerdos. El producto no era solo una pantalla bonita.",
+"captacion": "Shearer cuenta en 2021 que el capital amplió distribución, alianzas y asesoramiento. Antes de lanzar trabajaron relaciones con aseguradoras; la experiencia y red de Ben Rose ayudó a conseguir capacidad.",
+"conversion": "Combinan apetitos de varias aseguradoras desde un punto de contacto. El formato mensual y los cambios de coberturas facilitan adaptarse al negocio. El vídeo de FF News explica especialización por actividad y broking para riesgos complejos.",
+"despues": "Miden adquisición, conversión, valor y retención, pero no publican porcentajes en la entrevista.",
+"hipotesis": "Ruta corta para riesgos estándar y una persona especializada para excepciones.",
+"riesgo": "El propio fundador advierte de que crecer en clientes puede ocultar malos riesgos y pérdidas que aparecen años después. Aunque una correduría no soporte normalmente esas indemnizaciones, una mala cartera perjudica sus acuerdos, servicio y continuidad. La financiación de 2023 no se usa aquí como prueba de éxito.",
+"limites": "La alianza Amazon de 2021 no demuestra cuánto negocio produjo ni su continuidad actual.",
+"fuentes": [
+[
+"Growth Business · 31 julio 2020 · Entrevista al cofundador",
+"https://growthbusiness.co.uk/how-ive-grown-my-business-cameron-shearer-co-founder-superscript-19386/"
+],
+[
+"TechCrunch · 9 enero 2023 · Reportaje con entrevista al cofundador",
+"https://techcrunch.com/2023/01/09/superscript-a-bespoke-insurance-provider-for-smes-raises-54-million/"
+],
+[
+"Superscript · 3 marzo 2026 · Comunicado de empresa",
+"https://gosuperscript.com/news-and-resources/glasgow-hub-gig-economy-growth/"
+],
+[
+"Entrevista · Shearer · EN · 2021",
+"https://concentric.vc/conversations/how-ive-grown-my-business-through-disruption-cameron-shearer-superscript/"
+],
+[
+"Vídeo y resumen · FF News · EN · 2024",
+"https://ffshowcase.com/fintech-tv/ff-virtual-arena/how-to-solve-the-small-business-insurance-problem-superscript-ff-virtual-arena-341/"
+]
+]
+},
+{
+"key": "covergenius",
+"name": "Cover Genius",
+"sub": "Plataforma de distribución integrada B2B2C",
+"tipo": "embedded",
+"pais": "Australia",
+"fund": null,
+"seg": "socios",
+"ramo": "Viaje, entradas, compras y otros productos de socios",
+"canales": [
+"socios",
+"b2b"
+],
+"humano": "autoservicio",
+"rent": "no_probada",
+"evid": "media",
+"desen": "independiente",
+"escalaCorta": "Ingresos +50% en 2025 · >200 socios",
+"evidencia": "Escala y crecimiento declarados; sin beneficio auditado verificado.",
+"canal": "Venta a grandes socios e integración en su compra",
+"facts": [],
+"que": "El comercio añade protección en el momento de comprar un viaje, una entrada o un producto. Una integración sirve para coordinar producto, países, contratación y siniestros, en lugar de negociar un proveedor por mercado.",
+"escala": "Comunicado de julio de 2026: ingresos +50% en 2025, más de 70 millones de clientes protegidos acumulados, más de 200 socios y más de 50 aseguradoras. Los 240 millones de pólizas son una cifra acumulada, no clientes activos ni ingresos.",
+"evolucion": "En citybiz, Angus McDonald cuenta que el problema surgió al intentar añadir seguros a su propia agencia de viajes. Identificaron la fricción del socio, pivotaron y construyeron API, autorizaciones y equipo de siniestros. En otra entrevista insiste en cobertura pertinente y servicio posventa: no basta con añadir una casilla en el checkout.",
+"captacion": "McDonald identifica Rentalcars.com como primer socio decisivo; después ampliaron a Priceline y Agoda dentro del mismo grupo. XCover se lanzó en 2019 y la expansión a más verticales llegó en 2020.",
+"conversion": "Dos ventas: convencer al socio de integrar y ofrecer protección relevante al consumidor durante su compra. Capacidad multinacional, cumplimiento y siniestros son parte del servicio que compra el socio.",
+"despues": "La relación con Rentalcars seguía activa según el fundador. Eso no es una tasa global de renovación.",
+"hipotesis": "Empezar con un piloto pequeño en un socio y ampliar tras demostrar uso, no construir primero una API mundial.",
+"riesgo": "La base de socios aporta acceso, pero también puede concentrar poder negociador y riesgo de dependencia. Esa es una inferencia de negocio, no una pérdida concreta acreditada. En Kifid 2025-0692 se desestimó una petición adicional porque ya se había pagado el límite: incluso una venta fácil necesita explicar bien los máximos. No demuestra mala práctica de la empresa.",
+"limites": "No publica duración del ciclo comercial, coste de integración o tasa de aceptación del seguro.",
+"fuentes": [
+[
+"citybiz · 22 noviembre 2024 · Entrevista al cofundador y CEO",
+"https://www.citybiz.co/article/630193/qa-with-angus-mcdonald-ceo-and-co-founder-of-cover-genius/"
+],
+[
+"Vista Equity Partners / Cover Genius · 14 julio 2026 · Comunicado de financiador y empresa",
+"https://www.vistaequitypartners.com/news/cover-genius-raises-usd-100m-backed-by-vista-credit-partners-reaching-usd-1-9-billion-valuation-as-it-advances-ai-first-platform-and-global-expansion/"
+],
+[
+"Open & Embedded Insurance Observatory · 23 febrero 2025 · Entrevista al CEO",
+"https://openinsuranceobs.com/yuri-interview-with-angus-mcdonald-ceo-and-co-founder-of-cover-genius/"
+],
+[
+"Kifid · 29 agosto 2025 · Resolución de organismo de reclamaciones",
+"https://www.kifid.nl/media/4foipezp/uitspraak-2025-0692.pdf"
+],
+[
+"Entrevista · McDonald · EN · décimo aniversario",
+"https://www.insurtechinsights.com/leadership-spotlight-angus-mcdonald-on-creating-cover-genius/"
+],
+[
+"Entrevista · InsurTech Digital · EN",
+"https://insurtechdigital.com/articles/talking-embedded-insurance-with-cover-genius-angus-mcdonald"
+]
+]
+},
+{
+"key": "policybazaar",
+"name": "Policybazaar / PB Fintech",
+"sub": "Distribución y asesoramiento a gran escala en India",
+"tipo": "correduria",
+"pais": "India",
+"fund": null,
+"seg": "particulares",
+"ramo": "Vida, salud y otros ramos de particulares",
+"canales": [
+"comparador",
+"asistida"
+],
+"humano": "asistido",
+"rent": "probada",
+"evid": "alta",
+"desen": "cotiza",
+"escalaCorta": "Ingresos 6.794 crore ₹ (+37%) · beneficio 670 crore (FY26)",
+"evidencia": "Crecimiento y beneficio de grupo publicados en resultados auditados; no equivalen al resultado aislado de la correduría.",
+"canal": "Comparación online + cierre asistido",
+"facts": [],
+"que": "Ayuda a elegir protección, contratarla y recibir apoyo después. La dirección destaca onboarding y apoyo en siniestros. El valor no termina en comparar una prima inicial: reducir la incertidumbre ayuda a conservar al cliente.",
+"escala": "FY26, cerrado el 31 de marzo de 2026: ingresos operativos consolidados de 6.794 crore de rupias (+37%), beneficio neto de 670 crore y primas de seguros intermediadas de 29.934 crore (+42%). Un crore son diez millones de rupias. El grupo también incluye crédito mediante Paisabazaar.",
+"evolucion": "La dirección explica el peso creciente de las renovaciones. La comunicación bursátil registra 935 crore de ingresos de renovación/trail del negocio principal en doce meses (+40%; incluye su mezcla de negocios), con crecimiento del 55% en el segmento asegurador. En 2025 describía un cambio hacia asesores de mayor calidad, no solo más agentes.",
+"captacion": "Dahiya relata en 2014 el cambio desde enviar al usuario a la aseguradora hacia generar y convertir el lead. La regulación india forzó parte del cambio.",
+"conversion": "Describe unas 800 contrataciones para gestionar operaciones de call centre de aseguradoras. Acompañar hasta emisión evitaba depender solo de un clic saliente.",
+"despues": "Las fuentes recientes del informe original muestran peso creciente de ingresos de renovación/trail; no son beneficio neto ni solo ingresos de Policybazaar.",
+"hipotesis": "Identificar el bloqueo entre comparar, entender coberturas, documentar y emitir. Ayuda humana donde haga falta, no llamadas indiscriminadas.",
+"riesgo": "India, su regulación, productos de vida y salud y tamaño de mercado no se trasladan a España. Los márgenes de contribución de renovaciones citados por la dirección en 2025 no son margen neto de la empresa ni una previsión para Protectio. El negocio de ahorro mostró dificultades; el éxito en protección no garantizó acertar en productos próximos.",
+"limites": "La estructura de 2014 no es un organigrama de 2026. No copiar condiciones regulatorias indias.",
+"fuentes": [
+[
+"PB Fintech / BSE · 6 mayo 2026 · Comunicación bursátil y resultados auditados",
+"https://www.bseindia.com/xml-data/corpfiling/AttachLive/cd091908-cde2-4998-a699-1b63f0fc346f.pdf"
+],
+[
+"Exa, reproducción de conferencia de PB Fintech · 6 mayo 2026 · Transcripción",
+"https://exa.ai/library/markets/stocks/POLICYBZR/earnings/FY2026/Q4/transcript"
+],
+[
+"YourStory · 16 mayo 2025 · Reportaje de conferencia con Yashish Dahiya",
+"https://yourstory.com/2025/05/pb-fintech-q4-renewals-savings-uae-credit-fy25-profitability-dahiya"
+],
+[
+"Entrevista · Dahiya · EN · 2014",
+"https://www.businesstoday.in/opinion/interviews/story/policy-bazaar-ceo-yashish-dahiya-insurance-market-137117-2014-08-06"
+],
+[
+"Historia del cambio · YourStory · EN · 2021",
+"https://yourstory.com/2021/11/the-turning-point-insurance-policybazaar-paisabazaar-ipo"
+]
+]
+},
+{
+"key": "alan",
+"name": "Alan",
+"sub": "Aseguradora de salud y servicios, no correduría",
+"tipo": "aseguradora",
+"pais": "Francia",
+"fund": null,
+"seg": "empresas",
+"ramo": "Salud colectiva para empresas",
+"canales": [
+"seo",
+"socios",
+"recomendacion",
+"b2b"
+],
+"humano": "mixto",
+"rent": "declarada",
+"evid": "media",
+"desen": "independiente",
+"escalaCorta": "804 M€ de ARR firmado · 1,1 M miembros (Q1 2026)",
+"evidencia": "Escala declarada y EBITDA positivo en Francia; no beneficio global probado aquí.",
+"canal": "Contenido + socios + recomendación + ventas a empresas",
+"facts": [],
+"que": "Vende a empresas una experiencia de salud para sus equipos: seguro, orientación y servicios que se usan antes del siniestro. El comprador puede valorar la experiencia del empleado y la gestión, no solo el precio de la póliza.",
+"escala": "Carta Q1 2026: 804 millones de euros de ARR firmado y 1,1 millones de miembros. La empresa señala EBITDA positivo en Francia en 2025. ARR firmado no es ingreso contable del ejercicio ni comisión de corredor.",
+"evolucion": "El resumen de la conversación con Jean-Charles Samuelian insiste en prevención, regulación y cambio de hábitos. La carta de 2026 comunica un 60% más de nueva captación con inversión aproximadamente similar, según la empresa. Mi lectura: una propuesta que el empleado percibe y RR. HH. puede gestionar crea una razón de compra distinta a la del comparador.",
+"captacion": "Kevin Aserraf explica en GrowthMakers que comenzó con alianzas y contenido, trabajó en ventas con el CEO y luego orientó la captación a empresas mayores. Parte del blog pasó de Medium al dominio propio.",
+"conversion": "Las notas de la entrevista de Samuelian atribuyen al rediseño del alta una reducción a la mitad del abandono y más de un 12% de las altas a recomendación. Son cifras históricas del episodio, no pólizas emitidas ni dato actual.",
+"despues": "La recomendación se introdujo dentro del producto. No hay renovación por cohorte en esos episodios.",
+"hipotesis": "Contenido que responda dudas reales del comprador y medir abandono paso a paso antes de contratar más vendedores.",
+"riesgo": "Asume riesgo asegurador y desarrolla servicios propios. La correduría no puede replicar sus márgenes ni decidir cobertura o reembolsos. El contexto francés de salud de empresa no prueba por sí solo demanda española. No se ha comprobado rentabilidad del grupo.",
+"limites": "El 80% de cierre anunciado en GrowthMakers pertenece a una experiencia concreta con una landing, no a todas las ventas.",
+"fuentes": [
+[
+"Alan · Q1 2026 · Carta de la dirección",
+"https://alan.com/en/blog/discover-alan/a/alan-2026-q1-letter-to-shareholders"
+],
+[
+"EU-Startups · 30 abril 2025 · Resumen editorial de podcast con cofundador",
+"https://www.eu-startups.com/2025/04/eu-startups-podcast-episode-115-jean-charles-samuelian-co-founder-and-ceo-of-alan/"
+],
+[
+"Podcast y notas · Samuelian · FR · alta desde 21:05",
+"https://blog.mantra.work/article/alan-avoir-obsession-produit"
+],
+[
+"Podcast · Aserraf · FR · etapa 2018/19",
+"https://podcasts.audiomeans.fr/growthmakers-a22916d02a69/-55-alan-400-de-croissance-en-2019-par-kevin-aserraf-growth-manager-5dff97df5483"
+]
+]
+},
+{
+"key": "coalition",
+"name": "Coalition",
+"sub": "Proveedor de ciberseguro y prevención; estructura de grupo mixta",
+"tipo": "mixto",
+"pais": "EE. UU.",
+"fund": null,
+"seg": "pymes",
+"ramo": "Ciberriesgo para empresas",
+"canales": [
+"agentes",
+"seo"
+],
+"humano": "asistido",
+"rent": "no_probada",
+"evid": "media",
+"desen": "independiente",
+"escalaCorta": ">100.000 asegurados analizados (mar 2026)",
+"evidencia": "Escala de cartera declarada; comparación de eficacia no causal.",
+"canal": "Corredores independientes + educación técnica",
+"facts": [],
+"que": "El cliente compra protección financiera junto con alertas, herramientas y respuesta a incidentes. Joshua Motta lo llama seguro activo: tratar de evitar o limitar el daño, no esperar a tramitar una indemnización.",
+"escala": "El informe de marzo de 2026 analiza datos de más de 100.000 asegurados de EE. UU., Canadá, Reino Unido, Australia y Alemania. No es una muestra española ni una cifra de clientes captados durante un año.",
+"evolucion": "En la entrevista se explica cómo conectan información técnica del riesgo con prevención y respuesta. En la cartera de 2025, compromiso de correo y fraude de transferencias supusieron el 58% de incidentes observados. Eso ayuda a expresar el problema en términos cotidianos del negocio.",
+"captacion": "Motta explica en 2025 cómo aprovecharon distribución existente. Webinars, formación, sesiones y materiales ayudan al corredor a explicar un riesgo complejo.",
+"conversion": "La venta une riesgo financiero, mitigación y respuesta a incidentes. El servicio al broker importa junto al servicio al asegurado.",
+"despues": "La prevención da motivos de contacto más allá de la emisión; no hay evidencia causal aquí de cuánto mejora la renovación.",
+"hipotesis": "Un diagnóstico sencillo y apoyo experto para que el colaborador pueda explicar y vender. Solo prometer servicios que realmente prestan los proveedores.",
+"riesgo": "Sus datos no prueban que el mismo servicio produzca idéntico resultado en cualquier pyme: selección de clientes y coberturas influyen. La tecnología de detección y la respuesta especializada no son capacidades triviales de una correduría. No se ha verificado su beneficio actual ni disponibilidad de estos productos para Protectio en España.",
+"limites": "Resumen editorial del podcast, no auditoría de superioridad o cuota de mercado.",
+"fuentes": [
+[
+"Risk & Insurance / The Institutes · 20 octubre 2025 · Resumen de entrevista al cofundador",
+"https://riskandinsurance.com/predict-prevent-podcast-24-from-passive-policies-to-active-cyber-protection/"
+],
+[
+"Coalition · 5 marzo 2026 · Datos de cartera declarados por empresa",
+"https://www.coalitioninc.com/announcements/2026-cyber-claims-report"
+],
+[
+"Podcast · Motta · EN · 2025",
+"https://podcasts.apple.com/us/podcast/joshua-motta-how-coalition-created-the-active/id1700969672?i=1000685321278"
+],
+[
+"Podcast y notas · Voice of Insurance · EN · 2022",
+"https://www.advantagego.com/content/new-podcast-with-joshua-motta-from-coalition/"
+]
+]
+},
+{
+"key": "cleverea",
+"name": "Cleverea",
+"sub": "Referencia española de producto digital y distribución omnicanal",
+"tipo": "aseguradora",
+"pais": "España",
+"fund": null,
+"seg": "particulares",
+"ramo": "Viaje, movilidad, hogar, salud y servicios del hogar",
+"canales": [
+"paid",
+"seo",
+"asistida",
+"agentes"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "baja",
+"desen": "independiente",
+"escalaCorta": "Sin serie verificable de ingresos o beneficio",
+"evidencia": "Caso cualitativo local, no éxito financiero actual demostrado.",
+"canal": "SEM, redes, SEO y cierre humano",
+"facts": [],
+"que": "Empezó con viajes y amplió hacia movilidad, hogar, salud y servicios del hogar. En 2025 explica una apuesta por simplificar la gestión con un único proveedor de varios servicios regulados.",
+"escala": "Las entrevistas permiten estudiar producto y canal, pero no aportan una serie reciente verificable de ingresos, retención y beneficio. Por eso no se coloca al nivel probatorio de PB Fintech ni de la salida de Simply Business.",
+"evolucion": "Bosch describía en 2022 contratación digital junto con cierre por teléfono y atención humana, especialmente en siniestros. La entrevista de 2025 atribuye al covid el giro desde viajes y destaca su alianza con mediadores. Lección del relato: el mercado obligó a cambiar, y digital no significó eliminar personas.",
+"captacion": "Bosch concreta en mayo de 2022 SEM, redes, programática, SEO, eventos e influencers. Declara 100.000 € de gasto de marketing en 2021 y aproximadamente 1 M€ previsto para 2022; previsión no es gasto realizado ni retorno. En la entrevista de junio de 2025 al Col·legi, el canal indirecto con mediadores ya se describe como relevante y prioritario, con inversión en equipo y herramientas; el esquema no se quedó solo en campañas directas.",
+"conversion": "Dice que la mayoría compraba digitalmente, pero una parte relevante cerraba por teléfono. Atendían 5.000-10.000 llamadas mensuales, sin distinguir ventas y servicio.",
+"despues": "El teléfono también servía para siniestros. No se publica su efecto en renovación.",
+"hipotesis": "Un historial único por cliente entre web, WhatsApp y llamadas; asistencia en pasos con dudas.",
+"riesgo": "La frase del fundador de que cuesta lo mismo vender una póliza que un millón no se toma literalmente: no incluye toda la carga de atención, siniestros, distribución y cumplimiento. Abrir varios ramos o añadir luz y gas no acredita rentabilidad. No se propone copiar esa amplitud.",
+"limites": "No hay CAC, atribución de ventas o beneficio del aumento de inversión.",
+"fuentes": [
+[
+"Col·legi de Mediadors de Barcelona · 4 junio 2025 · Entrevista a la empresa",
+"https://www.elcol-legi.org/w/es/cleverea-nuestra-alianza-con-los-mediadores-es-estrategica/"
+],
+[
+"Entrevista · Bosch · ES · mayo de 2022",
+"https://www.muysegura.com/javier-bosch-cleverea-en-cleverea-apostamos-por-la-omnicanalidad-y-la-cercania-con-nuestros-clientes/"
+],
+[
+"Audio · Intereconomía · ES · 2021",
+"https://archivo.intereconomia.com/programas/cleverea-la-compania-que-cierra-una-ronda-de-5me-para-lanzar-nuevos-productos-20211209-1730/"
+]
+]
+},
+{
+"key": "wefox",
+"name": "wefox",
+"sub": "Contraste: crecimiento, aseguradora, MGA y distribución",
+"tipo": "mixto",
+"pais": "Alemania",
+"fund": null,
+"seg": "particulares",
+"ramo": "Varios ramos a través de asesores",
+"canales": [
+"agentes"
+],
+"humano": "asistido",
+"rent": "no_probada",
+"evid": "media",
+"desen": "reestructurada",
+"escalaCorta": "151 M€ de financiación y refinanciación (jul 2025)",
+"evidencia": "Reestructuración comprobada; no presentar como fracaso total ni como rentabilidad consolidada lograda.",
+"canal": "Red de asesores y plataformas locales",
+"facts": [],
+"que": "Su nuevo enfoque combina plataformas locales, acuerdos con aseguradoras y distribución. No es el mismo perímetro que el relato de expansión anterior; comparar volúmenes sin ajustar esas ventas sería engañoso.",
+"escala": "En julio de 2025 comunicó 151 millones de euros de financiación: 76 millones de capital y 75 de refinanciación. Había vendido su aseguradora de Liechtenstein y negocios italianos, reorientándose a MGA y distribución.",
+"evolucion": "Insurance Journal relaciona las dificultades con el capital requerido por el negocio asegurador y describe la venta de activos y el foco en posiciones rentables. La comunicación de la empresa hablaba de una ruta hacia beneficio en 2025, no de cuentas que lo certificasen. La prensa de julio de 2026 seguía examinando financiación y gobierno.",
+"captacion": "Las entrevistas históricas de Teicke describen distribución indirecta y herramientas para asesores. Las nuevas fuentes de 2025 muestran un perímetro distinto tras ventas y reestructuración.",
+"conversion": "Hay que convencer al asesor y al asegurado. La promesa histórica era emitir y atender a distancia con menos tareas manuales.",
+"despues": "La relación personal queda en la red. No hay tasa comparable entre negocios.",
+"hipotesis": "Estudiar qué necesita un colectivo de colaboradores para vender y atender mejor. No medir éxito por altas de colaboradores sin actividad.",
+"riesgo": "No he verificado beneficio consolidado auditado posterior. Tampoco se puede atribuir el desenlace solo a una causa ni decir que la intermediación digital no funciona. La evidencia sí permite rechazar financiación y valoración como medidas suficientes de éxito.",
+"limites": "No usar previsiones antiguas de rentabilidad como resultados. La nota de julio de 2025 anunciaba una ruta, no cuentas que la confirmasen.",
+"fuentes": [
+[
+"wefox · comunicado primario · julio de 2025",
+"https://www.wefox.com/press/wefox-successfully-secures-eur-151m-funding-to-support-new-strategy-with-focus-on-mga-business-and-smart-insurance-distribution"
+],
+[
+"Insurance Journal · 14 mayo 2025 · Prensa sectorial",
+"https://www.insurancejournal.com/news/international/2025/05/14/823700.htm"
+],
+[
+"experten.de · 2 julio 2026 · Investigación de prensa sectorial",
+"https://www.experten.de/id/4950641/wefox-Von-der-Notfallfinanzierung-zur-Governance-Frage/"
+],
+[
+"Entrevista histórica · Teicke · EN",
+"https://review.brunswickgroup.com/article/wefox-julian-teicke/"
+],
+[
+"Entrevista histórica · Claret · EN",
+"https://www.claret-capital.com/articles/ceo-spotlight-wefoxs-julian-teicke/"
+]
+]
+},
+{
+"key": "tuio",
+"name": "Tuio",
+"sub": "Distribución digital / MGA según producto; no una correduría pura",
+"tipo": "mga",
+"pais": "España",
+"fund": 2021,
+"seg": "particulares",
+"ramo": "Hogar, coche y vida",
+"canales": [
+"paid",
+"ia",
+"directo"
+],
+"humano": "autoservicio",
+"rent": "no_probada",
+"evid": "media",
+"desen": "participada",
+"escalaCorta": ">100.000 clientes activos (jul 2026)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Marketing interno, Google, Meta y asistentes IA",
+"facts": [
+[
+"Fundación",
+"2021, España"
+],
+[
+"Clientes",
+"Más de 100.000 activos, según Mapfre (julio de 2026)"
+],
+[
+"Operación anunciada",
+"Acuerdo para adquirir 38,9% por Mapfre, sujeto a autorizaciones (julio de 2026)"
+]
+],
+"que": "Contratación digital y autoservicio de hogar, coche y vida; experiencia simple y precio inmediato. La entrevista de septiembre de 2026 describe aproximadamente 50 empleados y más de 100.000 clientes, según la empresa.",
+"escala": "",
+"evolucion": "Mapfre anunció en julio de 2026 que Tuio genera más del 20% de sus nuevos clientes a través de asistentes IA desde su integración de febrero. El titular destaca ChatGPT; el cuerpo no separa qué parte corresponde a cada asistente. No se presenta como canal propio ni como garantía de que no haya competencia.",
+"captacion": "García explica en abril de 2026 que su marketing digital es interno, sin agencias. Analizan Google y Meta para detectar gasto desperdiciado y cambiar campañas. Mapfre añade en julio el canal de asistentes IA.",
+"conversion": "La venta sigue alta → cotización → decisión sin llamada obligatoria. Pasaron de pocas campañas amplias a un árbol granular de concordancias casi siempre exactas. Declara reducir un 90% el tiempo hasta obtener conclusiones, no el CAC.",
+"despues": "Habla de resolver rápido siniestros claros, pero no publica tasa de renovación.",
+"hipotesis": "Conectar anuncio con póliza emitida y mantenida. Optimizar por contribución, no formularios baratos. Probar reglas manuales antes de automatizar.",
+"riesgo": "",
+"limites": "Testimonio del fundador, no auditoría. Mapfre dice en titular ChatGPT, pero en el cuerpo atribuye más del 20% de nuevos clientes a asistentes IA; no aislar todo el porcentaje a ChatGPT. Es canal externo, no propio.",
+"fuentes": [
+[
+"Forbes: cierre de 2023 con 25.000 pólizas",
+"https://forbes.es/economia/441418/la-insurtech-tuio-cierra-2023-con-25-000-polizas-y-con-la-prevision-de-alcanzar-a-finales-de-2024-las-65-000/"
+],
+[
+"Business People: entrevista a Juan García (sep 2026)",
+"https://business-people.es/protagonistas/tuio-desafio-a-lo-tradicional/"
+],
+[
+"Mapfre: adquisición del 38,9% (jul 2026)",
+"https://www.mapfre.com/comunicacion/corporativo-comunicacion/innovacion-desarrollo-negocio-digital-tuio/"
+],
+[
+"Podcast con transcripción · García · EN · abril de 2026",
+"https://podcast.thoughtsonselling.com/build-how-customers-want-to-buy/"
+],
+[
+"Entrevista · Product Hackers · ES",
+"https://producthackers.com/es/podcast/tuio-juan-garcia/"
+]
+]
+},
+{
+"key": "marshmallow",
+"name": "Marshmallow",
+"sub": "Aseguradora digital, coche",
+"tipo": "aseguradora",
+"pais": "Reino Unido",
+"fund": 2017,
+"seg": "particulares",
+"ramo": "Coche (recién llegados e inmigrantes)",
+"canales": [
+"comparador"
+],
+"humano": "autoservicio",
+"rent": "declarada",
+"evid": "media",
+"desen": "independiente",
+"escalaCorta": "1 M conductores · run rate 500 M$ (abr 2025)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Especialización que capta en comparadores",
+"facts": [
+[
+"Fundación",
+"2017, Londres"
+],
+[
+"Clientes",
+"1 millón de conductores (abr 2025)"
+],
+[
+"Ingresos",
+"Run rate de 500 M$ y rentable, según la empresa (abr 2025)"
+],
+[
+"Valoración",
+"Más de 2.000 M$ (abr 2025)"
+]
+],
+"que": "Propuesta de valor: precio justo de seguro de coche para inmigrantes y recién llegados, un colectivo al que las aseguradoras tradicionales penalizan por no tener historial local. Marshmallow usa datos internacionales y modelos propios para tarificarles bien.",
+"escala": "",
+"evolucion": "La empresa pasó de unos 100.000 asegurados en 2021 a un millón de conductores en 2025, según las fuentes del informe anterior. Sus planes de ampliar servicios no deben tratarse como productos ya lanzados.",
+"captacion": "En The Follow-up 73 (2023), Francesca Bennett, de Marshmallow, dice que el 80% de su negocio llega por webs de comparación de precios. La ventaja de segmento no significa que capte fuera de esos sitios.",
+"conversion": "El logo y mascota debían funcionar en el pequeño recuadro de un comparador. Una identidad reconocible y precio pertinente para recién llegados debían ganar allí la elección.",
+"despues": "La entrevista de 2021 hablaba de profundizar relación y posibles servicios futuros; no acredita cross-selling ejecutado o retención.",
+"hipotesis": "Buscar un perfil desatendido y dónde ya compra. Especialización y uso de comparadores pueden coexistir.",
+"riesgo": "",
+"limites": "80% es testimonio de 2023 sobre \"business\", sin desglose de primas/pólizas/ingresos; no extrapolar a 2026.",
+"fuentes": [
+[
+"TechCrunch: ronda de 90 M$ y entrevista al CEO (abr 2025)",
+"https://techcrunch.com/2025/04/14/marshmallow-the-uk-insurance-startup-for-migrants-raises-90m-at-a-2b-valuation/"
+],
+[
+"Marshmallow: nota oficial de la ronda",
+"https://www.marshmallow.com/blog/marshmallow-raises-90-million-funding"
+],
+[
+"PDF transcrito · The Follow-up 73 · EN · 2023",
+"https://www.underconsideration.com/brandnew/wp/wp-content/uploads/2023/11/BN_Podcast_Transcript_Ep_073.pdf"
+],
+[
+"Entrevista · TechCrunch · EN · 2021",
+"https://techcrunch.com/2021/09/07/marshmallow-insurance-85-million/"
+]
+]
+},
+{
+"key": "next",
+"name": "NEXT",
+"sub": "Aseguradora digital, pymes",
+"tipo": "aseguradora",
+"pais": "EE. UU.",
+"fund": 2016,
+"seg": "pymes",
+"ramo": "RC y accidentes para autónomos y pymes (>1.300 profesiones)",
+"canales": [
+"directo",
+"socios",
+"agentes"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "media",
+"desen": "adquirida",
+"escalaCorta": "~750.000 clientes · 548 M$ de ventas 2024",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Tres vías: directo, socios y agentes",
+"facts": [
+[
+"Fundación",
+"2016, Palo Alto"
+],
+[
+"Clientes",
+"Casi 750.000 (sep 2025)"
+],
+[
+"Ventas 2024",
+"548 M$ (cifra de ERGO)"
+],
+[
+"Salida",
+"Comprada por Munich Re/ERGO por 2.600 M$ (jul 2025)"
+]
+],
+"que": "Propuesta de valor: seguro de responsabilidad civil y accidentes para autónomos y pymes, cotizado y contratado en minutos, con coberturas adaptadas a más de 1.300 profesiones y certificados al instante.",
+"escala": "",
+"evolucion": "Guy Goldstein, su fundador, lo planteó en 2016 como replicar en empresas lo que Geico hizo en particulares. Y decidió no ser un comparador: \"es casi imposible comparar opciones, salvo por precio\", así que Next recomienda el producto concreto para cada profesión en lugar de listar precios.",
+"captacion": "Ramsey, responsable del canal de agentes, dice en octubre de 2025 que cada vía supone aproximadamente un tercio del negocio. Nació directa y añadió agentes unos cinco años antes.",
+"conversion": "Promesa al agente: saber en segundos si el riesgo encaja y emitir en minutos. La entrevista Goldstein/Bluevine muestra distribución a pymes desde un proveedor financiero que ya usan.",
+"despues": "No hay renovación por canal. No se puede concluir que un tercio sea más rentable.",
+"hipotesis": "Simplificar la cotización por profesión y buscar proveedores que ya sirven a esa profesión.",
+"riesgo": "",
+"limites": "Los tercios son una aproximación declarada en 2025, no segmentación auditada de 2026. Una correduría debe negociar las facultades de emisión.",
+"fuentes": [
+[
+"ERGO: cierre de la compra de Next (jul 2025)",
+"https://www.ergo.com/en/newsroom/media-information/2025/20250701-ergo-acquisition-next-insurance"
+],
+[
+"CB Insights: entrevista a Guy Goldstein (2016)",
+"https://www.cbinsights.com/research/largest-seed-round-in-insurance/"
+],
+[
+"Next: rating A+ y 750.000 clientes (sep 2025)",
+"https://www.nextinsurance.com/blog/next-insurance-earns-a-superior-rating-from-am-best-approaches-750000-small-business-customers/"
+],
+[
+"Entrevista · Ramsey · EN · octubre de 2025",
+"https://iireporter.com/itc-briefing-nexts-jack-ramsey-on-the-digital-evolution-of-agent-distribution/"
+],
+[
+"Podcast transcrito · Goldstein / Bluevine · EN · 2021",
+"https://www.bluevine.com/blog/tearsheet-podcast-bluevine-next-insurance-partnership"
+]
+]
+},
+{
+"key": "zego",
+"name": "Zego",
+"sub": "Grupo de seguro de movilidad, con actividad MGA y entidad aseguradora: no una correduría pura",
+"tipo": "mixto",
+"pais": "Reino Unido",
+"fund": 2016,
+"seg": "movilidad",
+"ramo": "Movilidad: repartidores, conductores y flotas",
+"canales": [
+"socios"
+],
+"humano": "autoservicio",
+"rent": "no_probada",
+"evid": "media",
+"desen": "independiente",
+"escalaCorta": "1/3 del reparto de comida en Reino Unido (2020)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Plataformas de trabajo y flotas",
+"facts": [
+[
+"Fundación",
+"2016, Londres"
+],
+[
+"Cuota",
+"Un tercio del reparto de comida en Reino Unido (declarado en 2020)"
+],
+[
+"Cobertura dada",
+"Más de 230 millones de horas (2020)"
+],
+[
+"Hito",
+"Primera insurtech británica con licencia de aseguradora (2019)"
+]
+],
+"que": "Seguro flexible para trabajadores y flotas, con formatos por horas, treinta días o anual. Permite ajustar cobertura al trabajo realizado, sujeto al producto y a las coberturas obligatorias que correspondan.",
+"escala": "",
+"evolucion": "Los fundadores venían de Deliveroo y describen la prima anual como una barrera para incorporarse al trabajo. La combinación de flexibilidad, datos y relaciones con plataformas permitió ampliar hacia flotas; no se aísla cuánto aportó cada factor.",
+"captacion": "Saar describe relaciones con Uber, Deliveroo, flotas y operadores como Voi y TIER. La necesidad para poder trabajar crea el momento natural de venta.",
+"conversion": "Formatos de cobertura por horas, treinta días o anual; integración y telemática permiten adaptar precio al uso y comportamiento.",
+"despues": "Declara 95% de retención en buenos conductores frente a 45-50% en malos. Es una comparación por riesgo en esa entrevista, no tasa global actual.",
+"hipotesis": "Buscar desencadenantes también fuera del coche: inicio de actividad, alquiler de local o requisito de un contrato de servicios.",
+"riesgo": "",
+"limites": "No publica peso o comisión de cada socio. Ventaja de riesgo no es una capacidad que una correduría pueda copiar sola.",
+"fuentes": [
+[
+"TechRound: entrevista a Sten Saar (2020)",
+"https://techround.co.uk/interviews/interview-with-sten-saar-ceo-and-co-founder-of-zego/"
+],
+[
+"Entrevista · TechRound · EN",
+"https://techround.co.uk/interviews/interview-with-sten-saar-ceo-at-mobility-insurance-provider-zego/"
+],
+[
+"Entrevista · Saar · ITC DIA · EN",
+"https://www.itcdiaeurope.com/thought-leadership/zegos-vision-for-the-future-of-insurance/"
+]
+]
+},
+{
+"key": "qover",
+"name": "Qover",
+"sub": "Plataforma de orquestación y distribución integrada",
+"tipo": "embedded",
+"pais": "Bélgica",
+"fund": 2016,
+"seg": "socios",
+"ramo": "Seguros integrados en bancos, fabricantes y apps",
+"canales": [
+"socios",
+"b2b"
+],
+"humano": "autoservicio",
+"rent": "no_probada",
+"evid": "media",
+"desen": "independiente",
+"escalaCorta": "15 M personas en 32 países (mar 2026)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Venta dirigida a cuentas y alianzas",
+"facts": [
+[
+"Fundación",
+"2016, Bruselas"
+],
+[
+"Alcance",
+"15 millones de personas, 32 países (mar 2026)"
+],
+[
+"Socios",
+"Revolut, Mastercard, BMW, Monzo, Canyon"
+],
+[
+"Objetivo",
+"55 millones protegidos a fin de 2026"
+]
+],
+"que": "Propuesta de valor: la infraestructura para que una marca (un banco, un fabricante, una app) ofrezca seguros dentro de su propio producto, con API, paneles en tiempo real y siniestros asistidos por IA. Ingresos multiplicados por tres en cuatro años.",
+"escala": "",
+"evolucion": "La distribución integrada utiliza la relación del socio con su cliente. No significa que la empresa no haga marketing: la entrevista nueva concreta su trabajo comercial dirigido a cuentas. El objetivo de 55 millones protegidos a cierre de 2026 era una previsión, no un resultado.",
+"captacion": "En su vídeo de abril de 2026, Colmant recorre Immoweb → Deliveroo en Bélgica y Europa → Revolut. Explica acumulación de acuerdos; capítulo publicado 03:58 sobre alianzas.",
+"conversion": "En Front Lines concreta algunas acciones a cuentas, eventos y documentos con socios. Divide venta en diseño, acuerdo y puesta en marcha; separa tecnología, operaciones y asesoría al cobrar. Definir cliente ideal sirve para rechazar oportunidades.",
+"despues": "Crece con el volumen del socio. Advierte de diferencia entre ingreso contratado y real y de inversiones perdidas por socios que no lanzaron o quebraron.",
+"hipotesis": "Exigir prueba de audiencia, capacidad comercial y responsable; piloto, costes iniciales y hitos antes de integrar.",
+"riesgo": "",
+"limites": "No es ausencia de marketing. El propio CEO dice que si empezara otra vez elegiría un nicho, no una plataforma horizontal desde el principio.",
+"fuentes": [
+[
+"Qover: 10 años y 12 M$ de CIBC (mar 2026)",
+"https://www.qover.com/press/10-years-embedded-insurance-12m-funding"
+],
+[
+"Qover y Willis: alianza para seguro de afinidad (mar 2026)",
+"https://www.qover.com/press/willis-wtw-gb-affinity"
+],
+[
+"Vídeo transcrito · Colmant · EN · 21:47 · abril de 2026",
+"https://www.youtube.com/watch?v=roq-TiITHYE"
+],
+[
+"Podcast y extractos · Front Lines · EN · sin fecha visible",
+"https://www.frontlines.io/podcasts/quentin-colmant/"
+]
+]
+},
+{
+"key": "manypets",
+"name": "ManyPets / Bought By Many",
+"sub": "Distribución de mascotas / MGA y estructura de grupo, no aseguradora única",
+"tipo": "mga",
+"pais": "Reino Unido",
+"fund": 2012,
+"seg": "particulares",
+"ramo": "Mascotas",
+"canales": [
+"seo",
+"recomendacion"
+],
+"humano": "autoservicio",
+"rent": "probada",
+"evid": "alta",
+"desen": "independiente",
+"escalaCorta": "62 M£ de ingresos · 6,25 M£ de beneficio (2024/25)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Búsquedas específicas, comunidades y recomendación",
+"facts": [
+[
+"Origen",
+"Bought By Many, 2012, Reino Unido"
+],
+[
+"Beneficio",
+"Many Group: 6,25 M£ netos, ejercicio cerrado el 31 marzo 2025"
+],
+[
+"Ingresos y primas",
+"62 M£ de ingresos y 232 M£ de GWP en 2024/25; magnitudes distintas"
+]
+],
+"que": "Propuesta de valor: nació creando comunidades de gente con necesidades de seguro ignoradas. Su co-fundador Steven Mendel cuenta que encuestaron a 40.000 personas y diseñaron siete productos de mascotas que no existían, rehaciendo además cada paso de la experiencia de cliente.",
+"escala": "",
+"evolucion": "Tras expansión y retirada de mercados, la empresa se reenfocó en Reino Unido. Su informe anual 2025 recoge el primer beneficio neto de 6,25 M£ en el ejercicio 2024/25. No se puede aislar una única causa de recuperación.",
+"captacion": "Mendel describe el orden: preguntar a aseguradoras dónde quieren crecer, analizar búsquedas y conversación social, crear grupos donde coincidan oferta y demanda y negociar condiciones.",
+"conversion": "Al principio el miembro compraba directamente a la aseguradora. En el podcast de 2022 cuenta que 40.000 respuestas sirvieron para diseñar siete productos de mascotas antes del lanzamiento de febrero de 2017.",
+"despues": "BCG recoge revisión del acuerdo y acciones activas para renovar; el podcast destaca recomendación entre dueños de mascotas. No se mide aquí efecto incremental.",
+"hipotesis": "Una necesidad específica, aseguradora interesada y distribución a su colectivo. Crear comunidad que aporte problemas y referencias, no solo seguidores.",
+"riesgo": "",
+"limites": "Entrevistas del modelo inicial y de 2022; sus técnicas de datos de Facebook no son instrucciones técnicas o legales vigentes.",
+"fuentes": [
+[
+"Future of Insurance: entrevista a Steven Mendel",
+"http://future-of-insurance.com/podcast/stevenmendel/"
+],
+[
+"Sifted: pérdidas, despidos y salidas de mercados (2024)",
+"https://sifted.eu/articles/manypets-losses-fall-layoffs-market-exits-news"
+],
+[
+"ManyPets: informe anual 2025, primer beneficio",
+"https://manypets.com/uk/resources/press-release/annual-report-2025.pdf"
+],
+[
+"Entrevista · McKinsey · EN · modelo inicial",
+"https://www.mckinsey.com/industries/financial-services/our-insights/playing-to-connectedness"
+],
+[
+"Entrevista · BCG · EN · 2015",
+"https://www.bcg.com/publications/2015/insurance-financial-institutions-mendel-steven-digital-insurance-long-tail"
+],
+[
+"Podcast · Mendel · EN · enero de 2022",
+"https://sabinega.podbean.com/e/steven-mendel-tips-on-how-to-build-a-sustainable-growth-business/"
+]
+]
+},
+{
+"key": "lemonade",
+"name": "Lemonade",
+"sub": "Aseguradora digital directa (hogar, mascotas, coche)",
+"tipo": "aseguradora",
+"pais": "EE. UU.",
+"fund": 2015,
+"seg": "particulares",
+"ramo": "Inquilinos, hogar, mascotas, coche y vida",
+"canales": [
+"directo"
+],
+"humano": "autoservicio",
+"rent": "perdidas",
+"evid": "alta",
+"desen": "cotiza",
+"escalaCorta": "1.240 M$ de primas en vigor (+31%, 4T 2025)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Entrada por inquilinos y ampliación de productos",
+"facts": [
+[
+"Fundación",
+"2015, Nueva York. Cotiza desde 2020"
+],
+[
+"Primas en vigor",
+"1.240 M$ (+31% interanual, 4T 2025)"
+],
+[
+"Racha",
+"9 trimestres seguidos acelerando el crecimiento"
+],
+[
+"Eficiencia",
+"+1,2 M clientes desde 2022 con 6% menos plantilla"
+]
+],
+"que": "Compra y gestión digital de seguros, con automatización y un programa de donaciones. Los tiempos promocionales de compra o pago de siniestro no son un compromiso universal.",
+"escala": "",
+"evolucion": "La carta del 4T 2025 recoge primas en vigor de 1.240 M$ (+31% interanual) y pérdida neta de 22 M$ en el trimestre. La automatización y el aprendizaje son parte de la explicación de la dirección, no una prueba causal de crecimiento rentable.",
+"captacion": "Schreiber explica en 2021 captar jóvenes con una primera necesidad sencilla, experiencia móvil y marca ligada a valores, para acompañarlos después con más productos.",
+"conversion": "La compra digital rápida forma parte de su argumento de coste y experiencia. Jerby, responsable de growth, recomienda experimentar y no descartar canales antes de dar tiempo al aprendizaje.",
+"despues": "Vida completaba oferta para clientes existentes y permitía agrupar. La carta de 4T 2025 registra annual dollar retention de 85%: retención monetaria, no porcentaje de clientes que renuevan.",
+"hipotesis": "Una puerta de entrada clara y después revisar necesidades nuevas; no presentar todo el catálogo en el primer contacto.",
+"riesgo": "",
+"limites": "La anécdota de Jerby de pasar presupuesto de Google a Bing era de otra startup que asesoró, no demuestra un canal de Lemonade.",
+"fuentes": [
+[
+"Lemonade: carta a accionistas del 4T 2025",
+"https://www.lemonade.com/investor-relations-bo/wp-content/uploads/docs/LMND-Shareholder-Letter-Q4-25.pdf"
+],
+[
+"Entrevista transcrita · Schreiber · EN · 2021",
+"https://www.fool.com/investing/2021/12/06/interview-lemonade-co-founder-daniel-schreiber/"
+],
+[
+"Entrevista · Jerby · InfiniGrow · EN",
+"https://infinigrow.com/blog/qa-with-marketing-leaders-tamir-jerby-vp-growth-lemonade/"
+]
+]
+},
+{
+"key": "ethos",
+"name": "Ethos",
+"sub": "Plataforma de venta de vida (corredor tecnológico)",
+"tipo": "correduria",
+"pais": "EE. UU.",
+"fund": 2016,
+"seg": "particulares",
+"ramo": "Vida",
+"canales": [
+"directo",
+"agentes"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "alta",
+"desen": "cotiza",
+"escalaCorta": "IPO de ~200 M$ con valoración ~1.200 M$ (ene 2026)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Directo y red de agentes/agencias",
+"facts": [
+[
+"Fundación",
+"2016, San Francisco"
+],
+[
+"Producto",
+"Vida con evaluación digital y sin examen médico en la propuesta descrita; elegibilidad y producto condicionan la emisión"
+],
+[
+"Valoración histórica",
+"2.700 M$ en 2021; aproximadamente 1.200 M$ en IPO de enero de 2026"
+],
+[
+"IPO",
+"Unos 200 M$ entre empresa y accionistas vendedores, enero de 2026"
+]
+],
+"que": "Seguro de vida contratado con evaluación digital que busca sustituir semanas de trámites por una experiencia en minutos, sin examen médico en la propuesta descrita. La elegibilidad y el producto condicionan emisión, precio y proceso.",
+"escala": "",
+"evolucion": "La fricción de contratar vida fue el problema inicial. Reuters recoge una IPO en enero de 2026 de unos 200 M$ entre empresa y vendedores y valoración cercana a 1.200 M$, frente a 2.700 M$ de 2021. Salir a bolsa no equivale a mantener una valoración anterior ni demuestra rentabilidad por sí solo.",
+"captacion": "El S-1/A de enero de 2026 sitúa el canal de terceros en 2021. En septiembre Colis explica el motor de agentes: agentes activos × pólizas por agente.",
+"conversion": "Proceso corto, comisiones al día siguiente y herramientas liberan tiempo del agente. En directo, mejor conversión, persistencia y economía por póliza permiten reinvertir en publicidad.",
+"despues": "Controlan persistencia de pagos y mortalidad con las aseguradoras. El umbral declarado de caja variable positiva al mes dos no es margen contable neto ni benchmark universal.",
+"hipotesis": "Medir colaboradores activos y producción por colaborador; quitar duplicaciones y acordar pagos claros.",
+"riesgo": "",
+"limites": "Suscripción y datos médicos son de acuerdos y regulación estadounidenses. No extrapolar conversión a España.",
+"fuentes": [
+[
+"Reuters: IPO de Ethos (ene 2026)",
+"https://www.reuters.com/technology/ethos-technologies-prices-us-ipo-19share-bloomberg-news-reports-2026-01-29/"
+],
+[
+"TechCrunch: ronda de SoftBank y modelo (2021)",
+"https://techcrunch.com/2021/07/21/ethos-picks-up-100m-at-a-2-7b-valuation-for-a-big-data-platform-to-improve-life-insurance-accessibility/"
+],
+[
+"Fuente primaria · SEC S-1/A · EN · enero de 2026",
+"https://www.sec.gov/Archives/edgar/data/1788451/000119312526015943/d901135ds1a.htm"
+],
+[
+"Conferencia transcrita · Colis · EN · septiembre de 2026",
+"https://stockanalysis.com/stocks/life/transcripts/737235-goldman-sachs-communacopia-technology-conference-2026/"
+]
+]
+},
+{
+"key": "luko",
+"name": "Luko",
+"sub": "Neoaseguradora de hogar, Francia",
+"tipo": "aseguradora",
+"pais": "Francia",
+"fund": null,
+"seg": "particulares",
+"ramo": "Hogar",
+"canales": [
+"paid"
+],
+"humano": "autoservicio",
+"rent": "perdidas",
+"evid": "media",
+"desen": "insolvencia",
+"escalaCorta": "72 M€ captados; insolvencia y venta a Allianz Direct (2024)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Pruebas pequeñas en Facebook y expansión de medios",
+"facts": [
+[
+"Capital captado",
+"72 M€ entre 2016 y 2021"
+],
+[
+"Desenlace",
+"Negocio de hogar adquirido por Allianz Direct en enero de 2024 tras proceso de insolvencia"
+]
+],
+"que": "Qué prometía: la mejor experiencia digital de seguro de hogar de Europa, con contratación veloz y expansión a varios países. Llegó a comprar dos startups (Coya en Alemania y Unkle en Francia) para acelerar.",
+"escala": "",
+"evolucion": "La expansión, compras y dificultades de financiación precedieron a su proceso de insolvencia y venta a Allianz Direct en 2024. No hay base en estas fuentes para atribuir el desenlace solo a economía unitaria, expansión o cierre del mercado de capital.",
+"captacion": "GrowthMakers 138 con Caillaud, VP Growth, trata primeros compradores antes del lanzamiento, priorización de canales, Facebook con 100 € semanales y primera campaña TV.",
+"conversion": "Goodassur identifica mudanza como momento clave de búsqueda. Las notas del podcast anuncian dividir CAC por tres, pero no publican aquí la metodología completa.",
+"despues": "No hay proceso ni tasa de renovación que pueda dar por contrastado en estas fuentes.",
+"hipotesis": "Ensayar mensaje y audiencia con presupuesto limitado; comprobar margen, atención y permanencia antes de escalar.",
+"riesgo": "",
+"limites": "Notas de episodio, no benchmark de CAC auditado. Crecimiento de clientes no evitó insolvencia y venta.",
+"fuentes": [
+[
+"TechCrunch: autopsia de la etapa independiente",
+"https://techcrunch.com/2023/08/04/unpacking-the-end-of-lukos-solo-journey-in-insurtech/"
+],
+[
+"TechCrunch: venta a Allianz Direct (ene 2024)",
+"https://techcrunch.com/2024/01/25/luko-insurtech-allianz-direct/"
+],
+[
+"Podcast · Caillaud · FR · etapa de 100.000 clientes",
+"https://podcasts.audiomeans.fr/growthmakers-a22916d02a69/-138-luko-passer-de-0-a-100-000-clients-en-2-ans-90890e6406c3"
+],
+[
+"Podcast · Vullierme · FR · 2019 · captación desde 08:30",
+"https://data-tribune.com/raphael-vullierme"
+],
+[
+"Entrevista · Goodassur · FR",
+"https://goodassur.com/luko/interview"
+],
+[
+"Fuente primaria · Allianz Direct · enero de 2024",
+"https://www.allianzdirect.de/presse/allianz-direct-uebernimmt-das-franzoesische-hausratversicherungsgeschaeft-von-luko/"
+]
+]
+},
+{
+"key": "root",
+"name": "Root",
+"sub": "Aseguradora de coche con telemetría",
+"tipo": "aseguradora",
+"pais": "EE. UU.",
+"fund": null,
+"seg": "particulares",
+"ramo": "Coche (tarificación por conducción)",
+"canales": [
+"socios",
+"agentes",
+"directo"
+],
+"humano": "mixto",
+"rent": "probada",
+"evid": "alta",
+"desen": "cotiza",
+"escalaCorta": "40,3 M$ de beneficio 2025 · 483.921 pólizas (2T 2026)",
+"evidencia": "Cifras declaradas por la empresa o recogidas por prensa, salvo fuente auditada indicada. No son métricas equivalentes entre empresas.",
+"canal": "Carvana, agentes y marketing directo",
+"facts": [
+[
+"Modelo",
+"Aseguradora de coche con telemática"
+],
+[
+"Beneficio anual",
+"40,3 M$ netos en 2025"
+],
+[
+"2T 2026",
+"25,4 M$ de beneficio neto; 483.921 pólizas en vigor"
+],
+[
+"Matiz",
+"Hubo pérdida neta de 5,4 M$ en 3T 2025; no hubo una secuencia ininterrumpida de trimestres rentables"
+]
+],
+"que": "Qué prometía: precio del seguro de coche basado en cómo conduces de verdad, medido con el móvil, con datos de conducción además de otros factores de tarificación.",
+"escala": "",
+"evolucion": "Primer trimestre con beneficio neto en 3T 2024 y beneficio anual en 2024 y 2025. En el 1S 2026 sumó 61,3 M$ netos. La tabla oficial de 2T 2026 muestra una pérdida de 5,4 M$ en 3T 2025: se corrige la afirmación anterior de beneficios consecutivos.",
+"captacion": "Timm explica en octubre de 2025 integrar seguro dentro de la compra en Carvana. La carta de 4T 2025 incorpora también agentes independientes y venta directa.",
+"conversion": "Describe compra en tres clics e integración en cotizadores de agentes para evitar repetir datos. El distribuidor compra facilidad de emisión, además de producto.",
+"despues": "Conectan marketing y precio para predecir conversión, permanencia y pérdidas; no se publica aquí una tasa de renovación trasladable.",
+"hipotesis": "Insertar oferta pertinente en una operación real. También puede ser plataforma profesional, operación inmobiliaria o contratación de servicios.",
+"riesgo": "",
+"limites": "No atribuir todo a Carvana. Ser buen distribuidor sin disciplina de riesgo no basta para una aseguradora.",
+"fuentes": [
+[
+"TechCrunch: dentro de la salida a bolsa de Root (2020)",
+"https://techcrunch.com/2020/10/06/inside-roots-ipo-filing/"
+],
+[
+"The Dispatch: entrevista a Alex Timm sobre el rescate (2023)",
+"https://www.dispatch.com/story/business/2023/05/12/after-losses-and-layoffs-root-ceo-confident-about-future/70195341007/"
+],
+[
+"Root: resultados de 2025, beneficio neto de 40,3 M$",
+"https://ir.joinroot.com/news-releases/news-release-details/root-inc-announces-2025-fourth-quarter-and-full-year-results/"
+],
+[
+"Root: carta a accionistas del 2T 2026 (SEC)",
+"https://www.sec.gov/Archives/edgar/data/1788882/000178888226000060/q22026shareholderletter.htm"
+],
+[
+"Podcast y notas · Timm · EN · octubre de 2025",
+"https://future-of-insurance.com/podcast/alextimm/"
+],
+[
+"Fuente primaria · SEC carta 4T 2025 · EN",
+"https://www.sec.gov/Archives/edgar/data/1788882/000178888226000013/q42025shareholderletter.htm"
+]
+]
+}
+];
+const REF_FIRST=[['manypets','demanda desatendida y negociación con aseguradoras'],['superscript','autoservicio frente a asesoría'],['tuio','publicidad conectada con compra'],
+  ['qover','socios y fases de venta'],['alan','abandono y recomendación'],['cleverea','canales digitales y teléfono']];
+const REF_FIX=[['Simply Business','un millón global en agosto de 2024, no solo Reino Unido en junio de 2026.'],
+  ['Mapfre/Tuio','acuerdo sujeto a autorizaciones, no cierre probado; asistentes IA no equivalen exclusivamente a ChatGPT.'],
+  ['Root','no hubo trimestres rentables ininterrumpidos, pues 3T 2025 fue negativo.'],
+  ['ManyPets','beneficio de Many Group fechado a marzo de 2025.'],
+  ['Luko/wefox','no se atribuye su desenlace a una sola causa.']];
+const REF_FILTER_VARS=['tipo','seg','canales','humano','rent','evid','desen'];
+let REF_F={q:''}; REF_FILTER_VARS.forEach(v=>REF_F[v]=new Set());
+let REF_ROW='canales', REF_COL='rent';
+const refVals=(r,v)=> REF_VARS[v].multi? r[v] : [r[v]];
+const refLab=(v,k)=>REF_VARS[v].vals[k]||k;
+const refBadge=(v,k)=>`<span class="rbadge ${(REF_TONE[v]||{})[k]||'neutral'}">${refLab(v,k)}</span>`;
+const refChips=r=>r.canales.map(c=>`<span class="rchip">${refLab('canales',c)}</span>`).join('');
+function refFiltered(){
+  const q=REF_F.q.trim().toLowerCase();
+  return REFS.filter(r=> REF_FILTER_VARS.every(v=>!REF_F[v].size || refVals(r,v).some(x=>REF_F[v].has(x)))
+    && (!q || [r.name,r.sub,r.ramo,r.pais,r.canal,r.que,r.captacion,r.hipotesis].join(' ').toLowerCase().includes(q)));
+}
+function renderRefs(){
+  const box=document.getElementById('refsBody'); if(!box) return;
+  if(!box.dataset.built){ box.dataset.built='1';
+    box.innerHTML=`
+    <div class="panel">
+      <h2>Cómo venden y crecen en seguros <span class="h2-sub">dossier unificado de 18 empresas · consultado el 26 de octubre de 2026</span></h2>
+      <p class="note" style="margin-top:0">No hay un solo canal ganador: <b>segmento, distribución, conversión y servicio</b> deben encajar. No todas son corredurías, y crecimiento, financiación, salida y rentabilidad no equivalen. Ser un comparador generalista es un modelo; usar comparadores para captar es una decisión de canal. Marshmallow declaró en 2023 que el 80% del negocio procedía de comparadores, sin definir denominador auditado (no se extrapola a 2026); Policybazaar también creció desde comparación y venta asistida.</p>
+      <div class="ref-first"><span class="ref-first-l">Qué mirar primero</span>${REF_FIRST.map(([k,t])=>{ const r=REFS.find(x=>x.key===k); return `<button type="button" class="ref-first-b" data-ref="${k}"><b>${esc(r.name)}</b> ${t}</button>`; }).join('')}</div>
+      <details class="ref-fix"><summary>Correcciones frente a las versiones anteriores del dossier</summary><ul>${REF_FIX.map(([n,t])=>`<li><b>${n}:</b> ${t}</li>`).join('')}</ul></details>
+      <p class="ref-warn">Las cifras son declaradas por cada empresa o recogidas por prensa salvo que se indique fuente auditada, y <b>no son métricas equivalentes entre empresas</b> (clientes, pólizas acumuladas, ARR, primas o ingresos miden cosas distintas). Las variables de clasificación son una lectura del dossier para poder comparar modelos.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Filtrar por variables de negocio <span class="h2-sub" id="refCount"></span></h2>
+        <div class="frow"><input type="search" class="ui-in" id="refQ" placeholder="Buscar empresa, ramo, canal…" style="width:240px" aria-label="Buscar en los referentes"><button type="button" class="btn btn-sm" id="refClear">Limpiar filtros</button></div></div>
+      <div id="refFilters" class="ref-filters"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Cruce de variables <span class="h2-sub">qué empresas comparten cada combinación</span></h2>
+        <div class="frow"><span class="fhint">Filas</span><select class="ui-in ref-sel" id="refRow"></select><span class="fhint">Columnas</span><select class="ui-in ref-sel" id="refCol"></select></div></div>
+      <div class="tblscroll" id="refCross"></div>
+    </div>
+    <div class="panel">
+      <h2>Matriz comparativa <span class="h2-sub">pulsa una empresa para abrir su ficha completa</span></h2>
+      <div class="tblscroll" id="refMatrix"></div>
+    </div>
+    <div class="panel">
+      <h2>Hipótesis para Protectio <span class="h2-sub">qué probar a partir de cada caso</span></h2>
+      <div class="ref-hyp" id="refHyp"></div>
+    </div>`;
+    const opts=Object.keys(REF_VARS).map(v=>`<option value="${v}">${REF_VARS[v].label}</option>`).join('');
+    const rs=box.querySelector('#refRow'), cs=box.querySelector('#refCol');
+    rs.innerHTML=opts; cs.innerHTML=opts; rs.value=REF_ROW; cs.value=REF_COL;
+    rs.onchange=()=>{ REF_ROW=rs.value; paintRefs(); }; cs.onchange=()=>{ REF_COL=cs.value; paintRefs(); };
+    box.querySelector('#refQ').addEventListener('input',e=>{ REF_F.q=e.target.value; paintRefs(); });
+    box.querySelector('#refClear').onclick=()=>{ REF_FILTER_VARS.forEach(v=>REF_F[v].clear()); REF_F.q=''; box.querySelector('#refQ').value=''; paintRefs(); };
+    box.addEventListener('click',e=>{
+      const f=e.target.closest('[data-fv]'); if(f){ const s=REF_F[f.dataset.fv], k=f.dataset.fk; s.has(k)?s.delete(k):s.add(k); paintRefs(); return; }
+      const r=e.target.closest('[data-ref]'); if(r){ openRef(r.dataset.ref); }
+    });
+  }
+  paintRefs();
+}
+function paintRefs(){
+  const L=refFiltered();
+  document.getElementById('refCount').textContent=`· ${L.length} de ${REFS.length} empresas`;
+  // filtros: una fila de opciones por variable, con cuántas empresas hay en cada una
+  document.getElementById('refFilters').innerHTML=REF_FILTER_VARS.map(v=>`<div class="ref-frow"><span class="ref-flab">${REF_VARS[v].label}</span><div class="ref-fopts">`+
+    Object.keys(REF_VARS[v].vals).map(k=>{ const n=REFS.filter(r=>refVals(r,v).includes(k)).length; if(!n) return '';
+      return `<button type="button" class="cmp-chip${REF_F[v].has(k)?' on':''}" data-fv="${v}" data-fk="${k}" aria-pressed="${REF_F[v].has(k)}">${refLab(v,k)} <span class="cpct">${n}</span></button>`; }).join('')+`</div></div>`).join('');
+  // cruce de dos variables
+  const rv=REF_ROW, cv=REF_COL, rk=Object.keys(REF_VARS[rv].vals), ck=Object.keys(REF_VARS[cv].vals);
+  const usedC=ck.filter(c=>L.some(r=>refVals(r,cv).includes(c)));
+  let h=`<table class="ref-x"><thead><tr><th>${REF_VARS[rv].label} \\ ${REF_VARS[cv].label}</th>${usedC.map(c=>`<th>${refLab(cv,c)}</th>`).join('')}<th class="tcol">Total</th></tr></thead><tbody>`;
+  rk.forEach(a=>{ const inRow=L.filter(r=>refVals(r,rv).includes(a)); if(!inRow.length) return;
+    h+=`<tr><td>${refLab(rv,a)}</td>`+usedC.map(c=>{ const cell=inRow.filter(r=>refVals(r,cv).includes(c));
+      return `<td>${cell.map(r=>`<button type="button" class="ref-name" data-ref="${r.key}">${esc(r.name.split(' /')[0])}</button>`).join('')}</td>`; }).join('')+
+      `<td class="tcol"><b>${inRow.length}</b></td></tr>`; });
+  document.getElementById('refCross').innerHTML= L.length? h+'</tbody></table>' : '<div class="empty" style="margin:12px">Ninguna empresa cumple los filtros.</div>';
+  // matriz comparativa
+  document.getElementById('refMatrix').innerHTML= !L.length? '<div class="empty" style="margin:12px">Ninguna empresa cumple los filtros.</div>' :
+    `<table class="ref-m"><thead><tr><th>Empresa</th><th>Tipo</th><th>País · fundación</th><th>Cliente y ramo</th><th>Canales de captación</th><th>Venta humana</th><th>Escala declarada</th><th>Rentabilidad</th><th>Evidencia</th><th>Situación</th></tr></thead><tbody>`+
+    L.map(r=>`<tr><td><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button><div class="ref-sub">${esc(r.sub)}</div></td>
+      <td>${refLab('tipo',r.tipo)}</td><td>${esc(r.pais)}${r.fund?' · '+r.fund:''}</td>
+      <td>${refLab('seg',r.seg)}<div class="ref-sub">${esc(r.ramo)}</div></td><td><div class="rchips">${refChips(r)}</div></td>
+      <td>${refLab('humano',r.humano)}</td><td>${esc(r.escalaCorta)}</td><td>${refBadge('rent',r.rent)}</td><td>${refBadge('evid',r.evid)}</td><td>${refBadge('desen',r.desen)}</td></tr>`).join('')+'</tbody></table>';
+  // hipótesis
+  document.getElementById('refHyp').innerHTML=L.map(r=>`<div class="ref-hyp-c"><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button>
+    <p>${esc(r.hipotesis)}</p><div class="rchips">${refChips(r)}</div></div>`).join('');
+}
+// ficha completa de un referente (reutiliza el diálogo de informes de la competencia)
+function openRef(key){
+  const r=REFS.find(x=>x.key===key); if(!r) return;
+  document.getElementById('dosLogo').innerHTML=`<span class="ref-ini">${esc(r.name.replace(/[^A-Za-zÁÉÍÓÚÑ ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join(''))}</span>`;
+  document.getElementById('dosName').innerHTML=esc(r.name)+' '+refBadge('tipo',r.tipo);
+  document.getElementById('dosRazon').textContent=r.sub;
+  const hasFund=(r.facts||[]).some(f=>f[0]==='Fundación');
+  const ficha=[['País',r.pais+(r.fund&&!hasFund?' · fundada en '+r.fund:'')],['Cliente',refLab('seg',r.seg)],['Ramo',r.ramo],['Canal',r.canal],
+    ['Venta humana',refLab('humano',r.humano)],['Rentabilidad',refLab('rent',r.rent)],['Evidencia',refLab('evid',r.evid)],['Situación',refLab('desen',r.desen)],...(r.facts||[])];
+  const sec=(t,x)=> x? `<div class="dos-h">${t}</div><p class="ref-p">${esc(x)}</p>` : '';
+  document.getElementById('dosBody').innerHTML=
+    `<div class="dos-warn"><b>Evidencia:</b> ${esc(r.evidencia)}</div>`+
+    `<div class="dos-h">Ficha</div><div class="dos-ficha">${ficha.map(([a,b])=>`<div><span>${esc(a)}</span><span>${esc(b)}</span></div>`).join('')}</div>`+
+    `<div class="dos-h">Canales de captación</div><div class="rchips">${refChips(r)}</div>`+
+    sec('Qué compra el cliente',r.que)+sec('Escala',r.escala)+sec('Evolución del modelo',r.evolucion)+sec('Captación',r.captacion)+
+    sec('Conversión y equipo',r.conversion)+sec('Después de la venta',r.despues)+
+    (r.hipotesis?`<div class="dos-h">Hipótesis para Protectio</div><div class="ref-hyp-box">${esc(r.hipotesis)}</div>`:'')+
+    sec('Riesgo',r.riesgo)+sec('Límites de la evidencia comercial',r.limites)+
+    `<div class="dos-h">Fuentes</div><ul class="ref-src">${r.fuentes.map(([t,u])=>`<li><a href="${escAttr(u)}" target="_blank" rel="noopener noreferrer">${esc(t)}</a></li>`).join('')}</ul>`;
+  const bd=document.getElementById('dosBackdrop');
+  bd.classList.add('on'); bd.scrollTop=0; document.body.style.overflow='hidden';
+}
+
 // ---- página «Mercado»: sector de mediación de seguros (DGSFP, informe estadístico anual 2024) ----
 const meur=v=>(v/1e6).toLocaleString('es-ES',{maximumFractionDigits:0})+' M€';
 // evolución del registro DGSFP; 2025 es una foto provisional a 21/11/2025 (año en curso, no cierre)
