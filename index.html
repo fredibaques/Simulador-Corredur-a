@@ -750,6 +750,28 @@
   .mkt-insight{padding:12px 14px;border-radius:var(--radius);border:1px dashed var(--border);background:var(--muted-bg);font-size:12.5px;line-height:1.6}
   .mkt-insight b{color:var(--foreground)}
   .mkt-ramos-t th.mkt-sortable{cursor:pointer;user-select:none;white-space:nowrap}
+  /* crecimiento por ramo: barra divergente desde 0, con la media del mercado marcada */
+  .gb{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .gb-row{display:grid;grid-template-columns:minmax(150px,34%) 1fr 64px;align-items:center;gap:12px;font-size:12.5px}
+  .gb-l{color:var(--foreground);line-height:1.3}
+  .gb-l span{display:block;font-size:11px;color:var(--muted-foreground)}
+  .gb-track{position:relative;height:16px}
+  .gb-zero{position:absolute;left:50%;top:-3px;bottom:-3px;width:1px;background:#a3a3a3}
+  .gb-mkt{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed #171717;opacity:.55}
+  .gb-bar{position:absolute;top:2px;height:12px;border-radius:3px}
+  .gb-bar.up{background:#2a78d6} .gb-bar.mid{background:#a3a3a3} .gb-bar.neg{background:#e34948}
+  .gb-v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+  .gb-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11.5px;color:var(--muted-foreground)}
+  .gb-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .gb-legend i.up{background:#2a78d6} .gb-legend i.mid{background:#a3a3a3} .gb-legend i.neg{background:#e34948}
+  .gb-legend i.mk{width:0;height:12px;border-left:2px dashed #171717;border-radius:0;opacity:.55}
+  .mkt-ramos-t td.gpos{color:#1c5cab;font-weight:600} .mkt-ramos-t td.neg{color:#b42318}
+  .hm-t td,.hm-t th{text-align:center;white-space:nowrap}
+  .kpi .v .kv-txt{display:block;font-size:20px;line-height:1.25;white-space:normal}
+  .hm-t td{font-variant-numeric:tabular-nums;color:#171717}
+  .hm-t td.hm-na{color:var(--muted-foreground)}
+  .hm-sub{display:block;font-size:10.5px;font-weight:500;color:var(--muted-foreground)}
+  @media(max-width:600px){ .gb-row{grid-template-columns:1fr 56px} .gb-track{grid-column:1/-1;grid-row:2} }
   .mkt-ramos-t th.mkt-sortable:hover{color:var(--foreground)}
   .mkt-ramos-t th.mkt-sortable.on{color:var(--foreground);font-weight:700}
   .mkt-cell{display:inline-flex;align-items:center;gap:8px;justify-content:flex-end}
@@ -1114,7 +1136,7 @@
       </div>
       <div class="country-tabs" id="mktCountries" role="tablist" aria-label="País"></div>
       <div id="marketBody" class="tabpane"></div>
-      <div id="marketEmpty" class="tabpane" style="display:none"></div>
+      <div id="marketOther" class="tabpane" style="display:none"></div>
     </section>
 
     <!-- ================= MERCADO · COMPETENCIA ================= -->
@@ -5899,20 +5921,177 @@ function mktSplit(label,a,b,nameA,nameB,colorA,colorB){
     `<div class="mkt-split-seg" style="width:${b}%;background:${colorB}">${pct(b/100)}</div>`+
     `</div></div>`;
 }
-// Sector por país: solo España tiene estudio; el resto queda en blanco hasta que tengamos datos
-const MKT_COUNTRIES=[['España','España'],['Francia','Francia'],['Italia','Italia'],['Portugal','Portugal'],['Alemania','Alemania'],['Reino Unido','Reino Unido']];
-const MKT_DATA=new Set(['España']);
+/* ---- Sector por país: España (DGSFP) y el resto con los datos de su supervisor oficial ----
+   Cada país: fuente, magnitud, años comparados y una fila por ramo: [nombre, familia, año anterior, año último, CAGR].
+   Las familias homogeneizan los ramos de cada supervisor para poder compararlos entre países. */
+const MKT_FAM={salud:'Salud / enfermedad', accidentes:'Accidentes y protección de ingresos', auto:'Automóvil', bienes:'Hogar y daños a bienes',
+  rc:'Responsabilidad civil', asistencia:'Asistencia', juridica:'Defensa jurídica', credito:'Crédito y caución', perdidas:'Pérdidas pecuniarias',
+  transporte:'Transporte', otros:'Otros'};
+const MKT_EU={
+  'Francia':{sup:'ACPR', supName:'Autorité de contrôle prudentiel et de résolution (Banque de France)',
+    doc:'«La situation des assureurs en France fin 2025» (Analyses et synthèses n.º 181, junio 2026), tabla 3',
+    url:'https://acpr.banque-france.fr/system/files/2026-06/20260630_AS181_assureurs_S2_2025.pdf',
+    measure:'primas adquiridas de negocio directo', unit:'M€', y0:2024, y1:2025, cagr:null,
+    tot:[136371,144077],
+    rows:[['Gastos médicos (salud)','salud',44424,46729],['Automóvil (RC + daños)','auto',27540,29489],['Incendio y daños a los bienes','bienes',25534,27628],
+      ['Protección de ingresos','accidentes',14436,15104],['RC general','rc',10371,10339],['Pérdidas pecuniarias','perdidas',4047,4207],
+      ['Asistencia','asistencia',3892,4186],['Protección jurídica','juridica',2392,2506],['Crédito y caución','credito',2153,2201],
+      ['Marítimo, aviación y transporte','transporte',1241,1327],['Accidentes de trabajo','accidentes',342,359]],
+    extra:[['Ratio combinado no vida','95,3%','96,6% en 2024'],['Siniestralidad de auto','+10%','coste de reparación +5,9% (SRA)']],
+    inter:{v:null, txt:'El registro de intermediarios (ORIAS) no publica el desglose de corredores en un formato que hayamos podido descargar. Queda pendiente.'},
+    note:'Perímetro: aseguradoras con reporte trimestral Solvencia II. El total no vida suma salud no vida (gastos médicos, protección de ingresos y accidentes de trabajo) y el resto de ramos; no incluye la salud asimilada a vida.',
+    insight:`El crecimiento de 2025 lo tiran <b>incendio y daños a los bienes (+8,2%)</b>, <b>asistencia (+7,6%)</b>, <b>automóvil (+7,1%)</b> y <b>transporte (+6,9%)</b>. En auto es sobre todo precio: los siniestros suben un 10% por el coste de reparación. <b>Gastos médicos</b> es el mayor ramo no vida (46.729 M€) y crece un 5,2%. La <b>RC general</b> se estanca (−0,3%).`},
+  'Italia':{sup:'IVASS', supName:'Istituto per la Vigilanza sulle Assicurazioni',
+    doc:'Relazione annuale sul 2025 (junio 2026), Appendice, tavola 3.2.1',
+    url:'https://www.ivass.it/pubblicazioni-e-statistiche/pubblicazioni/relazione-annuale/2026/Relazione_annuale_2025.pdf',
+    measure:'primas brutas contabilizadas, portafolio directo italiano', unit:'M€', y0:2024, y1:2025, cagr:[2018,2025],
+    tot:[40868.7,43552.8], totG:6.6, totCagr:4.0,
+    rows:[['RC auto','auto',12916.2,13385.0,0.2,3.6],['Daños propios del vehículo','auto',4527.6,4944.6,7.6,9.2],['Enfermedad','salud',4402.7,4911.4,8.6,11.6],
+      ['RC general','rc',4156.9,4261.3,5.0,2.5],['Otros daños a los bienes','bienes',4004.6,4217.8,5.3,5.3],['Incendio y elementos naturales','bienes',3553.0,4159.2,7.7,17.1],
+      ['Accidentes','accidentes',3598.6,3709.5,2.6,3.1],['Asistencia','asistencia',1050.3,1152.1,6.8,9.7],['Pérdidas pecuniarias','perdidas',782.7,824.4,4.3,5.3],
+      ['Caución','credito',606.0,653.4,7.4,7.7],['Defensa jurídica','juridica',576.9,605.2,6.8,4.9],['Transporte (cascos, mercancías y RC)','transporte',539.9,542.5,4.2,0.5],
+      ['Crédito','credito',113.0,144.2,10.7,27.6]],
+    extra:[['Corredores (sección B del RUI)','5.821','1.720 sociedades y 4.101 personas físicas, fin de 2025'],['Cuota de los corredores en no vida','10,2%','8,2% en 2015 · agentes 76,6% · banca 10,3% · directo 2,9%']],
+    inter:{v:'5.821', txt:'Corredores inscritos en la sección B del RUI a fin de 2025 (1.720 sociedades). Intermedian el 10,2% de las primas no vida, frente al 8,2% de 2015: el canal gana cuota poco a poco a costa de los agentes (76,6%) y la venta directa (2,9%).'},
+    note:'Variación a perímetro homogéneo de compañías, según IVASS. CAGR = crecimiento anual compuesto 2018–2025.',
+    insight:`<b>Incendio y elementos naturales (+17,1%)</b> es el ramo que más acelera, empujado por el <b>seguro catastrófico obligatorio para empresas</b> que entra en vigor por fases desde 2025. <b>Enfermedad</b> encadena tres años por encima del 11% (CAGR 8,6% desde 2018) y ya pesa el 11% del no vida. Le siguen <b>asistencia (+9,7%)</b> y <b>daños propios del vehículo (+9,2%)</b>. La <b>RC auto</b> está madura: 0,2% anual desde 2018.`},
+  'Portugal':{sup:'ASF', supName:'Autoridade de Supervisão de Seguros e Fundos de Pensões',
+    doc:'Estadísticas mensuales de producción de seguro directo, serie hasta julio de 2026 (total del mercado)',
+    url:'https://www.asf.com.pt/estat%C3%ADsticas/seguros/estat%C3%ADsticas-mensais/produ%C3%A7%C3%A3o',
+    measure:'primas brutas emitidas de seguro directo, total del mercado', unit:'M€', y0:2024, y1:2025, cagr:[2019,2025],
+    tot:[7354.9,8196.2], totCagr:7.8,
+    rows:[['Automóvil','auto',2360.9,2719.3,6.7],['Enfermedad','salud',1586.2,1765.1,12.4],['Accidentes de trabajo','accidentes',1250.6,1341.0,7.0],
+      ['Multirriesgo hogar','bienes',755.9,863.3,8.4],['Asistencia','asistencia',195.0,233.7,7.8],['Accidentes personales','accidentes',219.1,226.9,3.1],
+      ['RC general (explotación, productos, profesional…)','rc',207.9,220.4,7.5],['Multirriesgo comercios','bienes',200.4,218.1,8.1],
+      ['Multirriesgo industrial','bienes',151.1,150.4,5.1],['Pérdidas pecuniarias','perdidas',89.4,94.1,6.4],['Crédito','credito',81.0,82.7,3.6],
+      ['Otros daños a bienes (otros multirriesgos, avería de maquinaria…)','bienes',167.6,191.7,null],['Marítimo y transporte','transporte',30.4,30.9,2.6],['Aviación y mercancías transportadas','transporte',29.8,28.1,null],
+      ['Protección jurídica','juridica',17.4,15.5,-1.6],['Caución','credito',11.2,14.6,16.2]],
+    extra:[['Corredores autorizados','68','frente a 10.199 agentes · 10.289 mediadores activos (2024)']],
+    inter:{v:'68', txt:'Solo 68 corredores autorizados por la ASF en 2024 (69 en 2023), frente a 10.199 agentes: el mercado se distribuye casi entero por agentes y banca. Hay poca competencia de corredurías.'},
+    note:'Datos de 2025 provisionales. CAGR = crecimiento anual compuesto 2019–2025.',
+    insight:`Mercado no vida en plena expansión (+11,4% en 2025; 7,8% anual desde 2019). <b>Enfermedad</b> es el gran ramo estructural: 12,4% anual compuesto desde 2019, más que ningún otro. En 2025 destacan <b>asistencia (+19,8%)</b>, <b>automóvil (+15,2%)</b> y <b>multirriesgo hogar (+14,2%)</b>. La <b>caución</b> crece un 30%, aunque sobre una base pequeña. Con solo 68 corredores, la mediación independiente está casi por construir.`},
+  'Alemania':{sup:'BaFin', supName:'Bundesanstalt für Finanzdienstleistungsaufsicht',
+    doc:'Statistik der BaFin – Erstversicherungsunternehmen 2024 (Schaden- und Unfallversicherung), tabla de primas brutas contabilizadas',
+    url:'https://www.bafin.de/DE/die-bafin/publikationen-daten/statistiken/erstversicherung/erstversicherung_node.html',
+    measure:'primas brutas contabilizadas de las aseguradoras de daños y accidentes', unit:'M€', y0:2023, y1:2024, cagr:null, g0:true,
+    tot:[116008.4/1.14605,116008.4], totPrev:6.4,
+    rows:[['Automóvil','auto',37011.4,17.7,4.0],['RC general','rc',15751.0,13.7,2.1],['Hogar · continente (edificio)','bienes',13602.6,14.5,17.9],
+      ['Otros daños a bienes (técnicos, robo, agrícola, ciber…)','bienes',11995.3,20.5,14.0],['Otros seguros de daños','otros',8000.2,-2.3,4.3],
+      ['Accidentes','accidentes',7497.7,9.0,1.3],['Defensa jurídica','juridica',5900.4,7.4,3.0],['Incendio (industrial y comercial)','bienes',5452.8,34.0,8.2],
+      ['Hogar · contenido','bienes',4004.2,14.1,3.5],['Transporte','transporte',2656.6,11.3,11.4],['Crédito y caución','credito',1346.6,17.7,18.3],
+      ['Enfermedad (solo aseguradoras de daños)','salud',1164.7,25.8,-8.0],['Asistencia','asistencia',842.5,17.2,10.8],['Aviación (cascos y RC)','transporte',782.3,-0.6,null]],
+    extra:[['Corredores (Versicherungsmakler, § 34d GewO)','47.329','1 oct 2026 · 46.619 en enero de 2025 (+1,5%)']],
+    inter:{v:'47.329', txt:'Corredores con licencia en el registro oficial de intermediarios (DIHK) a 1 de octubre de 2026: 47.329, frente a 46.619 en enero de 2025 (+1,5%). En el mismo periodo, el total de inscritos baja de 181.761 a 179.065: los agentes vinculados pierden peso y los corredores ganan.'},
+    note:'Último año publicado por BaFin: 2024. La columna del año anterior es la variación de 2023. La salud privada sustitutiva va en otra estadística (aseguradoras de salud), por eso aquí «enfermedad» es pequeña.',
+    insight:`En 2024 las primas de daños crecieron un 14,6%, casi todo por precio (inflación de reparaciones y catástrofes naturales). Lideran <b>incendio industrial (+34%)</b>, <b>otros daños a bienes (+20,5%)</b>, <b>automóvil (+17,7%)</b>, <b>asistencia (+17,2%)</b> y <b>crédito y caución (+17,7%)</b>. <b>Hogar · continente</b> suma dos años seguidos por encima del 14% por la exposición a fenómenos naturales. La <b>RC general</b> también acelera (+13,7%).`},
+  'Reino Unido':{sup:'Bank of England · PRA', supName:'Prudential Regulation Authority (Bank of England)',
+    doc:'Insurance aggregate data – annual report, gráficos 2.1 y 2.2 (primas brutas emitidas de no vida por línea)',
+    url:'https://www.bankofengland.co.uk/statistics/insurance-aggregate-annual-data-report',
+    measure:'primas brutas emitidas (gross written premiums) de no vida', unit:'M£', y0:2024, y1:2025, cagr:[2019,2025],
+    tot:[114290,116449], totCagr:null,
+    rows:[['Daños a bienes · empresas','bienes',29574,29409,12.0],['Marítimo, aviación y transporte','transporte',11609,11931,6.7],['Otros (empresas)','otros',9332,10267,null],
+      ['Gastos médicos (salud privada)','salud',8982,9650,5.6],['Auto RC · particulares','auto',9607,9307,3.1],['Hogar · particulares','bienes',9018,9132,0.2],
+      ['RC profesional','rc',8146,7782,null],['Auto daños · particulares','auto',5232,4990,8.0],['RC general y de productos','rc',4963,4858,null],
+      ['Pérdidas pecuniarias · particulares','perdidas',3964,4501,14.1],['Auto RC · flotas','auto',4285,4260,2.9],['Crédito · particulares','credito',2376,2936,8.3],
+      ['Auto daños · flotas','auto',1962,1958,10.0],['RC patronal','rc',1752,1888,null],['Protección de ingresos','accidentes',1485,1565,1.8],
+      ['Asistencia','asistencia',1307,1298,-4.7],['Defensa jurídica','juridica',695,717,2.3]],
+    extra:[['Particulares','44.096 M£','+3,4% en 2025'],['Empresas','72.353 M£','+1,0% en 2025']],
+    inter:{v:null, txt:'El registro de la FCA no publica una cifra agregada de corredores de seguros comparable. Queda pendiente.'},
+    note:'En 2024 la PRA reclasificó parte de la RC profesional y la RC general a «Otros»: para esas líneas no damos CAGR. CAGR = crecimiento anual compuesto 2019–2025.',
+    insight:`Mercado maduro y en fase blanda: +1,9% en 2025. Lo que crece está en particulares: <b>crédito (+23,6%)</b>, <b>pérdidas pecuniarias (+13,5%</b>, con un 14,1% anual compuesto desde 2019: garantías, GAP, mascotas, gadgets…) y <b>gastos médicos (+7,4%)</b>. El <b>auto</b> retrocede (−3% a −5%) tras las subidas de 2023–24, y los ramos de empresas se estancan.`},
+};
+// normaliza filas: [nombre, familia, anterior, último, CAGR, variación]
+function mktEURows(c){ const D=MKT_EU[c];
+  return D.rows.map(r=> D.g0? {name:r[0],fam:r[1],prev:r[2]/(1+r[3]/100),cur:r[2],g:r[3],gPrev:r[4],cagr:null}
+    : {name:r[0],fam:r[1],prev:r[2],cur:r[3],cagr:r[4]==null?null:r[4],g: r[5]!=null? r[5] : (r[2]? (r[3]/r[2]-1)*100 : null)}); }
+const fmtG=g=> g==null||!isFinite(g)? '—' : (g>=0?'+':'−')+Math.abs(g).toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
+const fmtM=(v,u)=> Math.round(v).toLocaleString('es-ES',{useGrouping:'always'})+' '+u;
+const MKT_NOCMP=new Set(['Alemania|salud']);
+let MKT_EU_SORT={key:'g',dir:-1};
+function marketEUHTML(c){
+  const D=MKT_EU[c], R=mktEURows(c), [t0,t1]=D.tot, tg= D.totG!=null? D.totG : (t1/t0-1)*100;
+  const yl=`${D.y1} vs ${D.y0}`, big=R.filter(r=>r.cur/t1>=0.02).sort((a,b)=>b.g-a.g)[0];
+  const kpi=(k,v,s)=>`<div class="kpi"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${s}</div></div>`;
+  // barras de crecimiento: azul = crece más que el mercado; gris = crece menos; rojo = cae
+  const mx=Math.max(...R.map(r=>Math.abs(r.g||0)),Math.abs(tg))||1;
+  const bars=[...R].sort((a,b)=>(b.g||0)-(a.g||0)).map(r=>{ const w=Math.abs(r.g||0)/mx*50, cls= r.g<0?'neg': r.g>=tg?'up':'mid';
+    return `<div class="gb-row" title="${escAttr(r.name)}: ${fmtG(r.g)} · ${fmtM(r.cur,D.unit)} en ${D.y1}"><div class="gb-l">${esc(r.name)}<span>${fmtM(r.cur,D.unit)}</span></div>`+
+      `<div class="gb-track"><i class="gb-zero"></i><i class="gb-mkt" style="left:${50+tg/mx*50}%"></i><b class="gb-bar ${cls}" style="${r.g<0?`right:50%`:`left:50%`};width:${w}%"></b></div>`+
+      `<div class="gb-v">${fmtG(r.g)}</div></div>`; }).join('');
+  const {key,dir}=MKT_EU_SORT, arrow=k=> key===k? (dir<0?' ▾':' ▴') : '';
+  const val=(r,k)=> k==='name'? r.name : k==='w'? r.cur : r[k]==null? -1e9 : r[k];
+  const rows=[...R].sort((a,b)=>{ const x=val(a,key), y=val(b,key); return (typeof x==='string'? x.localeCompare(y,'es') : x-y)*dir; });
+  const th=(k,l,al)=>`<th class="mkt-sortable${key===k?' on':''}" data-eusort="${k}" style="text-align:${al||'right'}">${l}${arrow(k)}</th>`;
+  const tbl=`<table class="ue-t mkt-ramos-t"><thead><tr>${th('name','Ramo','left')}<th style="text-align:left">Familia</th>${th('cur','Primas '+D.y1)}${th('w','Peso')}${th('g','Crec. '+yl)}`+
+    `${D.g0?th('gPrev','Crec. '+D.y0+' vs '+(D.y0-1)):''}${D.cagr?th('cagr',`CAGR ${D.cagr[0]}–${String(D.cagr[1]).slice(2)}`):''}</tr></thead><tbody>`+
+    rows.map(r=>`<tr><td style="text-align:left">${esc(r.name)}</td><td style="text-align:left;color:var(--muted-foreground)">${MKT_FAM[r.fam]}</td><td>${fmtM(r.cur,D.unit)}</td><td>${(r.cur/t1*100).toLocaleString('es-ES',{maximumFractionDigits:1})}%</td>`+
+      `<td class="${r.g<0?'neg':r.g>=tg?'gpos':''}">${fmtG(r.g)}</td>${D.g0?`<td>${fmtG(r.gPrev)}</td>`:''}${D.cagr?`<td>${fmtG(r.cagr)}</td>`:''}</tr>`).join('')+
+    `<tr class="st"><td style="text-align:left">Total no vida</td><td></td><td>${fmtM(t1,D.unit)}</td><td>100%</td><td>${fmtG(tg)}</td>${D.g0?`<td>${fmtG(D.totPrev)}</td>`:''}${D.cagr?`<td>${fmtG(D.totCagr)}</td>`:''}</tr></tbody></table>`;
+  return `
+    <div class="panel">
+      <h2>El seguro no vida en ${c} <span class="h2-sub">${D.sup} · ${D.y1}</span></h2>
+      <p class="note" style="margin-top:0">Fuente oficial: <b>${D.supName}</b>, ${D.doc} (<a href="${D.url}" target="_blank" rel="noopener">ver documento</a>). Magnitud: ${D.measure}, en ${D.unit==='M£'?'millones de libras':'millones de euros'}.</p>
+      <div class="mkt-kpis">
+        ${kpi('Primas no vida '+D.y1,fmtM(t1,D.unit),`${fmtG(tg)} frente a ${D.y0}`)}
+        ${big?kpi('Ramo relevante que más crece',`<span class="kv-txt">${esc(big.name)}</span>`,`${fmtG(big.g)} · ${fmtM(big.cur,D.unit)} (entre los que pesan ≥2%)`):''}
+        ${D.extra.map(e=>kpi(e[0],e[1],e[2])).join('')}
+      </div>
+      <div class="mkt-insight" style="margin-top:16px">${D.insight}</div>
+    </div>
+    <div class="panel">
+      <h2>Qué ramos crecen <span class="h2-sub">crecimiento ${yl}</span></h2>
+      <div class="gb-legend"><span><i class="up"></i>Crece más que el mercado (${fmtG(tg)})</span><span><i class="mid"></i>Crece menos que el mercado</span><span><i class="neg"></i>Cae</span><span><i class="mk"></i>Media del mercado</span></div>
+      <div class="gb">${bars}</div>
+    </div>
+    <div class="panel">
+      <h2>Primas por ramo <span class="h2-sub">pulsa una cabecera para ordenar</span></h2>
+      <div class="tblscroll">${tbl}</div>
+      <p class="note">${D.note}</p>
+    </div>
+    <div class="panel">
+      <h2>Mediación</h2>
+      ${D.inter.v?`<div class="mkt-kpis" style="margin-bottom:12px;grid-template-columns:minmax(0,280px)">${kpi('Corredores',D.inter.v,'registro oficial')}</div>`:''}
+      <p class="note" style="margin:0">${D.inter.txt}</p>
+    </div>`;
+}
+// comparativa: crecimiento por familia de ramos en cada país (último año publicado)
+function marketCmpHTML(){
+  const C=Object.keys(MKT_EU), fams=Object.keys(MKT_FAM);
+  const agg={}; C.forEach(c=>{ agg[c]={}; mktEURows(c).forEach(r=>{ if(MKT_NOCMP.has(c+'|'+r.fam)) return; const a=agg[c][r.fam]||(agg[c][r.fam]={p:0,v:0}); a.p+=r.prev; a.v+=r.cur; }); });
+  const tot=c=>{ const D=MKT_EU[c]; return D.totG!=null? D.totG : (D.tot[1]/D.tot[0]-1)*100; };
+  const cell=(g)=>{ if(g==null) return '<td class="hm-na">—</td>';
+    const t=Math.min(1,Math.abs(g)/20), a=(0.10+0.55*t).toFixed(2), bg= g>=0? `rgba(42,120,214,${a})` : `rgba(227,73,72,${a})`;
+    return `<td style="background:${bg}">${fmtG(g)}</td>`; };
+  const rows=fams.filter(f=>f!=='otros' && C.some(c=>agg[c][f])).map(f=>{ const gs=C.map(c=>agg[c][f]? (agg[c][f].v/agg[c][f].p-1)*100 : null), n=gs.filter(g=>g!=null);
+    const avg= n.length? n.reduce((s,x)=>s+x,0)/n.length : null;
+    return {f, gs, avg, up:C.filter((c,i)=>gs[i]!=null && gs[i]>tot(c)).length}; }).sort((a,b)=>(b.avg||0)-(a.avg||0));
+  const top=rows.filter(r=>r.f!=='otros').slice(0,4);
+  return `
+    <div class="panel">
+      <h2>Ramos que crecen en Europa <span class="h2-sub">último año publicado por cada supervisor</span></h2>
+      <p class="note" style="margin-top:0">Cada supervisor agrupa los ramos a su manera; aquí se reúnen en familias comparables. La celda es el crecimiento de primas del último año (Alemania: 2024 frente a 2023; resto: 2025 frente a 2024). Más azul = crece más; rojo = cae. Debajo de cada país, el crecimiento de su mercado no vida. En Alemania la salud privada va en una estadística aparte, así que esa celda queda vacía. España no entra: el informe de la DGSFP que usamos no da el crecimiento por ramo.</p>
+      <div class="tblscroll"><table class="ue-t hm-t"><thead><tr><th style="text-align:left">Familia de ramos</th>${C.map(c=>`<th>${c}<span class="hm-sub">${MKT_EU[c].y1} · mercado ${fmtG(tot(c))}</span></th>`).join('')}<th>Media</th><th title="Países en que la familia crece más que su mercado" style="white-space:normal;min-width:90px">Supera a su mercado</th></tr></thead><tbody>`+
+      rows.map(r=>`<tr><td style="text-align:left">${MKT_FAM[r.f]}</td>${r.gs.map(cell).join('')}<td><b>${fmtG(r.avg)}</b></td><td>${r.up} de ${r.gs.filter(g=>g!=null).length}</td></tr>`).join('')+
+      `</tbody></table></div>
+      <div class="mkt-insight" style="margin-top:16px"><b>Lectura:</b> las familias que más crecen de media son ${top.map(r=>`<b>${MKT_FAM[r.f].toLowerCase()}</b> (${fmtG(r.avg)})`).join(', ')}.
+        Las señales más sólidas son las que crecen por encima de su mercado en varios países a la vez: <b>salud privada</b> (doble dígito en Italia y Portugal, crecimiento sostenido en Francia y Reino Unido), <b>asistencia</b> (Portugal, Alemania, Italia y Francia) y <b>hogar y daños a bienes</b>, empujado por las catástrofes naturales y por el seguro catastrófico obligatorio en Italia.
+        En <b>automóvil</b> el crecimiento es casi todo precio: sube donde los siniestros encarecen las primas y ya cae en Reino Unido. <b>Crédito y caución</b> crece con fuerza en Italia, Alemania y en el crédito a particulares británico, pero sobre bases pequeñas.</div>
+    </div>`;
+}
+const MKT_COUNTRIES=[['España','España'],['Francia','Francia'],['Italia','Italia'],['Portugal','Portugal'],['Alemania','Alemania'],['Reino Unido','Reino Unido'],['cmp','Comparar países']];
 function renderMarket(){
   if(!MKT_COUNTRIES.some(c=>c[0]===MKT_COUNTRY)) MKT_COUNTRY='España';
-  renderCountryTabs(document.getElementById('mktCountries'),MKT_COUNTRY,MKT_COUNTRIES.map(([k,l])=>[k,MKT_DATA.has(k)?l:`${l} <span class="ct-n zero">—</span>`]));
-  const has=MKT_DATA.has(MKT_COUNTRY), empty=document.getElementById('marketEmpty');
-  document.getElementById('marketBody').style.display= has? '' : 'none';
-  empty.style.display= has? 'none' : '';
-  if(!has) empty.innerHTML=`<div class="mkt-empty"><b>Sin análisis del sector en ${countryLabel(MKT_COUNTRY)} todavía</b>Esta sección queda en blanco hasta que incorporemos datos del mercado de mediación de ${countryLabel(MKT_COUNTRY)} (nº de corredores, volumen intermediado, reparto por canal y comisiones por ramo).</div>`;
-  else buildMarketES();
+  renderCountryTabs(document.getElementById('mktCountries'),MKT_COUNTRY,MKT_COUNTRIES);
+  const es=MKT_COUNTRY==='España', other=document.getElementById('marketOther');
+  document.getElementById('marketBody').style.display= es? '' : 'none';
+  other.style.display= es? 'none' : '';
+  if(es) buildMarketES();
+  else other.innerHTML= MKT_COUNTRY==='cmp'? marketCmpHTML() : marketEUHTML(MKT_COUNTRY);
 }
 document.getElementById('mktCountries').addEventListener('click',e=>{ const b=e.target.closest('[data-country]'); if(!b) return;
   MKT_COUNTRY=b.dataset.country; saveState(); renderMarket(); });
+document.getElementById('marketOther').addEventListener('click',e=>{ const th=e.target.closest('[data-eusort]'); if(!th) return;
+  const k=th.dataset.eusort; if(MKT_EU_SORT.key===k) MKT_EU_SORT.dir*=-1; else MKT_EU_SORT={key:k,dir:k==='name'?1:-1}; renderMarket(); });
 function buildMarketES(){
   const box=document.getElementById('marketBody'); if(!box || box.dataset.built) return;
   box.dataset.built='1';
