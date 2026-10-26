@@ -392,6 +392,15 @@
   .ref-m td:nth-child(4){min-width:170px} .ref-m td:nth-child(5){min-width:200px} .ref-m td:nth-child(7){min-width:180px}
   .ref-sub{font-size:11px;color:var(--muted-foreground);margin-top:2px;line-height:1.4}
   .rchips{display:flex;flex-wrap:wrap;gap:4px}
+  .rchip.tec{background:#f0fdf4;color:#15803d;border-color:var(--success-border)}
+  .ref-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:8px;margin-top:12px}
+  .ref-map-b{font:inherit;text-align:left;border:1px solid var(--border);background:var(--background);border-radius:var(--radius);padding:10px 12px;cursor:pointer;
+    display:flex;flex-direction:column;gap:3px;transition:background .15s,border-color .15s}
+  .ref-map-b:hover{background:var(--accent);border-color:#cbd5e1}
+  .ref-map-b b{font-size:13px;color:var(--foreground)} .ref-map-b span{font-size:12px;color:var(--muted-foreground);line-height:1.5}
+  .ref-study{font-size:12.5px;line-height:1.65;margin:0 0 8px;padding-left:18px}
+  .ref-study b{color:var(--foreground)}
+  .ref-m td:nth-child(6){min-width:170px}
   .rchip{font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:999px;background:var(--accent);color:var(--primary);border:1px solid var(--border);white-space:nowrap}
   .rbadge{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
   .rbadge.good{background:var(--success-bg);color:#15803d;border-color:var(--success-border)}
@@ -3550,16 +3559,19 @@ document.getElementById('compDetailBack').addEventListener('click',closeCompanyD
 // ---- Competencia › Referentes: cómo venden y crecen 18 empresas de seguros (dossier de negocio, no financiero) ----
 // Cada empresa se clasifica con variables de negocio (REF_VARS) para poder filtrarlas, cruzarlas y compararlas.
 const REF_VARS={
-  tipo:{label:'Tipo de empresa', vals:{correduria:'Correduría / distribución', aseguradora:'Aseguradora', mga:'MGA / distribución con producto', embedded:'Plataforma de seguro integrado', mixto:'Grupo mixto'}},
-  seg:{label:'Cliente', vals:{pymes:'Pymes y autónomos', particulares:'Particulares', empresas:'Empresas (colectivos)', socios:'Clientes de socios (B2B2C)', movilidad:'Trabajadores de movilidad'}},
+  estudio:{label:'Estudio', vals:{crecer:'Cómo venden y crecen en seguros', tech:'Corredurías con ventaja tecnológica'}},
+  papel:{label:'Papel en el estudio', vals:{principal:'Caso principal', adyacente:'Referencia adyacente', seguimiento:'En seguimiento'}},
+  tipo:{label:'Tipo de empresa', vals:{correduria:'Correduría / distribución', agencia:'Agencia independiente (EE. UU.)', aseguradora:'Aseguradora', mga:'MGA / distribución con producto', embedded:'Plataforma de seguro integrado', mixto:'Grupo mixto'}},
+  seg:{label:'Cliente', vals:{pymes:'Pymes y autónomos', empresas_c:'Empresas medianas (seguros comerciales)', particulares:'Particulares', empresas:'Empresas (colectivos y beneficios)', socios:'Clientes de socios (B2B2C)', movilidad:'Trabajadores de movilidad'}},
   canales:{label:'Canal de captación', multi:true, vals:{seo:'Contenido / SEO', paid:'Publicidad digital', directo:'Venta directa online', comparador:'Comparadores', socios:'Socios e integración', agentes:'Agentes, corredores o red', b2b:'Venta a cuentas / empresas', asistida:'Cierre asistido / teléfono', recomendacion:'Comunidad y recomendación', ia:'Asistentes IA'}},
+  tecUso:{label:'Tecnología al servicio de', multi:true, vals:{productividad:'Productividad del corredor', cliente:'Portal y autoservicio del cliente', red:'Gestión de la red de asesores', posventa:'Siniestros y posventa', documental:'Automatización documental', ia:'IA aplicada'}},
   humano:{label:'Peso de la venta humana', vals:{autoservicio:'Autoservicio', mixto:'Mixto', asistido:'Asistido o por red'}},
   rent:{label:'Rentabilidad', vals:{probada:'Beneficio publicado', declarada:'Rentable según la empresa', no_probada:'No demostrada', perdidas:'Pérdidas o insolvencia'}},
   evid:{label:'Solidez de la evidencia', vals:{alta:'Resultados publicados', media:'Cifras declaradas', baja:'Caso cualitativo'}},
-  desen:{label:'Situación', vals:{independiente:'Independiente', cotiza:'Cotiza en bolsa', adquirida:'Adquirida', participada:'Participación anunciada', reestructurada:'Reestructurada', insolvencia:'Insolvencia y venta'}},
+  desen:{label:'Situación', vals:{independiente:'Independiente', cotiza:'Cotiza en bolsa', adquirida:'Adquirida', participada:'Participación anunciada', consolidada:'Consolidación entre empresas', reestructurada:'Reestructurada', insolvencia:'Insolvencia y venta'}},
 };
 const REF_TONE={rent:{probada:'good',declarada:'ok',no_probada:'neutral',perdidas:'bad'}, evid:{alta:'good',media:'ok',baja:'neutral'},
-  desen:{adquirida:'good',cotiza:'good',participada:'ok',independiente:'neutral',reestructurada:'warn',insolvencia:'bad'}};
+  desen:{adquirida:'good',cotiza:'good',participada:'ok',consolidada:'ok',independiente:'neutral',reestructurada:'warn',insolvencia:'bad'}};
 const REFS=[
 {
 "key": "simplybusiness",
@@ -3617,7 +3629,9 @@ const REFS=[
 "Campañas · Brainlabs · EN · 2021",
 "https://gmp.brainlabsdigital.com/case-studies/simply-business/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "superscript",
@@ -3671,7 +3685,9 @@ const REFS=[
 "Vídeo y resumen · FF News · EN · 2024",
 "https://ffshowcase.com/fintech-tv/ff-virtual-arena/how-to-solve-the-small-business-insurance-problem-superscript-ff-virtual-arena-341/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "covergenius",
@@ -3728,7 +3744,9 @@ const REFS=[
 "Entrevista · InsurTech Digital · EN",
 "https://insurtechdigital.com/articles/talking-embedded-insurance-with-cover-genius-angus-mcdonald"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "policybazaar",
@@ -3781,7 +3799,10 @@ const REFS=[
 "Historia del cambio · YourStory · EN · 2021",
 "https://yourstory.com/2021/11/the-turning-point-insurance-policybazaar-paisabazaar-ipo"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": [],
+"short": "Policybazaar"
 },
 {
 "key": "alan",
@@ -3832,7 +3853,9 @@ const REFS=[
 "Podcast · Aserraf · FR · etapa 2018/19",
 "https://podcasts.audiomeans.fr/growthmakers-a22916d02a69/-55-alan-400-de-croissance-en-2019-par-kevin-aserraf-growth-manager-5dff97df5483"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "coalition",
@@ -3881,7 +3904,9 @@ const REFS=[
 "Podcast y notas · Voice of Insurance · EN · 2022",
 "https://www.advantagego.com/content/new-podcast-with-joshua-motta-from-coalition/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "cleverea",
@@ -3928,7 +3953,9 @@ const REFS=[
 "Audio · Intereconomía · ES · 2021",
 "https://archivo.intereconomia.com/programas/cleverea-la-compania-que-cierra-una-ronda-de-5me-para-lanzar-nuevos-productos-20211209-1730/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "wefox",
@@ -3980,7 +4007,9 @@ const REFS=[
 "Entrevista histórica · Claret · EN",
 "https://www.claret-capital.com/articles/ceo-spotlight-wefoxs-julian-teicke/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "tuio",
@@ -4047,7 +4076,9 @@ const REFS=[
 "Entrevista · Product Hackers · ES",
 "https://producthackers.com/es/podcast/tuio-juan-garcia/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "marshmallow",
@@ -4112,7 +4143,9 @@ const REFS=[
 "Entrevista · TechCrunch · EN · 2021",
 "https://techcrunch.com/2021/09/07/marshmallow-insurance-85-million/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "next",
@@ -4183,7 +4216,9 @@ const REFS=[
 "Podcast transcrito · Goldstein / Bluevine · EN · 2021",
 "https://www.bluevine.com/blog/tearsheet-podcast-bluevine-next-insurance-partnership"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "zego",
@@ -4244,7 +4279,9 @@ const REFS=[
 "Entrevista · Saar · ITC DIA · EN",
 "https://www.itcdiaeurope.com/thought-leadership/zegos-vision-for-the-future-of-insurance/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "qover",
@@ -4310,7 +4347,9 @@ const REFS=[
 "Podcast y extractos · Front Lines · EN · sin fecha visible",
 "https://www.frontlines.io/podcasts/quentin-colmant/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "manypets",
@@ -4380,7 +4419,10 @@ const REFS=[
 "Podcast · Mendel · EN · enero de 2022",
 "https://sabinega.podbean.com/e/steven-mendel-tips-on-how-to-build-a-sustainable-growth-business/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": [],
+"short": "ManyPets"
 },
 {
 "key": "lemonade",
@@ -4441,7 +4483,9 @@ const REFS=[
 "Entrevista · Jerby · InfiniGrow · EN",
 "https://infinigrow.com/blog/qa-with-marketing-leaders-tamir-jerby-vp-growth-lemonade/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "ethos",
@@ -4507,7 +4551,9 @@ const REFS=[
 "Conferencia transcrita · Colis · EN · septiembre de 2026",
 "https://stockanalysis.com/stocks/life/transcripts/737235-goldman-sachs-communacopia-technology-conference-2026/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "luko",
@@ -4572,7 +4618,9 @@ const REFS=[
 "Fuente primaria · Allianz Direct · enero de 2024",
 "https://www.allianzdirect.de/presse/allianz-direct-uebernimmt-das-franzoesische-hausratversicherungsgeschaeft-von-luko/"
 ]
-]
+],
+"estudio": "crecer",
+"tecUso": []
 },
 {
 "key": "root",
@@ -4647,7 +4695,517 @@ const REFS=[
 "Fuente primaria · SEC carta 4T 2025 · EN",
 "https://www.sec.gov/Archives/edgar/data/1788882/000178888226000013/q42025shareholderletter.htm"
 ]
+],
+"estudio": "crecer",
+"tecUso": []
+},
+{
+"key": "konsileo",
+"name": "Konsileo",
+"sub": "Correduría comercial · Reino Unido",
+"papel": "principal",
+"tipo": "correduria",
+"pais": "Reino Unido",
+"seg": "empresas_c",
+"ramo": "Seguros comerciales para pequeñas, medianas y medianas-grandes empresas",
+"canales": [
+"agentes"
+],
+"tecUso": [
+"productividad",
+"documental"
+],
+"humano": "asistido",
+"rent": "perdidas",
+"evid": "media",
+"desen": "independiente",
+"motor": "Captar buenos corredores y quitarles administración.",
+"entidad": "Konsileo (Trading) Limited · corredor independiente regulado por la FCA, nº 748287",
+"escalaCorta": ">85 M£ de primas · 10,84 M£ de ingresos 2024 (+54%)",
+"evidencia": "Escala y crecimiento demostrados; no rentabilidad final.",
+"canal": "Red de corredores propios apoyados por plataforma",
+"exito": "Escala y crecimiento demostrados; no rentabilidad final. En octubre de 2026 declara más de 85 M£ de primas anuales intermediadas y más de 220 personas. Insurance Age, al comentar las cuentas de la matriz Konsileo Limited de 2024, recoge 10,84 M£ de ingresos, +54%. La cobertura de julio de 2026 sigue hablando de pérdidas; no se ha recuperado su importe completo.",
+"modelo": "Konsileo (Trading) Limited se identifica como corredor independiente, regulado por la FCA, número 748287. No se presenta como aseguradora ni MGA. Sus condiciones contemplan avisar si actúa para el asegurador en una operación: esa cláusula no demuestra por sí sola un negocio MGA.",
+"queVende": "Asesoramiento y colocación para pequeñas, medianas y medianas-grandes empresas. El cliente recibe un corredor que conoce su negocio, no una compra completamente sin personas.",
+"tec": "Plataforma propia de principio a fin: captura de datos de riesgo, automatización administrativa y controles de cumplimiento. La tecnología sirve al corredor. La cifra comercial de reducir esfuerzo a la mitad no es una medición independiente de ahorro para cualquier correduría.",
+"crece": "El motor comercial es la contratación de corredores con capacidad de desarrollar relaciones y cartera, apoyados por tecnología y colaboración. La entrevista de Insurance Times explica autonomía, coaching y libertad de colocación, en lugar de una dirección central que elija todos los ramos. Los nuevos corredores desarrollan su negocio; no es el mismo modelo que comprar una base de clientes con anuncios. La ronda de 5 M£ de octubre de 2026 financia continuidad, pero no es prueba de beneficio.",
+"despues": "La relación y el servicio del corredor sostienen la cartera. Las cuentas comentadas por prensa atribuyen crecimiento tanto a retención como a nuevo negocio y nuevas incorporaciones. No hay porcentaje de renovación por cohorte verificado aquí.",
+"hipotesis": "Estudiar una propuesta atractiva para un corredor especialista o colaborador habilitado, con expediente único y menos recaptura. Medir producción neta, minutos por póliza y permanencia. No copiar su estructura salarial ni su ausencia de jefes sin validar control y economía.",
+"limites": "No tenemos beneficio neto actual, CAC ni contribución por corredor. Los 85 M£ son primas, no ingresos. La información de pérdidas de 2025 se apoya en el titular y parte accesible de prensa con suscripción, no en una lectura íntegra de esas cuentas.",
+"fuentes": [
+[
+"Modelo y entidad · condiciones de negocio · fuente propia",
+"https://konsileo.com/terms-of-business/"
+],
+[
+"Escala actual · 7 octubre 2026 · fuente propia",
+"https://konsileo.com/konsileo-secures-5m-investment-to-accelerate-growth/"
+],
+[
+"Ingresos 2024 · Insurance Age · 25 julio 2025",
+"https://www.insuranceage.co.uk/insight/7956997/konsileo-grows-revenue-and-trims-losses-in-2024"
+],
+[
+"Entrevista a John Warburton y Vicky Ferrier · EN · 28 noviembre 2024 · texto consultado",
+"https://www.insurancetimes.co.uk/analysis/john-warburton-and-vicky-ferrier-konsileo-committed-to-secret-sauce-as-broker-comes-of-age/1453818.article"
+],
+[
+"Advertencia de pérdidas · Insurance Age · 16 julio 2026 · acceso parcial",
+"https://www.insuranceage.co.uk/insight/7958629/no-way-konsileo-selling-up-following-capital-raise"
 ]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null
+},
+{
+"key": "newfront",
+"name": "Newfront",
+"sub": "Brokerage especializada · Estados Unidos · ahora WTW",
+"papel": "principal",
+"tipo": "correduria",
+"pais": "EE. UU.",
+"seg": "empresas_c",
+"ramo": "Empresas del segmento medio: tecnología, fintech, ciencias de la vida; seguros y beneficios",
+"canales": [
+"agentes",
+"b2b"
+],
+"tecUso": [
+"cliente",
+"productividad",
+"ia"
+],
+"humano": "asistido",
+"rent": "no_probada",
+"evid": "media",
+"desen": "adquirida",
+"motor": "Especialistas sectoriales + productores + tecnología para servir cuentas complejas.",
+"entidad": "Brokerage; desde el 27 de enero de 2026 forma parte de WTW",
+"escalaCorta": "Crecimiento orgánico del 20% anual (2018-2024) · >120 productores",
+"evidencia": "Crecimiento orgánico publicado por el comprador y adquisición cerrada; no beneficio neto independiente.",
+"canal": "Productores especialistas por sector, apoyados por tecnología",
+"exito": "WTW declara un crecimiento orgánico anual compuesto de ingresos del 20% entre 2018 y 2024. La adquisición se cerró el 27 de enero de 2026. Son dos señales distintas: crecimiento comercial y salida corporativa, no una demostración de beneficio neto independiente en 2026.",
+"modelo": "Newfront es una brokerage que coloca seguros y presta servicios de gestión de riesgos y beneficios. Desde enero de 2026 forma parte de WTW. El caso es Newfront, no todo WTW como supuesta correduría tecnológica pura. Usar MGAs como proveedores tampoco convierte al broker en una MGA.",
+"queVende": "Empresas del segmento medio y especialidades como tecnología, fintech y ciencias de la vida. Combina Business Insurance y Total Rewards. La especialización facilita entender riesgos, aportar asesoramiento y mantener relación.",
+"tec": "Portal del cliente para pólizas, pagos, renovaciones y certificados; herramientas para ordenar información y analizar huecos de cobertura. Spike Lipkin explica en mayo de 2026 que los ingenieros trabajan junto a los profesionales del seguro, en lugar de desarrollar software alejados de quien lo usa.",
+"crece": "Crece incorporando productores y conocimiento sectorial, mejorando la experiencia del cliente y la calidad del expediente enviado al mercado. WTW mencionó más de 120 productores en el anuncio de diciembre de 2025. No todo el crecimiento histórico fue orgánico: se fusionó con ABD en 2021. El 20% citado es la métrica orgánica publicada por el comprador, no la suma de todas las adquisiciones.",
+"despues": "Los datos y la gestión continua permiten atender cambios, beneficios y renovaciones desde la misma plataforma. La entrevista plantea reducción del trabajo manual y mejor información para aseguradores; no publica una tasa de retención atribuible a la IA.",
+"hipotesis": "Elegir un sector, ordenar sus datos una sola vez y hacer que quien vende, quien coloca y quien desarrolla el proceso trabajen juntos. Empezar por certificados, expedientes y comparativas revisadas, no por prometer que una IA asesora sola.",
+"limites": "No se ha verificado beneficio neto autónomo. Los márgenes y cifras de 2025/26 de la presentación de compra contienen estimaciones y medidas proforma ajustadas: no se usan como beneficios cerrados. La compra anunciaba 1.050 M$ al cierre y contraprestaciones condicionales; no una valoración cobrada íntegra de 1.300 M$.",
+"fuentes": [
+[
+"Crecimiento orgánico y condiciones del acuerdo · WTW · 10 diciembre 2025",
+"https://investors.wtwco.com/news-releases/news-release-details/wtw-acquire-newfront-specialized-broker-combining-deep-expertise"
+],
+[
+"Cierre confirmado de adquisición · WTW · 27 enero 2026",
+"https://www.wtwco.com/en-us/news/2026/01/wtw-completes-acquisition-of-newfront"
+],
+[
+"Entrevista Spike Lipkin y Lou Smith · EN · 7 mayo 2026 · texto consultado",
+"https://www.wtwco.com/en-us/insights/2026/05/perspectives-from-tomorrows-broker-to-protect-your-future"
+],
+[
+"Modelo, portal y fusión ABD · Newfront · 9 marzo 2022 · información histórica",
+"https://www.newfront.com/blog/newfront-insurance-modernizing-the-insurance-world"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null
+},
+{
+"key": "clark",
+"name": "CLARK",
+"sub": "Correduría digital de particulares · Alemania / grupo europeo",
+"papel": "principal",
+"tipo": "correduria",
+"pais": "Alemania",
+"seg": "particulares",
+"ramo": "Cartera de seguros de particulares (gestión de contratos existentes y nuevos)",
+"canales": [
+"directo",
+"socios",
+"asistida"
+],
+"tecUso": [
+"cliente",
+"productividad"
+],
+"humano": "mixto",
+"rent": "declarada",
+"evid": "media",
+"desen": "independiente",
+"motor": "Mandato para gestionar cartera + asesoramiento + canales propios y adquisiciones.",
+"entidad": "CLARK Germany GmbH · Versicherungsmakler §34d, registro D-NNRU-GY7JK-66",
+"escalaCorta": ">135 M€ de ingresos 2023 (+35%) · >2 M clientes del grupo",
+"evidencia": "Ingresos y primer resultado operativo positivo de 2023 declarados por el grupo; no beneficio neto auditado.",
+"canal": "App directa al consumidor, marca blanca para bancos y expertos",
+"exito": "Comunicó más de 135 M€ de ingresos en 2023, crecimiento del 35% y su primer resultado operativo positivo. La cifra es del grupo, declarada por la empresa, no beneficio neto auditado recuperado aquí. En esa misma comunicación hablaba de más de 700.000 usuarios de la app en Alemania; no confundirlos con los más de 2 millones de clientes del grupo.",
+"modelo": "CLARK Germany GmbH figura como Versicherungsmakler bajo §34d, registro D-NNRU-GY7JK-66, en su información legal de marzo de 2026. Esta es la entidad corredora verificada. El grupo tiene varias marcas y adquisiciones; no se atribuye a la sociedad alemana todo el ingreso consolidado.",
+"queVende": "Un lugar para ver contratos existentes, detectar necesidades, comparar, contratar y recibir ayuda. El punto de partida puede ser la cartera actual del cliente, no solo una póliza nueva.",
+"tec": "App y sistemas basados en reglas para gestionar contratos y generar ocasiones de asesoramiento. Expertos asalariados por especialidad completan la parte digital. No pretende digitalizar cada interacción.",
+"crece": "En la entrevista histórica con Marco Adelt, el foco principal era el negocio directo al consumidor, complementado por módulos de marca blanca para bancos, con ejemplos como N26 y DKB. En la explicación de resultados de 2023, Christopher Oster dice que redujeron inversión en marketing y aumentaron captación a través de canales propios de leads. Crecieron también comprando corredurías y negocios de distribución. No es prueba de que cualquier app reduzca CAC.",
+"despues": "La tesis es acompañar al cliente durante años y atender sus contratos existentes. Adelt contrasta esta relación con cambiar asegurador cada año para cobrar otra venta. No publica un porcentaje actual de retención en las fuentes consultadas.",
+"hipotesis": "Ofrecer revisión y gestión ordenada de contratos, con tareas periódicas que aporten valor, y probar un socio con acceso real a clientes. No basta con una app que almacene documentos; hacen falta mandato, datos y servicio.",
+"limites": "El resultado positivo es operativo y de 2023. No acredita beneficio neto ni rentabilidad 2026. La entrevista de Horváth es histórica y sin fecha visible; sus 150.000 clientes y objetivos futuros no describen el presente. La fecha del cuerpo del comunicado es 25 marzo 2024 aunque su URL y metadatos discrepan.",
+"fuentes": [
+[
+"Modelo legal · información inicial CLARK Germany · marzo 2026",
+"https://www.clark.de/wp-content/uploads/2026/03/20260323-erstinformation-clark-de.pdf"
+],
+[
+"Resultados 2023 · comunicado fechado 25 marzo 2024 en el cuerpo",
+"https://www.clark.io/2024/01/02/european-insurtech-clark-achieves-positive-operating-result/"
+],
+[
+"Estructura, países y adquisiciones · fuente propia · sin fecha visible",
+"https://www.clark.io/about/"
+],
+[
+"Entrevista a Marco Adelt · DE · Horváth · histórica, texto consultado",
+"https://www.horvath-partners.com/en/branchen/insurance/market-insights-interviewserie-digitale-bancassurance/interview-mit-dr-marco-adelt-clark"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null
+},
+{
+"key": "turtlemint",
+"name": "Turtlemint Insurance Broking Services",
+"sub": "Correduría dentro de matriz tecnológica · India",
+"papel": "principal",
+"tipo": "correduria",
+"pais": "India",
+"seg": "particulares",
+"ramo": "Productos de varias aseguradoras a través de asesores locales",
+"canales": [
+"agentes"
+],
+"tecUso": [
+"red",
+"posventa"
+],
+"humano": "asistido",
+"rent": "perdidas",
+"evid": "alta",
+"desen": "independiente",
+"motor": "Reclutar, formar y activar asesores locales con una plataforma.",
+"entidad": "Turtlemint Insurance Broking Services (TIB), filial de Turtlemint Fintech Solutions desde el 8 de mayo de 2024",
+"escalaCorta": "Ingresos FY26 10.983 M INR (+57%) · pérdida 1.843 M INR",
+"evidencia": "Resultados de la matriz en folleto ante SEBI y presentación FY26; no beneficio aislado de la correduría.",
+"canal": "Red de asesores locales (PoSP) habilitados con software",
+"exito": "La matriz Turtlemint Fintech Solutions publica ingresos FY26 de 10.983 millones INR, primas de plataforma de 38.678 millones INR y pérdida anual de 1.843 millones INR. Ingresos +57% frente a la comparación proforma FY25 de 7.003 millones INR. No es una empresa con beneficio anual probado: el EBITDA ajustado anual siguió negativo, pese al equilibrio ajustado del cuarto trimestre.",
+"modelo": "El folleto presentado ante SEBI identifica que el negocio de corretaje directo se realiza mediante la filial Turtlemint Insurance Broking Services (TIB), adquirida por la matriz el 8 de mayo de 2024. La matriz también tiene tecnología, soporte y distribución de otros productos financieros. Se analiza la correduría y su sistema de distribución, no se llama a toda la matriz una correduría pura.",
+"queVende": "Acceso a productos de varias aseguradoras mediante asesores de proximidad. La confianza se construye en la localidad; la plataforma permite comparar, emitir y atender. No es sustituir a todos los distribuidores por una web.",
+"tec": "TurtlemintPro para socios, formación y certificación, datos, comparación y soporte de posventa. Turtlefin reutiliza capacidades tecnológicas en formato de marca blanca y API para bancos y otros distribuidores. Ese SaaS es una actividad distinta del corretaje.",
+"crece": "La presentación FY26 explica captación de socios con marketing digital y contacto de relationship managers; después formación, certificación y activación. Una red grande no es una red productiva: 659.073 socios digitales verificados no equivale a todos certificados ni activos. Declara más de 532.000 PoSP certificados y 94.800 socios activos en los últimos tres meses del cuarto trimestre. La cifra media trimestral anual de activos es otra medida: 83.657.",
+"despues": "Apoyo a siniestros y renovación como parte del servicio al socio y al cliente. La empresa explica que la comisión de renovación tiene mayor margen de servicio, antes de estructura, que el nuevo negocio. Eso no equivale a beneficio final del grupo. Los costes de captar y mantener la red son un riesgo material reconocido en el folleto.",
+"hipotesis": "Copiar el embudo de colaboradores activos, no el tamaño de la red. Medir altas, formación, primera oportunidad, primera póliza, recurrencia y contribución por cohorte. El PoSP indio no equivale jurídicamente al colaborador externo español.",
+"limites": "Los resultados son consolidados de matriz, no beneficio aislado de TIB. Parte de la comparación es proforma por la adquisición de 2024. El podcast tiene notas editoriales consultadas, no transcripción completa ni audio escuchado; no se usan sus biografías como tamaño actual.",
+"fuentes": [
+[
+"Entidad corredora y riesgos · folleto ante SEBI · junio 2026",
+"https://www.sebi.gov.in/sebi_data/commondocs/jun-2026/Turtlemint%20Fintech%20Solutions%20Limited%20-%20Abri_p.pdf"
+],
+[
+"Resultados, definiciones y embudo de socios · presentación FY26 · julio 2026",
+"https://cdn.turtlemint.com/wp-content/uploads/20260717121538/Turtlemint_Investor-Presentation_Q4_FY26.pdf"
+],
+[
+"Repositorio de resultados · fuente propia",
+"https://www.turtlemint.com/investor-relations/"
+],
+[
+"Podcast Dhirendra Mahyavanshi · EN · Asia InsurTech EP239 · 15 febrero 2025 · notas consultadas",
+"https://asiainsurtechpodcast.com/ep-239-is-generative-ai-revolutionizing-insurance-for-underserved-communities-in-india-dhirendra-mahyavanshi-turtlemint/"
+],
+[
+"Vídeo del episodio EP239 · EN · enlace localizado, no visionado íntegro",
+"https://www.youtube.com/watch?v=rO7j9s8nZXA"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null,
+"short": "Turtlemint"
+},
+{
+"key": "insurancedekho",
+"name": "InsuranceDekho / RenewBuy",
+"sub": "Corredurías y red de distribución consolidada · India",
+"papel": "principal",
+"tipo": "correduria",
+"pais": "India",
+"seg": "particulares",
+"ramo": "Motor, salud, vida y empresas a través de asesores locales",
+"canales": [
+"agentes"
+],
+"tecUso": [
+"red",
+"ia"
+],
+"humano": "asistido",
+"rent": "perdidas",
+"evid": "media",
+"desen": "consolidada",
+"motor": "Ampliar cobertura territorial y productos con asesores apoyados por software.",
+"entidad": "D2C Insurance Broking Private Limited · corredor directo, certificado 505, IRDAI/DB571/14",
+"escalaCorta": ">6.600 crore INR de primas FY26 combinadas · >600.000 socios",
+"evidencia": "Primas de la red combinada y resultados FY25 de InsuranceDekho recogidos por prensa; sin resultado combinado.",
+"canal": "Red de asesores locales con software y productos complementarios",
+"exito": "Las empresas anunciaron su consolidación el 1 septiembre de 2026: más de 6.600 crore INR de primas FY26 a 31 marzo 2026 y más de 600.000 socios digitales. Un crore son diez millones de rupias; son primas de la red combinada, no ingresos del broker. InsuranceDekho por separado tuvo en FY25 ingresos de 1.290 crore INR, +73,5%, y pérdida de 47,5 crore INR, según Inc42 sobre resultados.",
+"modelo": "La documentación propia identifica D2C Insurance Broking Private Limited como corredor directo, certificado 505, IRDAI/DB571/14, con vigencia indicada hasta el 26 noviembre de 2026. El FAQ de integración señala que los socios operarán bajo D2C. InsuranceDekho antes operaba mediante Girnar Insurance Brokers. No contar RenewBuy como otro éxito independiente actual ni confundir a la matriz CarDekho/GirnarSoft con una correduría pura.",
+"queVende": "Comparación y distribución de seguros de motor, salud, vida y empresas. El asesor local aporta confianza y servicio; el sistema aporta cartera de productos y trámites.",
+"tec": "Dos redes y dos sistemas en integración. El anuncio incluye recomendación de planes con IA e incorporación automatizada de socios. Son capacidades declaradas y un proceso de integración, no ahorros ya auditados.",
+"crece": "Ankit Agrawal explica en entrevista que InsuranceDekho era fuerte en norte y oeste; RenewBuy aporta más presencia al sur, relaciones y tecnología. La venta sigue apoyándose en el asesor. Plantean que quien ya vende motor a una familia pueda atender salud y vida. El crecimiento tiene una parte corporativa de consolidación: no todo es captación orgánica.",
+"despues": "El FAQ dice que se mantienen acuerdos y comisiones durante la transición y que los cambios se comunicarán. La continuidad de servicio es un objetivo de integración. No hay retención por cohorte verificada ni resultado financiero combinado que permita declarar rentable a la nueva plataforma.",
+"hipotesis": "Un socio de confianza puede abrir la puerta a otra necesidad, pero solo si tiene formación, habilitación, permiso y producto adecuado. Añadir ramos a un distribuidor sin soporte puede empeorar servicio y riesgo de venta.",
+"limites": "Las cifras de red no demuestran socios activos. La entrevista llega a hablar de dos crore de clientes, mientras otras fuentes dicen pólizas acumuladas: no se adopta la cifra como clientes únicos. Tampoco se suma otra vez el volumen de RenewBuy. La vigencia documental de licencia no sustituye una auditoría registral de la integración.",
+"fuentes": [
+[
+"Entidad D2C y categoría de licencia · fuente propia",
+"https://corporate.insurancedekho.com/corporate-social-responsibility"
+],
+[
+"FAQ de integración, entidad y socios · fuente propia · agosto 2026",
+"https://pos.insurancedekho.com/insurance/articles/partners-faq"
+],
+[
+"Consolidación y primas combinadas · CNBC TV18 · 1 septiembre 2026",
+"https://www.cnbctv18.com/business/finance/insurancedekho-renewbuy-consolidate-combined-premium-book-rs-6600-crore-19981184.htm"
+],
+[
+"Entrevista Ankit Agrawal · EN · Inc42 · 1 septiembre 2026 · texto consultado",
+"https://inc42.com/features/insurancedekho-renewbuy-ankit-agrawal-on-making-of-a-pan-india-insurance-distribution-giant/"
+],
+[
+"Resultados FY25 · Inc42 · 12 septiembre 2025",
+"https://inc42.com/buzz/insurancedekho-slips-into-red-posts-inr-47-5-cr-loss-in-fy25/"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null,
+"short": "InsuranceDekho/RenewBuy"
+},
+{
+"key": "plum",
+"name": "Plum Benefits Insurance Brokers",
+"sub": "Correduría de beneficios para empleados · India",
+"papel": "principal",
+"tipo": "correduria",
+"pais": "India",
+"seg": "empresas",
+"ramo": "Seguro colectivo y beneficios de salud para empleados",
+"canales": [
+"b2b"
+],
+"tecUso": [
+"cliente",
+"posventa"
+],
+"humano": "mixto",
+"rent": "declarada",
+"evid": "media",
+"desen": "independiente",
+"motor": "Vender a empresas y hacer útil el seguro también después de contratarlo.",
+"entidad": "Plum Benefits Insurance Brokers Pvt Ltd · certificado 897, IRDA/DB1001/2022, Direct Broker (Life & General)",
+"escalaCorta": ">6.000 empresas (web) · EBITDA y caja positivos declarados",
+"evidencia": "Escala y EBITDA positivo declarados por la compañía; no beneficio neto auditado de la filial.",
+"canal": "Venta B2B consultiva a empresas",
+"exito": "La web actual del servicio declara más de 6.000 empresas. Forbes India recogía más de 4.000 empresas y 500.000 personas alcanzadas en mayo de 2024. CNBC TV18 informa en marzo de 2026 de EBITDA y caja positivos durante un año completo, según la compañía. Es una declaración de desempeño del negocio, no beneficio neto auditado de la filial aislada.",
+"modelo": "Plum Benefits Insurance Brokers Pvt Ltd publica certificado 897, IRDA/DB1001/2022, categoría Direct Broker (Life & General). El fundador explica en junio de 2023 el paso de agente corporativo a broker. Este cambio importa: no clasificarla usando solo su etapa inicial. El grupo también vende servicios sanitarios; no toda su actividad ni sus ingresos son corretaje.",
+"queVende": "Seguro colectivo y beneficios de salud para empresas de diferentes tamaños. La empresa compra y los empleados usan el servicio: hay dos experiencias que resolver, la de RR. HH. y la del asegurado.",
+"tec": "Paneles y aplicación para gestionar beneficios y apoyo en siniestros. En 2024 el CEO estimaba procesos de siniestros 60-70% apoyados por tecnología; en marzo de 2026 la empresa declara 78% sin intervención humana. Son métricas diferentes, de épocas diferentes, no una comparación homogénea ni prueba de que Plum decida indemnizaciones.",
+"crece": "Venta B2B consultiva: ayudar a elegir beneficios adecuados para el equipo, con tecnología que reduce trabajo al cliente. La web muestra petición de presupuesto y testimonios de responsables de empresas. No se ha encontrado un reparto fiable entre venta directa, referrals, publicidad y socios, ni el guion completo de ventas. No se inventa un canal ganador.",
+"despues": "La ayuda cuando hay un siniestro es parte de la propuesta comercial. CNBC recoge que el volumen de casos creció casi 50 veces en cuatro años, mientras el equipo se duplicó, según la empresa. Eso es una declaración de productividad operativa, no reducción del coste total ni prueba causal de retención.",
+"hipotesis": "Explorar un beneficio empresarial concreto y hacer fácil altas, bajas, consultas y documentación. La venta no termina al emitir. Medir horas por empresa y por incidencia, además de comisión, antes de ampliar servicios de salud.",
+"limites": "Las cifras públicas de clientes y EBITDA son del negocio Plum y no aíslan siempre correduría y matriz tecnológica/sanitaria. La palabra «claims» se usa para gestión y apoyo, no para afirmar que asume el riesgo asegurador. No se ha validado rentabilidad neta por cliente ni renovación actual.",
+"fuentes": [
+[
+"Entidad, certificado y categoría · condiciones propias",
+"https://www.plumhq.com/terms-and-conditions"
+],
+[
+"Cambio de agente corporativo a broker · fundador · 8 junio 2023",
+"https://www.plumhq.com/blog/plum-receives-the-irdai-broker-license"
+],
+[
+"Servicio y escala declarada · web actual",
+"https://www.plumhq.com/"
+],
+[
+"Entrevista/declaraciones Abhishek Poddar · EN · Forbes India · 20 mayo 2024 · texto consultado",
+"https://www.forbesindia.com/article/leadership/how-plum-is-bringing-fintech-innovation-to-employee-health-insurance/93140/1"
+],
+[
+"Declaraciones de productividad y EBITDA · CNBC TV18 · 26 marzo 2026",
+"https://www.cnbctv18.com/business/startup/plum-raises-193-crore-in-peak-xv-led-series-b-targets-40-45-pc-revenue-from-healthcare-ws-l-19875585.htm"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null,
+"short": "Plum"
+},
+{
+"key": "insureon",
+"name": "Insureon",
+"sub": "Referencia adyacente: agencia independiente multicompañía de EE. UU.",
+"papel": "adyacente",
+"tipo": "agencia",
+"pais": "EE. UU.",
+"seg": "pymes",
+"ramo": "Seguros para pequeñas empresas por actividad",
+"canales": [
+"directo",
+"asistida"
+],
+"tecUso": [
+"cliente"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "media",
+"desen": "adquirida",
+"motor": "Ruta por profesión: cotización y compra online con ayuda de expertos licenciados.",
+"entidad": "Digital agency con licencias de intermediación en los 50 estados; parte de HUB International",
+"escalaCorta": ">1,8 M de pólizas acumuladas a >450.000 pequeñas empresas",
+"evidencia": "Cifras acumuladas declaradas en su web; no cartera vigente ni ingresos.",
+"canal": "Compra online por actividad + expertos licenciados",
+"resumen": "No la cuento entre las seis corredurías principales para respetar el filtro jurídico. En Estados Unidos se presenta como digital agency, con licencias de intermediación en los 50 estados, no como aseguradora o MGA. Es parte de HUB International. Su web declara más de 1,8 millones de pólizas entregadas a más de 450.000 pequeñas empresas: cifras acumuladas, no cartera vigente ni ingresos. En el estudio propio de cyber publicado el 9 de junio de 2026, las pólizas de cyber emitidas crecieron 59% de 2023 a 2025; no es crecimiento del total de todas las pólizas de Insureon. La compra online convive con expertos licenciados: Jeff Kroeger lo explica en la entrevista de Business Insurance de junio de 2024. La tecnología combina cotización, compra y gestión online con asesoramiento por actividad.",
+"hipotesis": "Interesa la ruta por profesión y la ayuda antes de contratar; no prueba que el autoservicio elimine asesores.",
+"limites": "No se ha verificado beneficio neto, CAC ni renovación. La adquisición de 2022 separó marca/agencia para HUB y plataforma para Bold Penguin; no atribuir propiedad de todo el software a Insureon.",
+"fuentes": [
+[
+"Escala acumulada, historia y servicio · web propia",
+"https://www.insureon.com/about-us"
+],
+[
+"Licencias estatales · web propia",
+"https://www.insureon.com/legal/licenses"
+],
+[
+"Pólizas cyber, no toda la empresa · 9 junio 2026",
+"https://www.insureon.com/about-us/insureon-cyber-insurance-trends-2026"
+],
+[
+"Entrevista Jeff Kroeger · EN · 26 junio 2024 · resumen propio del vídeo consultado",
+"https://www.insureon.com/about-us/business-insurance-interview"
+],
+[
+"Estructura de adquisición · 1 marzo 2022",
+"https://www.insureon.com/about-us/hub-international-and-bold-penguin-to-acquire-insureon"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null
+},
+{
+"key": "nsure",
+"name": "Nsure",
+"sub": "Referencia adyacente: agencia independiente digital de EE. UU.",
+"papel": "adyacente",
+"tipo": "agencia",
+"pais": "EE. UU.",
+"seg": "particulares",
+"ramo": "Hogar y auto de varias aseguradoras",
+"canales": [
+"directo"
+],
+"tecUso": [
+"documental",
+"ia"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "baja",
+"desen": "independiente",
+"motor": "Automatizar el cuello de botella operativo y el seguimiento comercial, con cierre humano.",
+"entidad": "Nsure Insurance Agency Inc. · licencia de agencia de Florida L103223 (y Nsure Insurance Services Inc. en otros estados)",
+"escalaCorta": "Ingresos +100% anual compuesto 2020-2023 (declarado)",
+"evidencia": "Fuente comercial del proveedor (Microsoft) y de la empresa; no auditoría.",
+"canal": "Comparación de hogar y auto con apoyo de IA",
+"resumen": "El registro de Florida identifica Nsure Insurance Agency Inc., licencia de agencia L103223. La web también publica licencias de Nsure Insurance Services Inc. en otros estados. No son una licencia española de corredor ni evidencia de una MGA. Compara hogar y auto de varias aseguradoras. Microsoft publica un caso de cliente con declaraciones de crecimiento de ingresos superior al 100% anual compuesto de 2020 a 2023, reducción del tiempo manual del 60% y de costes asociados del 50%. Es fuente comercial de proveedor y empresa, no auditoría ni ahorro del coste total. El proceso incluye recabar información pendiente, documentos, datos de compañías sin API y clasificación de correo. Leader’s Edge entrevistó a sus responsables en febrero de 2025: Friendly John prepara comparaciones, pero una persona debe cerrar la emisión. La tecnología se aplica a cuello de botella operativo y seguimiento comercial, no solo chatbot.",
+"hipotesis": "Recuperar expedientes incompletos y normalizar documentación con revisión humana.",
+"limites": "El reparto de canales de captación, el beneficio neto y una tasa actual de retención no están verificados. Aunque incluye automoción, el aprendizaje de proceso no depende de ese ramo.",
+"fuentes": [
+[
+"Licencia de agencia · registro oficial de Florida",
+"https://licenseesearch.fldfs.com/Licensee/1776272"
+],
+[
+"Licencias de entidades · web propia",
+"https://nsure.com/licences/"
+],
+[
+"Caso de Microsoft con directivos · EN · texto consultado",
+"https://www.microsoft.com/en/customers/story/1728829430186194098-nsure-power-platform-insurance-usa"
+],
+[
+"Entrevistas sobre IA · EN · Leader’s Edge · 28 febrero 2025",
+"https://www.leadersedge.com/brokerage-ops/are-ai-agents-ready-to-serve"
+],
+[
+"Modelo de comisión y servicio · web propia",
+"https://nsure.com/"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null
+},
+{
+"key": "roams",
+"name": "Roams Insurtech",
+"sub": "Seguimiento español, no éxito financiero confirmado",
+"papel": "seguimiento",
+"tipo": "correduria",
+"pais": "España",
+"seg": "particulares",
+"ramo": "Seguros de particulares (con Roams TIC para telefonía y energía)",
+"canales": [
+"seo",
+"asistida"
+],
+"tecUso": [
+"productividad"
+],
+"humano": "mixto",
+"rent": "no_probada",
+"evid": "baja",
+"desen": "independiente",
+"motor": "SEO/inbound + gestor personal + un sistema que ejecuta tareas mientras el gestor habla.",
+"entidad": "Roams Insurtech S.L. · CIF B34279240 · DGSFP J3536 (declarado en su web)",
+"escalaCorta": "Previsión >4 M€ de primas 2025 (no confirmada)",
+"evidencia": "Previsiones internas recogidas por prensa, no cuentas cerradas.",
+"canal": "SEO/inbound y gestor personal",
+"resumen": "La web identifica Roams Insurtech S.L., CIF B34279240, DGSFP J3536. Distingue esta correduría de Roams TIC, que atiende telefonía, energía y otros servicios. En la entrevista a Eduardo Delgado de febrero de 2026, el motor es SEO/inbound, gestor personal y un sistema que ejecuta tareas mientras el gestor habla. La propuesta no es entregar un lead a otro vendedor, sino gestionar y mantener la relación. Sin embargo, la pieza económica de noviembre de 2025 habla de previsiones internas de superar 4 M€ de primas y 300.000 € de resultado operativo en 2025. No se ha encontrado confirmación del cierre: no se presenta esa previsión como resultado conseguido. Tampoco se convierten sus más de 100.000 personas declaradas en clientes actuales de pólizas sin definición.",
+"hipotesis": "Interesa como comparación española del modelo humano + automatización, pendiente de cuentas y evidencia de cartera.",
+"limites": "La web todavía cita Ley26/2006: su texto comercial no se toma como actualización normativa ni verificación independiente del registro.",
+"fuentes": [
+[
+"Entidad y clave DGSFP declaradas · web propia",
+"https://roams.es/seguros/roams-insurtech/"
+],
+[
+"Entrevista Eduardo Delgado · ES · 17 febrero 2026 · texto consultado",
+"https://www.estrategiasdeinversion.com/analisis/bolsa-y-mercados/el-experto-opina/nosotros-decimos-que-mientras-el-gestor-habla-n-890701"
+],
+[
+"Previsiones internas, no cuentas cerradas · 21 noviembre 2025",
+"https://www.castillayleoneconomica.es/roams-negocia-entrada-capital-sociedad-espanola-transformacion-tecnologica/"
+]
+],
+"estudio": "tech",
+"facts": [],
+"fund": null,
+"short": "Roams"
 }
 ];
 const REF_FIRST=[['manypets','demanda desatendida y negociación con aseguradoras'],['superscript','autoservicio frente a asesoría'],['tuio','publicidad conectada con compra'],
@@ -4657,17 +5215,39 @@ const REF_FIX=[['Simply Business','un millón global en agosto de 2024, no solo 
   ['Root','no hubo trimestres rentables ininterrumpidos, pues 3T 2025 fue negativo.'],
   ['ManyPets','beneficio de Many Group fechado a marzo de 2025.'],
   ['Luko/wefox','no se atribuye su desenlace a una sola causa.']];
-const REF_FILTER_VARS=['tipo','seg','canales','humano','rent','evid','desen'];
+const REF_FILTER_VARS=['estudio','papel','tipo','seg','canales','tecUso','humano','rent','evid','desen'];
+const REF_TECH_MAP=[['konsileo','comercial B2B, crecimiento orgánico mediante corredores y plataforma. Buen caso para productividad del equipo; continúa la cautela sobre pérdidas.'],
+  ['newfront','especialización y productores apoyados por tecnología. Crecimiento orgánico publicado y adquisición cerrada por WTW; ya no independiente.'],
+  ['clark','cartera de particulares, app y asesoramiento. Declara resultado operativo positivo de 2023; parte de su crecimiento viene de compras.'],
+  ['turtlemint','red de asesores locales habilitados con software. Escala importante, pero la matriz aún pierde dinero.'],
+  ['insurancedekho','red y productos complementarios, un único caso tras consolidación. Mucho volumen no equivale a beneficio.'],
+  ['plum','salud/beneficios B2B, tecnología para la vida del contrato. La correduría existe, pero las cifras del grupo incluyen otros servicios.']];
+const REF_TECH_CRIT=['Se excluyen las 18 empresas del informe anterior. La lista principal contiene seis casos; InsuranceDekho y RenewBuy no se cuentan dos veces.',
+  'Filtro de modelo: entidad corredora o brokerage identificada; aseguradores terceros soportan el riesgo. No se incluye una MGA ni una aseguradora como si fuera broker. Un broker puede colocar con MGAs sin convertirse en una.',
+  'Se separa entidad regulada de matriz, grupo y proveedor tecnológico. CLARK, Turtlemint y Plum no se presentan como grupos puros de corretaje. Newfront ya forma parte de WTW.',
+  'Insureon y Nsure están en un apartado adyacente: agencias independientes multicompañía de EE. UU., sin afirmar equivalencia legal con la correduría española. Roams es seguimiento, no éxito financiero confirmado.',
+  'Éxito significa evidencia de escala, crecimiento, resultado o salida, cada una con su etiqueta. Si éxito significa beneficio neto actual auditado, esta selección no demuestra que todas lo cumplan.',
+  'Se han consultado páginas propias, documentación legal y financiera, prensa sectorial y entrevistas. Las afirmaciones de empresa y proveedor no son auditorías. Cada cifra conserva su período.',
+  'Primas, ingresos, usuarios, clientes y pólizas no se suman ni comparan como equivalentes. Se mantienen INR, GBP y EUR sin inventar conversiones. Un crore son diez millones; un lakh son cien mil.',
+  'Las entrevistas textuales se distinguen de notas o resúmenes de vídeo/podcast. La clasificación es documental, no una auditoría legal de todas las sociedades, permisos y delegaciones por producto.'];
+const REF_TECH_STUDY=[['Especialización y criterio humano','Konsileo y Newfront. Elegir un sector y resolver bien sus riesgos antes de ampliar catálogo.'],
+  ['Cartera y servicio','CLARK y Plum. Crear motivos útiles de relación después de emitir; no dar por hecho que una app retiene.'],
+  ['Colaboradores activos','Turtlemint e InsuranceDekho. Separar el contacto firmado del socio formado y productivo. El régimen PoSP de India no se traslada a España.'],
+  ['Automatización primero donde duele','Documentación incompleta, recaptura, certificados, cambios y renovación. Nsure aporta evidencia de proceso, no una promesa de asesoramiento autónomo.'],
+  ['Cuadro mínimo','Oportunidades con permiso, cotizaciones válidas, emisión, comisión neta de devoluciones, horas de servicio, contribución, pólizas por socio activo y retención por cohorte. No usar primas como ingresos.'],
+  ['Antes de operar','Ninguna propuesta autoriza contactar empresas, reutilizar datos, activar campañas o vender. Confirmar habilitación, acuerdos, responsabilidades y protección de datos para el flujo concreto.']];
 let REF_F={q:''}; REF_FILTER_VARS.forEach(v=>REF_F[v]=new Set());
 let REF_ROW='canales', REF_COL='rent';
-const refVals=(r,v)=> REF_VARS[v].multi? r[v] : [r[v]];
+const refVals=(r,v)=> REF_VARS[v].multi? (r[v]||[]) : (r[v]!=null? [r[v]] : []);
+const refShort=r=>r.short||r.name.split(' /')[0];
 const refLab=(v,k)=>REF_VARS[v].vals[k]||k;
 const refBadge=(v,k)=>`<span class="rbadge ${(REF_TONE[v]||{})[k]||'neutral'}">${refLab(v,k)}</span>`;
 const refChips=r=>r.canales.map(c=>`<span class="rchip">${refLab('canales',c)}</span>`).join('');
+const refTec=r=>(r.tecUso||[]).map(c=>`<span class="rchip tec">${refLab('tecUso',c)}</span>`).join('');
 function refFiltered(){
   const q=REF_F.q.trim().toLowerCase();
   return REFS.filter(r=> REF_FILTER_VARS.every(v=>!REF_F[v].size || refVals(r,v).some(x=>REF_F[v].has(x)))
-    && (!q || [r.name,r.sub,r.ramo,r.pais,r.canal,r.que,r.captacion,r.hipotesis].join(' ').toLowerCase().includes(q)));
+    && (!q || [r.name,r.sub,r.ramo,r.pais,r.canal,r.que,r.captacion,r.hipotesis,r.motor,r.tec,r.crece,r.resumen,r.queVende].join(' ').toLowerCase().includes(q)));
 }
 function renderRefs(){
   const box=document.getElementById('refsBody'); if(!box) return;
@@ -4678,7 +5258,22 @@ function renderRefs(){
       <p class="note" style="margin-top:0">No hay un solo canal ganador: <b>segmento, distribución, conversión y servicio</b> deben encajar. No todas son corredurías, y crecimiento, financiación, salida y rentabilidad no equivalen. Ser un comparador generalista es un modelo; usar comparadores para captar es una decisión de canal. Marshmallow declaró en 2023 que el 80% del negocio procedía de comparadores, sin definir denominador auditado (no se extrapola a 2026); Policybazaar también creció desde comparación y venta asistida.</p>
       <div class="ref-first"><span class="ref-first-l">Qué mirar primero</span>${REF_FIRST.map(([k,t])=>{ const r=REFS.find(x=>x.key===k); return `<button type="button" class="ref-first-b" data-ref="${k}"><b>${esc(r.name)}</b> ${t}</button>`; }).join('')}</div>
       <details class="ref-fix"><summary>Correcciones frente a las versiones anteriores del dossier</summary><ul>${REF_FIX.map(([n,t])=>`<li><b>${n}:</b> ${t}</li>`).join('')}</ul></details>
+      <div class="frow" style="margin-top:10px"><button type="button" class="btn btn-sm" data-study="crecer">Ver solo estas 18 empresas</button></div>
       <p class="ref-warn">Las cifras son declaradas por cada empresa o recogidas por prensa salvo que se indique fuente auditada, y <b>no son métricas equivalentes entre empresas</b> (clientes, pólizas acumuladas, ARR, primas o ingresos miden cosas distintas). Las variables de clasificación son una lectura del dossier para poder comparar modelos.</p>
+    </div>
+    <div class="panel">
+      <h2>Corredurías con ventaja tecnológica <span class="h2-sub">ampliación del estudio · consultado el 26 de octubre de 2026</span></h2>
+      <p class="note" style="margin-top:0">Seis corredurías adicionales con <b>tecnología en el centro de su operación</b>, sin MGAs ni aseguradoras como casos principales, más dos referencias adyacentes de EE. UU. (Insureon y Nsure) y un caso español en seguimiento (Roams). La tecnología no obliga a asumir riesgo ni a convertirse en MGA: estos casos crecen distribuyendo y prestando servicio. La selección <b>no es una lista de empresas con beneficio neto actual probado</b>.</p>
+      <div class="ref-map">${REF_TECH_MAP.map(([k,t])=>{ const r=REFS.find(x=>x.key===k); return `<button type="button" class="ref-map-b" data-ref="${k}"><b>${esc(r.name)}</b><span>${t}</span></button>`; }).join('')}</div>
+      <div class="dos-h" style="margin-top:18px">Lo que estudiaría para Protectio</div>
+      <ul class="ref-study">${REF_TECH_STUDY.map(([h,t])=>`<li><b>${h}:</b> ${t}</li>`).join('')}</ul>
+      <details class="ref-fix"><summary>Criterios y límites del estudio</summary><ul>${REF_TECH_CRIT.map(t=>`<li>${t}</li>`).join('')}</ul></details>
+      <details class="ref-fix"><summary>Exclusiones y decisiones de alcance</summary><ul>
+        <li>No se repiten los 18 casos del estudio anterior ni se añaden aseguradoras o MGAs para engordar la lista.</li>
+        <li><b>Ditto</b> no entra: su licencia propia es de agente corporativo, no de corredor (<a href="https://joinditto.in/irdai-license/" target="_blank" rel="noopener noreferrer">licencia IRDAI</a>).</li>
+        <li><b>CoverWallet</b> se reserva como caso histórico: la fuente actual indica redirección a Aon Affinity, por lo que no se presenta como competidor independiente actual (<a href="https://coverager.com/coverwallet-redirects-to-aon-affinity/" target="_blank" rel="noopener noreferrer">Coverager</a>).</li>
+        <li>No se ha contactado con empresas ni compartido información con terceros.</li></ul></details>
+      <div class="frow" style="margin-top:10px"><button type="button" class="btn btn-sm" data-study="tech">Ver solo estas 9 empresas</button></div>
     </div>
     <div class="panel">
       <div class="panel-head"><h2>Filtrar por variables de negocio <span class="h2-sub" id="refCount"></span></h2>
@@ -4695,7 +5290,7 @@ function renderRefs(){
       <div class="tblscroll" id="refMatrix"></div>
     </div>
     <div class="panel">
-      <h2>Hipótesis para Protectio <span class="h2-sub">qué probar a partir de cada caso</span></h2>
+      <h2>Hipótesis y lecturas para Protectio <span class="h2-sub">qué probar a partir de cada caso</span></h2>
       <div class="ref-hyp" id="refHyp"></div>
     </div>`;
     const opts=Object.keys(REF_VARS).map(v=>`<option value="${v}">${REF_VARS[v].label}</option>`).join('');
@@ -4706,6 +5301,8 @@ function renderRefs(){
     box.querySelector('#refClear').onclick=()=>{ REF_FILTER_VARS.forEach(v=>REF_F[v].clear()); REF_F.q=''; box.querySelector('#refQ').value=''; paintRefs(); };
     box.addEventListener('click',e=>{
       const f=e.target.closest('[data-fv]'); if(f){ const s=REF_F[f.dataset.fv], k=f.dataset.fk; s.has(k)?s.delete(k):s.add(k); paintRefs(); return; }
+      const st=e.target.closest('[data-study]'); if(st){ REF_FILTER_VARS.forEach(v=>REF_F[v].clear()); REF_F.estudio.add(st.dataset.study);
+        document.getElementById('refFilters').scrollIntoView({behavior:'smooth',block:'start'}); paintRefs(); return; }
       const r=e.target.closest('[data-ref]'); if(r){ openRef(r.dataset.ref); }
     });
   }
@@ -4724,19 +5321,20 @@ function paintRefs(){
   let h=`<table class="ref-x"><thead><tr><th>${REF_VARS[rv].label} \\ ${REF_VARS[cv].label}</th>${usedC.map(c=>`<th>${refLab(cv,c)}</th>`).join('')}<th class="tcol">Total</th></tr></thead><tbody>`;
   rk.forEach(a=>{ const inRow=L.filter(r=>refVals(r,rv).includes(a)); if(!inRow.length) return;
     h+=`<tr><td>${refLab(rv,a)}</td>`+usedC.map(c=>{ const cell=inRow.filter(r=>refVals(r,cv).includes(c));
-      return `<td>${cell.map(r=>`<button type="button" class="ref-name" data-ref="${r.key}">${esc(r.name.split(' /')[0])}</button>`).join('')}</td>`; }).join('')+
+      return `<td>${cell.map(r=>`<button type="button" class="ref-name" data-ref="${r.key}">${esc(refShort(r))}</button>`).join('')}</td>`; }).join('')+
       `<td class="tcol"><b>${inRow.length}</b></td></tr>`; });
   document.getElementById('refCross').innerHTML= L.length? h+'</tbody></table>' : '<div class="empty" style="margin:12px">Ninguna empresa cumple los filtros.</div>';
   // matriz comparativa
   document.getElementById('refMatrix').innerHTML= !L.length? '<div class="empty" style="margin:12px">Ninguna empresa cumple los filtros.</div>' :
-    `<table class="ref-m"><thead><tr><th>Empresa</th><th>Tipo</th><th>País · fundación</th><th>Cliente y ramo</th><th>Canales de captación</th><th>Venta humana</th><th>Escala declarada</th><th>Rentabilidad</th><th>Evidencia</th><th>Situación</th></tr></thead><tbody>`+
-    L.map(r=>`<tr><td><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button><div class="ref-sub">${esc(r.sub)}</div></td>
+    `<table class="ref-m"><thead><tr><th>Empresa</th><th>Tipo</th><th>País · fundación</th><th>Cliente y ramo</th><th>Canales de captación</th><th>Tecnología al servicio de</th><th>Venta humana</th><th>Escala declarada</th><th>Rentabilidad</th><th>Evidencia</th><th>Situación</th></tr></thead><tbody>`+
+    L.map(r=>`<tr><td><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button><div class="ref-sub">${esc(r.sub)}</div>${r.papel&&r.papel!=='principal'?`<span class="rbadge neutral" style="margin-top:4px">${refLab('papel',r.papel)}</span>`:''}</td>
       <td>${refLab('tipo',r.tipo)}</td><td>${esc(r.pais)}${r.fund?' · '+r.fund:''}</td>
       <td>${refLab('seg',r.seg)}<div class="ref-sub">${esc(r.ramo)}</div></td><td><div class="rchips">${refChips(r)}</div></td>
+      <td>${(r.tecUso||[]).length? `<div class="rchips">${refTec(r)}</div>` : '<span class="cnd">—</span>'}</td>
       <td>${refLab('humano',r.humano)}</td><td>${esc(r.escalaCorta)}</td><td>${refBadge('rent',r.rent)}</td><td>${refBadge('evid',r.evid)}</td><td>${refBadge('desen',r.desen)}</td></tr>`).join('')+'</tbody></table>';
   // hipótesis
   document.getElementById('refHyp').innerHTML=L.map(r=>`<div class="ref-hyp-c"><button type="button" class="ref-name strong" data-ref="${r.key}">${esc(r.name)}</button>
-    <p>${esc(r.hipotesis)}</p><div class="rchips">${refChips(r)}</div></div>`).join('');
+    <p>${esc(r.hipotesis)}</p><div class="rchips">${refChips(r)}${refTec(r)}</div></div>`).join('');
 }
 // ficha completa de un referente (reutiliza el diálogo de informes de la competencia)
 function openRef(key){
@@ -4746,15 +5344,20 @@ function openRef(key){
   document.getElementById('dosRazon').textContent=r.sub;
   const hasFund=(r.facts||[]).some(f=>f[0]==='Fundación');
   const ficha=[['País',r.pais+(r.fund&&!hasFund?' · fundada en '+r.fund:'')],['Cliente',refLab('seg',r.seg)],['Ramo',r.ramo],['Canal',r.canal],
-    ['Venta humana',refLab('humano',r.humano)],['Rentabilidad',refLab('rent',r.rent)],['Evidencia',refLab('evid',r.evid)],['Situación',refLab('desen',r.desen)],...(r.facts||[])];
+    ['Venta humana',refLab('humano',r.humano)],['Rentabilidad',refLab('rent',r.rent)],['Evidencia',refLab('evid',r.evid)],['Situación',refLab('desen',r.desen)],
+    ...(r.motor?[['Motor de crecimiento',r.motor]]:[]),...(r.entidad?[['Entidad regulada',r.entidad]]:[]),
+    ['Estudio',refLab('estudio',r.estudio)+(r.papel?' · '+refLab('papel',r.papel).toLowerCase():'')],...(r.facts||[])];
   const sec=(t,x)=> x? `<div class="dos-h">${t}</div><p class="ref-p">${esc(x)}</p>` : '';
   document.getElementById('dosBody').innerHTML=
     `<div class="dos-warn"><b>Evidencia:</b> ${esc(r.evidencia)}</div>`+
     `<div class="dos-h">Ficha</div><div class="dos-ficha">${ficha.map(([a,b])=>`<div><span>${esc(a)}</span><span>${esc(b)}</span></div>`).join('')}</div>`+
     `<div class="dos-h">Canales de captación</div><div class="rchips">${refChips(r)}</div>`+
-    sec('Qué compra el cliente',r.que)+sec('Escala',r.escala)+sec('Evolución del modelo',r.evolucion)+sec('Captación',r.captacion)+
+    ((r.tecUso||[]).length?`<div class="dos-h">Tecnología al servicio de</div><div class="rchips">${refTec(r)}</div>`:'')+
+    sec('Resumen',r.resumen)+sec('Qué prueba el éxito',r.exito)+sec('Modelo y entidad',r.modelo)+
+    sec('Qué compra el cliente',r.que)+sec('Qué vende y a quién',r.queVende)+sec('Escala',r.escala)+sec('Qué hace la tecnología',r.tec)+
+    sec('Evolución del modelo',r.evolucion)+sec('Captación',r.captacion)+sec('Cómo crece y vende',r.crece)+
     sec('Conversión y equipo',r.conversion)+sec('Después de la venta',r.despues)+
-    (r.hipotesis?`<div class="dos-h">Hipótesis para Protectio</div><div class="ref-hyp-box">${esc(r.hipotesis)}</div>`:'')+
+    (r.hipotesis?`<div class="dos-h">${r.estudio==='tech'?'Lectura para Protectio':'Hipótesis para Protectio'}</div><div class="ref-hyp-box">${esc(r.hipotesis)}</div>`:'')+
     sec('Riesgo',r.riesgo)+sec('Límites de la evidencia comercial',r.limites)+
     `<div class="dos-h">Fuentes</div><ul class="ref-src">${r.fuentes.map(([t,u])=>`<li><a href="${escAttr(u)}" target="_blank" rel="noopener noreferrer">${esc(t)}</a></li>`).join('')}</ul>`;
   const bd=document.getElementById('dosBackdrop');
